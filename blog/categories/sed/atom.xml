@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sed | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/blog/categories/sed/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T19:33:53+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/08/regex-substitution-101.html"/>
+    <updated>2011-08-01T07:42:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/08/regex-substitution-101</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching...<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn't enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word 'hello'<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed "s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/" &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed 's/PATTERN/REPLACEMENT/'</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /'s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://blog.psych0tik.net">
+  <div class="css-comment-name js-comment-name">
+    richo
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-08-30T11:31:51.256Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    FWIW, vim doesn&#39;t require that you don&#39;t include the trailing seperator, and inherently requires it to use modifiers, so including it is a good habit to develop regardless.
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Search and replace in multiple files with Sed]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/07/search-and-replace-in-multiple-files.html"/>
+    <updated>2011-07-20T04:25:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/07/search-and-replace-in-multiple-files</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Back on the 30th of May, I put up a blog post on how to do a <a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html">search and replace in multiple files with Vim</a>.<br />I think this is a great way of doing substitutions in multiple files because you get to see a preview of what it looks like before you actually writing it to disk.<br /><br />This is great for a small number of files, but to do a large directory of files, you don't really gain any advantages as you're probably not going to open every file in a vim buffer and review each one separately.<br /><br />This is where <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> come in handy!<br /><br />This command will replace every occurrence of the word "foo" with the word "bar" in all html files recursively from the current directory:<br /><blockquote><pre>find . -name "*.html" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br /><b>The explanation:</b><br /><br />This might look a little confusing, but it essentially 2 parts:<br /><br />The first part will list all the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.html</span> files recursively and for each one, execute the command specified by the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option:<br /><blockquote><pre>find . -name "*.html" -exec ...</pre></blockquote><br />The second part is the command to execute for each found file, which in this case is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span>:<br /><blockquote><pre>sed -i "s/foo/bar/g" &lt;TheFile&gt;</pre></blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">'{}'</span> represents the current file and the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\;</span> represents the end of the command to execute as part of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option.<br /><br /><br /><b>Doing more:</b><br /><br />As you can see, the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-name</span> option to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> command takes a <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">glob pattern</a>.<br />If you wanted to be more specific about which files should have the substituion, you could use a regular expression instead, like this:<br /><blockquote><pre>find . -regex ".*[.]html\|.*[.]js" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br />This regex will match all files that end with ".html" or ".js".<br /><br />If you wanted to preview your changes before they are actually written to disk, there are a few ways of accomplishing this, but the simpliest is probably to modify the command as follows:<br /><blockquote><pre>find . -name "*.html" -exec sed "s/foo/bar/g" '{}' \; | less</pre></blockquote><br />Removing the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">"-i"</span> will mean that instead of writing the changes "in place", the changed output will be written to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">STDOUT</span> instead of the files.<br />Then to capture this (potentially large) output, we pipe it to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span>.<br />From within <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span> you will be able to do searches (with the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/</span>" key) and scroll through the output to do a quick sanity check.<br />Once your happy, you can remove the pipe and add the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">"-i"</span> option again to make it permanent!
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T06:50:35.696Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    That would be very useful if I used Linux more... instead I fight the Windows tools ;)<br /><br />p.s. [.] looks funny, I thought \. would work, but it looks like you have to use \\. -- and that looks really ugly and is the same amount of chars anyway!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T07:02:39.134Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    lol, yea, I set up all the linux tools with cygwin in windows when I was forced to use it at my old work, but these things seem lot easier for me in linux!<br /><br />Re: the regex, you could just use \. and you shouldn&#39;t need to escape the backslash. <br />Infact that&#39;s what I had first, but I changed it to the square brackets at the last minute.<br />I thought escaping the dots and the | character made it look a bit more complicated - too many backslashes, even though it was lass characters.<br /><br />&quot;.*\.html\|.*\.js&quot;<br />&quot;.*[.]html\|.*[.]js&quot;<br /><br />It&#39;s all the same really, just trying to make the blog as easy to read as possible for my millions of fans ;)<br />...jokes
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[DHCP fixedhosts to /etc/hosts file]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/05/dhcp-fixedhosts-to-etchosts-file.html"/>
+    <updated>2011-05-17T12:28:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/05/dhcp-fixedhosts-to-etchosts-file</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS... I think... correct me if I'm wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn't need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I've already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo "admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D" | nc 192.168.1.1 23 | \grep "[ ]*[0-9]" | sed "s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g"</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">... <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />...</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">...<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />...</span></blockquote>This isn't really that useful, but it took a couple of minutes, just to "see if I could do it"... and it worked :)<br /><br />... I don't think I'll actually use it, lol, but it was fun anyway :P
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

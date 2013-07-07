@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Minecraft exception in linux - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="I finally decided to install Minecraft on my new shiny Toshiba Portege z830.Ubuntu ships with an open-source version of Java, which did run &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2012/02/minecraft-exception-in-linux.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Minecraft Exception in Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-02T12:25:00+11:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<br />I finally decided to install Minecraft on my new shiny <a href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html" target="_blank">Toshiba Portege z830</a>.<br />Ubuntu ships with an open-source version of Java, which did run Minecraft, but the graphics were terrible, even on the lowest settings. There were artefacts everywhere!<br /><br />So as recommended, I switched to the official JRE, but now the login screen works, but that&#8217;s about it. After logging in, I just got a black screen and the following exception in the console:<br /><br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;"><div class="de2">Exception in thread &#8220;Minecraft main thread&#8221; java.lang.ExceptionInInitializerError at net.minecraft.client.Minecraft.a(SourceFile:180) at net.minecraft.client.Minecraft.run(SourceFile:648) at java.lang.Thread.run(Thread.java:662)</div><div class="de2">Caused by: java.lang.ArrayIndexOutOfBoundsException: 0 at org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:234) at org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:196) at org.lwjgl.opengl.XRandR.populate(XRandR.java:87) at org.lwjgl.opengl.XRandR.access$100(XRandR.java:52)at org.lwjgl.opengl.XRandR$1.run(XRandR.java:110) at java.security.AccessController.doPrivileged(Native Method) at org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at org.lwjgl.opengl.Display.&lt;clinit&gt;(Display.java:135)</div><div class="de1">&#8230; 3 more</div></blockquote><br />After discussing the problem in IRC, the solution was quite simple. It turns out &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">lwjgl</span>&#8221; is a &#8221;<i>Light Weight Java Game Library</i>&#8221; and the version I had wasn&#8217;t behaving.<br />On the advice of the helpful IRC&#8217;ers, I downloaded the latest &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">lwjgl</span>&#8221; from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/" target="_blank">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.<br /><br />To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin<br />cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives</blockquote>Done! Now it works nicely.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://dunks.inflex.co.uk">
+  <div class="css-comment-name js-comment-name">
+    Dunks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-02-18T12:45:09.889Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hello, I&#39;ve just encountered the same problem and tried your fix, but it didn&#39;t seem to work at first.<br /><br />I then noticed then you said to copy from lwjgl-2.8.3/native/linux/* into ~/.minecraft/bin/native. But it&#39;s actually ~/.minecraft/bin/natives , note &#39;natives&#39;.<br /><br />This is using the latest MC version as of posting.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-02-19T00:40:28.102Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you Dunks!<br /><br />My mistake, I&#39;ve updated the post.<br /><br />Cheers
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05140961413515108235">
+  <div class="css-comment-name js-comment-name">
+    kasmanit
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-04-16T16:55:44.028Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks a lot
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-03T19:49:47.627Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks a lot for this post. Fixed my problem.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/13178688912435393698">
+  <div class="css-comment-name js-comment-name">
+    Unknown
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-04T19:19:44.277Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Helped me out too, thanks so much.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-05T01:18:30.765Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Great! Appreciate the feedback, thanks!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/07009091958248701343">
+  <div class="css-comment-name js-comment-name">
+    David Huttleston Jr
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-06T20:40:57.506Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Sweet, thanks for the fix!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-07-25T13:52:46.230Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Wow, after hours of searching, this was indeed the solution of my problem. Thanx!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-07-27T16:04:03.673Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    This problem was haunting me for a while now&#8230; Im running my system from USB as i dont want to leave traces on the system and so i didnt want to run regular Ubuntu as Gnome is too heavy. Minecraft worked perfectly fine under Ubuntu, but not under Xubuntu..<br /><br />This solved it for me! :D<br /><br />Thank you sir.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-05T19:54:32.386Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Been fighting with Minecraft for 2 days on xubuntu trying to run it, finally came across this post and WOW got it running right away. The 5000 internets shall be delivered to your account posthaste.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-05T23:14:55.820Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Glad this is useful, thanks for the great feedback everyone! Really appreciate it!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-12-23T00:54:32.126Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/07401725258980128326">
+  <div class="css-comment-name js-comment-name">
+    Ian Kropp
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-02-20T04:31:54.420Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Bless your heart! Made my night!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-03-23T17:46:54.245Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    This worked perfectly! Thanks!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-03-26T19:35:28.719Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you !!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-03-29T09:57:32.570Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-03-31T13:30:12.193Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    This problem has been winding me up for just over 3 days now, but thanks to you, problem solved :)<br />you sir, are a legend :)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-01T21:40:36.066Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks for the great feedback! :)<br />Glad to hear it&#39;s helping people!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-12T16:38:56.677Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks alot! I don&#39;t understand why this is needed in the first place, but thanks alot for giving us the solution!<br /><br />This should be reported to the devs, shouldn&#39;t it?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-21T22:26:21.489Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you very much! :)
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-19T00:39:43+11:00" class="updated">Updated Feb 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/minecraft/'>minecraft</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2012/02/minecraft-exception-in-linux.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2012/02/minecraft-exception-in-linux.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/12/toshiba-portege-z830.html" title="Previous Post: Toshiba Portege Z830">&laquo; Toshiba Portege Z830</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/copy-and-paste-over-ssh-with-xclip.html" title="Next Post: Copy and Paste over SSH with Xclip">Copy and Paste over SSH with Xclip &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

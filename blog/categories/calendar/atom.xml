@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: calendar | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/blog/categories/calendar/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T19:33:53+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Google Calendar - Repeating an event on the last <weekday> of the month]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html"/>
+    <updated>2012-05-23T12:19:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I regularly attend <a href="http://ruby.org.au/" target="_blank"><i>RORO</i> - The Ruby on Rails Oceania</a> meetups.<br />They currently occur on the last Thursday of every month and so naturally I put the event in my calendar. I added the usual details and then selected the "repeat" option and set it to repeat monthly by the day of the week.<br /><br />This worked well for a while, until one day when I rocked up and it wasn't on.<br />A later realised that in that particular month there were 5 Thursdays instead of 4 and my calendar event was actually set to repeat <i>"Monthly on the fourth Thursday"</i>.<br />It turns out that the interface Google provide to set recurring events does not allow you to change this.. or at least not intuitively.<br /><br />After some searching around I found a few solutions:<br /><br /><br /><b>Use English!</b><br /><br />The simplest way is to just write out the event in plain English. For example:<br /><blockquote class="tr_bq"><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">RORO at Inspire9, Richmond on the last Thursday of every month</div></blockquote>This will create an event called "RORO at Inspire9, Richmond", with the location field set to "Inspire9, Richmond" and the repetition set to <i>"Monthly on the last Thursday".</i><br /><br /><br /><b>Start repeating from an appropriate month</b><br /><br />Another fairly easy way is to find a month that actually has 5 Thursdays and make the event start from there. This will set the recurrence to repeat <i>"Monthly on the last Thursday"</i>, instead of <i>"Monthly on the fourth Thursday"</i>.<br /><br /><br /><b>Hack the ICS</b><br /><br />This solution is probably the hardest, but because the <a href="http://en.wikipedia.org/wiki/ICalendar" target="_blank">iCalendar</a> format does support this, you could write the code manually. To do this you would have to export the calendar to a file, hack it and import it back.<br />While it's nice to know this, seems like more effort that just typing what you want in English!<br /><br /><br /><b>A better solution</b><br /><br />.. would be if Google provided an additional option in the little "repeat" popup to allow this!<br /><br />Or maybe the RORO organiser should maintain there own calendar feed that we could all subscribe to. This would also mean that if a particular meetup was moved or cancelled, all the subscribers calendars would automatically be updated!
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T18:14:54.098Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    BEGIN:VCALENDAR<br />BEGIN:VEVENT<br />DTSTART:20120131<br />DTEND:20120131<br />RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;WKST=SU<br />SUMMARY:Payday<br />END:VEVENT<br />END:VCALENDAR<br /><br />Save the above to a .ics file.  In google next to other calendars choose import calendar.<br /><br />This gives you an event on the last weekday of the month
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T22:56:47.571Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks!
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

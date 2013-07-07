@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby + parallel port + LEDs - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="In the initial R&amp;D stages for our Tank Project we have to work out the most suitable way to interface from software to hardware - which I have &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby + Parallel Port + LEDs</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-10T03:49:00+11:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 &#8220;D&#8221; pins for data with 8 matching &#8220;Ground&#8221; pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED&#8217;s were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED&#8217;s.<br />I found a bunch of tristate LED&#8217;s - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn&#8217;t have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:12:33.662Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Maybe it&#39;s just me, but there&#39;s an elegance in seeing *bits* when so many of us work in higher level languages these days.<br /><br />Good work man!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:20:32.130Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man :)<br /><br />I wouldn&#39;t have even known how to specify bits if not for this, lol.<br /><br />Yea, don&#39;t see bits very often. I could have written this basic example in C, but because its going to be part of a web app one day, I wanted my high level comforts for later on - I&#39;m not that hardcore, lol :P
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-10T03:49:40+11:00" class="updated">Updated Oct 10<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hardware/'>hardware</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/parallel-port/'>parallel port</a>, <a class='category' href='/blog/categories/programming/'>programming</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/tank/'>tank</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/09/git-diff-and-patch.html" title="Previous Post: Git stash, diff and patch">&laquo; Git stash, diff and patch</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/10/recursive-search-with-vimgrep.html" title="Next Post: Recursive search with vimgrep">Recursive search with vimgrep &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

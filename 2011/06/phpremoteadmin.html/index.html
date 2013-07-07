@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>PhpRemoteAdmin - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2011/06/phpremoteadmin.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">PhpRemoteAdmin</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-24T02:56:00+10:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy &#8220;Create PHP Code&#8221; button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn&#8217;t create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER[&#8220;REQUEST_URI&#8221;], &#8220;phpremoteadmin&#8221;) &gt; 0) {<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;connect_type&#8217;] = &#8216;tcp&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;port&#8217;] = &#8216;6666&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;host&#8217;] = &#8216;127.0.0.1&#8217;;<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You&#8217;l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo &#8220;Usage: $0 host1 [host2]&#8221;<br />&nbsp; exit 2<br />fi<br /><br />USER=&#8221;steve&#8221;<br />HOST=$1<br /><br />DBHOST=&#8221;localhost&#8221;<br />[ -z &#8220;$2&#8221; ] || DBHOST=&#8221;$2&#8221;<br /><br />echo &#8220;Browse to: http://localhost/phpremoteadmin&#8221;<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server&#8217;s localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn&#8217;t normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:12:38.930Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steven,<br /><br />Little help required.<br />Till the step <br />sudo /etc/init.d/apache2 reload<br /><br />I am done and on checking localhost/phpremoteadmin<br />gives a login page like the normal localhost/phpmyadmin and upon logging it goes to show my local db. (Is it OK? Should it come like that?)<br /><br />And the next step of establishing SSH where should i put it ?<br /><br />Thanks<br /><br />Unni
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:35:55.216Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Unni,
+
+If you log in and see your local databas&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Unni,<br /><br />If you log in and see your local database, I&#39;m guessing you haven&#39;t been able to configure phpmyadmin to connect to the database on the new port.<br /><br />By default, MySql listens on 3306, which is what PhpMyAdmin is configured to connect to.<br /><br />By modifying PhpMyAdmin&#39;s config, you are telling it to connect to port 6666 instead (if it is accessed from a URI that includes &quot;phpremoteadmin&quot;)<br /><br />By default, you probably dont have anything listening on port 6666, that&#39;s where the tunnel comes in.<br />You need to tunnel the remote server&#39;s 3306 port to your local 6666.<br />The command I provided does this, which you have to run in order for PhpMyAdmin to connect to it.<br /><br />The script at the end of the post is just a convenient wrapper for that command. I saved that script in ~/bin/mysql_remote so it is accessible from anywhere.<br />That means whenever I want to connect to a remote host, I just run that script and provide the hostname as a parameter, which makes the remote MySql available on my local port 6666.<br /><br />It is important to note, that this won&#39;t work unless you:<br />1) Configure PhpMyAdmin to connect to a different port<br />2) Open a tunnel so that you can connect to the remote MySql server via that different port.<br /><br />Hope that helps<br /><br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:55:06.158Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Steve,
+
+&gt; I configured Phpmyadmin to connect&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steve,<br /><br />&gt; I configured Phpmyadmin to connect to 6666 as in the instructions. Below &#8230;<br /><br />   /* Advance to next server for rest of config */<br />    $i++;<br /><br />if (substr_count($_SERVER[&quot;REQUEST_URI&quot;], &quot;phpremoteadmin&quot;) &gt; 0) {<br />$cfg[&#39;Servers&#39;][$i][&#39;connect_type&#39;] = &#39;tcp&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;port&#39;] = &#39;6666&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;host&#39;] = &#39;127.0.0.1&#39;;<br />}<br /><br />&gt; Then after this i made SSH tunnel to server on which there is mysql running<br /><br />ssh -L 6666:localhost:3306 mobshare@124.15.102.53<br /><br />&gt; Then i opened localhost/phpremoteadmin<br /><br />&gt; It shows the normal PhpMyadmin page with login box. <br />So.. did it get connected to the remote one or my local?<br /><br />Should I be logging in that with remote server Mysql user and pass ?<br /><br />Did i do everything fine? <br /><br />Thanks
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:58:31.426Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Yes, you should be logging in with the remote MySql server&#39;s username and password.<br />Did you try this? Only you can tell me if it worked or not :/
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T10:13:08.332Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    1&gt; Added alias at this location as i couldn&#39;t find the file you specified.<br /> <br />sudo vim /etc/phpmyadmin/apache.conf <br /><br />Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin<br /><br />        Options FollowSymLinks<br />        DirectoryIndex index.php<br /><br />        <br /><br />&gt; And configuration for 6666 at <br />sudo vim /etc/phpmyadmin/config.inc.php <br /><br />I tried logging in with the remote server MySQL username and pass in the phpmyadmin interface which i got when i gave <br />localhost/phpremoteadmin<br /><br />But not working :( .I tried same user pass in the window in which SSH tunnel was done. Its working fine. Any clue where to look for error ?<br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T11:47:03.679Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    It sounds like PhpMyAdmin is still connecting to your local database (using the original port 3306).<br /><br />I&#39;m afraid I can&#39;t help you anymore than this, but some ideas to help you find the cause of your problem could be:<br /><br />1. Once you have an SSH tunnel established, you could check that the tunnel is actually going to your remote MySql with `telnet localhost 6666`. If that connects, your tunnel is ok.<br /><br />2. If you tunnel is ok, you try to connect the normal mysql client to it through the tunnel to make sure it is working with something like &#39;mysql -uuser -ppass -P6666&#39; (you&#39;ll have to check that syntax!)<br /><br />3. Remove the &#39;if&#39; condition in PhpMyAdmin&#39;s config and just hard code it to 6666 to make sure it is working.<br />Or perhaps a random port that is not is use (such as 9999), this should stop you from being able to login at all, if it doesn&#39;t cause an error, that means you are not modifying the right config file.<br /><br />You might need to get another programmer to look at your setup in person, I don&#39;t think I can really offer any more help than than without seeing it in person and debugging/experimenting.<br /><br />Good luck!
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-24T02:56:12+10:00" class="updated">Updated Jun 24<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/apache/'>apache</a>, <a class='category' href='/blog/categories/lamp/'>lamp</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/mysql/'>mysql</a>, <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2011/06/phpremoteadmin.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2011/06/phpremoteadmin.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/06/bash-auto-complete.html" title="Previous Post: Bash auto-complete">&laquo; Bash auto-complete</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/06/vi-mode-for-bash.html" title="Next Post: Vi mode for Bash">Vi mode for Bash &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bluetooth audio streaming from phone to Ubuntu - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="I was toying with the idea of making my own &#8220;Car Computer&#8221; and one of the crucial parts is a&nbsp;Bluetooth&nbsp;connection, but not for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2012/10/bluetooth-audio-streaming-from-phone-to.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bluetooth Audio Streaming From Phone to Ubuntu</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-10-30T11:27:00+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I was toying with the idea of making my own &#8220;Car Computer&#8221; and one of the crucial parts is a&nbsp;Bluetooth&nbsp;connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a&nbsp;Bluetooth&nbsp;stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&#8217;s quite easy with Ubuntu :)<br /><br />PulseAudio is pretty awesome!<br />First step is ensure Pulse has the&nbsp;Bluetooth&nbsp;module loaded (mine did by default), you can check this by looking at this file&nbsp;<span style="font-family: 'Courier New', Courier, monospace;">/etc/pulse/default.pa</span><br /><br />The next step is to configure the&nbsp;Bluetooth&nbsp;daemon to enable &#8221;<span style="font-family: Courier New, Courier, monospace;">Source</span>&#8221; (and/or &#8221;<span style="font-family: Courier New, Courier, monospace;">Gateway</span>&#8221; mode).<br />To do this, I added the following line to <span style="font-family: Courier New, Courier, monospace;">/etc/bluetooth/audio.conf</span>:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">Enable=Gateway,Source,Socket</span></blockquote><div><br /></div><div>Then restart the&nbsp;Bluetooth&nbsp;daemon:</div><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo service bluetooth restart</span></blockquote><div><br /></div><div></div><br />Now you&#8217;ll have to pair the computer with the phone as per normal.<br /><br />Once the devices are paired, an &#8220;Audio Source&#8221; connection needs to be created.<br />For this, the easiest way is via DBus, but so we don&#8217;t have to write a script and easy way to test this in an ad-hoc manner is to use a tool called &#8217;<span style="font-family: Courier New, Courier, monospace;">d-feet</span>&#8217;, which is available in the Ubuntu repos.<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo apt-get install d-feet</span></blockquote><br />Using <span style="font-family: Courier New, Courier, monospace;">d-feet</span>, navigate to the <i>system bus</i> and find the <span style="font-family: Courier New, Courier, monospace;">org.bluez</span> key.<br />In here, there will be another key that has a device number in it. (for me this was <span style="font-family: Courier New, Courier, monospace;">/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</span>)<br />Under this key, execute <span style="font-family: Courier New, Courier, monospace;">org.bluez.AudioSource &gt; methods &gt; Connect()</span> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.<br /><br />At this point, I started playing some music so I could tell when it was working, but you probably won&#8217;t be able to hear anything just yet.<br />That is because Pulse does not automatically send every source to every output - that could get messy!<br />To configure pulse to send the audio from the&nbsp;Bluetooth&nbsp;connection to your speakers you need to determine the name of the audio source and the name of the &#8221;<i>sink</i>&#8221; (or output) and join them together.<br />You can do this with the PulseAudio shell like this:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; pacmd<br /> &gt;&gt;&gt; list-sources<br />&gt;&gt;&gt; list-sinks<br />&gt;&gt;&gt; load-module module-loopback source=<u>bluez_source.xxxx</u>&nbsp;sink=<u>alsa_output.pci-xxxx</u></span></blockquote><br />(Replace the <u>underlined</u> parts with the names from the preceding two commands)<br /><br />Now all audio from your phone should be streaming through your computer.<br />DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc..<br /><br />I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br />I used &#8220;AudioSource&#8221; in this example, but the other fun option is the &#8220;HandsFreeGateway&#8221;, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.<br /><br />The resources that helped me with this where:<br /><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05370040969486223230">
+  <div class="css-comment-name js-comment-name">
+    pablofabregat
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-30T17:58:43.019Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Beautiful, I will try the handsfreegateway later today, but the AudioSource worked like a charm. <br />Ubuntu 13.04 here :D :D<br /><br />It&#39;s a little uncomfortable to do this every time I boot the laptop, but the result is fun :D<br /><br />Thanks for this!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T03:22:34.889Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    No problem, glad it helped.<br /><br />I used d-feet because I was just playing around, but if you want a more permanent solution, I would recommend writing a script to do it.<br />Most languages have a DBus library and you could even get that script to run at startup.<br /><br />Good luck.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-20T12:30:42.411Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi,
+It worked for me but didn&#39;t have to use th&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi,<br />It worked for me but didn&#39;t have to use the load-module stuff, the sound was doubled, but I don&#39;t have a sterio output, why?<br />is it because btheadsets are only mono?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-21T04:41:29.153Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My understanding was that &quot;AudioSource&quot; was Stereo (A2DP) and &quot;HandsFreeGateway&quot; was mono, but I&#39;m not 100% sure.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-22T13:49:17.409Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Well, it didn&#39;t work sterio for me :/ and I can&#39;t connect it after I rebooted the computer : Method Output: &#39;GDBus.Error:org.bluez.Error.Failed: Stream setup failed&#39;
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-10-30T11:27:10+11:00" class="updated">Updated Oct 30<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2012/10/bluetooth-audio-streaming-from-phone-to.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2012/10/bluetooth-audio-streaming-from-phone-to.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/09/changing-default-boot-option-with-grub2.html" title="Previous Post: Changing the default boot option with GRUB2">&laquo; Changing the default boot option with GRUB2</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/12/a-few-photography-tips.html" title="Next Post: A few photography tips">A few photography tips &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

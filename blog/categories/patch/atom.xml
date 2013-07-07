@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: patch | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/blog/categories/patch/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T19:33:53+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/09/git-diff-and-patch.html"/>
+    <updated>2011-09-21T10:41:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/09/git-diff-and-patch</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I recently found myself in a situation where I need to comment out  certain lines in my code in order to test a particular set of features.<br /><br />These  commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br />In this situation, checking them into Git or making a personal <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.gitignore</span> file are not suitable solutions.<br /><br />I have found 2 good ways of accomplishing this:<br /><br /><br /><b>Git stash:</b><br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git stash save temp workaround for some issue </blockquote><br />Then I continue on with my work. I selectively leave these changes out of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git checkout -- .</span> so I'm left with a clean repository.<br /><br />When I need to work on a related feature again, I can list my stashes with:<br /><blockquote>git stash list</blockquote><br />Then, apply the most recent stash by running this command:<br /><blockquote>git stash apply</blockquote><br />If you have more than one stash, you can specify which stash you want to apply on the command line. See <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git stash --help</span> to see more information.<br /><br /><br /><b>Git diff and patch:</b> <br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> are very useful tools to be familiar with if you ever deal with text. Git's <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> output is much the same, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> tool is still very handy!<br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git diff &gt; ~/patches/temp_workaround.patch</blockquote><br />Then I continue on with my work. I selectively leave these changes out  of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in  except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git  checkout -- .</span> so I'm left with a clean repository.<br /><br />When I need to work on a related feature again, I can apply my patch by running this command from the project root:<br /><blockquote>patch -p1 &lt; ~/patches/temp_workaround.patch</blockquote><br /><br />Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-09-23T05:34:22.096Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    OverflowException: Steve.GitFanboiness cannot fit in Int32 :P
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-09-23T05:39:39.986Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    lol! ...really?<br />Now that I&#39;m using it daily, I am seeing why its so popular!
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

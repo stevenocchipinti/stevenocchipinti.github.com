@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Google Calendar - Repeating an event on the last <weekday> of the month - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="I regularly attend RORO - The Ruby on Rails Oceania meetups.They currently occur on the last Thursday of every month and so naturally I put the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Google Calendar - Repeating an Event on the Last <weekday> of the Month</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-05-23T12:19:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I regularly attend <a href="http://ruby.org.au/" target="_blank"><i>RORO</i> - The Ruby on Rails Oceania</a> meetups.<br />They currently occur on the last Thursday of every month and so naturally I put the event in my calendar. I added the usual details and then selected the &#8220;repeat&#8221; option and set it to repeat monthly by the day of the week.<br /><br />This worked well for a while, until one day when I rocked up and it wasn&#8217;t on.<br />A later realised that in that particular month there were 5 Thursdays instead of 4 and my calendar event was actually set to repeat <i>&#8220;Monthly on the fourth Thursday&#8221;</i>.<br />It turns out that the interface Google provide to set recurring events does not allow you to change this.. or at least not intuitively.<br /><br />After some searching around I found a few solutions:<br /><br /><br /><b>Use English!</b><br /><br />The simplest way is to just write out the event in plain English. For example:<br /><blockquote class="tr_bq"><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">RORO at Inspire9, Richmond on the last Thursday of every month</div></blockquote>This will create an event called &#8220;RORO at Inspire9, Richmond&#8221;, with the location field set to &#8220;Inspire9, Richmond&#8221; and the repetition set to <i>&#8220;Monthly on the last Thursday&#8221;.</i><br /><br /><br /><b>Start repeating from an appropriate month</b><br /><br />Another fairly easy way is to find a month that actually has 5 Thursdays and make the event start from there. This will set the recurrence to repeat <i>&#8220;Monthly on the last Thursday&#8221;</i>, instead of <i>&#8220;Monthly on the fourth Thursday&#8221;</i>.<br /><br /><br /><b>Hack the ICS</b><br /><br />This solution is probably the hardest, but because the <a href="http://en.wikipedia.org/wiki/ICalendar" target="_blank">iCalendar</a> format does support this, you could write the code manually. To do this you would have to export the calendar to a file, hack it and import it back.<br />While it&#8217;s nice to know this, seems like more effort that just typing what you want in English!<br /><br /><br /><b>A better solution</b><br /><br />.. would be if Google provided an additional option in the little &#8220;repeat&#8221; popup to allow this!<br /><br />Or maybe the RORO organiser should maintain there own calendar feed that we could all subscribe to. This would also mean that if a particular meetup was moved or cancelled, all the subscribers calendars would automatically be updated!
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T18:14:54.098Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    BEGIN:VCALENDAR<br />BEGIN:VEVENT<br />DTSTART:20120131<br />DTEND:20120131<br />RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;WKST=SU<br />SUMMARY:Payday<br />END:VEVENT<br />END:VCALENDAR<br /><br />Save the above to a .ics file.  In google next to other calendars choose import calendar.<br /><br />This gives you an event on the last weekday of the month
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T22:56:47.571Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks!
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-05-23T12:19:38+10:00" class="updated">Updated May 23<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/google/'>Google</a>, <a class='category' href='/blog/categories/calendar/'>calendar</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/05/password-management.html" title="Previous Post: Password management">&laquo; Password management</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/07/arduino-web-server-with-sd-card-reader.html" title="Next Post: Arduino Web Server with SD card reader">Arduino Web Server with SD card reader &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Search and replace in multiple files with Sed - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="Back on the 30th of May, I put up a blog post on how to do a search and replace in multiple files with Vim.I think this is a great way of doing &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/2011/07/search-and-replace-in-multiple-files.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Search and Replace in Multiple Files With Sed</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-20T04:25:00+10:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Back on the 30th of May, I put up a blog post on how to do a <a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html">search and replace in multiple files with Vim</a>.<br />I think this is a great way of doing substitutions in multiple files because you get to see a preview of what it looks like before you actually writing it to disk.<br /><br />This is great for a small number of files, but to do a large directory of files, you don&#8217;t really gain any advantages as you&#8217;re probably not going to open every file in a vim buffer and review each one separately.<br /><br />This is where <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> come in handy!<br /><br />This command will replace every occurrence of the word &#8220;foo&#8221; with the word &#8220;bar&#8221; in all html files recursively from the current directory:<br /><blockquote><pre>find . -name "*.html" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br /><b>The explanation:</b><br /><br />This might look a little confusing, but it essentially 2 parts:<br /><br />The first part will list all the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.html</span> files recursively and for each one, execute the command specified by the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option:<br /><blockquote><pre>find . -name "*.html" -exec ...</pre></blockquote><br />The second part is the command to execute for each found file, which in this case is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span>:<br /><blockquote><pre>sed -i "s/foo/bar/g" &lt;TheFile&gt;</pre></blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8217;{}&#8217;</span> represents the current file and the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\;</span> represents the end of the command to execute as part of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option.<br /><br /><br /><b>Doing more:</b><br /><br />As you can see, the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-name</span> option to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> command takes a <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">glob pattern</a>.<br />If you wanted to be more specific about which files should have the substituion, you could use a regular expression instead, like this:<br /><blockquote><pre>find . -regex ".*[.]html\|.*[.]js" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br />This regex will match all files that end with &#8220;.html&#8221; or &#8220;.js&#8221;.<br /><br />If you wanted to preview your changes before they are actually written to disk, there are a few ways of accomplishing this, but the simpliest is probably to modify the command as follows:<br /><blockquote><pre>find . -name "*.html" -exec sed "s/foo/bar/g" '{}' \; | less</pre></blockquote><br />Removing the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> will mean that instead of writing the changes &#8220;in place&#8221;, the changed output will be written to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">STDOUT</span> instead of the files.<br />Then to capture this (potentially large) output, we pipe it to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span>.<br />From within <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span> you will be able to do searches (with the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/</span>&#8221; key) and scroll through the output to do a quick sanity check.<br />Once your happy, you can remove the pipe and add the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> option again to make it permanent!
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T06:50:35.696Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    That would be very useful if I used Linux more&#8230; instead I fight the Windows tools ;)<br /><br />p.s. [.] looks funny, I thought &#46; would work, but it looks like you have to use &#92;. &#8211; and that looks really ugly and is the same amount of chars anyway!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T07:02:39.134Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    lol, yea, I set up all the linux tools with cygwin in windows when I was forced to use it at my old work, but these things seem lot easier for me in linux!<br /><br />Re: the regex, you could just use &#46; and you shouldn&#39;t need to escape the backslash. <br />Infact that&#39;s what I had first, but I changed it to the square brackets at the last minute.<br />I thought escaping the dots and the | character made it look a bit more complicated - too many backslashes, even though it was lass characters.<br /><br />&quot;.*&#46;html\|.*&#46;js&quot;<br />&quot;.*[.]html\|.*[.]js&quot;<br /><br />It&#39;s all the same really, just trying to make the blog as easy to read as possible for my millions of fans ;)<br />&#8230;jokes
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-20T04:25:37+10:00" class="updated">Updated Jul 20<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bash/'>bash</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/regex/'>regex</a>, <a class='category' href='/blog/categories/sed/'>sed</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://stevenocchipinti.github.io/2011/07/search-and-replace-in-multiple-files.html" data-via="" data-counturl="http://stevenocchipinti.github.io/2011/07/search-and-replace-in-multiple-files.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/07/ssh-copy-id-with-alternative-port.html" title="Previous Post: ssh-copy-id with an alternative port">&laquo; ssh-copy-id with an alternative port</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/08/regex-substitution-101.html" title="Next Post: Regex substitution 101">Regex substitution 101 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
