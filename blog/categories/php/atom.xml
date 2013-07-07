@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: php | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T19:33:53+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PhpRemoteAdmin]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/06/phpremoteadmin.html"/>
+    <updated>2011-06-24T02:56:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/06/phpremoteadmin</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+If you've ever used PhpMyAdmin before, you'll know it can be quite handy, especially for people like me who always forget SQL's syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy "Create PHP Code" button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn't create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER["REQUEST_URI"], "phpremoteadmin") &gt; 0) {<br />$cfg['Servers'][$i]['connect_type'] = 'tcp';<br />$cfg['Servers'][$i]['port'] = '6666';<br />$cfg['Servers'][$i]['host'] = '127.0.0.1';<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You'l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo "Usage: $0 host1 [host2]"<br />&nbsp; exit 2<br />fi<br /><br />USER="steve"<br />HOST=$1<br /><br />DBHOST="localhost"<br />[ -z "$2" ] || DBHOST="$2"<br /><br />echo "Browse to: http://localhost/phpremoteadmin"<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server's localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn't normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:12:38.930Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steven,<br /><br />Little help required.<br />Till the step <br />sudo /etc/init.d/apache2 reload<br /><br />I am done and on checking localhost/phpremoteadmin<br />gives a login page like the normal localhost/phpmyadmin and upon logging it goes to show my local db. (Is it OK? Should it come like that?)<br /><br />And the next step of establishing SSH where should i put it ?<br /><br />Thanks<br /><br />Unni
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:35:55.216Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Unni,
+
+If you log in and see your local databas...
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Unni,<br /><br />If you log in and see your local database, I&#39;m guessing you haven&#39;t been able to configure phpmyadmin to connect to the database on the new port.<br /><br />By default, MySql listens on 3306, which is what PhpMyAdmin is configured to connect to.<br /><br />By modifying PhpMyAdmin&#39;s config, you are telling it to connect to port 6666 instead (if it is accessed from a URI that includes &quot;phpremoteadmin&quot;)<br /><br />By default, you probably dont have anything listening on port 6666, that&#39;s where the tunnel comes in.<br />You need to tunnel the remote server&#39;s 3306 port to your local 6666.<br />The command I provided does this, which you have to run in order for PhpMyAdmin to connect to it.<br /><br />The script at the end of the post is just a convenient wrapper for that command. I saved that script in ~/bin/mysql_remote so it is accessible from anywhere.<br />That means whenever I want to connect to a remote host, I just run that script and provide the hostname as a parameter, which makes the remote MySql available on my local port 6666.<br /><br />It is important to note, that this won&#39;t work unless you:<br />1) Configure PhpMyAdmin to connect to a different port<br />2) Open a tunnel so that you can connect to the remote MySql server via that different port.<br /><br />Hope that helps<br /><br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:55:06.158Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Steve,
+
+&gt; I configured Phpmyadmin to connect...
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steve,<br /><br />&gt; I configured Phpmyadmin to connect to 6666 as in the instructions. Below ...<br /><br />   /* Advance to next server for rest of config */<br />    $i++;<br /><br />if (substr_count($_SERVER[&quot;REQUEST_URI&quot;], &quot;phpremoteadmin&quot;) &gt; 0) {<br />$cfg[&#39;Servers&#39;][$i][&#39;connect_type&#39;] = &#39;tcp&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;port&#39;] = &#39;6666&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;host&#39;] = &#39;127.0.0.1&#39;;<br />}<br /><br />&gt; Then after this i made SSH tunnel to server on which there is mysql running<br /><br />ssh -L 6666:localhost:3306 mobshare@124.15.102.53<br /><br />&gt; Then i opened localhost/phpremoteadmin<br /><br />&gt; It shows the normal PhpMyadmin page with login box. <br />So.. did it get connected to the remote one or my local?<br /><br />Should I be logging in that with remote server Mysql user and pass ?<br /><br />Did i do everything fine? <br /><br />Thanks
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:58:31.426Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Yes, you should be logging in with the remote MySql server&#39;s username and password.<br />Did you try this? Only you can tell me if it worked or not :/
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T10:13:08.332Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    1&gt; Added alias at this location as i couldn&#39;t find the file you specified.<br /> <br />sudo vim /etc/phpmyadmin/apache.conf <br /><br />Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin<br /><br />        Options FollowSymLinks<br />        DirectoryIndex index.php<br /><br />        <br /><br />&gt; And configuration for 6666 at <br />sudo vim /etc/phpmyadmin/config.inc.php <br /><br />I tried logging in with the remote server MySQL username and pass in the phpmyadmin interface which i got when i gave <br />localhost/phpremoteadmin<br /><br />But not working :( .I tried same user pass in the window in which SSH tunnel was done. Its working fine. Any clue where to look for error ?<br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T11:47:03.679Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    It sounds like PhpMyAdmin is still connecting to your local database (using the original port 3306).<br /><br />I&#39;m afraid I can&#39;t help you anymore than this, but some ideas to help you find the cause of your problem could be:<br /><br />1. Once you have an SSH tunnel established, you could check that the tunnel is actually going to your remote MySql with `telnet localhost 6666`. If that connects, your tunnel is ok.<br /><br />2. If you tunnel is ok, you try to connect the normal mysql client to it through the tunnel to make sure it is working with something like &#39;mysql -uuser -ppass -P6666&#39; (you&#39;ll have to check that syntax!)<br /><br />3. Remove the &#39;if&#39; condition in PhpMyAdmin&#39;s config and just hard code it to 6666 to make sure it is working.<br />Or perhaps a random port that is not is use (such as 9999), this should stop you from being able to login at all, if it doesn&#39;t cause an error, that means you are not modifying the right config file.<br /><br />You might need to get another programmer to look at your setup in person, I don&#39;t think I can really offer any more help than than without seeing it in person and debugging/experimenting.<br /><br />Good luck!
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

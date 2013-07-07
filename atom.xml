@@ -4,13 +4,701 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://stevenocchipinti.github.io/atom.xml" rel="self"/>
   <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-07T12:57:10+10:00</updated>
+  <updated>2013-07-07T19:33:53+10:00</updated>
   <id>http://stevenocchipinti.github.io/</id>
   <author>
-    <name><![CDATA[Steven Occhpinti]]></name>
+    <name><![CDATA[Steven Occhipinti]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Test]]></title>
+    <link href="http://stevenocchipinti.github.io/blog/2013/07/07/test/"/>
+    <updated>2013-07-07T18:53:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/blog/2013/07/07/test</id>
+    <content type="html"><![CDATA[<p>Test, Hack, Test</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <link href="http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines.html"/>
+    <updated>2013-06-08T15:27:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker" target="_blank">Ruby</a> <a href="https://rubygems.org/gems/tramtracker" target="_blank">Gem</a> that provides a command line interface to Melbourne&#8217;s <a href="http://yarratrams.com.au/tramtracker" target="_blank">TramTracker</a> service.<br /><br />One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br />In the past, I used the&nbsp;command line&nbsp;utility<span style="font-family: Courier New, Courier, monospace;"> watch </span>to achieve this, but I couldn&#8217;t find a way to enforce a &#8220;max iterations&#8221; option. If it gets forgotten about in the background, TramTracker will eventually block that IP address!<br /><br />So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.<br /><br />In this post, I&#8217;ll outline a couple of ways of achieving this.<br /><br /><br /><b>Using the \b (backspace) character</b><br /><br />Printing a<span style="font-family: Courier New, Courier, monospace;"> \b </span>character does the same thing as pressing backspace. This is really simple to use and is great for little &#8220;progress&#8221; spinners. For example, a character that cycles through<span style="font-family: Courier New, Courier, monospace;"> &#8216;|&#8217;, &#8216;/&#8217;, &#8216;-&#8216;, &#8216;&#39;</span>. For example:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts &#8220;foo\b\b\bbar&#8221; &nbsp;&nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; bar</span><br /><span style="font-family: 'Courier New', Courier, monospace;">(&#8220;|/-&#92;&#8221;*10).chars.each {|c| print c; sleep 1; print &#8220;\b&#8221;} &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; Cheesy, old-school spinner</span></blockquote>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&#8217;d need just as many<span style="font-family: Courier New, Courier, monospace;"> \b </span>characters (you would probably introduce a loop).<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts &#8220;foo\n\b\b\bbar&#8221; &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; foo\nbar</span></blockquote><br /><b>Using the \r (carriage return) character</b><br /><br />To avoid having to repeat just as many<span style="font-family: Courier New, Courier, monospace;"> &#8216;\b&#8217; </span>characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">100.times {|p| print &#8220;\rDownloading %#{p+1}&#8230;&#8221;; sleep 1}</span></blockquote>This approach still won&#8217;t work across multiple lines, but it has another&nbsp;subtle&nbsp;shortfall too, it doesn&#8217;t clear the entire line. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">puts &#8220;foo\rp&#8221; <span style="color: #999999;"># =&gt; poo</span></span></blockquote>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;)<br /><br /><br /><b>Using curses</b><br /><br />The most common answer to overwriting characters across multiple lines, is to use<span style="font-family: Courier New, Courier, monospace;"> <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)" target="_blank">curses</a></span>.<br />Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA" target="_blank">menu driven Text User Interfaces</a> (TUI&#8217;s) easier to develop.<br />Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html" target="_blank">curses module</a> built in to its standard library, which provides a simple API, for example:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">setpos(lines/2, cols/2)<span style="color: #999999;"> # Start in the middle</span><br />addstr(&#8220;Hello world&#8221;)</span></blockquote><br />I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381" target="_blank">gist here</a>.<br /><br />Curses is pretty good for this sort of stuff, it gives you a lot for free.<br />The thing that I didn&#8217;t like about using the curses library was that when it initialises, it clears the screen.<br />This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&#8217;t want that.<br /><br /><br /><b>Using individual cursor movement characters</b><br /><br />This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:<br /><blockquote class="tr_bq"><center><table><tbody><tr><th><div style="text-align: left;">Move the cursor to line L, column C</div></th><td>\033[&lt;L&gt;;&lt;C&gt;H</td></tr><tr><th><div style="text-align: left;">Move the cursor up N lines</div></th><td>\033[&lt;N&gt;A</td></tr><tr><th><div style="text-align: left;">Move the cursor down N lines</div></th><td>\033[&lt;N&gt;B</td></tr><tr><th><div style="text-align: left;">Move the cursor forward N columns</div></th><td>\033[&lt;N&gt;C</td></tr><tr><th><div style="text-align: left;">Move the cursor backward N columns</div></th><td>\033[&lt;N&gt;D</td></tr><tr><th><div style="text-align: left;">Clear the screen, move to (0,0)</div></th><td>\033[2J</td></tr><tr><th><div style="text-align: left;">Erase to end of line</div></th><td>\033[K</td></tr></tbody></table></center></blockquote>You can read more about these <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2" target="_blank">&#8220;escape sequences&#8221; here</a>.<br />I ended up using the<span style="font-family: Courier New, Courier, monospace;"> &#8216;\033[K&#8217; </span>(&#8220;Erase to end of line&#8221;) and the<span style="font-family: Courier New, Courier, monospace;"> &#8216;\033[A&#8217; </span>(&#8220;Move the cursor up&#8221;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb" target="_blank">characters in my TramTracker gem</a> and it worked a treat!<br /><br /><br />Now go and make a cool retro user interface! :)<br /><br /><br />
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA["Safe mode" on the Samsung Galaxy S3]]></title>
+    <link href="http://stevenocchipinti.github.io/2013/05/safe-mode-on-samsung-galaxy-s3.html"/>
+    <updated>2013-05-12T04:36:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2013/05/safe-mode-on-samsung-galaxy-s3</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I recently had some trouble with my Samsung Galaxy S3. I&#8217;m still not sure what caused it, but quite frequently, it would completely freeze up, even after a fresh reboot. It may have been a dodgy app, or something deeper in android, but in the process of fixing it, I was introduced to &#8220;safe mode&#8221;.<br /><br />&#8220;Safe mode&#8221; here behaves like safe mode in Windows. It basically lets you use your phone just like normal, but without starting the usual plethora of background processes. You can still get to your settings, apps and files, but things won&#8217;t start automatically.<br /><br />To enter safe mode on the Galaxy S3 is really simple:<br /><br /><ol><li>Restart the phone</li><li>While it is booting up (and you see the Samsung logo) simply hold the volume down button</li></ol><br /><br />When it boots, you should have the stock wallpaper, your shortcuts will be gone and you should see a little watermark in the bottom left corner that says &#8220;Safe mode&#8221;.<br /><br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s1600/Screenshot_2013-05-12-09-41-12.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"> <img border="0" src="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s640/Screenshot_2013-05-12-09-41-12.png" /> </a> </div><br />From here you can do everything like normal, browse the net, make calls, etc. but more importantly, you can uninstall dodgy apps, change settings, even factory reset the device.<br /><br />
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to make tomato sauce]]></title>
+    <link href="http://stevenocchipinti.github.io/2013/03/how-to-make-tomato-sauce.html"/>
+    <updated>2013-03-17T12:13:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2013/03/how-to-make-tomato-sauce</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div dir="ltr">This time of year is &#8220;tomato season&#8221; and it&#8217;s an Italian tradition of ours to spend a weekend together and make enough tomato sauce to last us the year. Of course, everyone does this differently, but here I&#8217;ll outline how our family does it.<br /><h4>1. Buy some &#8220;sauce tomatoes&#8221;</h4>If you go to any suburbs that have an Italian community you&#8217;ll most probably see signs for people selling &#8220;sauce tomatoes&#8221;. Sauce&nbsp;tomatoes&nbsp;are normally more ripe than usual, which makes them ideal to turn into sauce. We bought 16 boxes of tomatoes from the local Italian social club.</div><div dir="ltr"><u><br /></u></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"><a href="http://lh6.ggpht.com/-kLmW3G-M82k/UUUUgCR8bmI/AAAAAAAABIs/32XG7TXpzf0/s1600/20130316_094831.jpg" imageanchor="1"><img border="0" height="400" src="http://lh6.ggpht.com/-kLmW3G-M82k/UUUUgCR8bmI/AAAAAAAABIs/32XG7TXpzf0/s400/20130316_094831.jpg" width="300" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="http://lh3.ggpht.com/-J5tdH_9R4Z8/UUUU4RIw3CI/AAAAAAAABJc/ZygQmWXO5r4/s1600/20130316_094840.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="300" src="http://lh3.ggpht.com/-J5tdH_9R4Z8/UUUU4RIw3CI/AAAAAAAABJc/ZygQmWXO5r4/s400/20130316_094840.jpg" width="400" /></a></div><h4>2. Wash and cut the tomatoes</h4><div class="separator" style="clear: both; text-align: left;">This part is where most of the effort is spent!</div><div class="separator" style="clear: both; text-align: left;">We use large plastic tubs, fill them with two thirds water and empty some tomatoes in. We then pull out a tomato one by one, cut it in half and then cut the hard stem out from the middle, putting all the stems in the compost bin and the washed, cut tomatoes in another bucket. This makes it easier to mince later, but also gives us a chance to inspect the tomato to ensure the inside isn&#8217;t rotten.</div><div class="separator" style="clear: both; text-align: left;">Rotten tomatoes are easy to spot, they are either black on the inside or they stink! If ever you&#8217;re not sure, giving it a smell is normally the easiest way to tell - and <i>&#8220;When in doubt, throw it out&#8221;</i>.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><b>3. Pre-boil them if they are firm</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">&#8220;Sauce tomatoes&#8221; are normally very ripe and soft, but sometimes they are quite firm. If this is the case they won&#8217;t go through the mincer as well. So to help with this, we used a couple of large drums filled with water on a flame to lightly boil them a little. The idea is to only soften them up, so once the skin starts peeling off, you can pull them out of the water and drain them to remove as much as the water as possible (otherwise the sauce will be watery).</div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh5.ggpht.com/-3ysJI0FsWwM/UUUU10kcHzI/AAAAAAAABJU/xEjhXwc3AaA/s1600/20130316_142524.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh5.ggpht.com/-3ysJI0FsWwM/UUUU10kcHzI/AAAAAAAABJU/xEjhXwc3AaA/s400/20130316_142524.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Pre-boiling the tomatoes</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>4. Mince the tomatoes</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Now that the tomatoes are soft, washed and cut they can be minced. We scoop out some tomatoes and put them in the mincer. The mincer will separate the tomato sauce from the skin and the seeds. We generally fill one tub at a time.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh6.ggpht.com/-YgmLdVOWIDw/UUUUqO6wThI/AAAAAAAABJE/5jfEGgAVXX4/s1600/20130316_151435.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh6.ggpht.com/-YgmLdVOWIDw/UUUUqO6wThI/AAAAAAAABJE/5jfEGgAVXX4/s400/20130316_151435.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The machine!</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh3.ggpht.com/-2r2cTDwHr-M/UUUUntVvJQI/AAAAAAAABI8/Elhw7E87iUs/s1600/20130316_151842.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh3.ggpht.com/-2r2cTDwHr-M/UUUUntVvJQI/AAAAAAAABI8/Elhw7E87iUs/s400/20130316_151842.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Separating the skin, seeds, etc. from the sauce</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh6.ggpht.com/-od8P9pb0908/UUUUlBKMtkI/AAAAAAAABI0/Ee81zN89xCA/s1600/20130316_152105.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh6.ggpht.com/-od8P9pb0908/UUUUlBKMtkI/AAAAAAAABI0/Ee81zN89xCA/s400/20130316_152105.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Gently pushing the tomatoes down in to the mincer</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh4.ggpht.com/-XUSSgoaFCbE/UUUUaV-pFbI/AAAAAAAABIc/heYur21ches/s1600/20130316_154657.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh4.ggpht.com/-XUSSgoaFCbE/UUUUaV-pFbI/AAAAAAAABIc/heYur21ches/s400/20130316_154657.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The left over skin, seeds, etc. from the mincer</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>5. Second mince</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Once you have a (mostly) full tub of sauce, we actually put the left over skin and seed back through one more time and mix it with the rest of the sauce in the tub. This produces a thicker consistency and really gets the most out of the tomatoes. Be sure to mix the tub up well, otherwise the consistency will not be evenly spread.</div><br /><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh5.ggpht.com/-9oBg-HzFXvE/UUUUs-jYfqI/AAAAAAAABJM/pdz9BiY1uo4/s400/20130316_154702.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The second run - putting the left overs back through one more time</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>6.&nbsp;Bottling&nbsp;the sauce</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">This year we used three different types of bottles: The usual large beer bottles with bottle caps, large jars with screw on lids and for the first time we tried using a few small (crown lager) beer bottles.</div><div class="separator" style="clear: both; text-align: left;">The first step is to put a spoon of salt and two basil leaves in each bottle, then fill the bottles with the sauce, leaving at least 5cm of an air gap from the top of the bottle.</div><div class="separator" style="clear: both; text-align: left;">Throughout the year, we collect up the beer bottles so we can re-use them for the next year. Be careful of this though, the bottles shouldn&#8217;t be reused for more than about three times or so.&nbsp;Every time&nbsp;they are boiled, the bottles get weaker, so if they are reused too many times, they will eventually shatter when they are boiled.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh5.ggpht.com/-RadhwYybuNg/UUUUdfjqpuI/AAAAAAAABIk/CwYEz0gUd60/s1600/20130316_154646.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh5.ggpht.com/-RadhwYybuNg/UUUUdfjqpuI/AAAAAAAABIk/CwYEz0gUd60/s400/20130316_154646.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Filling the bottles with the sauce</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh4.ggpht.com/-L_qGUWCa8qY/UUUU7GU63MI/AAAAAAAABJk/Dv1e_zh49cs/s400/20130316_165043.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The beer bottles we use for the sauce</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh6.ggpht.com/-Hs6FLxazQ_0/UUUVEhXaXTI/AAAAAAAABJs/igdYDvmqMtw/s400/20130316_165038.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The jars we use for the sauce</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>7. Cap the bottles</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">The jars with the screw on lids are the most risky. They need to be sealed tightly, otherwise they will not preserve correctly and will make a mess in the final stages. The beer bottles on the other hand are more reliable. You can buy bags of new bottle caps fairly cheaply and then using a &#8220;capper&#8221;, they normally seal quite well. Just be sure to check they are tight as you go.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh5.ggpht.com/-xDFjdPPwOAQ/UUUVIcmmNuI/AAAAAAAABJ0/V4-W_PAO6Wk/s400/20130316_165105.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The &#8216;capper&#8217;</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"><a href="http://lh3.ggpht.com/-hH6Y62LyrLk/UUUEkP6h7qI/AAAAAAAABIU/SHBtwG2FsCs/s1600/20130316_165116.jpg" imageanchor="1"><img border="0" height="400" src="http://lh3.ggpht.com/-hH6Y62LyrLk/UUUEkP6h7qI/AAAAAAAABIU/SHBtwG2FsCs/s400/20130316_165116.jpg" width="300" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: left;"><b>8. Boil the bottles</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">After the sauce bottles are all sealed and ready to go, they are gently placed in a drum where they are boiled. We generally put a blanket in the bottom of the barrel, then a layer of bottles standing upright, then another blanket, another layer of bottles, etc. Then fill the drum with water and turn the flame on. As this is a large volume to heat up, it takes quite a while to start to boil, but once the boiling and/or steaming has started, we keep the flame on for another two hours. It&#8217;s very important that once they have boiled for two hours that you leave them in the water until the water goes cold - this could be a whole day. Taking them out too early can cause the bottles to shatter.</div><div class="separator" style="clear: both; text-align: left;">This process is what preserves and seals the bottles properly.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s1600/IMAG0281.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="293" src="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s400/IMAG0281.jpg" width="400" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Boiling the bottles to seal and preserve them</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>9. Enjoy!</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">After the water has gone cold, the bottles can be pulled out and put away. We try to make enough to last us a whole year, so we put them into crates, keep one crate in the kitchen and store the rest of them in a cool place.</div><div class="separator" style="clear: both; text-align: left;">When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time - you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&#8217;ll never want to buy that stuff again!</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <link href="http://stevenocchipinti.github.io/2013/01/script-to-transfer-photos-in-linux.html"/>
+    <updated>2013-01-04T16:38:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2013/01/script-to-transfer-photos-in-linux</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A few photography tips]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/12/a-few-photography-tips.html"/>
+    <updated>2012-12-14T13:44:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/12/a-few-photography-tips</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div dir="ltr">A little while ago, my brother got me a photography course as a gift, so I asked a friend of mine, Amy, to join me and last Thursday night we attended the course.&nbsp;The course was a &#8220;Night Landscape&#8221; tutorial where we all brought our own cameras and a professional photographer guides us through how to take photos at night. The class was quite small, it consisted of Amy and I with one other student.</div><div dir="ltr"><br /></div><div dir="ltr">The course started out quite basic and we went though some fundamental theory, a lot of which Amy and I already knew, but the other student was a little less experienced so the photographer needed to cater for all of us.</div><div dir="ltr">Luckily it was just a small class, because instead of following the standard course structure, the photographer spent more time in conversations with us, answering all our specific questions.</div><div dir="ltr"><br /></div><div dir="ltr">Being self-taught, I am grateful for that, because these conversations were what lead me to learn a few new things that I hadn&#8217;t picked up in my own research so far. Here is a quick summary of the things I learned:</div><div dir="ltr"><br /></div><div dir="ltr"><br /></div><div dir="ltr"><b>1. Blowing out the sky, intentionally</b></div><div dir="ltr"><br /></div><div dir="ltr">The first new tip I learned was a trick the photographer used when the scene has an unusable sky, such as a dull cloud cover (like last night in the rain). He would take another photo that was&nbsp;intentionally&nbsp;over-exposed so the sky was as white as possible.&nbsp;By doing this, afterwards in Photoshop a pure white sky is very easy to select, even through the leaves of a tree or someone&#8217;s hair using tools like the magic wand, or a color-based selection and can be replaced with a more dramatic sky from another shoot.</div><div dir="ltr"><br /></div><div dir="ltr"><br /></div><div dir="ltr"><b>2. Hand-holding at night</b></div><div dir="ltr"><br /></div><div dir="ltr">At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</div><div dir="ltr"><i>&#8220;Make the denominator of the shutter speed match the focal length&#8221;</i></div>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&#8217;t a perfect rule, but it is a great place to start and you can adjust from there.<br /><br /><br /><b>3. Freezing human motion</b><br /><br />So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends a shutter speed of 1/125 as a baseline to freeze human motion. It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as&nbsp;necessary.<br /><br /><br /><b>4. Filters to allow for more creativity</b><br /><br />So far the only filters I have used are a &#8220;Circular&nbsp;Polariser&#8221; to enhance sky&#8217;s, cut out reflections, etc. and a &#8220;UV&#8221; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &#8220;Neutral Density&#8221; (or &#8220;ND&#8221;) filter and a &#8220;Graduated Blue-Yellow&#8221; filter.<br />Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day - it looked fantastic!<br />The &#8220;Graduated Blue-Yellow&#8221; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.<br /><br /><br />So at the end of the day, the course was quite basic, but in our&nbsp;tangential&nbsp;conversations I gained some pretty cool tips and tricks.<br />I think the most valuable aspect of a course like this is not so much the material presented, but just to experience another photographers style. It&#8217;s always interesting to see how everyone thinks about things in their own unique way, and going through other peoples photos with a conversation is really intriguing.<br /><br />Thanks to Rob and Sarah for the gift and Amy for keeping me company!
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bluetooth audio streaming from phone to Ubuntu]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/10/bluetooth-audio-streaming-from-phone-to.html"/>
+    <updated>2012-10-30T11:27:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/10/bluetooth-audio-streaming-from-phone-to</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I was toying with the idea of making my own &#8220;Car Computer&#8221; and one of the crucial parts is a&nbsp;Bluetooth&nbsp;connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a&nbsp;Bluetooth&nbsp;stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&#8217;s quite easy with Ubuntu :)<br /><br />PulseAudio is pretty awesome!<br />First step is ensure Pulse has the&nbsp;Bluetooth&nbsp;module loaded (mine did by default), you can check this by looking at this file&nbsp;<span style="font-family: 'Courier New', Courier, monospace;">/etc/pulse/default.pa</span><br /><br />The next step is to configure the&nbsp;Bluetooth&nbsp;daemon to enable &#8221;<span style="font-family: Courier New, Courier, monospace;">Source</span>&#8221; (and/or &#8221;<span style="font-family: Courier New, Courier, monospace;">Gateway</span>&#8221; mode).<br />To do this, I added the following line to <span style="font-family: Courier New, Courier, monospace;">/etc/bluetooth/audio.conf</span>:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">Enable=Gateway,Source,Socket</span></blockquote><div><br /></div><div>Then restart the&nbsp;Bluetooth&nbsp;daemon:</div><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo service bluetooth restart</span></blockquote><div><br /></div><div></div><br />Now you&#8217;ll have to pair the computer with the phone as per normal.<br /><br />Once the devices are paired, an &#8220;Audio Source&#8221; connection needs to be created.<br />For this, the easiest way is via DBus, but so we don&#8217;t have to write a script and easy way to test this in an ad-hoc manner is to use a tool called &#8217;<span style="font-family: Courier New, Courier, monospace;">d-feet</span>&#8217;, which is available in the Ubuntu repos.<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo apt-get install d-feet</span></blockquote><br />Using <span style="font-family: Courier New, Courier, monospace;">d-feet</span>, navigate to the <i>system bus</i> and find the <span style="font-family: Courier New, Courier, monospace;">org.bluez</span> key.<br />In here, there will be another key that has a device number in it. (for me this was <span style="font-family: Courier New, Courier, monospace;">/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</span>)<br />Under this key, execute <span style="font-family: Courier New, Courier, monospace;">org.bluez.AudioSource &gt; methods &gt; Connect()</span> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.<br /><br />At this point, I started playing some music so I could tell when it was working, but you probably won&#8217;t be able to hear anything just yet.<br />That is because Pulse does not automatically send every source to every output - that could get messy!<br />To configure pulse to send the audio from the&nbsp;Bluetooth&nbsp;connection to your speakers you need to determine the name of the audio source and the name of the &#8221;<i>sink</i>&#8221; (or output) and join them together.<br />You can do this with the PulseAudio shell like this:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; pacmd<br /> &gt;&gt;&gt; list-sources<br />&gt;&gt;&gt; list-sinks<br />&gt;&gt;&gt; load-module module-loopback source=<u>bluez_source.xxxx</u>&nbsp;sink=<u>alsa_output.pci-xxxx</u></span></blockquote><br />(Replace the <u>underlined</u> parts with the names from the preceding two commands)<br /><br />Now all audio from your phone should be streaming through your computer.<br />DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc..<br /><br />I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br />I used &#8220;AudioSource&#8221; in this example, but the other fun option is the &#8220;HandsFreeGateway&#8221;, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.<br /><br />The resources that helped me with this where:<br /><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05370040969486223230">
+  <div class="css-comment-name js-comment-name">
+    pablofabregat
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-30T17:58:43.019Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Beautiful, I will try the handsfreegateway later today, but the AudioSource worked like a charm. <br />Ubuntu 13.04 here :D :D<br /><br />It&#39;s a little uncomfortable to do this every time I boot the laptop, but the result is fun :D<br /><br />Thanks for this!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T03:22:34.889Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    No problem, glad it helped.<br /><br />I used d-feet because I was just playing around, but if you want a more permanent solution, I would recommend writing a script to do it.<br />Most languages have a DBus library and you could even get that script to run at startup.<br /><br />Good luck.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-20T12:30:42.411Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi,
+It worked for me but didn&#39;t have to use th&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi,<br />It worked for me but didn&#39;t have to use the load-module stuff, the sound was doubled, but I don&#39;t have a sterio output, why?<br />is it because btheadsets are only mono?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-21T04:41:29.153Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My understanding was that &quot;AudioSource&quot; was Stereo (A2DP) and &quot;HandsFreeGateway&quot; was mono, but I&#39;m not 100% sure.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-22T13:49:17.409Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Well, it didn&#39;t work sterio for me :/ and I can&#39;t connect it after I rebooted the computer : Method Output: &#39;GDBus.Error:org.bluez.Error.Failed: Stream setup failed&#39;
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/09/changing-default-boot-option-with-grub2.html"/>
+    <updated>2012-09-19T11:33:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/09/changing-default-boot-option-with-grub2</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-09-19T23:20:55.100Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Man you&#39;re a geek :P
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-09-19T23:23:03.938Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Haha! &#8230; thanks&#8230; I think
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/09/getting-started-with-ruby-on-rails.html"/>
+    <updated>2012-09-11T13:29:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/09/getting-started-with-ruby-on-rails</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div>I&#8217;ve been using Ruby on Rails for about a year and half now and I&#8217;m really enjoying it!&nbsp;At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&#8217;s, so it&#8217;s great time to get involved.</div><div>I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</div><ul></ul><br /><b>Join the community!</b><br /><br />Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is &#8221;<i>Ruby On Rails Oceania</i>&#8221; (aka RORO).<br />They have meetups on the <i>last Thursday of every month</i>&nbsp;in Melbourne and a pretty active mailing list:<br /><ul><li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania" target="_blank">Ruby On Rails Oceania Mailing List</a></li><li><a href="http://ruby.org.au/" target="_blank">Ruby.org.au</a></li></ul><br /><b>Ruby and Rails resources:</b><br /><ul><li><a href="http://guides.rubyonrails.org/">Rails Guides</a>&nbsp;- I use these almost everyday!</li><li><a href="http://apidock.com/">ApiDock</a> - API&#8217;s for Ruby, Rails and RSpec in one place</li><li><a href="http://railsforzombies.org/">Rails For Zombies</a>&nbsp;- A great beginners tutorial for rails</li><li><a href="http://railscasts.com/">Rails Casts</a>&nbsp;- Regular video podcast all about rails</li><li><a href="http://ruby5.envylabs.com/">Ruby5</a>&nbsp;- Regular 5 minute audio podcast on the latest news</li><li>&#8230; a plethora of good books, such as &#8220;The RSpec Book&#8221;, &#8220;Design Patterns in Ruby&#8221;, etc. (alot of which I still need to read)</li></ul><div><br /></div><b>Getting started:</b><br /><br />To get started you&#8217;ll need to set up your development environment, here&#8217;s what I use:<br /><ul><li>Vim&#8230; of course&#8230; although there are lots of alternatives, the most popular ones would probably be:</li><ul><li>RubyMine (IDE) - used alot at work (commercial software)</li><li>Sublime Text 2 (Text editor)</li><li>TextMate (Text editor)</li></ul><li>RVM (Ruby Version Manager)</li><ul><li>Get from here: <a href="https://rvm.io/" target="_blank">https://rvm.io</a></li><li>Follow the instructions to configure your shell to use RVM</li><li>Use RVM to install the latest ruby</li><ul><li>$&gt; rvm install 1.9.3</li></ul><li>A newer alternative to RVM is RBenv</li></ul><li>Once you have ruby installed, you will have the &#8216;gem&#8217; command available</li><ul><li>Gems are roughly equivalent to jars in the Java world</li><li>Use gem to install the latest rails</li><ul><li>$&gt; gem install rails</li></ul></ul><li>Once you have rails installed, you will have the &#8216;rails&#8217; command available</li><ul><li>Use the rails command to start a new project</li><ul><li>$&gt; rails new todolist</li><li>$&gt; rails server</li><li>browse to <a href="http://localhost:3000/" target="_blank">http://localhost:3000</a></li></ul></ul><li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li></ul><br /><b>Things to keep in mind for RoR dev:</b><br /><ul><li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.</li><ul><li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li></ul><li>Ruby  on Rails strongly supports DRY principles, don&#8217;t reinvent the wheel,  theres problably a gem that already does what you want.</li><ul><li>To find gems, good places to look are:</li><ul><li><a href="http://ruby-toolbox.com/" target="_blank">Ruby-Toolbox.com</a></li><li><a href="http://railscasts.com/" target="_blank">RailsCasts.com</a></li><li><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></li><li><a href="http://github.com/" target="_blank">GitHub.com</a></li></ul></ul><li>The majority of Ruby projects are:</li><ul><li>Developed using TDD/BDD, so you&#8217;ll need to learn the testing frameworks:</li><ul><li>Test::Unit (default with rails)</li><li>RSpec (a popular replacement for Test::Unit)</li><li>Cucumber (BDD)</li></ul><li>Developed on MacOSX - for new comers (like myself) some essentials are:</li><ul><li>brew - a mac package manager (like apt or yum)</li><li>iterm2 - really good terminal emulator</li></ul><li>Deployed on Linux</li><ul><li>Basic Linux foo is really useful</li></ul><li>Version controlled with git</li><ul><li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li></ul></ul></ul><div><br /></div><div>That&#8217;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Samsung Galaxy S3]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/08/samsung-galaxy-s3.html"/>
+    <updated>2012-08-21T12:50:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/08/samsung-galaxy-s3</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+At the end of June this year, I upgraded from a HTC Desire HD to a Samsung Galaxy S3, so I thought after a couple of months of having my new phone I should write up a (really long) post on what stood out for me.<br /><br /><br /><b>The positive</b> <br /><br />The <b>screen and form factor</b> is awesome! Due to the plastic body and the thin shape, this phone is really light and slips into your pocket nicely. The massive 4.8&#8221; screen really shines when watching videos and browsing the web. I regularly watch screencasts on my phone and the 1280x720 resolution gives me plenty of detail. The colour contrast is a lot higher than my previous phone, which makes the blacks look really deep and videos stand out nicely. The marketing video that the phone comes with does demo it off quite well!<br /><br />The <b>battery </b>is fairly good. My requirement for battery life is that I can use it all day and by the time I get home / go to bed, it hasn&#8217;t died. Not a high expectation, I know, but these days its hard to expect more. This phone meets that requirement quite easily. On the days I don&#8217;t use my phone much, I get home after a days work with more than 50% remaining (which is huge compared to my last phone!) and on the days I use it quite heavily, I get home to about 30%-40% which easily lasts me the rest of the night. My usage generally includes syncing gmail, facebook, twitter, weather, RSS reader, work email (during peak hours), I am generally connected to wifi most of the time and I regularly browse the web and watch videos / listen to podcasts during my commute.<br /><br />The general<b> responsiveness</b> is miles ahead of my last phone too! Day-to-day usage is smooth and rarely experience any lag. This will be improved even more when Jellybean is released (rumoured to be soon!).<br /><br /><b>&#8220;Smart Stay&#8221; </b>is a new innovative feature from Samsung where just before the screen is about to timeout and turn off, the phone will take a photo of you with the front-facing camera and use face (or eye) detection to work out if you&#8217;re still looking at it. If you are, it will keep it on for another minute or so, if you&#8217;re not, then it will dim the screen and check again soon after, which then will actually turn it off.<br />This is to avoid that randomly-scrolling-to-avoid-the-screen-turning-off trick that most people will do when reading a long article. Thankfully, this feature is quite effective and I haven&#8217;t needed to do that for a while, although it doesn&#8217;t work very well in the dark!<br /><br />In the settings, there is a section called <b>&#8220;Motion&#8221;</b>. I won&#8217;t go through all of the options, as there are about 10 different ones, but some are quite handy. By far the best one IMHO is <b>&#8220;Direct call&#8221;</b>, which lets you directly call a contact whose call log details, contact details or message details are displayed on the screen by simply putting the phone to your ear from that screen. Feels very natural.<br />Another nice one is <b>&#8220;Smart alert&#8221;</b>, which will give a little vibration when you pick it up from a stationary location if you have a missed call or sms.<br /><br />The <b>camera</b> on this phone is not too bad either. Obviously it will never replace my dSLR, but it has some nice features that even my dSLR doesn&#8217;t have. The burst fire mode is really quick, but Samsung have introduced a feature called <b>&#8220;best shot&#8221;</b>, which will analyse each of the photos you took in the burst and pick the ones it thinks turned out the best, based on focus and face detection. You can adjust what was picked, and then the others are automatically discarded (saves you having to go through the 14 bad ones and delete them later).<br />The camera has a <b>built-in HDR</b> mode which works quite well too and the <b>photo editor</b> provides heaps of enhancements and corrections, including red-eye reduction, color balance, cropping, etc.<br /><br />Another nice feature is found in the video player, it has a <b>&#8220;pop-out&#8221;</b> button! This means that if you&#8217;re in the middle of a video and you wanted to quickly google something, or reply to an sms, you can just pop out the video, which turns the full screen player into a small, floating, always on top window that you can drag around, do what you need to do, and then make it full screen again. Not something that I&#8217;ve needed to use very often, but on the rare occasion I have, it&#8217;s been quite nice.<br /><br />I use my calendar religiously and on my older HTC, the default app looked nice, but didn&#8217;t have many features. I ended up swapping it out for <a href="https://play.google.com/store/apps/details?id=netgenius.bizcal&amp;hl=en" target="_blank">Business Calendar Free</a> just so I could get a month view with text, instead of indicators.<br />The stock Samsung calendar, <b>S Planner</b>, however is not too bad! It integrates with their S Memo, which I don&#8217;t use, but comes with a good number of viewing options, my favourites being their month view and analogue week view. It also has a nice <b>&#8220;Quick add&#8221; </b>feature that lets you enter &#8220;Dinner at Nandos tomorrow 7:30pm&#8221; and it does what you&#8217;d expect. This doesn&#8217;t support anywhere near as much as Google Calendar does, but its better than nothing!<br /><br />I lashed out and bought an <b>official Samsung Desktop Dock</b>, and comparing this to my cheap eBay special I bought for my HTC, not only does it look quite nice, but it automatically launches the desktop clock app when I dock it and after 5 minutes it dims the screen and hides the other UI elements other than the clock. I like this feature a lot because I otherwise don&#8217;t have a clock in my room, so its really handy for me!<br /><br /><br />As with all things, there are pro&#8217;s and con&#8217;s. Here are some of the things I don&#8217;t like. <br /><br /><br /><b>The negative</b><br /><br />Android have decided to <b>remove USB Mass Storage mode</b> (my biggest pet hate with Android right now!) This leaves you with 3 alternative options for copying files to and from the device: Media Transfer Protocol (MTP), Camera mode or using an app such as <a href="https://play.google.com/store/apps/details?id=com.samsung.swift.app.kiesair&amp;hl=en" target="_blank">Kies Air</a> or <a href="https://play.google.com/store/apps/details?id=xcxin.filexpert&amp;feature=search_result#?t=W251bGwsMSwxLDEsInhjeGluLmZpbGV4cGVydCJd" target="_blank">File Expert</a>.<br />MTP and Camera mode both don&#8217;t give you access to all the directories on the phone, but for just transferring media it should be ok. Note that MTP will work out of the box with Windows, but if you run Mac or Linux like me, you will need to install software to get it to work (and Linux is a pain for this!).<br />The reason for this change is because USB Mass Storage mode will mean you have to unmount the partition from the system in order to mount it to the computer, whereas MTP will allow you to access it in both places at once, but its slower and requires software.<br />For phones like the Galaxy Nexus, this makes sense as there is only one partition, but with the S3, I would like to see the option of just unmounting the memory card (with is separate from the system storage) and allow that to work with USB Mass Storage mode.<br /><br />Another annoying thing I have found with this phone is sometimes the <b>home screen will randomly die</b>. This causes lag while all the widgets reinitialise themselves. It doesn&#8217;t happen often, but when it does, its annoying considering its a simple software issue. Hopefully this is fixed with Jellybean release!<br /><br />On a related note, I find the random delay between pressing the <b>unlock button</b> and the screen actually turning on to be annoying too, considering my older HTC was basically instantaneous everytime, this phone seems to vary quite a lot. I find myself pressing the button while its still in my pocket, just so by the time I have it in front of me, the screen is ready.<br /><br />A couple of other minor things include the <b>notification LED</b> being really bright, which is ok, but while the phone is docked my bedside, it will light up the entire room quite easily. This is kind of funny considering &#8220;smart stay&#8221; doesn&#8217;t work well at night. Maybe instead of just green and red, the LED should have also included an IR LED for that.<br />Not only is the LED really bright, but when the battery becomes fully charged, it will turn on the screen and popup a notification, which is also not very nice when I&#8217;m trying to sleep.<br />I know most of you are probably thinking a solution would be to turn it off at night, but I <a href="http://blog.stevenocchipinti.com/2012/03/xkcd-beyondpod.html" target="_blank">scheduled my phone to download podcasts</a> during these hours with <a href="https://play.google.com/store/apps/details?id=mobi.beyondpod&amp;hl=en" target="_blank">BeyondPod</a> - I think the pro&#8217;s outweigh the con&#8217;s in this situation.<br /><br />Also minor, but there is <b>no stock flashlight app</b>, which I wanted to put in the lock screen shortcuts. It does come with a 2x1 widget, but to get a shortcut on the lock screen, I ended up downloading one of the million flashlight apps out there.<br /><br />Speaking of widgets, the HTC widgets were really nice, but I find the <b>widgets</b> that came with the Samsung are not quite as useful, luckily they are in abundance on the play store too!<br /><br /><br /><b>The other stuff</b><br /><br />Here are some other noteworthy things which I haven&#8217;t really made up my mind if I like yet or not.<br /><br />The music player has a feature called <b>&#8220;Music Square&#8221;</b> and I love the idea of it, but I&#8217;m not sure how effective it is. Basically you index your music library and it categorises each of your songs into 2 scales: <i>&#8216;Exciting</i> to <i>Calm&#8217;</i> and <i>&#8216;Passionate</i> to <i>Joyful</i>&#8217;. These two scales make up the axes of the music square and by tapping where your mood is will play those types of songs. It&#8217;s a great idea and I need to experiment with it more to see how effective it is.<br /><br />A lot of the features in the phone are <b>voice activated</b>. For example, you can say <i>&#8216;answer&#8217;</i> or <i>&#8216;reject&#8217;</i> when it is ringing (as long as the ringtone isn&#8217;t too loud); <i>&#8216;snooze&#8217;</i> or <i>&#8216;stop&#8217;</i> when the alarm is going off (as long as thats not too loud); <i>&#8216;smile&#8217;</i>, <i>&#8216;cheese&#8217;</i>, <i>&#8216;capture&#8217;</i> or <i>&#8216;shoot&#8217;</i> to take a photo (as long as your close enough for the phone to hear you); <i>&#8216;next&#8217;</i>, <i>&#8216;previous&#8217;</i>, <i>&#8216;pause&#8217;</i>, <i>&#8216;play&#8217;</i>, <i>&#8216;volume&#8217;</i>, etc. to control your music or the radio (as long as thats not too loud either).<br />As you can see, the usefulness of these features are dependant on the environment.<br /><br /><b>S Voice</b> is Samsung&#8217;s answer to Siri, and even the UI&#8217;s look similar, but while its great in theory, I think the most useful thing about Siri on the iPhone or S Voice on the Galaxy would be SMS/email dictation, but that is the one thing these features don&#8217;t work that well for, at least for me anyway - maybe its just my voice!<br /><br /><br /><b>The conclusion</b><br /><br />In the end I am very happy with my new phone, it is leaps and bounds above my old phone, its really responsive other than the random home screen lag and unlock button delay, it has some nice new innovative features and is a joy to use.<br />Also, with the Jellybean release (hopefully) around the corner, it can only get better.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-22T03:09:53.174Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Jeez, that was so thorough you could be a horse :)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-22T03:13:44.550Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Haha! Yea, had a list of dot points that accumulated a bit, then when I wrote a &quot;quick&quot; paragraph on each one, it kind of exploded :P<br />Not expecting many people to read it all, unless they are considering buying one and they happen to be like me :P then its all about the details!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/13228213079214942610">
+  <div class="css-comment-name js-comment-name">
+    Todd Growcott
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-24T22:34:28.376Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Totaly agree with your review&#8230;just wondering if u had an issue with songs randomly skipping and restarting half way through.If so help would be greatly appreciated..cheers:)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-25T13:08:18.822Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks for the feedback Todd.<br />I&#39;m sorry but I can&#39;t say I&#39;ve had that issue before.<br />A friend of mine had a similar issue with a HTC phone, the problem turned out to be with the headphone jack.<br />Basically when he wiggled the headphone plug it would skip and pause, etc. because of the way corded remote controls works.<br />This also meant that when he wasn&#39;t playing music, sometimes the headphones would cause the phone to redial the last number.<br />I&#39;d suggest contacting the retailer or customer care and showing them the problem, they may be able to replace it for you.<br />Good luck!
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a network printer in Ubuntu 12.04]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/08/adding-network-printer-in-ubuntu-1204.html"/>
+    <updated>2012-08-05T04:11:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/08/adding-network-printer-in-ubuntu-1204</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+In the old days, printing was really hard in linux. It was one of the things that was a deal breaker when trying to switch from Windows for a lot of people, but when I first tried Ubuntu (probably around 2006-2007) it made all that pain go away! It was easy! A couple of clicks and you could set up a network printer and its been that easy ever since.<br /><br />Recently Ubuntu have tried to make their settings screen a bit like a Mac, and to simplify everything they seem to be using a simplified user interface for the printer configuration too:<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://3.bp.blogspot.com/-Bx9JrDkVYrk/UB3w_5N77aI/AAAAAAAAAKY/5HHdw8ZErB0/s1600/Screenshot+from+2012-08-05+14:04:37.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="285" src="http://3.bp.blogspot.com/-Bx9JrDkVYrk/UB3w_5N77aI/AAAAAAAAAKY/5HHdw8ZErB0/s320/Screenshot+from+2012-08-05+14:04:37.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">New Setting user interface</td><td class="tr-caption" style="text-align: center;"><br /></td></tr></tbody></table><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-xO2uGM8R36A/UB3xME_iwZI/AAAAAAAAAKg/kBFbC_MDcv8/s1600/Screenshot+from+2012-08-05+14:04:55.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="198" src="http://4.bp.blogspot.com/-xO2uGM8R36A/UB3xME_iwZI/AAAAAAAAAKg/kBFbC_MDcv8/s320/Screenshot+from+2012-08-05+14:04:55.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">New Printing user interface</td></tr></tbody></table><br />Well this new interface doesn&#8217;t work for me, when I try to add a network printer, I get the error message:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8216;FirewallD is not running. Network printer detection needs services mdns, ipp, ipp-client and samba-client enabled on firewall.&#8217;</blockquote><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/-FTpSMga_I2I/UB3xOZVzlDI/AAAAAAAAAKo/4_KILPWTWTg/s1600/Screenshot+from+2012-08-05+14%253A03%253A44.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="233" src="http://1.bp.blogspot.com/-FTpSMga_I2I/UB3xOZVzlDI/AAAAAAAAAKo/4_KILPWTWTg/s320/Screenshot+from+2012-08-05+14%253A03%253A44.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The error that stops me from finding my network printer</td></tr></tbody></table><br />Well no matter what I did, I couldn&#8217;t add my printer. After some googling around, I found how to get to the old user interface&#8230; which actually works!<br />Just type this into a terminal:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo system-config-printer</blockquote><br />And you will be given this old familiar screen:<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/s1600/Screenshot+from+2012-08-05+14%253A04%253A55.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="198" src="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/s320/Screenshot+from+2012-08-05+14%253A04%253A55.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The classic printing user interface&#8230; the one that works!</td></tr></tbody></table><br />Clicking the big &#8220;Add&#8221; button in this screen and following the steps worked great for me. Another alternative is to use the CUPS web interface on <a href="http://localhost:631/">http://localhost:631</a> but that can be a little more complicated.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-22T13:53:17.919Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Great!!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-26T12:51:30.446Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    localhost:631 worked fine for me
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-28T00:59:33.847Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Steven,
+The &quot;sudo system-config-printer&quot;&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Steven,<br />The &quot;sudo system-config-printer&quot; approach worked for me, thanks. <br />Ubuntu 12.04 connected via network cable and then wi-fi to an HP8600 printer/scanner/fax.<br /><br />Richard
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-28T01:03:25.251Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks for the feedback everyone, glad I could help.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-02-01T10:06:01.032Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    thx after 2 reinstalation of ubuntu 12.04. I find this approach and it work!!! litle problem is that guest have information that printing is stoped couse of some problem but all pages are printing well. Just cancel job in printer try after printing is finished and all is OK. THX THX THX 
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/00225152546369058619">
+  <div class="css-comment-name js-comment-name">
+    Brian Gallimore
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T15:48:09.132Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Just what I needed to get my old-school printer installed.  Thanks for posting up this info!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/04304547397419235914">
+  <div class="css-comment-name js-comment-name">
+    Gilli
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-06T07:12:25.638Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you so much , awesome
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Dave, M5DWI
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-20T09:32:52.022Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks Steve, this worked for me also &#8230; Laserjet 4L now working via Netgear print server.<br /><br />73 de M5DWI
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/03603439139655593802">
+  <div class="css-comment-name js-comment-name">
+    101North
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-13T18:45:15.513Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you !!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-23T18:10:36.906Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks to this post i could install my printer.<br /><br />I got the same error message as you did using the system setting install.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-25T09:27:12.650Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My Xerox Workcenter 133 was not so lucky, as he now has to print&#8230;<br />Thank you, Steve.<br /><br />73 de Nino, e79xp
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Arduino Web Server with SD card reader]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/07/arduino-web-server-with-sd-card-reader.html"/>
+    <updated>2012-07-27T02:47:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/07/arduino-web-server-with-sd-card-reader</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div>I&#8217;ve had an interest in electronics since a very young age, but I never really went further than building simple circuits as a kid and learning the theory and following diagrams through school.<br />There&#8217;s always the odd repair job, and plenty of theoretical knowledge from family, friends and university, but I wouldn&#8217;t be able to design the electronics of anything complex.<br /><br />A little while back, a <a href="http://michael.chandler.id.au/" target="_blank">friend of mine</a> got an email from <a href="http://meetup.com/">meetup.com</a> with suggested meetups. One of them was the <a href="http://www.meetup.com/Hackduino-Electronics-Meetup-Group" target="_blank">Melbourne Hackduino</a> meetup. <br />So he forwarded it on to our group of friends and a few of us went along to check it out. I&#8217;ve always wanted to play with a microprocessor, but never really put the time aside for it. Being a software developer there was always this barrier between the programs I write and making them do something in the real world.<br /><br />Well, in the last week that barrier has been lifted! The meetup was great and hearing about other people&#8217;s hobbies and projects provides plenty of motivation! We heard stories about everything from people trying to optimize solar hot water systems to building full size mechanical avatars. It was a lot of fun!<br /><br /><a href="http://au.linkedin.com/pub/mark-butt/28/507/539" target="_blank">Mark Butt</a>, the organiser of the event gave us a presentation of <a href="http://www.springrocket.com.au/portfolio/" target="_blank">some of the cool things he has done in the past</a>, such as an arduino powered bar counter top that detects what drink you put on it and a run down of some of the things he plans on doing in the future, all very cool!<br /><br />One really nice bonus was the generous offering from <a href="http://www.freetronics.com/" target="_blank">Freetronics</a>. There were a few people from Freetronics at the event and other than being very knowledgeable, they brought a big bunch of assorted hardware to give away! They had everything from RGB LEDs to full blown Arduino boards.   I was lucky enough to score an <a href="http://www.freetronics.com/products/ethermega-arduino-mega-2560-compatible-with-onboard-ethernet#.UA3bC3AwyGo" target="_blank">EtherMega 2650</a>, which from what I can tell is a beefed up Arduino with an Ethernet port (with power over Ethernet) and a MicroSD card reader. Some of my friends got a <a href="http://www.freetronics.com/products/lcd-keypad-shield#.UA4RrXAwyGp" target="_blank">LCD shield</a> that can display 2 rows of 16 characters and has a few buttons on board. For those that aren&#8217;t up with the lingo, a shield is an attachment for a standard Arduino board to add functionality.<br /><br />Together we had enough hardware to be able to make something cool! :-)<br />Needless to say after some great conversations about hardware hacking and being given some gear to get going, we were all pretty keen to get started hacking, so on the following Saturday three of us got together for a hack night.<br />The guys came around that night, we ordered pizzas and worked through the night till about 5:30 AM!   We had one experienced hardware guy, <a href="http://anthony.hacd.com.au/" target="_blank">Anthony</a>, but the other two of us, <a href="http://michael.chandler.id.au/" target="_blank">Michael</a> and I, were completely new to this, but between Anthony, the sample code that comes with the IDE and the Internet we picked it up pretty fast!<br />By the end of the night we had the first version of CarDuino!<br /><br /><a href="https://github.com/HACD/CarDuino" target="_blank">CarDuino</a> is a simple game where you hold the screen in portrait orientation and move your car from side to side to avoid obstacles.  It&#8217;s a very simple game, and we have plenty more features in mind for the future, but it was a great first project!<br /><br /><div class="separator" style="clear: both; text-align: center;"><object width="320" height="266" class="BLOGGER-youtube-video" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" data-thumbnail-src="http://3.gvt0.com/vi/JzRWstCstas/0.jpg"><param name="movie" value="http://www.youtube.com/v/JzRWstCstas&fs=1&source=uds" /><param name="bgcolor" value="#FFFFFF" /><param name="allowFullScreen" value="true" /><embed width="320" height="266"  src="http://www.youtube.com/v/JzRWstCstas&fs=1&source=uds" type="application/x-shockwave-flash" allowfullscreen="true"></embed></object></div><br />After sleeping in till about lunch time there next day, I wanted to put my EtherMega to use, so I spent the rest of the day fiddling with that.   With network access, power over Ethernet and a card reader, this is a perfect platform for controlling things via a web interface. As my background is web development, this was right up my alley!   Using various sample code, I put together a <a href="https://github.com/stevenocchipinti/ArduinoWebServer" target="_blank">really basic web server</a> that can respond to different requests and serve files from its built in memory card reader.<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" src="http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">My Freetronics EtherMega 2560 serving files from the memory card on a webserver!</td></tr></tbody></table><br />In just a few days, we went from no Arduino experience to a working project (or two). Especially with basic programming experience, the entry level for getting into Arduino is really low. When you buy (or build) a board and download the software, you have enough sample code with the IDE to make things happen, and you can get a lot done by simply copying and pasting!<br /><br />&nbsp;I recommend having a play with this stuff, its really fun and more than likely, one day you will come across a problem that you will be able to solve with an Arduino!</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Google Calendar - Repeating an event on the last <weekday> of the month]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html"/>
+    <updated>2012-05-23T12:19:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I regularly attend <a href="http://ruby.org.au/" target="_blank"><i>RORO</i> - The Ruby on Rails Oceania</a> meetups.<br />They currently occur on the last Thursday of every month and so naturally I put the event in my calendar. I added the usual details and then selected the &#8220;repeat&#8221; option and set it to repeat monthly by the day of the week.<br /><br />This worked well for a while, until one day when I rocked up and it wasn&#8217;t on.<br />A later realised that in that particular month there were 5 Thursdays instead of 4 and my calendar event was actually set to repeat <i>&#8220;Monthly on the fourth Thursday&#8221;</i>.<br />It turns out that the interface Google provide to set recurring events does not allow you to change this.. or at least not intuitively.<br /><br />After some searching around I found a few solutions:<br /><br /><br /><b>Use English!</b><br /><br />The simplest way is to just write out the event in plain English. For example:<br /><blockquote class="tr_bq"><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">RORO at Inspire9, Richmond on the last Thursday of every month</div></blockquote>This will create an event called &#8220;RORO at Inspire9, Richmond&#8221;, with the location field set to &#8220;Inspire9, Richmond&#8221; and the repetition set to <i>&#8220;Monthly on the last Thursday&#8221;.</i><br /><br /><br /><b>Start repeating from an appropriate month</b><br /><br />Another fairly easy way is to find a month that actually has 5 Thursdays and make the event start from there. This will set the recurrence to repeat <i>&#8220;Monthly on the last Thursday&#8221;</i>, instead of <i>&#8220;Monthly on the fourth Thursday&#8221;</i>.<br /><br /><br /><b>Hack the ICS</b><br /><br />This solution is probably the hardest, but because the <a href="http://en.wikipedia.org/wiki/ICalendar" target="_blank">iCalendar</a> format does support this, you could write the code manually. To do this you would have to export the calendar to a file, hack it and import it back.<br />While it&#8217;s nice to know this, seems like more effort that just typing what you want in English!<br /><br /><br /><b>A better solution</b><br /><br />.. would be if Google provided an additional option in the little &#8220;repeat&#8221; popup to allow this!<br /><br />Or maybe the RORO organiser should maintain there own calendar feed that we could all subscribe to. This would also mean that if a particular meetup was moved or cancelled, all the subscribers calendars would automatically be updated!
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T18:14:54.098Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    BEGIN:VCALENDAR<br />BEGIN:VEVENT<br />DTSTART:20120131<br />DTEND:20120131<br />RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;WKST=SU<br />SUMMARY:Payday<br />END:VEVENT<br />END:VCALENDAR<br /><br />Save the above to a .ics file.  In google next to other calendars choose import calendar.<br /><br />This gives you an event on the last weekday of the month
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-11-29T22:56:47.571Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks!
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Password management]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/05/password-management.html"/>
+    <updated>2012-05-16T13:46:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/05/password-management</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div>Password management is one of those things that can always be improved. If anyone is using a single password for all their accounts in this day and age they are most likely going to experience trouble at some stage! This post is to outline my progression through some approaches I&#8217;ve tried starting from a very young age to present day.<br /><br /><br /><b>Attempt #1: A tiered approach</b><br /><br />For me, the natural progression from a single password (back in primary school) was to go with a tiered approach. I used one password for for the basic sites, spam, etc. - the stuff I don&#8217;t really care about very much. I used another password for the important stuff, like Facebook, Twitter, etc. and this password was a lot stronger than the last. I had a unique and strong password for my email, as someone with access to that would most likely have the power to reset any of my other passwords. And finally I had a completely separate password for banking.<br /><br />While this system is ok, it&#8217;s not the best! Once upon a time, way back before I could touch type, I came to a password prompt, so I looked down at the keyboard, typed out my password, pressed enter and looked back up at the screen. In that time a friend had sent me an IM on MSN messenger (I know, old school!) and the chat window had stolen focus, so I sent my password to him. While I (mostly) trust my friend, in a panic, I frantically raced around to as many sites as I could to change the password to something else.<br /><br />If I had a different password for each site, this wouldn&#8217;t have been a problem. Now obviously most people wouldn&#8217;t IM their passwords to their friends, but there are lots of other ways for your passwords to get out. A few simple examples are the &#8220;Anonymous&#8221; attacks on large systems like the PSN, keyloggers, people looking over your shoulder, phishing attacks and even <a href="http://plaintextoffenders.com/" target="_blank">stupid websites</a> making dumb mistakes! Of course, this isn&#8217;t even thinking about what would happen if you were the target of a good hacker! &#8230; but that&#8217;ll never happen right? ;)<br /><br /><br /><b>Attempt #2: Patterned alterations</b><br /><br />Ok, so if I want a different password for every site I will ever use, how will I ever remember all of them. Well one simple way would be to make careful alterations to the password based on a pattern. This pattern should not be obvious by looking at a given password, but it should be reproducible based on whatever site you are trying to log in to. For example, if your normal password is &#8216;P@$sW0rd&#8217;, one pattern could produce &#8217;<u>T</u>@$sW<u>#Er</u>&#8217; for when you&#8217;re trying to log in to <u>T</u>witt<u>er</u> and &#8221;<u>F</u>@$sW<u>#Ok</u>&#8221; for when you&#8217;re trying to log in to <u>F</u>acebo<u>ok</u>.<br />I&#8217;m sure you can guess the pattern here. Everyone will have their own unique twist on patterns and this can be quite successful if executed correctly, but of course if your pattern is weak and a real person gets your Facebook password of &#8220;P@sS-facebook&#8221;, they can probably guess your twitter password would be &#8220;P@sS-twitter&#8221;.<br /><br /><br /><b>Attempt #3: Stored, centralised and synchronised passwords</b><br /><br />Alot of people think that letting your browser remember passwords is a bad thing, and while it does have particular cons, there are some pros to it too.<br />For one, you can have completely random passwords and not have to remember them. Also, two of the methods of disclosing a password that I mentioned earlier were keyloggers and someone looking over your shoulder. Both of these scenarios are a lot less likely if your browser does the typing for you (but of course there are other considerations with this approach). The obvious con would be that if someone gets a hold of what the browser knows, they have <i>all</i> your passwords!<br /><br />Firefox provides a &#8220;master password&#8221; facility to encrypt all your passwords (one of my pet hates is that Chrome lacks this) so when a password is needed, you type in your master password once, and it will then autofill any field after that. (Just remember to lock your screen if you leave your pc unattended).<br />Special consideration to make this password super strong should obviously be taken to avoid any brute force possibilities and of course a master password can be stolen just the same, but this password is useless online and it reduces the probability of others being stolen. (1 chance to steal the master password, as opposed to many chances to steal individual passwords).<br /><br />Now throw Firefox Sync into the mix. Now all your encrypted passwords are in the cloud and available on any machine running Firefox. I found this to be really handy, but it represents its own risks. This is also just limited to Firefox, what about mobile browsers? What about Chrome or your friends computer?<br />Again, not a perfect solution, but not too bad either.<br /><br /><br /><b>Attempt #4: Personal vault</b><br /><br />Some really paranoid people will say &#8220;But what if Mozilla aren&#8217;t encrypting your passwords properly?&#8221;, or &#8220;I don&#8217;t trust other people to store my passwords regardless of encryption&#8221;. Well, in that case, if you want to store all your random passwords, and ensure they are encrypted, you could always do it yourself.<br />I played with a nifty command line tool called &#8221;<a href="https://github.com/janlelis/pws" target="_blank">PWS</a>&#8221; and its open source so you can see exactly how they secure your passwords. The beauty about this method is that you are in complete control. For example, I could use a central repo to store my encrypted passwords and keep this synchronised across all machines, and if I don&#8217;t want to check out the repo (say, on a friends computer), I could just SSH to my VPS where I could get the password. It doesn&#8217;t fill forms in browsers, but it will copy the password to the clipboard for 10 seconds so you can just paste it in the browser (which is vulnerable to clipboard monitoring software/viruses).<br />It even has a random password generator for new sites. <br />While this method is great for paranoid people, its lacking a lot of features I would expect.<br /><br /><br /><b>Attempt #5: Hosted password services</b><br /><br />If you were to combine the best parts of the previous methods, you would get a hosted service that provides browser plugins for form filling on any browser, is centralised and synchronised across all machines, is encrypted with a master password, has an easy way to pull out any existing passwords from a &#8220;vault&#8221; and makes it simple to sign up for new sites with a unique random password.<br />As it turns out there are quite a few of these services available, such as 1Password and LastPass.<br /><br /></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div><a href="https://agilebits.com/onepassword" target="_blank">1Password</a> is quite popular, especially among Mac users and provides clients for Mac, Windows, iPhones, Androids, etc. The interface is quite polished (as you could have guessed) but it costs about $50 for a Mac licence (or $70 if you want to use it on Windows and Mac). One feature that a lot people like is that you can choose where you would like to store the passwords, for example using dropbox to synchronise across machines, but personally I don&#8217;t think that provides any real advantage.</div><div></div><div></div><div><a href="https://lastpass.com/" target="_blank">LastPass</a> is very similar in terms of features, but they host your encrypted passwords for you and it is free! They have plugins and clients for almost every conceivable device, but the only catch is that if you want to use the mobile browser plugins, you need a premium account, which costs $12 per year.<br /><br />I&#8217;ve been using LastPass for a little while now and one thing I like the configurable random password generator. You can choose just how complex the generated passwords are by configuring length and character set. When you sign up for a new site, you can generate a ramdom password with one click and it will get entered into the site&#8217;s form and saved in your vault for future. It can fill in standard forms with your personal details (name, email address, etc.) It is accessible anyway by logging into the web interface and its all secured using a master password, which I recommend using a super strong passphrase for, something in the order of 20-30 characters would be good. Remember if someone can log in here, they can get everything!<br /><br />Another layer of protection is using 2 factor authentication. They have a few varieties for this, but the one I like is the Google Authenticator method. Basically when ever a new device is used to attempt to log in with your account, either using a plugin, app or just the website, they will need to provide the email address, the password and a token. To get this token I configured the Google Authenticator app on my Android, which means that even if someone was to somehow get my super strong master password, they would also need my phone before they can do anything.<br />I use this approach on my Gmail account too, but Gmail&#8217;s 2 factor authentication uses SMS&#8217;s instead of the Google Authenticator app.<br /><br /><br /><b>Conclusion</b><br /><br />So far I am pretty happy with LastPass. I now type in my super strong master password once a day and the rest is filled automatically. Signing up to new sites is a breeze and uses a completely random and unique password per site. My passwords are available in Firefox and Chrome; in Linux, Mac or Windows and potentially for my mobile browsers too (if I decide to pay $1 per month). Not only is my master password really strong, but it is backed up with 2 factor authentication using my phone. I can even get to my passwords from a public computer via the web interface and my phone (without needing to go via dropbox or anything). Best of all, I get all this security and convenience with minimal effort and without paying a cent!</div>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.clickstudios.com.au/">
+  <div class="css-comment-name js-comment-name">
+    Jonathan robort
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-07-30T09:33:49.689Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Well informative blog,password management is very important issue.We should use our different password for different ID,social media and it should be unique combination of letter and number&#39;s more safety.Thanks for  nice share.
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[1 year and 40 posts!]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/04/1-year-and-40-posts.html"/>
+    <updated>2012-04-16T07:07:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/04/1-year-and-40-posts</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div><p>Today marks 1 year since my first blog post.<br>In that time I have written 40 posts and this site has received over 7000 views from all over the world!<br>I&#8217;ve had some great feedback (even from total strangers), which has been fantastic - It&#8217;s a good feeling to know that my ramblings can actually be useful for others too.</p><p>I started this blog because as a fairly technical person, I am constantly learning, but one of the caveats of this constant learning culture is that some people (such as myself) find it quite hard to remember all the cool stuff we pick up over the years, so this blog&#8217;s primary purpose was to act as a &#8221;<i>memory supplement</i>&#8221;.</p><p>The idea being that when you read something new, it will only stay in your head if you keep using it (or, unlike me, if you have a really good memory), but sometimes what ever it is that we just learned won&#8217;t be totally relevant or useful until much later. </p><p>One of the best ways that I have found to retain this knowledge is to use it! For example, if you are reading up on a new programming language, use it! Write little scripts, re-write other existing programs in this new language and just get used to using it regularly.<br>If this isn&#8217;t available (or suitable) I find talking about it with other like-minded people will reinforce the knowledge too. Alot of the time, you can really reinforce your knowledge of a topic by teaching it to someone else. Meetups and groups of like minded friends are great for this. </p><p>This is part of the reason I started this blog. Once I learn something new (that I have a desire to remember) I try to write up a quick blog post as soon as I can.<br>Not only does this reinforce my knowledge, but if I do happen to forget, instead of using Google to re-learn it, I can simply use my blog&#8217;s search to find my own post on the topic and has the convenience of being written in my own way of thinking/writing.<br>Even if my post is out-of-date, or not complete enough, it will still refresh my memory and give me a better foundation to start learning up on that particular topic once again. </p><p>This blog has served its purpose well and will continue to do so. If you have a similar way of thinking (or a similar memory) as me, I highly recommend starting a blog! </p><p>Thanks to everyone that has been reading so far! :-) </p></div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XBMC Eden + Ubuntu]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/04/xbmc-eden-ubuntu.html"/>
+    <updated>2012-04-06T10:23:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/04/xbmc-eden-ubuntu</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Back when I started uni, I bought a new <a href="http://www.notebookreview.com/default.asp?newsID=2886" target="_blank">Asus A6J laptop</a>. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) and decently powerful graphics (ATI X1600).<br />The A6J  is very dated now and weighing in at <span id="intelliTxt"> 2.85kg, its not very portable by today&#8217;s standard (considering my <a href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html" target="_blank">Toshiba Portege</a> weighs just 1.13kg).</span> <br />A couple of years after I bought it, I got sick of carrying it around, so I bought an Asus EeePc as a replacement for uni, so the A6J stayed at home and was rarely used - it was just a spare for a long time.<br /><br /><span id="intelliTxt">Up until recently, I was using I used it as a (stationary) desktop replacement at work but I now have a new job where I am provided a  Macbook Pro so this old machine is now spare once again. This with the recent release of <a href="http://xbmc.org/natethomas/2012/03/24/xbmc-11-0-eden/" target="_blank">XBMC 11 Eden</a>, I thought I may as well re-purpose it as a permanent HTPC.</span><br /><br /><span id="intelliTxt">I considered quite a few options, such as running Arch Linux, OpenElec or Ubuntu with XBMC installed, or going with the recently improved XBMCbuntu (formerly known as XBMC Live).</span><br /><br /><h4>    <b><span id="intelliTxt">XBMCbuntu</span></b></h4><span id="intelliTxt">I downloaded the iso and had a bit of a play. I love how it boots directly into XBMC without the need to startup Unity or anything like that, although it does let you exit to the login screen and select either &#8220;XBMCbuntu&#8221; (LXDE) or &#8220;OpenBox&#8221; which is nice.</span><br /><br /><span id="intelliTxt">Once it had booted, it behaved so slow! I figured it mustn&#8217;t have the correct drivers installed, so I tried to use the restricted drivers from the repo and after hitting quite a few problems I consulted the AMD site.</span><br /><span id="intelliTxt">The <a href="http://support.amd.com/us/gpudownload/linux/Legacy/Pages/radeon_linux.aspx?type=2.4.1&amp;product=2.4.1.3.12&amp;lang=English" target="_blank">AMD site explains</a> that my ATI X1600 is now &#8220;legacy&#8221; and is supported by the ATI Catalyst 9.3 proprietary linux driver.</span><br /><span id="intelliTxt">So I downloaded that and yet again hit a bunch of other issues.</span><br /><br /><span id="intelliTxt">I spent a fair portion of the day battling with this and couldn&#8217;t help but think back to how easy Ubuntu Desktop handled all this, so I thought I&#8217;d just give that another go.</span><br /><br /><h4>     <b><span id="intelliTxt">Ubuntu Desktop + XBMC</span></b></h4><span id="intelliTxt">I downloaded the Ubuntu 11.10 iso and installed that over the top of XBMCbuntu and </span><span id="intelliTxt">configured the user account as &#8216;xbmc&#8217; and to automatically login at startup.</span><br /><span id="intelliTxt">I then followed the <a href="http://wiki.xbmc.org/index.php?title=Installing_XBMC_for_Linux" target="_blank">instructions to install XBMC from their PPA</a>. I did a quick update, installed SSH, reconfigured grub to auto-boot in 1 second (instead of 10) and rebooted the machine.</span><br /><br /><span id="intelliTxt">When I launched XBMC, it was perfect!</span><span id="intelliTxt"> It was very snappy and there was no lag whatsoever.</span><span id="intelliTxt">&nbsp;</span><br /><span id="intelliTxt">I noticed that the power menu was missing the shutdown options that were in XBMCbuntu and that the suspend option did not work.</span><br /><span id="intelliTxt">After a bit if research, I found a <a href="http://wiki.xbmc.org/index.php?title=HOW-TO:Suspend_and_wake_in_Ubuntu" target="_blank">wiki page</a> that explains how to modify <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">policykit</span> to allow xbmc access to all the power functions.</span><br /><span id="intelliTxt">With this change, shutdown, suspend and hibernate were all working great.</span><br /><br /><span id="intelliTxt">I had already configured Wake-On-Lan in the past, so all that I needed to do was setup the <a href="https://play.google.com/store/apps/details?id=org.xbmc.android.remote&amp;feature=search_result#?t=W251bGwsMSwxLDEsIm9yZy54Ym1jLmFuZHJvaWQucmVtb3RlIl0." target="_blank">Android XBMC remote app</a> on my phone. After configuring the app with the laptops IP address, MAC address, etc. I was now able to use the &#8220;Turn your XBMC&#8217;s Power On&#8221; button from the mobile app to fire up the laptop.</span><br /><span id="intelliTxt">Of course to actually allow control of XBMC I needed to go into the settings screen and enable control via HTTP, etc. </span><br /><br /><span id="intelliTxt">So now I can power up the laptop and shut it down from my phone, but when it boots, I am brought into a Unity environment. In the past I would add XBMC to the startup applications, but with XBMC Eden, there is a better way.</span><br /><span id="intelliTxt">XBMC Eden adds it self to the choice of desktop environments from the login screen (in other words, you get a choice: Unity or straight into XBMC like the live cd).</span><br /><span id="intelliTxt">Unfortunately it doesn&#8217;t remember the last choice with XBMC, so if I boot straight into it and then shut it down, next time it will still automatically boot in to Unity.</span><br /><br /><span id="intelliTxt">I then came across an <a href="https://help.ubuntu.com/community/AutoLogin#For_Ubuntu_10.04_.28Lucid_Lynx.29" target="_blank">Ubuntu community page</a> that pointed in the direction the the LightDM config file. (LightDM is the thing that manages the login screen).</span><br /><span id="intelliTxt">I opened &#8217;</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/lightdm/lightdm.conf</span>&#8217; and saw this line:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">user-session=ubuntu</blockquote><br />I replaced the &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ubuntu</span>&#8217; part of this line with &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">XBMC</span>&#8217;, rebooted and low and behold, it booted straight into XBMC!<br /><br /><span id="intelliTxt">I now have a fully functional HTPC that I can completely control from my phone.</span><br /><span id="intelliTxt">The only things left to do now are configure my media sources, install some plugins and maybe play with some new skins.</span>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/10597239898384340093">
+  <div class="css-comment-name js-comment-name">
+    Chiran
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-05-04T12:26:33.614Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    I have installed Ubuntu on my OS and it really works great. NO i am planning to do the same with my Notebook.<br /><br /><a href="http://www.gadgetmasala.com/notebook-reviews-for-making-appropriate-decision.html" rel="nofollow">notebook reviews</a>
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05953319712024483470">
+  <div class="css-comment-name js-comment-name">
+    Ozair
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-08T09:28:14.286Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Very useful post, Steven.<br /><br />Are you able to use your phone as a mouse and keyboard outside the XBMC GUI too?<br /><br />I have XBMCbuntu 11 installed on my HTPC, which I control through my android phone over HTTP. The problem I&#39;m facing is that if I ever want to get out of XBMC and go into the OS, the HTTP server that was accepting commands from my phone, stops working, and I&#39;m left without an input device. :-(<br /><br />(I don&#39;t have a keyboard or mouse connected to the HTPC.)<br /><br />Do you have any suggestions that I could try?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-06-09T04:12:01.298Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Ozair, thanks for the feedback!<br /><br />I know what you mean, there are a couple of things that would work, but I&#39;ll admit, they are not perfect solutions. I guess it also depends on why you want to leave the XBMC UI too.<br /><br />If you enable/install the VNC server on your HTPC, there are a number of <a href="https://play.google.com/store/search?q=vnc&amp;c=apps" rel="nofollow">free VNC clients for android</a>, you&#39;d just have to pick the one that you like the best. I&#39;ve used <a href="https://play.google.com/store/apps/details?id=com.wyse.pocketcloudfree&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS53eXNlLnBvY2tldGNsb3VkZnJlZSJd" rel="nofollow">PocketCloud</a> in the past because it supports RDP too, and it was pretty good.<br />This can be a little difficult from a phone screen, but it does work ok, especially on a LAN.<br /><br />If the reason for leaving XBMC is to launch something like VLC (maybe because a particular media type isn&#39;t supported by XBMC) there are some <a href="https://play.google.com/store/apps/details?id=org.peterbaldwin.client.android.vlcremote&amp;feature=search_result#?t=W251bGwsMSwxLDEsIm9yZy5wZXRlcmJhbGR3aW4uY2xpZW50LmFuZHJvaWQudmxjcmVtb3RlIl0." rel="nofollow">VLC remote control apps for android</a>, but I haven&#39;t really experimented with them yet.<br /><br />If you want to copy files, kick off a download or something like that, the most common thing I do is use <a href="https://play.google.com/store/apps/details?id=org.connectbot&amp;hl=en" rel="nofollow">ConnectBot</a> for android to SSH onto it. I find typing on a phone is pretty easy compared to navigating a UI from a phone for console related tasks like cp, wget, etc.<br /><br />There are also a number of official and <a href="http://wiki.xbmc.org/index.php?title=Unofficial_add-on_repositories" rel="nofollow">unofficial</a> add-ons and &quot;programs&quot; for XBMC to do non-standard things, like games, etc. which I would like to play with one day.<br /><br />Hope that helps, I&#39;d be interested to know what you end up using :) Cheers
+  </div>
+  <br/>
+</div>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rooting the HTC Desire HD & Cyanogenmod 7]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/03/rooting-htc-desire-hd-cyanogenmod-7.html"/>
+    <updated>2012-03-31T07:10:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/03/rooting-htc-desire-hd-cyanogenmod-7</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the new version of <i>HTC Sense</i> - the same version that the <i>HTC Sensation</i> is running.<br />At the time I thought it was quite cool, having shortcuts on the lock screen is great and the new eye candy looks pretty nice too.<br /><br />But there were some very unwelcome changes with this new version too&#8230; lag and poor battery life!<br />I generally keep my phone on charge at work, so I didn&#8217;t think this would bother me, but it got so bad that if I went out after work, by the time I got home it was flat (from 6pm to later that night). Even swiping between home screens would lag! So I figured it was time for a new phone, but in the meantime I thought I may as well experiment with rooting and other OS&#8217;s.<br /><br />To root the Desire HD is quite simple. The first thing to do is go get the &#8221;<i><a href="http://forum.xda-developers.com/showthread.php?t=1259821" target="_blank"><u>Advanced Ace Hack Kit</u></a></i>&#8221; from the XDA Forums. In the zip file is all the tools you need to run the hack and most importantly, the aptly named &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">effen-manual.html</span>&#8221;, which is <i>very</i> important!<br /><br />The manual explains everything you need to know, but the first step is checking that the version of android that you are running can be exploited.<br />I had software  version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">3.12.405.1</span>, which judging by the <i>effen manual</i>, the hack tool can automatically downgrade to version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2.50.405.2</span> where there exists a flaw that can be exploited to give you root access.<br />Keep in mind that doing this will wipe your phone, so backup <i>everything</i>.<br /><br />The <i>effen manual</i> also explains how to setup your computer to enable the hack tool to work properly. There are very few steps for linux which was great!<br /><br />If you follow the instructions correctly, you will then have a stock standard install of an older version of HTC Sense. There are some advantages to having root access such as apps like titanium backup, ad blockers, etc. but the real fun comes from installing new Android ROMs.<br /><br />I looked at 2 third party ROMs, the first was <a href="http://www.cyanogenmod.com/" target="_blank">Cyanogen Mod</a> and the second was <a href="http://forum.xda-developers.com/showthread.php?t=840040" target="_blank">Android Revolution</a>.<br /><br />Android Revolution looks pretty good. Visually it looks and behaves just like HTC Sense but they have made lots of improvements under the hood which in turn increases performance and battery life. As good as this looked, I haven&#8217;t actually tried this option yet. Instead, I opted to go for a bigger change of scenery and give Cyanogen Mod a go.<br /><br /><br />Cyanogen Mod does not look like HTC Sense at all. Instead it is based on stock standard Android 2.3. They have then implemented a slew of changes that come as default, such as an audio equaliser, <a href="https://play.google.com/store/apps/details?id=org.adw.launcher&amp;hl=en" target="_blank">ADWLauncher</a>, the super-user app, a completely customisable button widget in the notification bar, customizable lock screens and a pretty cool torch app that lets you over charge the LEDs for super brightness!<br />This mod also lets you overclock the hardware, put limiters in place and lots of other options I was not used to seeing in the HTC Sense ROM.<br /><br />The 2 most important advantages of this change are that the UI is now quick and responsive again, I now have complete control over which effects are used and things like how long the animations should last, etc. and I have the best battery life I&#8217;ve ever had with this phone - I can now use the phone pretty heavily all day without needing a charge until I go to bed!<br /><br />Very happy with it now and it should keep me tied over until the Samsung Galaxy SIII is released :)
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Spam defence]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/03/spam-defence.html"/>
+    <updated>2012-03-07T11:14:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/03/spam-defence</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky enough to get an invite for Gmail in its early stages, Yahoo! Mail had (IMO) one killer feature: <i>Address Guard</i><br /><br />The idea behind <i>Address Guard</i> was simple, you make your primary email address, say <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@yahoo.com</span>, and then a secondary <i>&#8220;base name&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007</span>.<br />This <i>base name</i> was not just another email address, infact all mail sent to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007@yahoo.com</span> would get dropped.<br />Instead, use that base name to create an unlimited number of <i>&#8220;disposable addresses&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007-facebook@yahoo.com</span>, etc.<br /><br />The idea was that if you follow the simple 3 click process (settings -&gt; addressGaurd -&gt; add new address!) to create a new disposable email address every time you signed up for a new website, if ever they spammed you, you simply delete that address and they wont be able to bother you any more - brilliant!<br /><br />I avoided Gmail because they didn&#8217;t have the same <i>&#8220;whitelist&#8221;</i> approach to email addresses, but when I bought my domain name and started using Google Apps for email, I decided to use Gmail as my primary email provider.<br />Naturally this forced me to look for a similar way to defend again spam (albeit Gmails spam filtering is quite good).<br /><br />Google Apps provides <i>&#8220;nicknames&#8221;</i>, which works in much the same way, you can have an unlimited number of aliases for an account, except the process was a bit longer (settings -&gt; manage domain -&gt; users -&gt; Your user -&gt; Add a nickname) and I got too lazy for that after a little while.<br />I still use nicknames for certain things, but not for every website I sign up for.<br /><br />That&#8217;s when I discovered the + symbol in Gmail. Unlike Yahoo! Mail that uses the <i>&#8220;whitelist&#8221;</i> approach (only addresses you created will accept mail), you can use Gmail with a <i>&#8220;blacklist&#8221;</i> approach (all addresses accept mail unless you block them).<br /><br />Assume your email address is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@gmail.com</span>, you can append a + and then any (valid) characters you like to the end, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+facebook@gmail.com</span> and it will still get delivered.<br /><br />If some rogue website starts sending spam to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>, then you can go into the Gmail settings and setup a filter to delete all mail that is sent to: <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>.<br /><br />I don&#8217;t think it&#8217;s quite as nice as <i>Address Guard</i>, but it is a bit more convenient because there is no set up. The biggest downside is that quite a few websites consider an email address to be invalid if it has a + symbol in it, but most are fine.
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XKCD + BeyondPod]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/03/xkcd-beyondpod.html"/>
+    <updated>2012-03-04T04:10:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/03/xkcd-beyondpod</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+On my Android phone, I use an app called &#8221;<a href="https://market.android.com/details?id=mobi.beyondpod&amp;hl=en%20" target="_blank">BeyondPod</a>&#8221;. <br /><br />BeyondPod is great because unlike <a href="https://market.android.com/details?id=com.google.android.apps.reader&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5nb29nbGUuYW5kcm9pZC5hcHBzLnJlYWRlciJd" target="_blank">Google Reader</a> and <a href="https://market.android.com/details?id=com.alphonso.pulse&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5hbHBob25zby5wdWxzZSJd" target="_blank">Pulse</a> (which are other great RSS readers), BeyondPod will download video and audio podcasts on a schedule.<br /><br />What this means for me, is that at 2:30 AM, my phone will use my home ADSL2&#8217;s off-peak downloads and fetch a bunch of regular podcasts so when I wake up and make my way into work, I will have all the latest episodes of my favourite shows to watch and listen to on the train.<br /><br />One of the feeds that I&#8217;m subscribed to is <a href="http://xkcd.com/%20" target="_blank">XKCD</a>. If you look at the comics online, you probably already know that if hover your mouse over the image, you get to see an extra message about the comic.<br /><br />On Google Reader, you can tap and hold the image and use the menu to get to the tooltip, but with BeyondPod, there is no such option.<br /><br />This means that the tooltip is actually included in the <a href="http://xkcd.com/atom.xml" target="_blank">feed</a>, so I thought it would be pretty easy to write a little proxy that pulls out the &#8220;title=&#8221; attribute and appends it to the body.<br /><br />Before I started coding, I thought that surely someone would have already done this, so after a quick Google search I came across a <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=upJ5TUni3BGUZU9yLO2fWQ" target="_blank">Yahoo! Pipe</a> from &#8221;<a href="http://pipes.yahoo.com/pipes/person.info?guid=D4HQ7VIJ2YNE6NZRH3VHJOBREA">Benjamin Cook</a>&#8221; that does exactly that.<br /><br />Ben&#8217;s Pipe appends a &#8220;&lt;br /&gt;&#8221; and then the tooltip, but the &#8220;&lt;br /&gt;&#8221; seems to be getting escaped, so I copied the pipe and removed the &#8220;&lt;br /&gt;&#8221; and the end result was exactly what I wanted.<br /><br />If you have a similar problem, you can add <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=61e54ab0572541bd03cd44f3e601482e" target="_blank">my version of the pipe</a> to your reader and here&#8217;s what it&#8217;ll look like: <br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s1600/2012-02-23_16-14-04.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s320/2012-02-23_16-14-04.jpg" width="192" /></a></div><br />
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git + Hub = GitHub]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/02/git-hub-github.html"/>
+    <updated>2012-02-20T02:37:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/02/git-hub-github</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What&#8217;s nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> &#8220;Open a pull request to merge the current branch into master and attach the pull request to issue 49&#8221;</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don&#8217;t know why this isn&#8217;t built in to the web interface (or maybe it is and I just don&#8217;t know how).
+</div>
+]]></content>
+  </entry>
   
 </feed>

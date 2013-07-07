@@ -6,10 +6,11 @@
 <head>
   <meta charset="utf-8">
   <title>StevenOcchipinti.com</title>
-  <meta name="author" content="Steven Occhpinti">
+  <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="Test, Hack, Test
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,7 +67,611 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/07/test/">Test</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T18:53:00+10:00" pubdate data-updated="true">Jul 7<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/07/test/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Test, Hack, Test</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-06-08T15:27:00+10:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
+        
+         | <a href="/2013/06/removing-previously-printed-lines.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker" target="_blank">Ruby</a> <a href="https://rubygems.org/gems/tramtracker" target="_blank">Gem</a> that provides a command line interface to Melbourne&#8217;s <a href="http://yarratrams.com.au/tramtracker" target="_blank">TramTracker</a> service.<br /><br />One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br />In the past, I used the&nbsp;command line&nbsp;utility<span style="font-family: Courier New, Courier, monospace;"> watch </span>to achieve this, but I couldn&#8217;t find a way to enforce a &#8220;max iterations&#8221; option. If it gets forgotten about in the background, TramTracker will eventually block that IP address!<br /><br />So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.<br /><br />In this post, I&#8217;ll outline a couple of ways of achieving this.<br /><br /><br /><b>Using the \b (backspace) character</b><br /><br />Printing a<span style="font-family: Courier New, Courier, monospace;"> \b </span>character does the same thing as pressing backspace. This is really simple to use and is great for little &#8220;progress&#8221; spinners. For example, a character that cycles through<span style="font-family: Courier New, Courier, monospace;"> &#8216;|&#8217;, &#8216;/&#8217;, &#8216;-&#8216;, &#8216;&#39;</span>. For example:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts &#8220;foo\b\b\bbar&#8221; &nbsp;&nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; bar</span><br /><span style="font-family: 'Courier New', Courier, monospace;">(&#8220;|/-&#92;&#8221;*10).chars.each {|c| print c; sleep 1; print &#8220;\b&#8221;} &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; Cheesy, old-school spinner</span></blockquote>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&#8217;d need just as many<span style="font-family: Courier New, Courier, monospace;"> \b </span>characters (you would probably introduce a loop).<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts &#8220;foo\n\b\b\bbar&#8221; &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; foo\nbar</span></blockquote><br /><b>Using the \r (carriage return) character</b><br /><br />To avoid having to repeat just as many<span style="font-family: Courier New, Courier, monospace;"> &#8216;\b&#8217; </span>characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">100.times {|p| print &#8220;\rDownloading %#{p+1}&#8230;&#8221;; sleep 1}</span></blockquote>This approach still won&#8217;t work across multiple lines, but it has another&nbsp;subtle&nbsp;shortfall too, it doesn&#8217;t clear the entire line. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">puts &#8220;foo\rp&#8221; <span style="color: #999999;"># =&gt; poo</span></span></blockquote>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;)<br /><br /><br /><b>Using curses</b><br /><br />The most common answer to overwriting characters across multiple lines, is to use<span style="font-family: Courier New, Courier, monospace;"> <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)" target="_blank">curses</a></span>.<br />Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA" target="_blank">menu driven Text User Interfaces</a> (TUI&#8217;s) easier to develop.<br />Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html" target="_blank">curses module</a> built in to its standard library, which provides a simple API, for example:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">setpos(lines/2, cols/2)<span style="color: #999999;"> # Start in the middle</span><br />addstr(&#8220;Hello world&#8221;)</span></blockquote><br />I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381" target="_blank">gist here</a>.<br /><br />Curses is pretty good for this sort of stuff, it gives you a lot for free.<br />The thing that I didn&#8217;t like about using the curses library was that when it initialises, it clears the screen.<br />This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&#8217;t want that.<br /><br /><br /><b>Using individual cursor movement characters</b><br /><br />This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:<br /><blockquote class="tr_bq"><center><table><tbody><tr><th><div style="text-align: left;">Move the cursor to line L, column C</div></th><td>\033[&lt;L&gt;;&lt;C&gt;H</td></tr><tr><th><div style="text-align: left;">Move the cursor up N lines</div></th><td>\033[&lt;N&gt;A</td></tr><tr><th><div style="text-align: left;">Move the cursor down N lines</div></th><td>\033[&lt;N&gt;B</td></tr><tr><th><div style="text-align: left;">Move the cursor forward N columns</div></th><td>\033[&lt;N&gt;C</td></tr><tr><th><div style="text-align: left;">Move the cursor backward N columns</div></th><td>\033[&lt;N&gt;D</td></tr><tr><th><div style="text-align: left;">Clear the screen, move to (0,0)</div></th><td>\033[2J</td></tr><tr><th><div style="text-align: left;">Erase to end of line</div></th><td>\033[K</td></tr></tbody></table></center></blockquote>You can read more about these <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2" target="_blank">&#8220;escape sequences&#8221; here</a>.<br />I ended up using the<span style="font-family: Courier New, Courier, monospace;"> &#8216;\033[K&#8217; </span>(&#8220;Erase to end of line&#8221;) and the<span style="font-family: Courier New, Courier, monospace;"> &#8216;\033[A&#8217; </span>(&#8220;Move the cursor up&#8221;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb" target="_blank">characters in my TramTracker gem</a> and it worked a treat!<br /><br /><br />Now go and make a cool retro user interface! :)<br /><br /><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-05-12T04:36:00+10:00" pubdate data-updated="true">May 12<span>th</span>, 2013</time>
+        
+         | <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I recently had some trouble with my Samsung Galaxy S3. I&#8217;m still not sure what caused it, but quite frequently, it would completely freeze up, even after a fresh reboot. It may have been a dodgy app, or something deeper in android, but in the process of fixing it, I was introduced to &#8220;safe mode&#8221;.<br /><br />&#8220;Safe mode&#8221; here behaves like safe mode in Windows. It basically lets you use your phone just like normal, but without starting the usual plethora of background processes. You can still get to your settings, apps and files, but things won&#8217;t start automatically.<br /><br />To enter safe mode on the Galaxy S3 is really simple:<br /><br /><ol><li>Restart the phone</li><li>While it is booting up (and you see the Samsung logo) simply hold the volume down button</li></ol><br /><br />When it boots, you should have the stock wallpaper, your shortcuts will be gone and you should see a little watermark in the bottom left corner that says &#8220;Safe mode&#8221;.<br /><br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s1600/Screenshot_2013-05-12-09-41-12.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"> <img border="0" src="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s640/Screenshot_2013-05-12-09-41-12.png" /> </a> </div><br />From here you can do everything like normal, browse the net, make calls, etc. but more importantly, you can uninstall dodgy apps, change settings, even factory reset the device.<br /><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-03-17T12:13:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
+        
+         | <a href="/2013/03/how-to-make-tomato-sauce.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<div dir="ltr">This time of year is &#8220;tomato season&#8221; and it&#8217;s an Italian tradition of ours to spend a weekend together and make enough tomato sauce to last us the year. Of course, everyone does this differently, but here I&#8217;ll outline how our family does it.<br /><h4>1. Buy some &#8220;sauce tomatoes&#8221;</h4>If you go to any suburbs that have an Italian community you&#8217;ll most probably see signs for people selling &#8220;sauce tomatoes&#8221;. Sauce&nbsp;tomatoes&nbsp;are normally more ripe than usual, which makes them ideal to turn into sauce. We bought 16 boxes of tomatoes from the local Italian social club.</div><div dir="ltr"><u><br /></u></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"><a href="http://lh6.ggpht.com/-kLmW3G-M82k/UUUUgCR8bmI/AAAAAAAABIs/32XG7TXpzf0/s1600/20130316_094831.jpg" imageanchor="1"><img border="0" height="400" src="http://lh6.ggpht.com/-kLmW3G-M82k/UUUUgCR8bmI/AAAAAAAABIs/32XG7TXpzf0/s400/20130316_094831.jpg" width="300" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="http://lh3.ggpht.com/-J5tdH_9R4Z8/UUUU4RIw3CI/AAAAAAAABJc/ZygQmWXO5r4/s1600/20130316_094840.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="300" src="http://lh3.ggpht.com/-J5tdH_9R4Z8/UUUU4RIw3CI/AAAAAAAABJc/ZygQmWXO5r4/s400/20130316_094840.jpg" width="400" /></a></div><h4>2. Wash and cut the tomatoes</h4><div class="separator" style="clear: both; text-align: left;">This part is where most of the effort is spent!</div><div class="separator" style="clear: both; text-align: left;">We use large plastic tubs, fill them with two thirds water and empty some tomatoes in. We then pull out a tomato one by one, cut it in half and then cut the hard stem out from the middle, putting all the stems in the compost bin and the washed, cut tomatoes in another bucket. This makes it easier to mince later, but also gives us a chance to inspect the tomato to ensure the inside isn&#8217;t rotten.</div><div class="separator" style="clear: both; text-align: left;">Rotten tomatoes are easy to spot, they are either black on the inside or they stink! If ever you&#8217;re not sure, giving it a smell is normally the easiest way to tell - and <i>&#8220;When in doubt, throw it out&#8221;</i>.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><b>3. Pre-boil them if they are firm</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">&#8220;Sauce tomatoes&#8221; are normally very ripe and soft, but sometimes they are quite firm. If this is the case they won&#8217;t go through the mincer as well. So to help with this, we used a couple of large drums filled with water on a flame to lightly boil them a little. The idea is to only soften them up, so once the skin starts peeling off, you can pull them out of the water and drain them to remove as much as the water as possible (otherwise the sauce will be watery).</div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh5.ggpht.com/-3ysJI0FsWwM/UUUU10kcHzI/AAAAAAAABJU/xEjhXwc3AaA/s1600/20130316_142524.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh5.ggpht.com/-3ysJI0FsWwM/UUUU10kcHzI/AAAAAAAABJU/xEjhXwc3AaA/s400/20130316_142524.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Pre-boiling the tomatoes</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>4. Mince the tomatoes</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Now that the tomatoes are soft, washed and cut they can be minced. We scoop out some tomatoes and put them in the mincer. The mincer will separate the tomato sauce from the skin and the seeds. We generally fill one tub at a time.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh6.ggpht.com/-YgmLdVOWIDw/UUUUqO6wThI/AAAAAAAABJE/5jfEGgAVXX4/s1600/20130316_151435.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh6.ggpht.com/-YgmLdVOWIDw/UUUUqO6wThI/AAAAAAAABJE/5jfEGgAVXX4/s400/20130316_151435.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The machine!</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh3.ggpht.com/-2r2cTDwHr-M/UUUUntVvJQI/AAAAAAAABI8/Elhw7E87iUs/s1600/20130316_151842.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh3.ggpht.com/-2r2cTDwHr-M/UUUUntVvJQI/AAAAAAAABI8/Elhw7E87iUs/s400/20130316_151842.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Separating the skin, seeds, etc. from the sauce</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh6.ggpht.com/-od8P9pb0908/UUUUlBKMtkI/AAAAAAAABI0/Ee81zN89xCA/s1600/20130316_152105.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh6.ggpht.com/-od8P9pb0908/UUUUlBKMtkI/AAAAAAAABI0/Ee81zN89xCA/s400/20130316_152105.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Gently pushing the tomatoes down in to the mincer</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh4.ggpht.com/-XUSSgoaFCbE/UUUUaV-pFbI/AAAAAAAABIc/heYur21ches/s1600/20130316_154657.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh4.ggpht.com/-XUSSgoaFCbE/UUUUaV-pFbI/AAAAAAAABIc/heYur21ches/s400/20130316_154657.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The left over skin, seeds, etc. from the mincer</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>5. Second mince</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Once you have a (mostly) full tub of sauce, we actually put the left over skin and seed back through one more time and mix it with the rest of the sauce in the tub. This produces a thicker consistency and really gets the most out of the tomatoes. Be sure to mix the tub up well, otherwise the consistency will not be evenly spread.</div><br /><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh5.ggpht.com/-9oBg-HzFXvE/UUUUs-jYfqI/AAAAAAAABJM/pdz9BiY1uo4/s400/20130316_154702.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The second run - putting the left overs back through one more time</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>6.&nbsp;Bottling&nbsp;the sauce</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">This year we used three different types of bottles: The usual large beer bottles with bottle caps, large jars with screw on lids and for the first time we tried using a few small (crown lager) beer bottles.</div><div class="separator" style="clear: both; text-align: left;">The first step is to put a spoon of salt and two basil leaves in each bottle, then fill the bottles with the sauce, leaving at least 5cm of an air gap from the top of the bottle.</div><div class="separator" style="clear: both; text-align: left;">Throughout the year, we collect up the beer bottles so we can re-use them for the next year. Be careful of this though, the bottles shouldn&#8217;t be reused for more than about three times or so.&nbsp;Every time&nbsp;they are boiled, the bottles get weaker, so if they are reused too many times, they will eventually shatter when they are boiled.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://lh5.ggpht.com/-RadhwYybuNg/UUUUdfjqpuI/AAAAAAAABIk/CwYEz0gUd60/s1600/20130316_154646.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="400" src="http://lh5.ggpht.com/-RadhwYybuNg/UUUUdfjqpuI/AAAAAAAABIk/CwYEz0gUd60/s400/20130316_154646.jpg" width="300" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Filling the bottles with the sauce</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh4.ggpht.com/-L_qGUWCa8qY/UUUU7GU63MI/AAAAAAAABJk/Dv1e_zh49cs/s400/20130316_165043.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The beer bottles we use for the sauce</td></tr></tbody></table><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh6.ggpht.com/-Hs6FLxazQ_0/UUUVEhXaXTI/AAAAAAAABJs/igdYDvmqMtw/s400/20130316_165038.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The jars we use for the sauce</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>7. Cap the bottles</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">The jars with the screw on lids are the most risky. They need to be sealed tightly, otherwise they will not preserve correctly and will make a mess in the final stages. The beer bottles on the other hand are more reliable. You can buy bags of new bottle caps fairly cheaply and then using a &#8220;capper&#8221;, they normally seal quite well. Just be sure to check they are tight as you go.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><img border="0" height="400" src="http://lh5.ggpht.com/-xDFjdPPwOAQ/UUUVIcmmNuI/AAAAAAAABJ0/V4-W_PAO6Wk/s400/20130316_165105.jpg" style="margin-left: auto; margin-right: auto;" width="300" /></td></tr><tr><td class="tr-caption" style="text-align: center;">The &#8216;capper&#8217;</td></tr></tbody></table><div class="separator" style="clear: both; text-align: center;"><a href="http://lh3.ggpht.com/-hH6Y62LyrLk/UUUEkP6h7qI/AAAAAAAABIU/SHBtwG2FsCs/s1600/20130316_165116.jpg" imageanchor="1"><img border="0" height="400" src="http://lh3.ggpht.com/-hH6Y62LyrLk/UUUEkP6h7qI/AAAAAAAABIU/SHBtwG2FsCs/s400/20130316_165116.jpg" width="300" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: left;"><b>8. Boil the bottles</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">After the sauce bottles are all sealed and ready to go, they are gently placed in a drum where they are boiled. We generally put a blanket in the bottom of the barrel, then a layer of bottles standing upright, then another blanket, another layer of bottles, etc. Then fill the drum with water and turn the flame on. As this is a large volume to heat up, it takes quite a while to start to boil, but once the boiling and/or steaming has started, we keep the flame on for another two hours. It&#8217;s very important that once they have boiled for two hours that you leave them in the water until the water goes cold - this could be a whole day. Taking them out too early can cause the bottles to shatter.</div><div class="separator" style="clear: both; text-align: left;">This process is what preserves and seals the bottles properly.</div><div class="separator" style="clear: both; text-align: center;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s1600/IMAG0281.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="293" src="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s400/IMAG0281.jpg" width="400" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Boiling the bottles to seal and preserve them</td></tr></tbody></table><div class="separator" style="clear: both; text-align: left;"><b>9. Enjoy!</b></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">After the water has gone cold, the bottles can be pulled out and put away. We try to make enough to last us a whole year, so we put them into crates, keep one crate in the kitchen and store the rest of them in a cool place.</div><div class="separator" style="clear: both; text-align: left;">When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time - you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&#8217;ll never want to buy that stuff again!</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-01-04T16:38:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+         | <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/a-few-photography-tips.html">A Few Photography Tips</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-12-14T13:44:00+11:00" pubdate data-updated="true">Dec 14<span>th</span>, 2012</time>
+        
+         | <a href="/2012/12/a-few-photography-tips.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<div dir="ltr">A little while ago, my brother got me a photography course as a gift, so I asked a friend of mine, Amy, to join me and last Thursday night we attended the course.&nbsp;The course was a &#8220;Night Landscape&#8221; tutorial where we all brought our own cameras and a professional photographer guides us through how to take photos at night. The class was quite small, it consisted of Amy and I with one other student.</div><div dir="ltr"><br /></div><div dir="ltr">The course started out quite basic and we went though some fundamental theory, a lot of which Amy and I already knew, but the other student was a little less experienced so the photographer needed to cater for all of us.</div><div dir="ltr">Luckily it was just a small class, because instead of following the standard course structure, the photographer spent more time in conversations with us, answering all our specific questions.</div><div dir="ltr"><br /></div><div dir="ltr">Being self-taught, I am grateful for that, because these conversations were what lead me to learn a few new things that I hadn&#8217;t picked up in my own research so far. Here is a quick summary of the things I learned:</div><div dir="ltr"><br /></div><div dir="ltr"><br /></div><div dir="ltr"><b>1. Blowing out the sky, intentionally</b></div><div dir="ltr"><br /></div><div dir="ltr">The first new tip I learned was a trick the photographer used when the scene has an unusable sky, such as a dull cloud cover (like last night in the rain). He would take another photo that was&nbsp;intentionally&nbsp;over-exposed so the sky was as white as possible.&nbsp;By doing this, afterwards in Photoshop a pure white sky is very easy to select, even through the leaves of a tree or someone&#8217;s hair using tools like the magic wand, or a color-based selection and can be replaced with a more dramatic sky from another shoot.</div><div dir="ltr"><br /></div><div dir="ltr"><br /></div><div dir="ltr"><b>2. Hand-holding at night</b></div><div dir="ltr"><br /></div><div dir="ltr">At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</div><div dir="ltr"><i>&#8220;Make the denominator of the shutter speed match the focal length&#8221;</i></div>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&#8217;t a perfect rule, but it is a great place to start and you can adjust from there.<br /><br /><br /><b>3. Freezing human motion</b><br /><br />So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends a shutter speed of 1/125 as a baseline to freeze human motion. It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as&nbsp;necessary.<br /><br /><br /><b>4. Filters to allow for more creativity</b><br /><br />So far the only filters I have used are a &#8220;Circular&nbsp;Polariser&#8221; to enhance sky&#8217;s, cut out reflections, etc. and a &#8220;UV&#8221; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &#8220;Neutral Density&#8221; (or &#8220;ND&#8221;) filter and a &#8220;Graduated Blue-Yellow&#8221; filter.<br />Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day - it looked fantastic!<br />The &#8220;Graduated Blue-Yellow&#8221; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.<br /><br /><br />So at the end of the day, the course was quite basic, but in our&nbsp;tangential&nbsp;conversations I gained some pretty cool tips and tricks.<br />I think the most valuable aspect of a course like this is not so much the material presented, but just to experience another photographers style. It&#8217;s always interesting to see how everyone thinks about things in their own unique way, and going through other peoples photos with a conversation is really intriguing.<br /><br />Thanks to Rob and Sarah for the gift and Amy for keeping me company!
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html">Bluetooth Audio Streaming From Phone to Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-10-30T11:27:00+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I was toying with the idea of making my own &#8220;Car Computer&#8221; and one of the crucial parts is a&nbsp;Bluetooth&nbsp;connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a&nbsp;Bluetooth&nbsp;stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&#8217;s quite easy with Ubuntu :)<br /><br />PulseAudio is pretty awesome!<br />First step is ensure Pulse has the&nbsp;Bluetooth&nbsp;module loaded (mine did by default), you can check this by looking at this file&nbsp;<span style="font-family: 'Courier New', Courier, monospace;">/etc/pulse/default.pa</span><br /><br />The next step is to configure the&nbsp;Bluetooth&nbsp;daemon to enable &#8221;<span style="font-family: Courier New, Courier, monospace;">Source</span>&#8221; (and/or &#8221;<span style="font-family: Courier New, Courier, monospace;">Gateway</span>&#8221; mode).<br />To do this, I added the following line to <span style="font-family: Courier New, Courier, monospace;">/etc/bluetooth/audio.conf</span>:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">Enable=Gateway,Source,Socket</span></blockquote><div><br /></div><div>Then restart the&nbsp;Bluetooth&nbsp;daemon:</div><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo service bluetooth restart</span></blockquote><div><br /></div><div></div><br />Now you&#8217;ll have to pair the computer with the phone as per normal.<br /><br />Once the devices are paired, an &#8220;Audio Source&#8221; connection needs to be created.<br />For this, the easiest way is via DBus, but so we don&#8217;t have to write a script and easy way to test this in an ad-hoc manner is to use a tool called &#8217;<span style="font-family: Courier New, Courier, monospace;">d-feet</span>&#8217;, which is available in the Ubuntu repos.<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo apt-get install d-feet</span></blockquote><br />Using <span style="font-family: Courier New, Courier, monospace;">d-feet</span>, navigate to the <i>system bus</i> and find the <span style="font-family: Courier New, Courier, monospace;">org.bluez</span> key.<br />In here, there will be another key that has a device number in it. (for me this was <span style="font-family: Courier New, Courier, monospace;">/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</span>)<br />Under this key, execute <span style="font-family: Courier New, Courier, monospace;">org.bluez.AudioSource &gt; methods &gt; Connect()</span> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.<br /><br />At this point, I started playing some music so I could tell when it was working, but you probably won&#8217;t be able to hear anything just yet.<br />That is because Pulse does not automatically send every source to every output - that could get messy!<br />To configure pulse to send the audio from the&nbsp;Bluetooth&nbsp;connection to your speakers you need to determine the name of the audio source and the name of the &#8221;<i>sink</i>&#8221; (or output) and join them together.<br />You can do this with the PulseAudio shell like this:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; pacmd<br /> &gt;&gt;&gt; list-sources<br />&gt;&gt;&gt; list-sinks<br />&gt;&gt;&gt; load-module module-loopback source=<u>bluez_source.xxxx</u>&nbsp;sink=<u>alsa_output.pci-xxxx</u></span></blockquote><br />(Replace the <u>underlined</u> parts with the names from the preceding two commands)<br /><br />Now all audio from your phone should be streaming through your computer.<br />DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc..<br /><br />I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br />I used &#8220;AudioSource&#8221; in this example, but the other fun option is the &#8220;HandsFreeGateway&#8221;, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.<br /><br />The resources that helped me with this where:<br /><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05370040969486223230">
+  <div class="css-comment-name js-comment-name">
+    pablofabregat
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-30T17:58:43.019Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Beautiful, I will try the handsfreegateway later today, but the AudioSource worked like a charm. <br />Ubuntu 13.04 here :D :D<br /><br />It&#39;s a little uncomfortable to do this every time I boot the laptop, but the result is fun :D<br /><br />Thanks for this!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T03:22:34.889Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    No problem, glad it helped.<br /><br />I used d-feet because I was just playing around, but if you want a more permanent solution, I would recommend writing a script to do it.<br />Most languages have a DBus library and you could even get that script to run at startup.<br /><br />Good luck.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-20T12:30:42.411Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi,
+It worked for me but didn&#39;t have to use th&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi,<br />It worked for me but didn&#39;t have to use the load-module stuff, the sound was doubled, but I don&#39;t have a sterio output, why?<br />is it because btheadsets are only mono?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-21T04:41:29.153Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My understanding was that &quot;AudioSource&quot; was Stereo (A2DP) and &quot;HandsFreeGateway&quot; was mono, but I&#39;m not 100% sure.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-22T13:49:17.409Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Well, it didn&#39;t work sterio for me :/ and I can&#39;t connect it after I rebooted the computer : Method Output: &#39;GDBus.Error:org.bluez.Error.Failed: Stream setup failed&#39;
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/09/changing-default-boot-option-with-grub2.html">Changing the Default Boot Option With GRUB2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-09-19T11:33:00+10:00" pubdate data-updated="true">Sep 19<span>th</span>, 2012</time>
+        
+         | <a href="/2012/09/changing-default-boot-option-with-grub2.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-09-19T23:20:55.100Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Man you&#39;re a geek :P
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-09-19T23:23:03.938Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Haha! &#8230; thanks&#8230; I think
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/09/getting-started-with-ruby-on-rails.html">Getting Started With Ruby on Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-09-11T13:29:00+10:00" pubdate data-updated="true">Sep 11<span>th</span>, 2012</time>
+        
+         | <a href="/2012/09/getting-started-with-ruby-on-rails.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<div>I&#8217;ve been using Ruby on Rails for about a year and half now and I&#8217;m really enjoying it!&nbsp;At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&#8217;s, so it&#8217;s great time to get involved.</div><div>I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</div><ul></ul><br /><b>Join the community!</b><br /><br />Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is &#8221;<i>Ruby On Rails Oceania</i>&#8221; (aka RORO).<br />They have meetups on the <i>last Thursday of every month</i>&nbsp;in Melbourne and a pretty active mailing list:<br /><ul><li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania" target="_blank">Ruby On Rails Oceania Mailing List</a></li><li><a href="http://ruby.org.au/" target="_blank">Ruby.org.au</a></li></ul><br /><b>Ruby and Rails resources:</b><br /><ul><li><a href="http://guides.rubyonrails.org/">Rails Guides</a>&nbsp;- I use these almost everyday!</li><li><a href="http://apidock.com/">ApiDock</a> - API&#8217;s for Ruby, Rails and RSpec in one place</li><li><a href="http://railsforzombies.org/">Rails For Zombies</a>&nbsp;- A great beginners tutorial for rails</li><li><a href="http://railscasts.com/">Rails Casts</a>&nbsp;- Regular video podcast all about rails</li><li><a href="http://ruby5.envylabs.com/">Ruby5</a>&nbsp;- Regular 5 minute audio podcast on the latest news</li><li>&#8230; a plethora of good books, such as &#8220;The RSpec Book&#8221;, &#8220;Design Patterns in Ruby&#8221;, etc. (alot of which I still need to read)</li></ul><div><br /></div><b>Getting started:</b><br /><br />To get started you&#8217;ll need to set up your development environment, here&#8217;s what I use:<br /><ul><li>Vim&#8230; of course&#8230; although there are lots of alternatives, the most popular ones would probably be:</li><ul><li>RubyMine (IDE) - used alot at work (commercial software)</li><li>Sublime Text 2 (Text editor)</li><li>TextMate (Text editor)</li></ul><li>RVM (Ruby Version Manager)</li><ul><li>Get from here: <a href="https://rvm.io/" target="_blank">https://rvm.io</a></li><li>Follow the instructions to configure your shell to use RVM</li><li>Use RVM to install the latest ruby</li><ul><li>$&gt; rvm install 1.9.3</li></ul><li>A newer alternative to RVM is RBenv</li></ul><li>Once you have ruby installed, you will have the &#8216;gem&#8217; command available</li><ul><li>Gems are roughly equivalent to jars in the Java world</li><li>Use gem to install the latest rails</li><ul><li>$&gt; gem install rails</li></ul></ul><li>Once you have rails installed, you will have the &#8216;rails&#8217; command available</li><ul><li>Use the rails command to start a new project</li><ul><li>$&gt; rails new todolist</li><li>$&gt; rails server</li><li>browse to <a href="http://localhost:3000/" target="_blank">http://localhost:3000</a></li></ul></ul><li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li></ul><br /><b>Things to keep in mind for RoR dev:</b><br /><ul><li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.</li><ul><li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li></ul><li>Ruby  on Rails strongly supports DRY principles, don&#8217;t reinvent the wheel,  theres problably a gem that already does what you want.</li><ul><li>To find gems, good places to look are:</li><ul><li><a href="http://ruby-toolbox.com/" target="_blank">Ruby-Toolbox.com</a></li><li><a href="http://railscasts.com/" target="_blank">RailsCasts.com</a></li><li><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></li><li><a href="http://github.com/" target="_blank">GitHub.com</a></li></ul></ul><li>The majority of Ruby projects are:</li><ul><li>Developed using TDD/BDD, so you&#8217;ll need to learn the testing frameworks:</li><ul><li>Test::Unit (default with rails)</li><li>RSpec (a popular replacement for Test::Unit)</li><li>Cucumber (BDD)</li></ul><li>Developed on MacOSX - for new comers (like myself) some essentials are:</li><ul><li>brew - a mac package manager (like apt or yum)</li><li>iterm2 - really good terminal emulator</li></ul><li>Deployed on Linux</li><ul><li>Basic Linux foo is really useful</li></ul><li>Version controlled with git</li><ul><li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li></ul></ul></ul><div><br /></div><div>That&#8217;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/samsung-galaxy-s3.html">Samsung Galaxy S3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-08-21T12:50:00+10:00" pubdate data-updated="true">Aug 21<span>st</span>, 2012</time>
+        
+         | <a href="/2012/08/samsung-galaxy-s3.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+At the end of June this year, I upgraded from a HTC Desire HD to a Samsung Galaxy S3, so I thought after a couple of months of having my new phone I should write up a (really long) post on what stood out for me.<br /><br /><br /><b>The positive</b> <br /><br />The <b>screen and form factor</b> is awesome! Due to the plastic body and the thin shape, this phone is really light and slips into your pocket nicely. The massive 4.8&#8221; screen really shines when watching videos and browsing the web. I regularly watch screencasts on my phone and the 1280x720 resolution gives me plenty of detail. The colour contrast is a lot higher than my previous phone, which makes the blacks look really deep and videos stand out nicely. The marketing video that the phone comes with does demo it off quite well!<br /><br />The <b>battery </b>is fairly good. My requirement for battery life is that I can use it all day and by the time I get home / go to bed, it hasn&#8217;t died. Not a high expectation, I know, but these days its hard to expect more. This phone meets that requirement quite easily. On the days I don&#8217;t use my phone much, I get home after a days work with more than 50% remaining (which is huge compared to my last phone!) and on the days I use it quite heavily, I get home to about 30%-40% which easily lasts me the rest of the night. My usage generally includes syncing gmail, facebook, twitter, weather, RSS reader, work email (during peak hours), I am generally connected to wifi most of the time and I regularly browse the web and watch videos / listen to podcasts during my commute.<br /><br />The general<b> responsiveness</b> is miles ahead of my last phone too! Day-to-day usage is smooth and rarely experience any lag. This will be improved even more when Jellybean is released (rumoured to be soon!).<br /><br /><b>&#8220;Smart Stay&#8221; </b>is a new innovative feature from Samsung where just before the screen is about to timeout and turn off, the phone will take a photo of you with the front-facing camera and use face (or eye) detection to work out if you&#8217;re still looking at it. If you are, it will keep it on for another minute or so, if you&#8217;re not, then it will dim the screen and check again soon after, which then will actually turn it off.<br />This is to avoid that randomly-scrolling-to-avoid-the-screen-turning-off trick that most people will do when reading a long article. Thankfully, this feature is quite effective and I haven&#8217;t needed to do that for a while, although it doesn&#8217;t work very well in the dark!<br /><br />In the settings, there is a section called <b>&#8220;Motion&#8221;</b>. I won&#8217;t go through all of the options, as there are about 10 different ones, but some are quite handy. By far the best one IMHO is <b>&#8220;Direct call&#8221;</b>, which lets you directly call a contact whose call log details, contact details or message details are displayed on the screen by simply putting the phone to your ear from that screen. Feels very natural.<br />Another nice one is <b>&#8220;Smart alert&#8221;</b>, which will give a little vibration when you pick it up from a stationary location if you have a missed call or sms.<br /><br />The <b>camera</b> on this phone is not too bad either. Obviously it will never replace my dSLR, but it has some nice features that even my dSLR doesn&#8217;t have. The burst fire mode is really quick, but Samsung have introduced a feature called <b>&#8220;best shot&#8221;</b>, which will analyse each of the photos you took in the burst and pick the ones it thinks turned out the best, based on focus and face detection. You can adjust what was picked, and then the others are automatically discarded (saves you having to go through the 14 bad ones and delete them later).<br />The camera has a <b>built-in HDR</b> mode which works quite well too and the <b>photo editor</b> provides heaps of enhancements and corrections, including red-eye reduction, color balance, cropping, etc.<br /><br />Another nice feature is found in the video player, it has a <b>&#8220;pop-out&#8221;</b> button! This means that if you&#8217;re in the middle of a video and you wanted to quickly google something, or reply to an sms, you can just pop out the video, which turns the full screen player into a small, floating, always on top window that you can drag around, do what you need to do, and then make it full screen again. Not something that I&#8217;ve needed to use very often, but on the rare occasion I have, it&#8217;s been quite nice.<br /><br />I use my calendar religiously and on my older HTC, the default app looked nice, but didn&#8217;t have many features. I ended up swapping it out for <a href="https://play.google.com/store/apps/details?id=netgenius.bizcal&amp;hl=en" target="_blank">Business Calendar Free</a> just so I could get a month view with text, instead of indicators.<br />The stock Samsung calendar, <b>S Planner</b>, however is not too bad! It integrates with their S Memo, which I don&#8217;t use, but comes with a good number of viewing options, my favourites being their month view and analogue week view. It also has a nice <b>&#8220;Quick add&#8221; </b>feature that lets you enter &#8220;Dinner at Nandos tomorrow 7:30pm&#8221; and it does what you&#8217;d expect. This doesn&#8217;t support anywhere near as much as Google Calendar does, but its better than nothing!<br /><br />I lashed out and bought an <b>official Samsung Desktop Dock</b>, and comparing this to my cheap eBay special I bought for my HTC, not only does it look quite nice, but it automatically launches the desktop clock app when I dock it and after 5 minutes it dims the screen and hides the other UI elements other than the clock. I like this feature a lot because I otherwise don&#8217;t have a clock in my room, so its really handy for me!<br /><br /><br />As with all things, there are pro&#8217;s and con&#8217;s. Here are some of the things I don&#8217;t like. <br /><br /><br /><b>The negative</b><br /><br />Android have decided to <b>remove USB Mass Storage mode</b> (my biggest pet hate with Android right now!) This leaves you with 3 alternative options for copying files to and from the device: Media Transfer Protocol (MTP), Camera mode or using an app such as <a href="https://play.google.com/store/apps/details?id=com.samsung.swift.app.kiesair&amp;hl=en" target="_blank">Kies Air</a> or <a href="https://play.google.com/store/apps/details?id=xcxin.filexpert&amp;feature=search_result#?t=W251bGwsMSwxLDEsInhjeGluLmZpbGV4cGVydCJd" target="_blank">File Expert</a>.<br />MTP and Camera mode both don&#8217;t give you access to all the directories on the phone, but for just transferring media it should be ok. Note that MTP will work out of the box with Windows, but if you run Mac or Linux like me, you will need to install software to get it to work (and Linux is a pain for this!).<br />The reason for this change is because USB Mass Storage mode will mean you have to unmount the partition from the system in order to mount it to the computer, whereas MTP will allow you to access it in both places at once, but its slower and requires software.<br />For phones like the Galaxy Nexus, this makes sense as there is only one partition, but with the S3, I would like to see the option of just unmounting the memory card (with is separate from the system storage) and allow that to work with USB Mass Storage mode.<br /><br />Another annoying thing I have found with this phone is sometimes the <b>home screen will randomly die</b>. This causes lag while all the widgets reinitialise themselves. It doesn&#8217;t happen often, but when it does, its annoying considering its a simple software issue. Hopefully this is fixed with Jellybean release!<br /><br />On a related note, I find the random delay between pressing the <b>unlock button</b> and the screen actually turning on to be annoying too, considering my older HTC was basically instantaneous everytime, this phone seems to vary quite a lot. I find myself pressing the button while its still in my pocket, just so by the time I have it in front of me, the screen is ready.<br /><br />A couple of other minor things include the <b>notification LED</b> being really bright, which is ok, but while the phone is docked my bedside, it will light up the entire room quite easily. This is kind of funny considering &#8220;smart stay&#8221; doesn&#8217;t work well at night. Maybe instead of just green and red, the LED should have also included an IR LED for that.<br />Not only is the LED really bright, but when the battery becomes fully charged, it will turn on the screen and popup a notification, which is also not very nice when I&#8217;m trying to sleep.<br />I know most of you are probably thinking a solution would be to turn it off at night, but I <a href="http://blog.stevenocchipinti.com/2012/03/xkcd-beyondpod.html" target="_blank">scheduled my phone to download podcasts</a> during these hours with <a href="https://play.google.com/store/apps/details?id=mobi.beyondpod&amp;hl=en" target="_blank">BeyondPod</a> - I think the pro&#8217;s outweigh the con&#8217;s in this situation.<br /><br />Also minor, but there is <b>no stock flashlight app</b>, which I wanted to put in the lock screen shortcuts. It does come with a 2x1 widget, but to get a shortcut on the lock screen, I ended up downloading one of the million flashlight apps out there.<br /><br />Speaking of widgets, the HTC widgets were really nice, but I find the <b>widgets</b> that came with the Samsung are not quite as useful, luckily they are in abundance on the play store too!<br /><br /><br /><b>The other stuff</b><br /><br />Here are some other noteworthy things which I haven&#8217;t really made up my mind if I like yet or not.<br /><br />The music player has a feature called <b>&#8220;Music Square&#8221;</b> and I love the idea of it, but I&#8217;m not sure how effective it is. Basically you index your music library and it categorises each of your songs into 2 scales: <i>&#8216;Exciting</i> to <i>Calm&#8217;</i> and <i>&#8216;Passionate</i> to <i>Joyful</i>&#8217;. These two scales make up the axes of the music square and by tapping where your mood is will play those types of songs. It&#8217;s a great idea and I need to experiment with it more to see how effective it is.<br /><br />A lot of the features in the phone are <b>voice activated</b>. For example, you can say <i>&#8216;answer&#8217;</i> or <i>&#8216;reject&#8217;</i> when it is ringing (as long as the ringtone isn&#8217;t too loud); <i>&#8216;snooze&#8217;</i> or <i>&#8216;stop&#8217;</i> when the alarm is going off (as long as thats not too loud); <i>&#8216;smile&#8217;</i>, <i>&#8216;cheese&#8217;</i>, <i>&#8216;capture&#8217;</i> or <i>&#8216;shoot&#8217;</i> to take a photo (as long as your close enough for the phone to hear you); <i>&#8216;next&#8217;</i>, <i>&#8216;previous&#8217;</i>, <i>&#8216;pause&#8217;</i>, <i>&#8216;play&#8217;</i>, <i>&#8216;volume&#8217;</i>, etc. to control your music or the radio (as long as thats not too loud either).<br />As you can see, the usefulness of these features are dependant on the environment.<br /><br /><b>S Voice</b> is Samsung&#8217;s answer to Siri, and even the UI&#8217;s look similar, but while its great in theory, I think the most useful thing about Siri on the iPhone or S Voice on the Galaxy would be SMS/email dictation, but that is the one thing these features don&#8217;t work that well for, at least for me anyway - maybe its just my voice!<br /><br /><br /><b>The conclusion</b><br /><br />In the end I am very happy with my new phone, it is leaps and bounds above my old phone, its really responsive other than the random home screen lag and unlock button delay, it has some nice new innovative features and is a joy to use.<br />Also, with the Jellybean release (hopefully) around the corner, it can only get better.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-22T03:09:53.174Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Jeez, that was so thorough you could be a horse :)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-22T03:13:44.550Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Haha! Yea, had a list of dot points that accumulated a bit, then when I wrote a &quot;quick&quot; paragraph on each one, it kind of exploded :P<br />Not expecting many people to read it all, unless they are considering buying one and they happen to be like me :P then its all about the details!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/13228213079214942610">
+  <div class="css-comment-name js-comment-name">
+    Todd Growcott
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-24T22:34:28.376Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Totaly agree with your review&#8230;just wondering if u had an issue with songs randomly skipping and restarting half way through.If so help would be greatly appreciated..cheers:)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-08-25T13:08:18.822Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks for the feedback Todd.<br />I&#39;m sorry but I can&#39;t say I&#39;ve had that issue before.<br />A friend of mine had a similar issue with a HTC phone, the problem turned out to be with the headphone jack.<br />Basically when he wiggled the headphone plug it would skip and pause, etc. because of the way corded remote controls works.<br />This also meant that when he wasn&#39;t playing music, sometimes the headphones would cause the phone to redial the last number.<br />I&#39;d suggest contacting the retailer or customer care and showing them the problem, they may be able to replace it for you.<br />Good luck!
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -78,7 +683,56 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/blog/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -91,12 +745,25 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhpinti -
+  Copyright &copy; 2013 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

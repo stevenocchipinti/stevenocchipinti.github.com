@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tank | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/blog/categories/tank/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T19:33:53+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds.html"/>
+    <updated>2011-10-10T03:49:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 "D" pins for data with 8 matching "Ground" pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED's were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED's.<br />I found a bunch of tristate LED's - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn't have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:12:33.662Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Maybe it&#39;s just me, but there&#39;s an elegance in seeing *bits* when so many of us work in higher level languages these days.<br /><br />Good work man!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:20:32.130Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man :)<br /><br />I wouldn&#39;t have even known how to specify bits if not for this, lol.<br /><br />Yea, don&#39;t see bits very often. I could have written this basic example in C, but because its going to be part of a web app one day, I wanted my high level comforts for later on - I&#39;m not that hardcore, lol :P
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Tank Project!]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/05/tank-project.html"/>
+    <updated>2011-05-22T05:31:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/05/tank-project</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+So my brother Rob and I have wanted to work on a project together for a while now, and after our awesome <a href="http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw.html">Minecraft Server</a>, we came to the realization that I love doing the functional side of things (setting up the software, etc.) and Rob loves doing the creative, hands-on side of things (putting the hardware together and making it look pro) and so together, this things compliment each other!<br /><br />After scoring a <a href="http://netduino.com/">Netduino</a> (like an Arduino, but I write in C#.net instead of C) for use in a future project, this was the perfect opportunity for our skills to come together as Rob isn't keen on programming, and I'm probably not as good as him at making things, whereas he is quite passionate about that!<br /><br />I've always wanted to have a play with an <a href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> (or Netduino in this case). To actually allow my interest in programming to bridge across to the  hardware world always seemed like a mystical unknown to me, but these  little programmable micro-controllers allow just that - my software to  use hardware!<br /><br />Enter <a href="http://tank.stevenocchipinti.com/"><i>The Tank Project</i></a>!<br /><br />The idea was to build a physical tank that we can use the Netduino to control, but not just limited to controlling the movement of the tank, but then a variety of other features.<br />Things that came to mind were a working (not-so-dangerous, legal) canon, webcam feeds for remote control, mobile application to drive it, 360 degree spinning turret and just about anything else we could think of!<br />Our imagination started going wild with vague memories back to <a href="http://en.wikipedia.org/wiki/Robot_Wars">Robot Wars</a> and so we set aside a day to brainstorm ideas and develop a plan of attack (pardon the pun). That day was yesterday, and it went well! :)<br /><br />We're going to try to keep a project blog going if you want to keep track of the progress:<br /><a href="http://tank.stevenocchipinti.com/">http://tank.stevenocchipinti.com</a><br /><br />("keep <i>track</i> of the progress" is also a pun... theres going to be a few of these, lol!)
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-05-22T10:38:46.776Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    That sounds awesome! I&#39;ve been meaning to buy a Netduino for ages. Unfortunately there are *lots* of things I want to play with :o). Good luck with the tank!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-05-22T10:46:31.450Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man!<br />I know the feeling, there is so much cool stuff out there to learn I don&#39;t know how anyone can be bored.. I guess that&#39;s the good and bad thing about this industry.. you&#39;ll never know it all, but you&#39;ll never be bored!<br /><br />I&#39;m looking forward to this project getting off the ground too - hopefully it doesn&#39;t stall too much :)
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
