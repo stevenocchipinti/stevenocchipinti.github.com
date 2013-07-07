@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="So it turns out bash has a vi mode!(Can&#8217;t believe I didn&#8217;t know about this earlier)To enable vi mode, just type this into your shell:$& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/page/5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/vi-mode-for-bash.html">Vi Mode for Bash</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-26T23:22:00+10:00" pubdate data-updated="true">Jun 26<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/vi-mode-for-bash.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+So it turns out bash has a vi mode!<br />(Can&#8217;t believe I didn&#8217;t know about this earlier)<br /><br />To enable vi mode, just type this into your shell:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; set -o vi</blockquote><br />That will enable it for this shell so you can try it out, and if you like it, add that line to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file for future.<br /><br />One really useful vi-mode command is pressing &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">v</span>&#8217; from command mode. This will put your current command line into vim to modify. <br /><br />To get more help on the commands available in vi-mode, take a look at the bottom of this man page:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; man 3 readline</blockquote><br />To get more information on the various options available for bash, take a look at:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; help set</span></blockquote><br />I&#8217;m going to give it ago in the coming weeks to see if its actually useful or not. <br /><br />So far, I&#8217;ve found one small annoyance, I use ctrl+l to clear the terminal, but with the vi key bindings enabled, this only works from command mode (you have to hit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ESC</span> first).<br />To fix this, I added this to my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bind -m vi-insert &#8216;Control-l: clear-screen&#8217;</span></blockquote><br />These commands could also be added to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/inputrc</span>, but I&#8217;m happy to leave these 2 lines together in my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> so its easier to remember.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/phpremoteadmin.html">PhpRemoteAdmin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-24T02:56:00+10:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/phpremoteadmin.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy &#8220;Create PHP Code&#8221; button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn&#8217;t create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER[&#8220;REQUEST_URI&#8221;], &#8220;phpremoteadmin&#8221;) &gt; 0) {<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;connect_type&#8217;] = &#8216;tcp&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;port&#8217;] = &#8216;6666&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;host&#8217;] = &#8216;127.0.0.1&#8217;;<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You&#8217;l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo &#8220;Usage: $0 host1 [host2]&#8221;<br />&nbsp; exit 2<br />fi<br /><br />USER=&#8221;steve&#8221;<br />HOST=$1<br /><br />DBHOST=&#8221;localhost&#8221;<br />[ -z &#8220;$2&#8221; ] || DBHOST=&#8221;$2&#8221;<br /><br />echo &#8220;Browse to: http://localhost/phpremoteadmin&#8221;<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server&#8217;s localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn&#8217;t normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:12:38.930Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steven,<br /><br />Little help required.<br />Till the step <br />sudo /etc/init.d/apache2 reload<br /><br />I am done and on checking localhost/phpremoteadmin<br />gives a login page like the normal localhost/phpmyadmin and upon logging it goes to show my local db. (Is it OK? Should it come like that?)<br /><br />And the next step of establishing SSH where should i put it ?<br /><br />Thanks<br /><br />Unni
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:35:55.216Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Unni,
+
+If you log in and see your local databas&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Unni,<br /><br />If you log in and see your local database, I&#39;m guessing you haven&#39;t been able to configure phpmyadmin to connect to the database on the new port.<br /><br />By default, MySql listens on 3306, which is what PhpMyAdmin is configured to connect to.<br /><br />By modifying PhpMyAdmin&#39;s config, you are telling it to connect to port 6666 instead (if it is accessed from a URI that includes &quot;phpremoteadmin&quot;)<br /><br />By default, you probably dont have anything listening on port 6666, that&#39;s where the tunnel comes in.<br />You need to tunnel the remote server&#39;s 3306 port to your local 6666.<br />The command I provided does this, which you have to run in order for PhpMyAdmin to connect to it.<br /><br />The script at the end of the post is just a convenient wrapper for that command. I saved that script in ~/bin/mysql_remote so it is accessible from anywhere.<br />That means whenever I want to connect to a remote host, I just run that script and provide the hostname as a parameter, which makes the remote MySql available on my local port 6666.<br /><br />It is important to note, that this won&#39;t work unless you:<br />1) Configure PhpMyAdmin to connect to a different port<br />2) Open a tunnel so that you can connect to the remote MySql server via that different port.<br /><br />Hope that helps<br /><br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:55:06.158Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi Steve,
+
+&gt; I configured Phpmyadmin to connect&#8230;
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi Steve,<br /><br />&gt; I configured Phpmyadmin to connect to 6666 as in the instructions. Below &#8230;<br /><br />   /* Advance to next server for rest of config */<br />    $i++;<br /><br />if (substr_count($_SERVER[&quot;REQUEST_URI&quot;], &quot;phpremoteadmin&quot;) &gt; 0) {<br />$cfg[&#39;Servers&#39;][$i][&#39;connect_type&#39;] = &#39;tcp&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;port&#39;] = &#39;6666&#39;;<br />$cfg[&#39;Servers&#39;][$i][&#39;host&#39;] = &#39;127.0.0.1&#39;;<br />}<br /><br />&gt; Then after this i made SSH tunnel to server on which there is mysql running<br /><br />ssh -L 6666:localhost:3306 mobshare@124.15.102.53<br /><br />&gt; Then i opened localhost/phpremoteadmin<br /><br />&gt; It shows the normal PhpMyadmin page with login box. <br />So.. did it get connected to the remote one or my local?<br /><br />Should I be logging in that with remote server Mysql user and pass ?<br /><br />Did i do everything fine? <br /><br />Thanks
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T09:58:31.426Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Yes, you should be logging in with the remote MySql server&#39;s username and password.<br />Did you try this? Only you can tell me if it worked or not :/
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.payyanurnext.com">
+  <div class="css-comment-name js-comment-name">
+    Unnikrishnan V
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T10:13:08.332Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    1&gt; Added alias at this location as i couldn&#39;t find the file you specified.<br /> <br />sudo vim /etc/phpmyadmin/apache.conf <br /><br />Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin<br /><br />        Options FollowSymLinks<br />        DirectoryIndex index.php<br /><br />        <br /><br />&gt; And configuration for 6666 at <br />sudo vim /etc/phpmyadmin/config.inc.php <br /><br />I tried logging in with the remote server MySQL username and pass in the phpmyadmin interface which i got when i gave <br />localhost/phpremoteadmin<br /><br />But not working :( .I tried same user pass in the window in which SSH tunnel was done. Its working fine. Any clue where to look for error ?<br />
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2012-10-30T11:47:03.679Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    It sounds like PhpMyAdmin is still connecting to your local database (using the original port 3306).<br /><br />I&#39;m afraid I can&#39;t help you anymore than this, but some ideas to help you find the cause of your problem could be:<br /><br />1. Once you have an SSH tunnel established, you could check that the tunnel is actually going to your remote MySql with `telnet localhost 6666`. If that connects, your tunnel is ok.<br /><br />2. If you tunnel is ok, you try to connect the normal mysql client to it through the tunnel to make sure it is working with something like &#39;mysql -uuser -ppass -P6666&#39; (you&#39;ll have to check that syntax!)<br /><br />3. Remove the &#39;if&#39; condition in PhpMyAdmin&#39;s config and just hard code it to 6666 to make sure it is working.<br />Or perhaps a random port that is not is use (such as 9999), this should stop you from being able to login at all, if it doesn&#39;t cause an error, that means you are not modifying the right config file.<br /><br />You might need to get another programmer to look at your setup in person, I don&#39;t think I can really offer any more help than than without seeing it in person and debugging/experimenting.<br /><br />Good luck!
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/bash-auto-complete.html">Bash Auto-complete</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-20T05:40:00+10:00" pubdate data-updated="true">Jun 20<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/bash-auto-complete.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/cant-open-file-for-writing.html">Can&#8217;t Open File for Writing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-18T13:09:00+10:00" pubdate data-updated="true">Jun 18<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/cant-open-file-for-writing.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">E212: Can&#8217;t open file for writing<br />Press ENTER or type command to continue</blockquote>If you use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim</span>, you have probably come across this error before.<br />It normally happens when you don&#8217;t have permission to write to your chosen destination.<br /><br />The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> /tmp</span> or ~), then use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">cp</span> it across, or re-open the file in vim with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span>.<br /><br />A collegue at work showed me a great trick to get around this when it happens (Thanks Rich). All you have to do is add this to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.vimrc</span> file:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;command! W w !sudo tee % &gt; /dev/null</div></blockquote>Then when you come across this error again, instead of of using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:w</span> you can use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:W</span> and it will prompt you for your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> password before saving.<br />Works brilliantly!
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/flashy-prezis-ddd.html">Flashy Prezis @ DDD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-01T10:49:00+10:00" pubdate data-updated="true">Jun 1<span>st</span>, 2011</time>
+        
+         | <a href="/2011/06/flashy-prezis-ddd.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<a href="http://www.dddmelbourne.com/">DDD Melbourne</a> was on at Swinburne Uni on last weekend and a couple of friends and I went along.<br /><br />This event was more targeted at Microsoft technologies, but there was a bit of other stuff to keep me interested.<br />I got to see some pretty neat JavaScript stuff, learned a thing or two about the vast range of Microsoft technologies, got to re-visit Android 101 and eat plenty of junk food!<br />I love that us nerds love pizza and cake! :)<br /><br />Now as good as the day was, the topic I picked to blog about actually has nothing to do with the content of any of the talks.<br />This is partially because a fair amount of the MS tech stuff went over my head, but more to do with the website that I&#8217;m about to talk about is something I might consider for my own use in the future.<br /><br />One of the speakers had a really neat presentation that kept the audiences attention with fancy transitions and clever choice of images and at the end of the presentation, we found out that it was all done through a site called <a href="http://prezi.com/">prezi.com</a><br /><br />Anyway, instead of me ranting on about it, it really has to be seen.<br />Here is a quick &#8220;Prezi&#8221; I knocked up, but this doesn&#8217;t compare to the impressive prezi I saw at DDD:<br /><a href="http://prezi.com/8p2z_a_ua4mh/my-first-prezi/">http://prezi.com/8p2z_a_ua4mh/my-first-prezi/</a><br /><br />Browsing through the community prezi&#8217;s would probably give you a better Idea :)<br /><a href="http://prezi.com/8p2z_a_ua4mh/my-first-prezi/"><br /></a>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/search-and-replace-in-multiple-files.html">Search and Replace in Multiple Files With Vim</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-30T09:11:00+10:00" pubdate data-updated="true">May 30<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/search-and-replace-in-multiple-files.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; vim firstfile secondfile theothers*<br />:all<br />:windo %s/this/that/g</blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:all</span> will split the window to show you all the files at once.<br />This would not be the best option for lots of files, but for a small number you get to see the changes that are made. <br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo</span> will execute the given command for all the files in the current window.<br />Note this wont affect windows in other tabs.<br /><br />If you want to undo that change in all buffers, you can use the same method:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo undo</span></blockquote>When your finished, you can save and quit with:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:wqall</span></blockquote>There are plenty of variations, for more infomation checkout the help pages for these:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:tabdo</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:bufdo</div><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:argdo</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html">Cleaning Up Indicator-applet in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-23T10:33:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don&#8217;t use!<br /><br />But, its quite easy to get rid of them! All you have to do is remove the appropriate file in /usr/share/indicators/messages/applications<br /><br />Instead of removing them, I just removed all read permissions (root can still do anything with it of course)<br /><blockquote>$ cd /usr/share/indicators/messages/applications<br />$ sudo chmod 000 empathy evolution</blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/multi-monitor-keyboard-shortcuts-in.html">Multi Monitor Keyboard Shortcuts in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-23T05:55:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/05/multi-monitor-keyboard-shortcuts-in.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I&#8217;m now using  Ubuntu 11.04 with Unity as my primary OS for my desktop at work.<br />I&#8217;m still coming to grips with Unity - somethings I like, others I don&#8217;t. <br /><br />One of the things I do like is the compiz plugin called &#8220;Grid&#8221;.<br />At first I thought it was just a clone of Windows 7 where you can drag a window to the left and it will fill the left half of the screen, drag it to the top and it will maximize, but after taking a look at the key bindings it does a bit more!<br /><br />Using alt + ctrl + the number pad, you get more options!<br />Alt+ctrl+4 will make the window fill the left half (like dragging), 6 will do right, 8 will do the top half, 2 will do the bottom half and 7, 9, 1 and 3 will put the window in the appropriate corner, 5 will put it in the middle and 0 will maximize it.<br />On top of this, if you press the key repeatedly it will adjust from 1/2 screen, to a 1/3, to 1/4, to 3/4 and to 2/3. This is surprisingly easy to use and really helpful!<br /><br />The only thing I couldn&#8217;t work out how to do was move a window from one monitor to the other as these actions occur per monitor (i.e. 1/2 of one screen).<br /><br />The answer was quite easy though, I just needed to enable one more plugin: &#8220;Put&#8221;.<br />The &#8220;Put&#8221; plugin looks like it does similar actions to &#8220;Grid&#8221;, so before I enabled it, I disabled all the key bindings (there was only about 2 enabled anyway).<br />Then I set the keyboard binding for &#8220;Put To Next Output&#8221; to &#8220;&lt;Control&gt;&lt;Alt&gt;KPEnter&#8221;.<br /><br />When I enabled it, the Unity panel got a little screwed up (which is evidently not hard to break), so I restarted X and everything worked how I expected it to.<br />Now atl+ctrl+keypad-enter will move the window between my left monitor and my right monitor!
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/tank-project.html">The Tank Project!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-22T05:31:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2011</time>
+        
+         | <a href="/2011/05/tank-project.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+So my brother Rob and I have wanted to work on a project together for a while now, and after our awesome <a href="http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw.html">Minecraft Server</a>, we came to the realization that I love doing the functional side of things (setting up the software, etc.) and Rob loves doing the creative, hands-on side of things (putting the hardware together and making it look pro) and so together, this things compliment each other!<br /><br />After scoring a <a href="http://netduino.com/">Netduino</a> (like an Arduino, but I write in C#.net instead of C) for use in a future project, this was the perfect opportunity for our skills to come together as Rob isn&#8217;t keen on programming, and I&#8217;m probably not as good as him at making things, whereas he is quite passionate about that!<br /><br />I&#8217;ve always wanted to have a play with an <a href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> (or Netduino in this case). To actually allow my interest in programming to bridge across to the  hardware world always seemed like a mystical unknown to me, but these  little programmable micro-controllers allow just that - my software to  use hardware!<br /><br />Enter <a href="http://tank.stevenocchipinti.com/"><i>The Tank Project</i></a>!<br /><br />The idea was to build a physical tank that we can use the Netduino to control, but not just limited to controlling the movement of the tank, but then a variety of other features.<br />Things that came to mind were a working (not-so-dangerous, legal) canon, webcam feeds for remote control, mobile application to drive it, 360 degree spinning turret and just about anything else we could think of!<br />Our imagination started going wild with vague memories back to <a href="http://en.wikipedia.org/wiki/Robot_Wars">Robot Wars</a> and so we set aside a day to brainstorm ideas and develop a plan of attack (pardon the pun). That day was yesterday, and it went well! :)<br /><br />We&#8217;re going to try to keep a project blog going if you want to keep track of the progress:<br /><a href="http://tank.stevenocchipinti.com/">http://tank.stevenocchipinti.com</a><br /><br />(&#8220;keep <i>track</i> of the progress&#8221; is also a pun&#8230; theres going to be a few of these, lol!)
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-05-22T10:38:46.776Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    That sounds awesome! I&#39;ve been meaning to buy a Netduino for ages. Unfortunately there are *lots* of things I want to play with :o). Good luck with the tank!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-05-22T10:46:31.450Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man!<br />I know the feeling, there is so much cool stuff out there to learn I don&#39;t know how anyone can be bored.. I guess that&#39;s the good and bad thing about this industry.. you&#39;ll never know it all, but you&#39;ll never be bored!<br /><br />I&#39;m looking forward to this project getting off the ground too - hopefully it doesn&#39;t stall too much :)
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html">DHCP Fixedhosts to /etc/hosts File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-17T12:28:00+10:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS&#8230; I think&#8230; correct me if I&#8217;m wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn&#8217;t need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I&#8217;ve already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo &#8220;admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D&#8221; | nc 192.168.1.1 23 | \grep &#8220;[ ]*[0-9]&#8221; | sed &#8220;s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g&#8221;</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230; <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />&#8230;</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230;<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />&#8230;</span></blockquote>This isn&#8217;t really that useful, but it took a couple of minutes, just to &#8220;see if I could do it&#8221;&#8230; and it worked :)<br /><br />&#8230; I don&#8217;t think I&#8217;ll actually use it, lol, but it was fun anyway :P
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/6/">&larr; Older</a>
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/4/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

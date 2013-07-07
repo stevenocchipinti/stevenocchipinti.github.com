@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="The more I use Git, the more I love it and less I prefer my once trusty SVN.A while back I read the book &#8220;Pro Git&#8221; by Scott Chacon.The &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://stevenocchipinti.github.io/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:stevenocchipinti.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/code-review-workflow-with-github.html">Code Review Workflow With GitHub</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-18T10:06:00+10:00" pubdate data-updated="true">Sep 18<span>th</span>, 2011</time>
+        
+         | <a href="/2011/09/code-review-workflow-with-github.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>&#8220;<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>&#8221;</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known &#8221;<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>&#8221; and describes how they are both good, but Git-Flow is alot more involved, where the aptly known &#8220;GitHub-Flow&#8221; is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else&#8217;s work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>&#8221;.<br /><br />This doesn&#8217;t affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it&#8217;s the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>&#8221; instead of something more descriptive, like &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>&#8221;.<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/gtalksms.html">GTalkSMS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-08T10:41:00+10:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time>
+        
+         | <a href="/2011/09/gtalksms.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Continuing on from my last post, I found another great use for Pidgin!<br /><br />GTalkSMS is an Android app that turns your phone into a chat bot.<br />Here is an extract from the <a href="http://code.google.com/p/gtalksms/">GTalkSMS website</a>:<br /><blockquote><span style="font-size: x-small;"><i>GTalkSMS enables you to <b>control your android phone through GTalk/XMPP</b> (send/receive SMS, make calls, locate your phone, etc.). It can be  useful for those who prefer typing sms on a real keyboard. The app also  notifies you about new &#8220;events&#8221; on the phone, like a new text message  (SMS) or an incoming call.</i></span></blockquote><br />Although initially skeptical about security (it has the same functions as a would-be trojan) you have to be buddies with the bot to talk to it, so here is what I did&#8230;<br /><br /><br /><b>Basic Setup:</b> <br /><ul><li>Downloaded and installed GTalkSMS from the <a href="https://market.android.com/details?id=com.googlecode.gtalksms">market</a></li><li>Created a google account for GTalkSMS</li><li>Configured Pidgin with my personal gmail account (obviously) </li><li>Added this new account as a buddy on my personal gmail account</li><li>Configured GTalkSMS to send notifications to my personal gmail account</li></ul><br /><b>Basic Usage:</b> <br /><br />With this done, once I start the bot, it will send me a instant message when I get an SMS, phone call or the battery state changes.<br /><br />What is even better is that if I want to reply to a recently received SMS, I can send the bot an instant message like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">reply:Hey, I got your message</span></blockquote><br />If I want to initiate an SMS to someone else, I can send this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:mymate:Hey, how you goin?</span></blockquote><br />That will lookup <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mymate</span> in my phonebook and send the SMS to them.<br />If you have multiple people with the same name, you can search your phonebook using this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">contact:john</span></blockquote><br />This will list all the <i>John&#8217;s</i> then you can just copy and paste the phone number you want in place of the name, like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:04041111111:Hey John!</span></blockquote><br /><b>Doing more:</b> <br /><br />There are <a href="http://code.google.com/p/gtalksms/wiki/FeaturesAndCommands">heaps of commands</a> available and you can get a list of them all at any time with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">help:all</span></blockquote><br />Some other cool commands allow you to change your ringer volume, take a photo, share clipboards, get geolocation, launch a given URL in the browser and lots more.<br /><br />It also has some options to make GTalkSMS start automatically when the phone boots, or when it is charging, or when its on wifi.<br />I personally only want this connected while I&#8217;m in front of my pc, so I have it set to start when charging and stop when not charging anymore (I use a USB charging dock at my desk).<br /><br />One other noteworthy feature is the &#8220;Incoming SMS&#8221; setting &#8221;<span style="font-size: small;"><span style="color: black;">In separated conversations</span></span>&#8221;. When you receive an sms, not only does the bot send you an IM, but it will start a new &#8220;chat room&#8221; for that particular contact and send you an invite. From within this chat room, you dont need to worry about sending commands, whatever you send in there will be sent as an sms to that client. It makes it look seamlessly like any other chat.<br /><br /><br /><b>Pidgin fun:</b><br /><b><br /></b><br />As you may already know, I like Pidgin because of its configurability.<br />I have Pidgin using the libnotify plugin, which means I get the fancy Ubuntu notifications from Pidgin, but I soon realised there are too many notifications by default (everytime a buddy signs in or out is a bit much with 4 chat accounts signed in at once!) - so I turned those notifications off.<br /><br />But! I wanted these notifications to see when my phone is available to chat, so I set up some little recurring buddy pounces:<br /><ol><li>When my GTalkSMS account signs in, execute this command: <br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/bot.svg&#8221; &#8220;Droid online&#8221; &#8220;Your Android is now contactable via GTalkSMS&#8221;</span></blockquote></li><li>When my GTalkSMS account signs out, execute this command: <br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/unavailable.svg&#8221; &#8220;Droid offline&#8221; &#8220;Your Android has now signed off GTalkSMS&#8221; </blockquote></li></ol><br />Now when I dock my phone, it starts charging, GTalkSMS starts up and signs in and I get this notification appear:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s1600/online.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s320/online.png" width="320" /></a></div><br /><br />Then when I pull it off the dock, GTalkSMS signs out and I get this notification:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s1600/offline.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s320/offline.png" width="320" /></a></div><br /><br />Note: The notify-send command is available from the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package, which can be installed in Ubuntu with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install libnotify-bin</span></blockquote>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/13328391039656809615">
+  <div class="css-comment-name js-comment-name">
+    Lee Lanzafame
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-01T12:10:21.518Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    This is pretty cool :)
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/meta-contacts-in-pidgin.html">Meta-contacts in Pidgin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-03T00:18:00+10:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/09/meta-contacts-in-pidgin.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<a href="http://pidgin.im/">Pidgin</a> is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.<br />I chose Pidgin not because of a slick UI but because it has some really nice features!<br /><br />The two features that stand out the most in my opinion are the &#8220;buddy pounces&#8221; and the many available plugins:<br /><br /><b>Buddy pounces</b><b>:</b><br />For those that don&#8217;t know about pounces, they are little predefined actions that can be triggered upon some configurable event, such as <i>&#8220;when &lt;SomeContact&gt; returns from away status, open a conversation window&#8221;</i>, or <i>&#8220;when &lt;SomeContact&gt; signs on, send them a predefined message&#8221;</i>.<br /><br /><b>Plugins:</b><br />Not only does Pidgin come with lots of plugins by default, but there are a lot of <a href="http://developer.pidgin.im/wiki/ThirdPartyPlugins">third party plugins</a> available too.<br />There are basic ones that offer a more robust and configurable way of notifying you of messages, etc and some more fun ones like &#8220;psychic mode&#8221; - which listens for when a new contact starts typing a message to you and pops up a convo window before they have even sent it.<br /><br /><b>Meta-contacts:</b><br />The one thing that I missed from other IM clients was meta-contacts.<br />For example, at any one time I have Pidgin signed into my Google chat, MSN and Facebook chat accounts and for those friends of mine that have an account on all three platforms, they appear 3 times in my buddy list.<br />With meta-contacts you can collapse those 3 contacts into just one.<br /><br />Well, it turns out this feature has been in Pidgin for quite a while, I just never noticed as its just not quite as obvious as with other clients.<br /><br /><b>How to use meta-contacts in Pidgin:</b><br />To use this feature, all you have to do is right-mouse click on the contact and click &#8220;expand&#8221; and drag and drop other contacts under the newly expanded name.<br />You should put the most common account at the top as that is the account is used by default when you double click the contact.<br /><br />Even though these features aren&#8217;t exactly ground breaking, when you get used to having them there it becomes a little harder to go back to clients without them.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/poweroff-without-password.html">Poweroff Without a Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-21T07:29:00+10:00" pubdate data-updated="true">Aug 21<span>st</span>, 2011</time>
+        
+         | <a href="/2011/08/poweroff-without-password.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/mounting-nfs-in-ubuntu.html">Mounting NFS in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-05T06:17:00+10:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/08/mounting-nfs-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/regex-substitution-101.html">Regex Substitution 101</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-01T07:42:00+10:00" pubdate data-updated="true">Aug 1<span>st</span>, 2011</time>
+        
+         | <a href="/2011/08/regex-substitution-101.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching&#8230;<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn&#8217;t enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word &#8216;hello&#8217;<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed &#8220;s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/&#8221; &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed &#8216;s/PATTERN/REPLACEMENT/&#8217;</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /&#8217;s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://blog.psych0tik.net">
+  <div class="css-comment-name js-comment-name">
+    richo
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-08-30T11:31:51.256Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    FWIW, vim doesn&#39;t require that you don&#39;t include the trailing seperator, and inherently requires it to use modifiers, so including it is a good habit to develop regardless.
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/search-and-replace-in-multiple-files.html">Search and Replace in Multiple Files With Sed</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-20T04:25:00+10:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
+        
+         | <a href="/2011/07/search-and-replace-in-multiple-files.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Back on the 30th of May, I put up a blog post on how to do a <a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html">search and replace in multiple files with Vim</a>.<br />I think this is a great way of doing substitutions in multiple files because you get to see a preview of what it looks like before you actually writing it to disk.<br /><br />This is great for a small number of files, but to do a large directory of files, you don&#8217;t really gain any advantages as you&#8217;re probably not going to open every file in a vim buffer and review each one separately.<br /><br />This is where <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> come in handy!<br /><br />This command will replace every occurrence of the word &#8220;foo&#8221; with the word &#8220;bar&#8221; in all html files recursively from the current directory:<br /><blockquote><pre>find . -name "*.html" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br /><b>The explanation:</b><br /><br />This might look a little confusing, but it essentially 2 parts:<br /><br />The first part will list all the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.html</span> files recursively and for each one, execute the command specified by the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option:<br /><blockquote><pre>find . -name "*.html" -exec ...</pre></blockquote><br />The second part is the command to execute for each found file, which in this case is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span>:<br /><blockquote><pre>sed -i "s/foo/bar/g" &lt;TheFile&gt;</pre></blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8217;{}&#8217;</span> represents the current file and the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\;</span> represents the end of the command to execute as part of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option.<br /><br /><br /><b>Doing more:</b><br /><br />As you can see, the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-name</span> option to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> command takes a <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">glob pattern</a>.<br />If you wanted to be more specific about which files should have the substituion, you could use a regular expression instead, like this:<br /><blockquote><pre>find . -regex ".*[.]html\|.*[.]js" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br />This regex will match all files that end with &#8220;.html&#8221; or &#8220;.js&#8221;.<br /><br />If you wanted to preview your changes before they are actually written to disk, there are a few ways of accomplishing this, but the simpliest is probably to modify the command as follows:<br /><blockquote><pre>find . -name "*.html" -exec sed "s/foo/bar/g" '{}' \; | less</pre></blockquote><br />Removing the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> will mean that instead of writing the changes &#8220;in place&#8221;, the changed output will be written to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">STDOUT</span> instead of the files.<br />Then to capture this (potentially large) output, we pipe it to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span>.<br />From within <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span> you will be able to do searches (with the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/</span>&#8221; key) and scroll through the output to do a quick sanity check.<br />Once your happy, you can remove the pipe and add the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> option again to make it permanent!
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T06:50:35.696Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    That would be very useful if I used Linux more&#8230; instead I fight the Windows tools ;)<br /><br />p.s. [.] looks funny, I thought &#46; would work, but it looks like you have to use &#92;. &#8211; and that looks really ugly and is the same amount of chars anyway!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-21T07:02:39.134Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    lol, yea, I set up all the linux tools with cygwin in windows when I was forced to use it at my old work, but these things seem lot easier for me in linux!<br /><br />Re: the regex, you could just use &#46; and you shouldn&#39;t need to escape the backslash. <br />Infact that&#39;s what I had first, but I changed it to the square brackets at the last minute.<br />I thought escaping the dots and the | character made it look a bit more complicated - too many backslashes, even though it was lass characters.<br /><br />&quot;.*&#46;html\|.*&#46;js&quot;<br />&quot;.*[.]html\|.*[.]js&quot;<br /><br />It&#39;s all the same really, just trying to make the blog as easy to read as possible for my millions of fans ;)<br />&#8230;jokes
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/ssh-copy-id-with-alternative-port.html">Ssh-copy-id With an Alternative Port</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-14T16:05:00+10:00" pubdate data-updated="true">Jul 14<span>th</span>, 2011</time>
+        
+         | <a href="/2011/07/ssh-copy-id-with-alternative-port.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+If you use ssh on a regular basis, you probably already know about setting up ssk-keys.<br />If you dont know about ssh-keys, you should! - its worth reading up on.<br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> is a helper script that will copy your public key across to the remote machine and append it to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">authorized_keys</span> file.<br /><br />This is all well and good if the server is on port 22, but for non-standard ports, this script does not support a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-p</span> option.<br /><br />Instead of copying across the key manually, I googled for workarounds and came across <a href="http://mikegerwitz.com/2009/10/07/ssh-copy-id-and-sshd-port/">this post</a> where the author explains that the arguments to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> are simply passed on to the ssh command.<br /><br />This means by using quotes, everything inside of them will be passed straight through and that allows a command like this to achieve the desired result:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id -i ~/.ssh/id_rsa.pub ‘-p xxxx username@host’</span></blockquote><br />Kudos to Mike Gerwitz for the tip.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/pencil-for-ui-design.html">Pencil for UI Design</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-09T13:34:00+10:00" pubdate data-updated="true">Jul 9<span>th</span>, 2011</time>
+        
+         | <a href="/2011/07/pencil-for-ui-design.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I&#8217;m designing software!<br /><br />I&#8217;m currently in the early stages of design and have developed some basic requirements, a feature list, some rough UI sketches and a very rough roadmap.<br /><br />I&#8217;m putting a fair bit of thought into the user-friendliness of the app and I have gone through quite a few different idea&#8217;s for the UI.<br />During this sort-of brainstorming activity, I got really sick of trying to change my sketches on paper and asked my self <i>&#8220;why aren&#8217;t I doing this electronically!?&#8221;</i> - so I started looking into freeware mockup software.<br /><br />My searches lead me to this page: <br /><a href="http://stackoverflow.com/questions/54606/what-free-software-can-i-use-to-create-ui-mockups">http://stackoverflow.com/questions/54606/what-free-software-can-i-use-to-create-ui-mockups</a><br /><br />Which lead me to <b>Pencil</b>: <br /><a aiotitle="http://pencil.evolus.vn/en-US/Home.aspx" href="http://pencil.evolus.vn/en-US/Home.aspx">http://pencil.evolus.vn/en-US/Home.aspx</a><br /><br /><b>Pencil</b> is an <a href="http://en.wikipedia.org/wiki/Xul">XUL</a> based application for making UI mockups - and its free!<br />For those of you that have used professional UI mocking tools, I&#8217;m not sure you&#8217;ll find this to suit your needs, but as I have never used any software like this, this was basic enough for me (and faster than using The GIMP).<br /><br />Pencil is advertised as a firefox plugin, but the .xpi is configured for FF3.5 (which is a little old!) so instead of hacking at this, the <a href="http://pencil.evolus.vn/en-US/Downloads/Application.aspx">downloads page</a> offers a &#8220;stand-alone&#8221; option that you can run with <a href="http://en.wikipedia.org/wiki/Xulrunner">xulrunner</a>.<br /><br />Please note at the time of this blog, this app requires xulrunner 1.9.<br />In Ubuntu, xulrunner can be easily installed with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install xulrunner-1.9.2</span></blockquote><br />Once you&#8217;ve downloaded and extracted Pencil, and you have xulrunner 1.9 installed, you can run Pencil by giving xulrunner the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">application.ini</span> file, for example:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">xulrunner /opt/Pencil-1.2-0-linux-gtk/application.ini</div></blockquote><br />The UI for Pencil is pretty intuitive and judging by the menus, there isn&#8217;t a whole bunch of advanced features (or at least from what I can tell), but I do like the simplicity and I was able to sketch up my UI design quite quickly.<br /><br />By deafult (on Ubuntu) it comes with a number of &#8220;Collections&#8221; of widgets to start playing with.<br />I particularly like the &#8220;Sketchy GUI&#8221; collection for mockups, so the end result does not allow the viewer to let any preconceived opinions about the look and feel affect their judgement (some people dont like the look of the Windows XP widgets and may get turned off straight away).<br /><br />This also means if you change the implementation (from desktop app to web app for example) the mockups may possibly stay the same without too much confusion.<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://pencil.evolus.vn/en-US/Handlers/PictureHandler.ashx?ResourceId=4be6736a-429a-4d97-ab3e-4a8a8c7d3c85&amp;Width=881&amp;Height=0" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="232" src="http://pencil.evolus.vn/en-US/Handlers/PictureHandler.ashx?ResourceId=4be6736a-429a-4d97-ab3e-4a8a8c7d3c85&amp;Width=881&amp;Height=0" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Screenshot of the &#8220;Sketchy GUI&#8221; collection from the Pencil Website</td><td class="tr-caption" style="text-align: center;"><br /></td></tr></tbody></table><br /><br />If you are after more complete mockup software, that StackOverflow article has some good references, and I have heard <a href="http://www.balsamiq.com/products/mockups">Balsamiq</a> is quite good, but Pencil suited my needs just fine.
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-10T10:58:39.843Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Nice post. I&#39;ve used Balsamiq before but have a strange attachment to drawing mockups on paper. It feels like I&#39;m releasing my thoughts more easily.<br /><br />For the same reason I also use a paper to-do list, even though I end up re-writing it every day. :)
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-10T11:04:26.783Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man!<br /><br />Haha, dont worry, I can understand that :)<br /><br />I have a book full of paper mockups, lists, etc. I just got really sick of all the little adjustments.<br />Like: &quot;Oh, that needs to be a little wider&quot; and not having an undo button :P<br /><br />I don&#39;t think we&#39;ll ever live in the paper-less office :P
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/python-fu-for-gimp.html">Python-fu for the Gimp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-03T11:52:00+10:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/07/python-fu-for-gimp.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I&#8217;ve been meaning to learn how to script The Gimp for a while now, but have never bothered to put the time aside to do it. Well, I finally did it, and this is why and how :)<br /><br /><b>The story:</b><br /><b>&nbsp;</b> <br />When I had my 21st birthday, my brother made the party invites for me. He added a whole bunch of photos and I&#8217;ve still got a copy of that with all my photos as a keepsake.<br />Now his birthday is coming up and I thought I would repay the favour.<br /><br />The Idea I had was to scan a bunch of old photos (like he did), then use The Gimp to make them look like printed photos (white border, drop shadow, kind of like polaroids) and scatter them around a &#8220;Happy Birthday&#8221; title.<br /><br />I spent quite a while scanning the photos, adding them all as layers to a single canvas, resizing them to suit and then individually adding white padding, a black stroke around the outside, dropping a shadow, rotating and moving each individual layer to lay it out nicely, I was finally happy with the end result and saved a .xcf and then exported a .jpg.<br />At this stage I had all the scans, a font, a background image, the .xcf and the .jpg all saved in a folder on my desktop. <br />I quit The Gimp, got a flash drive and copied the .jpg over so I got get it printed, shutdown the pc and went for dinner.<br /><br />When I got back quite some time later, my pc hadn&#8217;t quite shutdown yet, it just had a black screen.. So I left it a little longer and it still hadn&#8217;t shutdown, so I held down the power button to force it.<br />The next day, I got asked to make a small adjustment to the invite, and to my horror, I could not find the .xcf anywhere! I had the exported .jpg from the flash drive, but that wasn&#8217;t suitable to make the adjustment&#8230; something had happened and to this day I&#8217;m still not sure what, but I lost all my work&#8230; When I realised I had to redo all that work, that&#8217;s when I put time aside to learn how to script The Gimp!<br /><br /><b>Scripting The Gimp:</b><br /><br />I took a look at some code examples for The Gimp&#8217;s script-fu functionality and having never learned Lisp, it looked pretty foreign to me! That&#8217;s when I noticed there was a Python-fu equivalent (luckily).<br /><br />Using the Python Console from within Gimp is really easy!<br />It has a &#8220;Browse&#8221; button which brings up the &#8220;Python Procedure Browser&#8221; - which is a list of functions that interact with The Gimp.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-nKAIY9543z0/ThBPoNzjquI/AAAAAAAAAB8/TqfEJU2SvEI/s1600/gimp-console.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="267" src="http://1.bp.blogspot.com/-nKAIY9543z0/ThBPoNzjquI/AAAAAAAAAB8/TqfEJU2SvEI/s320/gimp-console.png" width="320" /></a></div><br />Using the filterbox at the top, you can easily find the python function that matches the action you would normally execute using The Gimp&#8217;s menus (such as a layer resize, or filter).<br />When you select the function, it will show you a basic man page on what it does and the parameters it takes, and applying this function will insert the code into the console with place holders for the parameters, which you can then simply modify and execute.<br /><br />After getting the basics from Googling around, I made a basic script that I just copied and pasted into the console when I wanted to execute the repetitive actions.<br />I then optimised the script by wrapping it in a function, doing all my actions in a separate context (as not to disturb the users context for things like selected brush, etc.) and also group all my actions in a single undo (to simplify the history and make it easy to undo what my script does).<br /><br /><b>Work-arounds:</b><br /><br />There are a couple of hacks in the script that I couldn&#8217;t work out the nice way around in a short period of time (I&#8217;m still a n00b).<br />Rather than working out how to fix it, I thought I would just describe them here. <br /><br />One of those being that to add a white border around a layer, I need to resize the layer with an offset, and this new extra space would not always be white (regardless of my selected background color). My work around was to add a white layer behind it and merge it down.<br /><br />The other hack was with stoking. To add a 1px black stroke around a layer, I normally just specify 1px black from the stroke dialogue (as opposed to using the selected brush). I could not find an equivalent to this in the Python API - it always used the selected brush. <br />As the default brushes include a 1px brush (and a 3px brush, but no 2px brush) I thought I&#8217;d use that, but to do a stroke around the outside of a layer, I needed to select-all, then stoke, but with a 1px brush, I could not specify I wanted that 1px to be on the inside of the selection. So stroking with this method put the line on the top and left sides, not on the bottom and right.<br />The hack I used here is to rotate 180 degrees, stroke and repeat.<br /><br />Not the most elegant of scripts, but this was my first attempt and got the job done.<br /><br /><b>Registering the script with The Gimp:</b><br /><br />So now that the script was working (albeit with work arounds) and I added the polish (function definition, separate context, grouped undo, etc.) I was ready to add it to the menus just like any other filter.<br />I used an existing script (located in ~/.gimp-2.6/plug-ins/) as a baseline and adjusted it for my new script (that I called &#8220;photofy&#8221;).<br />This part of the code allows you to specify the name of the script, where in the menu it should be registered and if there are any user-specified inputs to the script you can even specify a simple GUI for a dialogue box to get them from the user - which I did to collect the desired size of the white margin.<br />You can see this part of the code at the bottom of the python script.<br /><br /><b>Demo:</b><br /><br />So now the fun part, this is how you use it :)<br />Here is a simple image with 2 layers: a white background layer and a smaller subject layer (the gradient).<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lpQOJzvaj44/Tgb-hNSxBwI/AAAAAAAAABs/baRi7vX9YCE/s1600/1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="284" src="http://4.bp.blogspot.com/-lpQOJzvaj44/Tgb-hNSxBwI/AAAAAAAAABs/baRi7vX9YCE/s320/1.png" width="320" /></a></div><br />With the subject layer selected, navigate to the menu in which the &#8220;Photofy&#8221; script is registered.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-TfMu_L4Sgzw/Tgb-hx17ebI/AAAAAAAAABw/-Qz_f-nxCkU/s1600/2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-TfMu_L4Sgzw/Tgb-hx17ebI/AAAAAAAAABw/-Qz_f-nxCkU/s320/2.png" width="262" /></a></div><br />The dialogue box that I specified in the script-fu code segment at the bottom of the script will appear and allow the user to enter the size of the white margin.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-9IyK0kdIzaQ/Tgb-iM-92pI/AAAAAAAAAB0/iDouukMupfw/s1600/3.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="170" src="http://1.bp.blogspot.com/-9IyK0kdIzaQ/Tgb-iM-92pI/AAAAAAAAAB0/iDouukMupfw/s320/3.png" width="320" /></a></div><br />When you press &#8220;OK&#8221;, the script will run through its actions and the user&#8217;s environment will remain the same, and the there will be a single new undo step in the history.<br />This is the final product:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-ZiLNMJ8g7iw/Tgb-ixVI8mI/AAAAAAAAAB4/o6nCg1vhxME/s1600/4.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="284" src="http://1.bp.blogspot.com/-ZiLNMJ8g7iw/Tgb-ixVI8mI/AAAAAAAAAB4/o6nCg1vhxME/s320/4.png" width="320" /></a></div><br /><b>The code:</b> <br /><br />If you&#8217;re interested in seeing what the code looks like, or want to use the script yourself (either as is, or as a baseline to write you own), it is available here:<br /><a href="https://github.com/stevenocchipinti/Gimp-Python-Fu/blob/master/photofy.py">https://github.com/stevenocchipinti/Gimp-Python-Fu/blob/master/photofy.py</a>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/01913646631731390691">
+  <div class="css-comment-name js-comment-name">
+    Виталий Т
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-04T13:57:49.075Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    not work for 2.7.3
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-07-04T14:16:03.099Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My apologies but I haven&#39;t done thorough testing on this script.<br />I am using 2.6.11, but please feel free to fork the repo to make any changes and send me a pull request :)
+  </div>
+  <br/>
+</div>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/5/">&larr; Older</a>
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/07/test/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/stevenocchipinti">@stevenocchipinti</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'stevenocchipinti',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

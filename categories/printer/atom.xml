@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: printer | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/categories/printer/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T21:36:17+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a network printer in Ubuntu 12.04]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/08/adding-network-printer-in-ubuntu-1204.html"/>
+    <updated>2012-08-05T04:11:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/08/adding-network-printer-in-ubuntu-1204</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+In the old days, printing was really hard in linux. It was one of the things that was a deal breaker when trying to switch from Windows for a lot of people, but when I first tried Ubuntu (probably around 2006-2007) it made all that pain go away! It was easy! A couple of clicks and you could set up a network printer and its been that easy ever since.<br /><br />Recently Ubuntu have tried to make their settings screen a bit like a Mac, and to simplify everything they seem to be using a simplified user interface for the printer configuration too:<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://3.bp.blogspot.com/-Bx9JrDkVYrk/UB3w_5N77aI/AAAAAAAAAKY/5HHdw8ZErB0/s1600/Screenshot+from+2012-08-05+14:04:37.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="285" src="http://3.bp.blogspot.com/-Bx9JrDkVYrk/UB3w_5N77aI/AAAAAAAAAKY/5HHdw8ZErB0/s320/Screenshot+from+2012-08-05+14:04:37.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">New Setting user interface</td><td class="tr-caption" style="text-align: center;"><br /></td></tr></tbody></table><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-xO2uGM8R36A/UB3xME_iwZI/AAAAAAAAAKg/kBFbC_MDcv8/s1600/Screenshot+from+2012-08-05+14:04:55.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="198" src="http://4.bp.blogspot.com/-xO2uGM8R36A/UB3xME_iwZI/AAAAAAAAAKg/kBFbC_MDcv8/s320/Screenshot+from+2012-08-05+14:04:55.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">New Printing user interface</td></tr></tbody></table><br />Well this new interface doesn't work for me, when I try to add a network printer, I get the error message:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">'FirewallD is not running. Network printer detection needs services mdns, ipp, ipp-client and samba-client enabled on firewall.'</blockquote><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/-FTpSMga_I2I/UB3xOZVzlDI/AAAAAAAAAKo/4_KILPWTWTg/s1600/Screenshot+from+2012-08-05+14%253A03%253A44.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="233" src="http://1.bp.blogspot.com/-FTpSMga_I2I/UB3xOZVzlDI/AAAAAAAAAKo/4_KILPWTWTg/s320/Screenshot+from+2012-08-05+14%253A03%253A44.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The error that stops me from finding my network printer</td></tr></tbody></table><br />Well no matter what I did, I couldn't add my printer. After some googling around, I found how to get to the old user interface... which actually works!<br />Just type this into a terminal:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo system-config-printer</blockquote><br />And you will be given this old familiar screen:<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/s1600/Screenshot+from+2012-08-05+14%253A04%253A55.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="198" src="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/s320/Screenshot+from+2012-08-05+14%253A04%253A55.png" width="320" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The classic printing user interface... the one that works!</td></tr></tbody></table><br />Clicking the big "Add" button in this screen and following the steps worked great for me. Another alternative is to use the CUPS web interface on <a href="http://localhost:631/">http://localhost:631</a> but that can be a little more complicated.
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-22T13:53:17.919Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Great!!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-26T12:51:30.446Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    localhost:631 worked fine for me
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-28T00:59:33.847Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Steven,
+The &quot;sudo system-config-printer&quot;...
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Steven,<br />The &quot;sudo system-config-printer&quot; approach worked for me, thanks. <br />Ubuntu 12.04 connected via network cable and then wi-fi to an HP8600 printer/scanner/fax.<br /><br />Richard
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-01-28T01:03:25.251Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks for the feedback everyone, glad I could help.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-02-01T10:06:01.032Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    thx after 2 reinstalation of ubuntu 12.04. I find this approach and it work!!! litle problem is that guest have information that printing is stoped couse of some problem but all pages are printing well. Just cancel job in printer try after printing is finished and all is OK. THX THX THX 
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/00225152546369058619">
+  <div class="css-comment-name js-comment-name">
+    Brian Gallimore
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T15:48:09.132Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Just what I needed to get my old-school printer installed.  Thanks for posting up this info!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/04304547397419235914">
+  <div class="css-comment-name js-comment-name">
+    Gilli
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-06T07:12:25.638Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you so much , awesome
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Dave, M5DWI
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-20T09:32:52.022Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks Steve, this worked for me also . . . Laserjet 4L now working via Netgear print server.<br /><br />73 de M5DWI
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/03603439139655593802">
+  <div class="css-comment-name js-comment-name">
+    101North
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-13T18:45:15.513Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thank you !!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-23T18:10:36.906Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks to this post i could install my printer.<br /><br />I got the same error message as you did using the system setting install.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-25T09:27:12.650Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My Xerox Workcenter 133 was not so lucky, as he now has to print...<br />Thank you, Steve.<br /><br />73 de Nino, e79xp
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

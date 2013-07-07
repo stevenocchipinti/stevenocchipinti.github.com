@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nfs | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/categories/nfs/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T21:36:17+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mounting NFS in Ubuntu]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/08/mounting-nfs-in-ubuntu.html"/>
+    <updated>2011-08-05T06:17:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/08/mounting-nfs-in-ubuntu</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

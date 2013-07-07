@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: programming | StevenOcchipinti.com]]></title>
+  <link href="http://stevenocchipinti.github.io/categories/programming/atom.xml" rel="self"/>
+  <link href="http://stevenocchipinti.github.io/"/>
+  <updated>2013-07-07T21:36:17+10:00</updated>
+  <id>http://stevenocchipinti.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <link href="http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines.html"/>
+    <updated>2013-06-08T15:27:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker" target="_blank">Ruby</a> <a href="https://rubygems.org/gems/tramtracker" target="_blank">Gem</a> that provides a command line interface to Melbourne's <a href="http://yarratrams.com.au/tramtracker" target="_blank">TramTracker</a> service.<br /><br />One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br />In the past, I used the&nbsp;command line&nbsp;utility<span style="font-family: Courier New, Courier, monospace;"> watch </span>to achieve this, but I couldn't find a way to enforce a "max iterations" option. If it gets forgotten about in the background, TramTracker will eventually block that IP address!<br /><br />So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.<br /><br />In this post, I'll outline a couple of ways of achieving this.<br /><br /><br /><b>Using the \b (backspace) character</b><br /><br />Printing a<span style="font-family: Courier New, Courier, monospace;"> \b </span>character does the same thing as pressing backspace. This is really simple to use and is great for little "progress" spinners. For example, a character that cycles through<span style="font-family: Courier New, Courier, monospace;"> '|', '/', '-', '\'</span>. For example:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts "foo\b\b\bbar" &nbsp;&nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; bar</span><br /><span style="font-family: 'Courier New', Courier, monospace;">("|/-\\"*10).chars.each {|c| print c; sleep 1; print "\b"} &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; Cheesy, old-school spinner</span></blockquote>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you'd need just as many<span style="font-family: Courier New, Courier, monospace;"> \b </span>characters (you would probably introduce a loop).<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts "foo\n\b\b\bbar" &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; foo\nbar</span></blockquote><br /><b>Using the \r (carriage return) character</b><br /><br />To avoid having to repeat just as many<span style="font-family: Courier New, Courier, monospace;"> '\b' </span>characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}</span></blockquote>This approach still won't work across multiple lines, but it has another&nbsp;subtle&nbsp;shortfall too, it doesn't clear the entire line. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">puts "foo\rp" <span style="color: #999999;"># =&gt; poo</span></span></blockquote>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;)<br /><br /><br /><b>Using curses</b><br /><br />The most common answer to overwriting characters across multiple lines, is to use<span style="font-family: Courier New, Courier, monospace;"> <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)" target="_blank">curses</a></span>.<br />Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA" target="_blank">menu driven Text User Interfaces</a> (TUI's) easier to develop.<br />Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html" target="_blank">curses module</a> built in to its standard library, which provides a simple API, for example:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">setpos(lines/2, cols/2)<span style="color: #999999;"> # Start in the middle</span><br />addstr("Hello world")</span></blockquote><br />I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381" target="_blank">gist here</a>.<br /><br />Curses is pretty good for this sort of stuff, it gives you a lot for free.<br />The thing that I didn't like about using the curses library was that when it initialises, it clears the screen.<br />This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn't want that.<br /><br /><br /><b>Using individual cursor movement characters</b><br /><br />This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:<br /><blockquote class="tr_bq"><center><table><tbody><tr><th><div style="text-align: left;">Move the cursor to line L, column C</div></th><td>\033[&lt;L&gt;;&lt;C&gt;H</td></tr><tr><th><div style="text-align: left;">Move the cursor up N lines</div></th><td>\033[&lt;N&gt;A</td></tr><tr><th><div style="text-align: left;">Move the cursor down N lines</div></th><td>\033[&lt;N&gt;B</td></tr><tr><th><div style="text-align: left;">Move the cursor forward N columns</div></th><td>\033[&lt;N&gt;C</td></tr><tr><th><div style="text-align: left;">Move the cursor backward N columns</div></th><td>\033[&lt;N&gt;D</td></tr><tr><th><div style="text-align: left;">Clear the screen, move to (0,0)</div></th><td>\033[2J</td></tr><tr><th><div style="text-align: left;">Erase to end of line</div></th><td>\033[K</td></tr></tbody></table></center></blockquote>You can read more about these <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2" target="_blank">"escape sequences" here</a>.<br />I ended up using the<span style="font-family: Courier New, Courier, monospace;"> '\033[K' </span>("Erase to end of line") and the<span style="font-family: Courier New, Courier, monospace;"> '\033[A' </span>("Move the cursor up") <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb" target="_blank">characters in my TramTracker gem</a> and it worked a treat!<br /><br /><br />Now go and make a cool retro user interface! :)<br /><br /><br />
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/09/getting-started-with-ruby-on-rails.html"/>
+    <updated>2012-09-11T13:29:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/09/getting-started-with-ruby-on-rails</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+<div>I've been using Ruby on Rails for about a year and half now and I'm really enjoying it!&nbsp;At the time of writing (at least in Melbourne) there is lots of demand for Rubyist's, so it's great time to get involved.</div><div>I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</div><ul></ul><br /><b>Join the community!</b><br /><br />Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is "<i>Ruby On Rails Oceania</i>" (aka RORO).<br />They have meetups on the <i>last Thursday of every month</i>&nbsp;in Melbourne and a pretty active mailing list:<br /><ul><li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania" target="_blank">Ruby On Rails Oceania Mailing List</a></li><li><a href="http://ruby.org.au/" target="_blank">Ruby.org.au</a></li></ul><br /><b>Ruby and Rails resources:</b><br /><ul><li><a href="http://guides.rubyonrails.org/">Rails Guides</a>&nbsp;- I use these almost everyday!</li><li><a href="http://apidock.com/">ApiDock</a> - API's for Ruby, Rails and RSpec in one place</li><li><a href="http://railsforzombies.org/">Rails For Zombies</a>&nbsp;- A great beginners tutorial for rails</li><li><a href="http://railscasts.com/">Rails Casts</a>&nbsp;- Regular video podcast all about rails</li><li><a href="http://ruby5.envylabs.com/">Ruby5</a>&nbsp;- Regular 5 minute audio podcast on the latest news</li><li>... a plethora of good books, such as "The RSpec Book", "Design Patterns in Ruby", etc. (alot of which I still need to read)</li></ul><div><br /></div><b>Getting started:</b><br /><br />To get started you'll need to set up your development environment, here's what I use:<br /><ul><li>Vim... of course... although there are lots of alternatives, the most popular ones would probably be:</li><ul><li>RubyMine (IDE) - used alot at work (commercial software)</li><li>Sublime Text 2 (Text editor)</li><li>TextMate (Text editor)</li></ul><li>RVM (Ruby Version Manager)</li><ul><li>Get from here: <a href="https://rvm.io/" target="_blank">https://rvm.io</a></li><li>Follow the instructions to configure your shell to use RVM</li><li>Use RVM to install the latest ruby</li><ul><li>$&gt; rvm install 1.9.3</li></ul><li>A newer alternative to RVM is RBenv</li></ul><li>Once you have ruby installed, you will have the 'gem' command available</li><ul><li>Gems are roughly equivalent to jars in the Java world</li><li>Use gem to install the latest rails</li><ul><li>$&gt; gem install rails</li></ul></ul><li>Once you have rails installed, you will have the 'rails' command available</li><ul><li>Use the rails command to start a new project</li><ul><li>$&gt; rails new todolist</li><li>$&gt; rails server</li><li>browse to <a href="http://localhost:3000/" target="_blank">http://localhost:3000</a></li></ul></ul><li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li></ul><br /><b>Things to keep in mind for RoR dev:</b><br /><ul><li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.</li><ul><li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li></ul><li>Ruby  on Rails strongly supports DRY principles, don't reinvent the wheel,  theres problably a gem that already does what you want.</li><ul><li>To find gems, good places to look are:</li><ul><li><a href="http://ruby-toolbox.com/" target="_blank">Ruby-Toolbox.com</a></li><li><a href="http://railscasts.com/" target="_blank">RailsCasts.com</a></li><li><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></li><li><a href="http://github.com/" target="_blank">GitHub.com</a></li></ul></ul><li>The majority of Ruby projects are:</li><ul><li>Developed using TDD/BDD, so you'll need to learn the testing frameworks:</li><ul><li>Test::Unit (default with rails)</li><li>RSpec (a popular replacement for Test::Unit)</li><li>Cucumber (BDD)</li></ul><li>Developed on MacOSX - for new comers (like myself) some essentials are:</li><ul><li>brew - a mac package manager (like apt or yum)</li><li>iterm2 - really good terminal emulator</li></ul><li>Deployed on Linux</li><ul><li>Basic Linux foo is really useful</li></ul><li>Version controlled with git</li><ul><li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li></ul></ul></ul><div><br /></div><div>That's a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds.html"/>
+    <updated>2011-10-10T03:49:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/10/ruby-parallel-port-leds</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 "D" pins for data with 8 matching "Ground" pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED's were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED's.<br />I found a bunch of tristate LED's - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn't have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:12:33.662Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Maybe it&#39;s just me, but there&#39;s an elegance in seeing *bits* when so many of us work in higher level languages these days.<br /><br />Good work man!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-10-12T03:20:32.130Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Thanks man :)<br /><br />I wouldn&#39;t have even known how to specify bits if not for this, lol.<br /><br />Yea, don&#39;t see bits very often. I could have written this basic example in C, but because its going to be part of a web app one day, I wanted my high level comforts for later on - I&#39;m not that hardcore, lol :P
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/09/git-diff-and-patch.html"/>
+    <updated>2011-09-21T10:41:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/09/git-diff-and-patch</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+I recently found myself in a situation where I need to comment out  certain lines in my code in order to test a particular set of features.<br /><br />These  commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br />In this situation, checking them into Git or making a personal <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.gitignore</span> file are not suitable solutions.<br /><br />I have found 2 good ways of accomplishing this:<br /><br /><br /><b>Git stash:</b><br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git stash save temp workaround for some issue </blockquote><br />Then I continue on with my work. I selectively leave these changes out of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git checkout -- .</span> so I'm left with a clean repository.<br /><br />When I need to work on a related feature again, I can list my stashes with:<br /><blockquote>git stash list</blockquote><br />Then, apply the most recent stash by running this command:<br /><blockquote>git stash apply</blockquote><br />If you have more than one stash, you can specify which stash you want to apply on the command line. See <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git stash --help</span> to see more information.<br /><br /><br /><b>Git diff and patch:</b> <br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> are very useful tools to be familiar with if you ever deal with text. Git's <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> output is much the same, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> tool is still very handy!<br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git diff &gt; ~/patches/temp_workaround.patch</blockquote><br />Then I continue on with my work. I selectively leave these changes out  of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in  except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git  checkout -- .</span> so I'm left with a clean repository.<br /><br />When I need to work on a related feature again, I can apply my patch by running this command from the project root:<br /><blockquote>patch -p1 &lt; ~/patches/temp_workaround.patch</blockquote><br /><br />Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.
+</div>
+
+
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/06966628689154715916">
+  <div class="css-comment-name js-comment-name">
+    optiks
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-09-23T05:34:22.096Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    OverflowException: Steve.GitFanboiness cannot fit in Int32 :P
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2011-09-23T05:39:39.986Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    lol! ...really?<br />Now that I&#39;m using it daily, I am seeing why its so popular!
+  </div>
+  <br/>
+</div>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Code review workflow with GitHub]]></title>
+    <link href="http://stevenocchipinti.github.io/2011/09/code-review-workflow-with-github.html"/>
+    <updated>2011-09-18T10:06:00+10:00</updated>
+    <id>http://stevenocchipinti.github.io/2011/09/code-review-workflow-with-github</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>"<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>"</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known "<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>" and describes how they are both good, but Git-Flow is alot more involved, where the aptly known "GitHub-Flow" is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else's work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>".<br /><br />This doesn't affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it's the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>" instead of something more descriptive, like "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>".<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

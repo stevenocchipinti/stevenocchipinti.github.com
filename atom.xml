@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://stevenocchipinti.github.io/atom.xml" rel="self"/>
   <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-07T19:33:53+10:00</updated>
+  <updated>2013-07-07T21:36:17+10:00</updated>
   <id>http://stevenocchipinti.github.io/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Test]]></title>
-    <link href="http://stevenocchipinti.github.io/blog/2013/07/07/test/"/>
+    <link href="http://stevenocchipinti.github.io/2013/07/07/test/"/>
     <updated>2013-07-07T18:53:00+10:00</updated>
-    <id>http://stevenocchipinti.github.io/blog/2013/07/07/test</id>
+    <id>http://stevenocchipinti.github.io/2013/07/07/test</id>
     <content type="html"><![CDATA[<p>Test, Hack, Test</p>
 ]]></content>
   </entry>
