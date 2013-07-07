@@ -1,0 +1,19 @@
+---
+title: "Script to transfer photos in linux"
+layout: "post"
+permalink: "/2013/01/script-to-transfer-photos-in-linux.html"
+uuid: "2649383664095480381"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-2649383664095480381"
+date: "2013-01-04 16:38:00"
+updated: "2013-03-23 12:16:08"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "2649383664095480381"
+    comments: "0"
+categories: [photography, bash]
+---
+
+<div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! ... I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it's a really simple script to write, all it does is move the photos from my camera's memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a 'jpg' or 'raw' sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn't really like that.
+</div>

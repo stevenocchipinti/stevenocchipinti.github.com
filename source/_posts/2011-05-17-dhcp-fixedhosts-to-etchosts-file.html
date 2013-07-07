@@ -1,0 +1,19 @@
+---
+title: "DHCP fixedhosts to /etc/hosts file"
+layout: "post"
+permalink: "/2011/05/dhcp-fixedhosts-to-etchosts-file.html"
+uuid: "3237433123704108198"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-3237433123704108198"
+date: "2011-05-17 12:28:00"
+updated: "2011-07-20 04:28:18"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "3237433123704108198"
+    comments: "0"
+categories: [linux, bash, regex, sed]
+---
+
+<div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS... I think... correct me if I'm wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn't need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I've already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo "admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D" | nc 192.168.1.1 23 | \grep "[ ]*[0-9]" | sed "s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g"</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">... <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />...</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">...<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />...</span></blockquote>This isn't really that useful, but it took a couple of minutes, just to "see if I could do it"... and it worked :)<br /><br />... I don't think I'll actually use it, lol, but it was fun anyway :P
+</div>

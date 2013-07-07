@@ -1,0 +1,19 @@
+---
+title: "XKCD + BeyondPod"
+layout: "post"
+permalink: "/2012/03/xkcd-beyondpod.html"
+uuid: "6003854256533816899"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-6003854256533816899"
+date: "2012-03-04 04:10:00"
+updated: "2012-04-06 10:24:23"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "6003854256533816899"
+    comments: "0"
+categories: [android]
+---
+
+<div class="css-full-post-content js-full-post-content">
+On my Android phone, I use an app called "<a href="https://market.android.com/details?id=mobi.beyondpod&amp;hl=en%20" target="_blank">BeyondPod</a>". <br /><br />BeyondPod is great because unlike <a href="https://market.android.com/details?id=com.google.android.apps.reader&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5nb29nbGUuYW5kcm9pZC5hcHBzLnJlYWRlciJd" target="_blank">Google Reader</a> and <a href="https://market.android.com/details?id=com.alphonso.pulse&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5hbHBob25zby5wdWxzZSJd" target="_blank">Pulse</a> (which are other great RSS readers), BeyondPod will download video and audio podcasts on a schedule.<br /><br />What this means for me, is that at 2:30 AM, my phone will use my home ADSL2's off-peak downloads and fetch a bunch of regular podcasts so when I wake up and make my way into work, I will have all the latest episodes of my favourite shows to watch and listen to on the train.<br /><br />One of the feeds that I'm subscribed to is <a href="http://xkcd.com/%20" target="_blank">XKCD</a>. If you look at the comics online, you probably already know that if hover your mouse over the image, you get to see an extra message about the comic.<br /><br />On Google Reader, you can tap and hold the image and use the menu to get to the tooltip, but with BeyondPod, there is no such option.<br /><br />This means that the tooltip is actually included in the <a href="http://xkcd.com/atom.xml" target="_blank">feed</a>, so I thought it would be pretty easy to write a little proxy that pulls out the "title=" attribute and appends it to the body.<br /><br />Before I started coding, I thought that surely someone would have already done this, so after a quick Google search I came across a <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=upJ5TUni3BGUZU9yLO2fWQ" target="_blank">Yahoo! Pipe</a> from "<a href="http://pipes.yahoo.com/pipes/person.info?guid=D4HQ7VIJ2YNE6NZRH3VHJOBREA">Benjamin Cook</a>" that does exactly that.<br /><br />Ben's Pipe appends a "&lt;br /&gt;" and then the tooltip, but the "&lt;br /&gt;" seems to be getting escaped, so I copied the pipe and removed the "&lt;br /&gt;" and the end result was exactly what I wanted.<br /><br />If you have a similar problem, you can add <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=61e54ab0572541bd03cd44f3e601482e" target="_blank">my version of the pipe</a> to your reader and here's what it'll look like: <br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s1600/2012-02-23_16-14-04.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s320/2012-02-23_16-14-04.jpg" width="192" /></a></div><br />
+</div>

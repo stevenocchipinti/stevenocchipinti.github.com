@@ -1,0 +1,105 @@
+---
+title: "Bluetooth audio streaming from phone to Ubuntu"
+layout: "post"
+permalink: "/2012/10/bluetooth-audio-streaming-from-phone-to.html"
+uuid: "6139269882284293478"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-6139269882284293478"
+date: "2012-10-30 11:27:00"
+updated: "2012-10-30 11:27:10"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "6139269882284293478"
+    comments: "5"
+categories: 
+---
+
+<div class="css-full-post-content js-full-post-content">
+I was toying with the idea of making my own "Car Computer" and one of the crucial parts is a&nbsp;Bluetooth&nbsp;connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a&nbsp;Bluetooth&nbsp;stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it's quite easy with Ubuntu :)<br /><br />PulseAudio is pretty awesome!<br />First step is ensure Pulse has the&nbsp;Bluetooth&nbsp;module loaded (mine did by default), you can check this by looking at this file&nbsp;<span style="font-family: 'Courier New', Courier, monospace;">/etc/pulse/default.pa</span><br /><br />The next step is to configure the&nbsp;Bluetooth&nbsp;daemon to enable "<span style="font-family: Courier New, Courier, monospace;">Source</span>" (and/or "<span style="font-family: Courier New, Courier, monospace;">Gateway</span>" mode).<br />To do this, I added the following line to <span style="font-family: Courier New, Courier, monospace;">/etc/bluetooth/audio.conf</span>:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">Enable=Gateway,Source,Socket</span></blockquote><div><br /></div><div>Then restart the&nbsp;Bluetooth&nbsp;daemon:</div><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo service bluetooth restart</span></blockquote><div><br /></div><div></div><br />Now you'll have to pair the computer with the phone as per normal.<br /><br />Once the devices are paired, an "Audio Source" connection needs to be created.<br />For this, the easiest way is via DBus, but so we don't have to write a script and easy way to test this in an ad-hoc manner is to use a tool called '<span style="font-family: Courier New, Courier, monospace;">d-feet</span>', which is available in the Ubuntu repos.<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; sudo apt-get install d-feet</span></blockquote><br />Using <span style="font-family: Courier New, Courier, monospace;">d-feet</span>, navigate to the <i>system bus</i> and find the <span style="font-family: Courier New, Courier, monospace;">org.bluez</span> key.<br />In here, there will be another key that has a device number in it. (for me this was <span style="font-family: Courier New, Courier, monospace;">/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</span>)<br />Under this key, execute <span style="font-family: Courier New, Courier, monospace;">org.bluez.AudioSource &gt; methods &gt; Connect()</span> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.<br /><br />At this point, I started playing some music so I could tell when it was working, but you probably won't be able to hear anything just yet.<br />That is because Pulse does not automatically send every source to every output - that could get messy!<br />To configure pulse to send the audio from the&nbsp;Bluetooth&nbsp;connection to your speakers you need to determine the name of the audio source and the name of the "<i>sink</i>" (or output) and join them together.<br />You can do this with the PulseAudio shell like this:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">$&gt; pacmd<br /> &gt;&gt;&gt; list-sources<br />&gt;&gt;&gt; list-sinks<br />&gt;&gt;&gt; load-module module-loopback source=<u>bluez_source.xxxx</u>&nbsp;sink=<u>alsa_output.pci-xxxx</u></span></blockquote><br />(Replace the <u>underlined</u> parts with the names from the preceding two commands)<br /><br />Now all audio from your phone should be streaming through your computer.<br />DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc..<br /><br />I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br />I used "AudioSource" in this example, but the other fun option is the "HandsFreeGateway", where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.<br /><br />The resources that helped me with this where:<br /><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a><br /><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a>
+</div>
+<div class="css-full-comments-content js-full-comments-content">
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/05370040969486223230">
+  <div class="css-comment-name js-comment-name">
+    pablofabregat
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-04-30T17:58:43.019Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Beautiful, I will try the handsfreegateway later today, but the AudioSource worked like a charm. <br />Ubuntu 13.04 here :D :D<br /><br />It&#39;s a little uncomfortable to do this every time I boot the laptop, but the result is fun :D<br /><br />Thanks for this!!
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-05-01T03:22:34.889Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    No problem, glad it helped.<br /><br />I used d-feet because I was just playing around, but if you want a more permanent solution, I would recommend writing a script to do it.<br />Most languages have a DBus library and you could even get that script to run at startup.<br /><br />Good luck.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-20T12:30:42.411Z
+  </div>
+  </div>
+  <div class="css-comment-title js-comment-title">
+    Hi,
+It worked for me but didn&#39;t have to use th...
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Hi,<br />It worked for me but didn&#39;t have to use the load-module stuff, the sound was doubled, but I don&#39;t have a sterio output, why?<br />is it because btheadsets are only mono?
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="http://www.blogger.com/profile/17635851344281945521">
+  <div class="css-comment-name js-comment-name">
+    Steven Occhipinti
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-21T04:41:29.153Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    My understanding was that &quot;AudioSource&quot; was Stereo (A2DP) and &quot;HandsFreeGateway&quot; was mono, but I&#39;m not 100% sure.
+  </div>
+  <br/>
+</div>
+<div class="css-full-comment js-full-comment">
+  <div class="css-comment-user-link js-comment-user-link">
+  <a href="undefined">
+  <div class="css-comment-name js-comment-name">
+    Anonymous
+  </div>
+  </a>
+  <div class="css-comment-date js-comment-date">
+    2013-06-22T13:49:17.409Z
+  </div>
+  </div>
+  <div class="css-comment-content js-comment-content">
+    Well, it didn&#39;t work sterio for me :/ and I can&#39;t connect it after I rebooted the computer : Method Output: &#39;GDBus.Error:org.bluez.Error.Failed: Stream setup failed&#39;
+  </div>
+  <br/>
+</div>
+</div>

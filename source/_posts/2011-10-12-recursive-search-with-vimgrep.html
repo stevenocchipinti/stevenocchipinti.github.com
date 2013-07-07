@@ -1,0 +1,19 @@
+---
+title: "Recursive search with vimgrep"
+layout: "post"
+permalink: "/2011/10/recursive-search-with-vimgrep.html"
+uuid: "1465445689904908635"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-1465445689904908635"
+date: "2011-10-12 02:46:00"
+updated: "2011-10-12 02:46:35"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "1465445689904908635"
+    comments: "0"
+categories: [vim, regex]
+---
+
+<div class="css-full-post-content js-full-post-content">
+Usually when I need to find things in multiple files, I would use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ack</span> from a terminal and then open those files in vim to do whatever it is that I have to do.<br /><br />This is ok, but sometimes this can be a little annoying.<br />Vim has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:grep</span> function which will use the system <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> command, but it also has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> function that is built in to vim.<br /><br />I had left a bunch of TODO's through out my code as a reminder to come back to them, so using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> I was able to quickly jump between them:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep TODO **/*</div></blockquote><br />This tells vim to search for the pattern "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">TODO</span>" recursively from the current directory.<br />The "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/</span>" means recursive and the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">*</span>" means any file - therefore "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/*.rb</span>" would just search the ruby scripts.<br /><br />The results are loaded into the "quickfix window". This means if you want to see all the occurences, you can open the list with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:copen</span><br />Naturally, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cfirst</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:clast</span>, etc. will allow you to jump between them or you can use the quicklist window and press enter on the filename, or in gvim you can even use the mouse.<br /><br />In addition, I use <a href="https://github.com/tpope/vim-unimpaired">Tim Pope's Unimpaired vim plugin</a>,which provides the easy shortcuts '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[q</span>' and '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">]q</span>' for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span> (respectively)
+</div>

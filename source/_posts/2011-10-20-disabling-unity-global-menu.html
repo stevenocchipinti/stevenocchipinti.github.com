@@ -1,0 +1,19 @@
+---
+title: "Disabling the Unity global menu"
+layout: "post"
+permalink: "/2011/10/disabling-unity-global-menu.html"
+uuid: "7380157991276200008"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-7380157991276200008"
+date: "2011-10-20 11:56:00"
+updated: "2011-10-20 11:56:38"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "7380157991276200008"
+    comments: "0"
+categories: [unity, linux, ui, ubuntu]
+---
+
+<div class="css-full-post-content js-full-post-content">
+The Unity global menubar in Ubuntu can take a bit of getting used to, especially if you don't come from a Mac background, but once you do, the screen real estate saving is quite nice, especially on small screens like my eeepc.<br /><br />But sometimes it can be frustrating!<br />For example, if you use The Gimp, alot of its functionality is in the menu, but for that to show, you must have the main window (the one with your work in it) focused, but whenever you select a tool from the toolbox, that window loses focus, and therefore you can't get to the menu.<br /><br />I know all it takes is a click in the main window and then a click on the global menu, but this can get quite annoying.<br /><br />Thankfully, there is an off-switch in the form of an env-var which you can either add to your profile to completely disable it, or just prefix it before you run commands like <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gimp</span>.<br /><br />All you need to do to disable it is set this:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">UBUNTU_MENUPROXY=0</blockquote><br />I made an alias so its easier to remember:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">alias dam='UBUNTU_MENUPROXY=0 '</span></blockquote><br />Note that typing (or shouting) <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">dam gimp</span> is not only to relieve the frustration of the global menubar, but it also stands for "<i><u>D</u>isable <u>A</u>pp<u>M</u>enu</i>" :)<br /><br />There is a full write up with more details over at <a href="http://www.webupd8.org/2011/03/disable-appmenu-global-menu-in-ubuntu.html">webupd8.org</a>
+</div>

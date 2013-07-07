@@ -1,0 +1,19 @@
+---
+title: "Copy and Paste over SSH with Xclip"
+layout: "post"
+permalink: "/2012/02/copy-and-paste-over-ssh-with-xclip.html"
+uuid: "4227334669843707002"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-4227334669843707002"
+date: "2012-02-12 12:59:00"
+updated: "2012-02-13 01:04:50"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "4227334669843707002"
+    comments: "0"
+categories: [linux, xclip]
+---
+
+<div class="css-full-post-content js-full-post-content">
+Have you ever SSH'ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn't seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>"X selections"</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
+</div>

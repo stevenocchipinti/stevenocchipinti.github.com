@@ -1,0 +1,20 @@
+---
+title: "My Ubuntu setup"
+layout: "post"
+permalink: "/My-Ubuntu-setup.html"
+uuid: "3530592517344679983"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-3530592517344679983"
+date: "2013-04-06 13:54:00"
+updated: "2013-04-06 13:54:28"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "3530592517344679983"
+    comments: "0"
+categories: [linux, ubuntu]
+published: "false"
+---
+
+<div class="css-full-post-content js-full-post-content">
+I format <a href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html">my laptop</a> quite often (almost in line with the Ubuntu six monthly release cycle) which keeps my system nice and clean and also gives me good confidence in my backups. The majority of the stuff I need on my laptop is text (<a href="https://github.com/stevenocchipinti">code</a>, <a href="https://github.com/stevenocchipinti/homesync">dot files</a>, <a href="https://github.com/stevenocchipinti/dotvim">vim config</a>, etc.) and so they live on GitHub, music is sync'ed to my phone and I try to keep photos off the laptop and make sure I put them onto my PC's RAID.<br /><br />This post provides a basic outline of what I do to re-install Ubuntu on my laptop.<br /><br />Install the latest Ubuntu<br />-----------------------<br /><br />- Boot off the USB<br />- Install Ubuntu over the existing Linux partition, but leave the old windows recovery partition... just in case<br />- Enable the third party package repos and do a software update<br />- Configure power settings, two finger scroll, samba sharing, alt+ctrl+backspace (restart X), fstab, printer<br /><br />Install Gnome-Shell<br />-------------------<br /><br /><a href="http://www.gnome.org/gnome-3/">Gnome Shell</a> is my desktop environment of choice, so that's the first thing I install. While I am a big fan of most parts, there are a few things that I don't like, but I fix that with extensions.<br /><br />```<br />sudo apt-get install gnome-shell<br />```<br /><br />- Restart X with Gnome<br />- Goto <a href="http://extensions.gnome.org/">extensions.gnome.org</a> to install these plugins:<br />&nbsp; -&nbsp;<a href="https://extensions.gnome.org/extension/67/dash-click-fix/">https://extensions.gnome.org/extension/67/dash-click-fix/</a><br />&nbsp; -&nbsp;https://extensions.gnome.org/extension/112/remove-accesibility/<br />&nbsp; -&nbsp;<a href="https://extensions.gnome.org/extension/5/alternative-status-menu/">https://extensions.gnome.org/extension/5/alternative-status-menu/</a><br />&nbsp; -&nbsp;<a href="https://extensions.gnome.org/extension/15/alternatetab/">https://extensions.gnome.org/extension/15/alternatetab/</a><br /><a href="https://extensions.gnome.org/extension/517/caffeine/">https://extensions.gnome.org/extension/517/caffeine/</a><br /><a href="https://extensions.gnome.org/extension/235/desktop-scroller-left-and-overview-version/">https://extensions.gnome.org/extension/235/desktop-scroller-left-and-overview-version/</a><br /><a href="https://extensions.gnome.org/extension/310/alt-tab-workspace/">https://extensions.gnome.org/extension/310/alt-tab-workspace/</a><br /><br /><br />Install applications<br />------------------<br /><br />```<br />sudo apt-get install terminator git build-essential&nbsp;vim-gnome exuberant-ctags tmux screen curl openssh-server vlc gimp skype calibre tree meld ack-grep wireshark netcat nmap gparted<br />```<br /><br />I also install these applications from the official sites:<br />- Google Chrome (instead of Chromium which is available in apt)<br />- Dropbox<br /><br /><br />Pull down my configs<br />----------------------<br /><br />&nbsp;<a href="https://github.com/stevenocchipinti/homesync">dot files</a>,&nbsp;<a href="https://github.com/stevenocchipinti/dotvim">vim config</a><br /><br /><br />Setup dev environment<br />------------------------<br /><br />- RVM or RBenv<br />- Ruby<br />- Gems (Rails, Bundler, etc.)<br />- MySQL or Postgres<br /><br /><br />
+</div>

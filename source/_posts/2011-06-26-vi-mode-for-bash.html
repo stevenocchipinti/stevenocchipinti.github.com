@@ -1,0 +1,19 @@
+---
+title: "Vi mode for Bash"
+layout: "post"
+permalink: "/2011/06/vi-mode-for-bash.html"
+uuid: "9170654625458801172"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-9170654625458801172"
+date: "2011-06-26 23:22:00"
+updated: "2011-06-27 00:19:59"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "9170654625458801172"
+    comments: "0"
+categories: [vim, linux, bash]
+---
+
+<div class="css-full-post-content js-full-post-content">
+So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this earlier)<br /><br />To enable vi mode, just type this into your shell:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; set -o vi</blockquote><br />That will enable it for this shell so you can try it out, and if you like it, add that line to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file for future.<br /><br />One really useful vi-mode command is pressing '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">v</span>' from command mode. This will put your current command line into vim to modify. <br /><br />To get more help on the commands available in vi-mode, take a look at the bottom of this man page:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; man 3 readline</blockquote><br />To get more information on the various options available for bash, take a look at:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; help set</span></blockquote><br />I'm going to give it ago in the coming weeks to see if its actually useful or not. <br /><br />So far, I've found one small annoyance, I use ctrl+l to clear the terminal, but with the vi key bindings enabled, this only works from command mode (you have to hit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ESC</span> first).<br />To fix this, I added this to my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bind -m vi-insert 'Control-l: clear-screen'</span></blockquote><br />These commands could also be added to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/inputrc</span>, but I'm happy to leave these 2 lines together in my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> so its easier to remember.
+</div>

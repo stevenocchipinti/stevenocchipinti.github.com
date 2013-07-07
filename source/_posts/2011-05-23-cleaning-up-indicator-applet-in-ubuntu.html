@@ -1,0 +1,19 @@
+---
+title: "Cleaning up indicator-applet in Ubuntu"
+layout: "post"
+permalink: "/2011/05/cleaning-up-indicator-applet-in-ubuntu.html"
+uuid: "1288031861539977717"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-1288031861539977717"
+date: "2011-05-23 10:33:00"
+updated: "2011-05-24 00:46:08"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "1288031861539977717"
+    comments: "0"
+categories: [linux, ubuntu]
+---
+
+<div class="css-full-post-content js-full-post-content">
+By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don't use!<br /><br />But, its quite easy to get rid of them! All you have to do is remove the appropriate file in /usr/share/indicators/messages/applications<br /><br />Instead of removing them, I just removed all read permissions (root can still do anything with it of course)<br /><blockquote>$ cd /usr/share/indicators/messages/applications<br />$ sudo chmod 000 empathy evolution</blockquote>
+</div>

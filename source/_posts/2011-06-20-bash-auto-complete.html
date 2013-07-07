@@ -1,0 +1,19 @@
+---
+title: "Bash auto-complete"
+layout: "post"
+permalink: "/2011/06/bash-auto-complete.html"
+uuid: "1596575328973903115"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-1596575328973903115"
+date: "2011-06-20 05:40:00"
+updated: "2011-06-20 05:40:26"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "1596575328973903115"
+    comments: "0"
+categories: [linux, bash, ubuntu]
+---
+
+<div class="css-full-post-content js-full-post-content">
+There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
+</div>

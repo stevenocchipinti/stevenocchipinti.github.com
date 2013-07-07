@@ -1,0 +1,19 @@
+---
+title: "Git + Hub = GitHub"
+layout: "post"
+permalink: "/2012/02/git-hub-github.html"
+uuid: "5249675904351824706"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-5249675904351824706"
+date: "2012-02-20 02:37:00"
+updated: "2012-04-06 10:24:07"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "5249675904351824706"
+    comments: "0"
+categories: [git, github]
+---
+
+<div class="css-full-post-content js-full-post-content">
+As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What's nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> "Open a pull request to merge the current branch into master and attach the pull request to issue 49"</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don't know why this isn't built in to the web interface (or maybe it is and I just don't know how).
+</div>

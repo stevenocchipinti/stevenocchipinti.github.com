@@ -1,0 +1,19 @@
+---
+title: "Search and replace in multiple files with Vim"
+layout: "post"
+permalink: "/2011/05/search-and-replace-in-multiple-files.html"
+uuid: "5580169690782790612"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-5580169690782790612"
+date: "2011-05-30 09:11:00"
+updated: "2011-07-20 04:28:37"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "5580169690782790612"
+    comments: "0"
+categories: [vim, linux, regex]
+---
+
+<div class="css-full-post-content js-full-post-content">
+There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; vim firstfile secondfile theothers*<br />:all<br />:windo %s/this/that/g</blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:all</span> will split the window to show you all the files at once.<br />This would not be the best option for lots of files, but for a small number you get to see the changes that are made. <br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo</span> will execute the given command for all the files in the current window.<br />Note this wont affect windows in other tabs.<br /><br />If you want to undo that change in all buffers, you can use the same method:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo undo</span></blockquote>When your finished, you can save and quit with:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:wqall</span></blockquote>There are plenty of variations, for more infomation checkout the help pages for these:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:tabdo</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:bufdo</div><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:argdo</span></blockquote>
+</div>

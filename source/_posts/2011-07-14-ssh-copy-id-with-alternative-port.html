@@ -1,0 +1,19 @@
+---
+title: "ssh-copy-id with an alternative port"
+layout: "post"
+permalink: "/2011/07/ssh-copy-id-with-alternative-port.html"
+uuid: "6862841487947842304"
+guid: "tag:blogger.com,1999:blog-2763821829623367137.post-6862841487947842304"
+date: "2011-07-14 16:05:00"
+updated: "2011-07-14 16:05:22"
+description: 
+blogger:
+    siteid: "2763821829623367137"
+    postid: "6862841487947842304"
+    comments: "0"
+categories: [linux, bash, ssh]
+---
+
+<div class="css-full-post-content js-full-post-content">
+If you use ssh on a regular basis, you probably already know about setting up ssk-keys.<br />If you dont know about ssh-keys, you should! - its worth reading up on.<br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> is a helper script that will copy your public key across to the remote machine and append it to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">authorized_keys</span> file.<br /><br />This is all well and good if the server is on port 22, but for non-standard ports, this script does not support a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-p</span> option.<br /><br />Instead of copying across the key manually, I googled for workarounds and came across <a href="http://mikegerwitz.com/2009/10/07/ssh-copy-id-and-sshd-port/">this post</a> where the author explains that the arguments to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> are simply passed on to the ssh command.<br /><br />This means by using quotes, everything inside of them will be passed straight through and that allows a command like this to achieve the desired result:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id -i ~/.ssh/id_rsa.pub ‘-p xxxx username@host’</span></blockquote><br />Kudos to Mike Gerwitz for the tip.
+</div>
