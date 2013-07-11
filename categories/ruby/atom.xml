@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | StevenOcchipinti.com]]></title>
   <link href="http://stevenocchipinti.github.io/categories/ruby/atom.xml" rel="self"/>
   <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-07T22:02:55+10:00</updated>
+  <updated>2013-07-11T22:41:27+10:00</updated>
   <id>http://stevenocchipinti.github.io/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -18,10 +18,95 @@
     <link href="http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines.html"/>
     <updated>2013-06-08T15:27:00+10:00</updated>
     <id>http://stevenocchipinti.github.io/2013/06/removing-previously-printed-lines</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker" target="_blank">Ruby</a> <a href="https://rubygems.org/gems/tramtracker" target="_blank">Gem</a> that provides a command line interface to Melbourne's <a href="http://yarratrams.com.au/tramtracker" target="_blank">TramTracker</a> service.<br /><br />One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br />In the past, I used the&nbsp;command line&nbsp;utility<span style="font-family: Courier New, Courier, monospace;"> watch </span>to achieve this, but I couldn't find a way to enforce a "max iterations" option. If it gets forgotten about in the background, TramTracker will eventually block that IP address!<br /><br />So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.<br /><br />In this post, I'll outline a couple of ways of achieving this.<br /><br /><br /><b>Using the \b (backspace) character</b><br /><br />Printing a<span style="font-family: Courier New, Courier, monospace;"> \b </span>character does the same thing as pressing backspace. This is really simple to use and is great for little "progress" spinners. For example, a character that cycles through<span style="font-family: Courier New, Courier, monospace;"> '|', '/', '-', '\'</span>. For example:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts "foo\b\b\bbar" &nbsp;&nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; bar</span><br /><span style="font-family: 'Courier New', Courier, monospace;">("|/-\\"*10).chars.each {|c| print c; sleep 1; print "\b"} &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; Cheesy, old-school spinner</span></blockquote>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you'd need just as many<span style="font-family: Courier New, Courier, monospace;"> \b </span>characters (you would probably introduce a loop).<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">puts "foo\n\b\b\bbar" &nbsp;</span><span style="color: #999999; font-family: 'Courier New', Courier, monospace;"># =&gt; foo\nbar</span></blockquote><br /><b>Using the \r (carriage return) character</b><br /><br />To avoid having to repeat just as many<span style="font-family: Courier New, Courier, monospace;"> '\b' </span>characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}</span></blockquote>This approach still won't work across multiple lines, but it has another&nbsp;subtle&nbsp;shortfall too, it doesn't clear the entire line. For example:<br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">puts "foo\rp" <span style="color: #999999;"># =&gt; poo</span></span></blockquote>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;)<br /><br /><br /><b>Using curses</b><br /><br />The most common answer to overwriting characters across multiple lines, is to use<span style="font-family: Courier New, Courier, monospace;"> <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)" target="_blank">curses</a></span>.<br />Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA" target="_blank">menu driven Text User Interfaces</a> (TUI's) easier to develop.<br />Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html" target="_blank">curses module</a> built in to its standard library, which provides a simple API, for example:<br /><br /><blockquote class="tr_bq"><span style="font-family: Courier New, Courier, monospace;">setpos(lines/2, cols/2)<span style="color: #999999;"> # Start in the middle</span><br />addstr("Hello world")</span></blockquote><br />I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381" target="_blank">gist here</a>.<br /><br />Curses is pretty good for this sort of stuff, it gives you a lot for free.<br />The thing that I didn't like about using the curses library was that when it initialises, it clears the screen.<br />This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn't want that.<br /><br /><br /><b>Using individual cursor movement characters</b><br /><br />This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:<br /><blockquote class="tr_bq"><center><table><tbody><tr><th><div style="text-align: left;">Move the cursor to line L, column C</div></th><td>\033[&lt;L&gt;;&lt;C&gt;H</td></tr><tr><th><div style="text-align: left;">Move the cursor up N lines</div></th><td>\033[&lt;N&gt;A</td></tr><tr><th><div style="text-align: left;">Move the cursor down N lines</div></th><td>\033[&lt;N&gt;B</td></tr><tr><th><div style="text-align: left;">Move the cursor forward N columns</div></th><td>\033[&lt;N&gt;C</td></tr><tr><th><div style="text-align: left;">Move the cursor backward N columns</div></th><td>\033[&lt;N&gt;D</td></tr><tr><th><div style="text-align: left;">Clear the screen, move to (0,0)</div></th><td>\033[2J</td></tr><tr><th><div style="text-align: left;">Erase to end of line</div></th><td>\033[K</td></tr></tbody></table></center></blockquote>You can read more about these <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2" target="_blank">"escape sequences" here</a>.<br />I ended up using the<span style="font-family: Courier New, Courier, monospace;"> '\033[K' </span>("Erase to end of line") and the<span style="font-family: Courier New, Courier, monospace;"> '\033[A' </span>("Move the cursor up") <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb" target="_blank">characters in my TramTracker gem</a> and it worked a treat!<br /><br /><br />Now go and make a cool retro user interface! :)<br /><br /><br />
-</div>
+    <content type="html"><![CDATA[<p>I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker">Ruby Gem</a> that provides a command line interface to Melbourne&rsquo;s <a href="http://yarratrams.com.au/tramtracker">TramTracker service</a>.</p>
 
+<p>One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br/>
+In the past, I used the command line utility watch to achieve this, but I couldn&rsquo;t find a way to enforce a &ldquo;max iterations&rdquo; option.
+If it gets forgotten about in the background, TramTracker will eventually block that IP address!</p>
+
+<p>So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.</p>
+
+<p>In this post, I&rsquo;ll outline a couple of ways of achieving this.</p>
+
+<h2>Using the \b (backspace) character</h2>
+
+<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
+
+<p>``` ruby
+puts &ldquo;foo\b\b\bbar&rdquo;</p>
+
+<h1>=> bar</h1>
+
+<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
+
+<h1>=> Cheesy, old-school spinner</h1>
+
+<p>```</p>
+
+<p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
+
+<p>``` ruby
+puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
+
+<h1>=> foo\nbar</h1>
+
+<p>```</p>
+
+<h2>Using the \r (carriage return) character</h2>
+
+<p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
+
+<p><code>ruby
+100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></p>
+
+<p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
+
+<p>```
+puts &ldquo;foo\rp&rdquo;</p>
+
+<h1>=> poo</h1>
+
+<p>```</p>
+
+<p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
+
+<h2>Using curses</h2>
+
+<p>The most common answer to overwriting characters across multiple lines, is to use <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)">curses</a>.
+Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
+Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
+
+<p><code>ruby
+setpos(lines/2, cols/2) # Start in the middle
+addstr("Hello world")
+</code></p>
+
+<p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
+
+<p>Curses is pretty good for this sort of stuff, it gives you a lot for free.
+The thing that I didn&rsquo;t like about using the curses library was that when it initialises, it clears the screen.
+This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&rsquo;t want that.</p>
+
+<h2>Using individual cursor movement characters</h2>
+
+<p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
+
+<p><code>
+\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+\033[&lt;N&gt;A     # Move the cursor up N lines
+\033[&lt;N&gt;B     # Move the cursor down N lines
+\033[&lt;N&gt;C     # Move the cursor forward N columns
+\033[&lt;N&gt;D     # Move the cursor backward N columns
+\033[2J       # Clear the screen, move to (0,0)
+\033[K        # Erase to end of line
+</code></p>
+
+<p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
+I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
+
+<p>Now go and make a cool retro user interface! :)</p>
 ]]></content>
   </entry>
   
