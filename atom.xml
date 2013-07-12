@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://stevenocchipinti.github.io/atom.xml" rel="self"/>
   <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-12T20:24:35+10:00</updated>
+  <updated>2013-07-12T20:29:34+10:00</updated>
   <id>http://stevenocchipinti.github.io/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Test]]></title>
-    <link href="http://stevenocchipinti.github.io/2013/07/07/test/"/>
-    <updated>2013-07-07T18:53:00+10:00</updated>
-    <id>http://stevenocchipinti.github.io/2013/07/07/test</id>
-    <content type="html"><![CDATA[<p>Test, Hack, Test</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
@@ -793,6 +784,17 @@ On my Android phone, I use an app called &#8221;<a href="https://market.android.
     <id>http://stevenocchipinti.github.io/2012/02/git-hub-github</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What&#8217;s nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> &#8220;Open a pull request to merge the current branch into master and attach the pull request to issue 49&#8221;</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don&#8217;t know why this isn&#8217;t built in to the web interface (or maybe it is and I just don&#8217;t know how).
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Copy and Paste over SSH with Xclip]]></title>
+    <link href="http://stevenocchipinti.github.io/2012/02/copy-and-paste-over-ssh-with-xclip.html"/>
+    <updated>2012-02-12T12:59:00+11:00</updated>
+    <id>http://stevenocchipinti.github.io/2012/02/copy-and-paste-over-ssh-with-xclip</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>&#8220;X selections&#8221;</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
 </div>
 ]]></content>
   </entry>
