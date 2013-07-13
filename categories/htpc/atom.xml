@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: htpc | StevenOcchipinti.com]]></title>
-  <link href="http://stevenocchipinti.github.io/categories/htpc/atom.xml" rel="self"/>
-  <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-12T20:29:34+10:00</updated>
-  <id>http://stevenocchipinti.github.io/</id>
+  <link href="http://blog.stevenocchipinti.com/categories/htpc/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2013-07-13T11:31:56+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[(Minecraft and) Arch Linux FTW!]]></title>
-    <link href="http://stevenocchipinti.github.io/2011/04/minecraft-and-arch-linux-ftw.html"/>
+    <link href="http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw.html"/>
     <updated>2011-04-16T08:25:00+10:00</updated>
-    <id>http://stevenocchipinti.github.io/2011/04/minecraft-and-arch-linux-ftw</id>
+    <id>http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 I haven't really played a game properly since back in my Counter Strike days, but recently my brother and I started playing <a href="http://www.minecraft.net/">Minecraft</a>... and its incredibly addictive!<br /><br />Minecraft give you the option of running a Java based dedicated server and so as we were starting out, my brother would start up a dedicated server and we would both connect to it.<br />As time went on, we thought it would be really cool to have a dedicated Minecraft box and thought we could build one out of some old hardware, which brings me to the HTPC!<br /><br />A little while ago, my brother built this (the black box):<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s1600/IMAG0146.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="191" src="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s320/IMAG0146.jpg" width="320" /></a></div><br /><br />He did an awesome job!<br />Basically gutted our very first dvd player (which was great for its time) and got some cheap (physically small) hardware off eBay and managed to fit it all inside! <br />It involved making alot of little brackets, extender cables, etc. but with a lot of effort it turned out pretty impressive!<br /><br />Unfortunately, using it as a media pc was a bit tough as it wasn't the most powerful of machines around and the graphics drivers weren't working too well so this got left in the dust for a while... until Minecraft came along!<br /><br />Last weekend we decided to make this our dedicated server :)<br />A while ago a friend of a friend was talking about how good Arch Linux was for its simplicity and ease of administration, so I started reading up on it and I am impressed!<br /><br />On the <a href="https://wiki.archlinux.org/">Arch Linux wiki</a> they have a couple of <a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide">guides</a> to help you get going, but my favorite page was the <a href="https://wiki.archlinux.org/index.php/Boot">explanation of the boot process</a>.<br />After a bit of reading I worked out my plan of attack:<br /><ul><li>Burn ISO to cd</li><li>Install Arch Linux</li><li>Install sudo (via pacman)&nbsp;</li><li>Setup 'minecraft' user with sudo access to the poweroff command</li><li>Install Java (via pacman)</li><li>Install rungetty (via AUR)</li><li>Replace 'agetty' with 'rungetty' and make the minecraft server startup on tty1, followed by a 'poweroff'</li><li>Configure Wake-On-Lan</li></ul><br />After the server was all setup, I wrote a little client side wrapper that will:<br /><ul><li>Launch minecraft</li><li>Broadcast a magic-packet to power on the server</li><li>Start pinging it and when it is available, notify me via Ubuntu's 'notify-send' command</li></ul><br />So now when I want to play Minecraft, I launch my script and it will power on the server and launch the client, I log in, wait about 5 seconds until my fancy fade-in notification appears, then join the server, play, and when im done, I issue the '/stop' command in Minecraft and it will stop the server and power it self off!<br /><br />This was a great first experiment with Arch Linux and I didn't even know what getty was before this day.<br /><br />Needless to say I was pretty happy with this setup and all in a days work :)
 </div>

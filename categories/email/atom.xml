@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: email | StevenOcchipinti.com]]></title>
-  <link href="http://stevenocchipinti.github.io/categories/email/atom.xml" rel="self"/>
-  <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-12T20:29:34+10:00</updated>
-  <id>http://stevenocchipinti.github.io/</id>
+  <link href="http://blog.stevenocchipinti.com/categories/email/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2013-07-13T11:31:56+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Spam defence]]></title>
-    <link href="http://stevenocchipinti.github.io/2012/03/spam-defence.html"/>
+    <link href="http://blog.stevenocchipinti.com/2012/03/spam-defence.html"/>
     <updated>2012-03-07T11:14:00+11:00</updated>
-    <id>http://stevenocchipinti.github.io/2012/03/spam-defence</id>
+    <id>http://blog.stevenocchipinti.com/2012/03/spam-defence</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky enough to get an invite for Gmail in its early stages, Yahoo! Mail had (IMO) one killer feature: <i>Address Guard</i><br /><br />The idea behind <i>Address Guard</i> was simple, you make your primary email address, say <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@yahoo.com</span>, and then a secondary <i>"base name"</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007</span>.<br />This <i>base name</i> was not just another email address, infact all mail sent to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007@yahoo.com</span> would get dropped.<br />Instead, use that base name to create an unlimited number of <i>"disposable addresses"</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007-facebook@yahoo.com</span>, etc.<br /><br />The idea was that if you follow the simple 3 click process (settings -&gt; addressGaurd -&gt; add new address!) to create a new disposable email address every time you signed up for a new website, if ever they spammed you, you simply delete that address and they wont be able to bother you any more - brilliant!<br /><br />I avoided Gmail because they didn't have the same <i>"whitelist"</i> approach to email addresses, but when I bought my domain name and started using Google Apps for email, I decided to use Gmail as my primary email provider.<br />Naturally this forced me to look for a similar way to defend again spam (albeit Gmails spam filtering is quite good).<br /><br />Google Apps provides <i>"nicknames"</i>, which works in much the same way, you can have an unlimited number of aliases for an account, except the process was a bit longer (settings -&gt; manage domain -&gt; users -&gt; Your user -&gt; Add a nickname) and I got too lazy for that after a little while.<br />I still use nicknames for certain things, but not for every website I sign up for.<br /><br />That's when I discovered the + symbol in Gmail. Unlike Yahoo! Mail that uses the <i>"whitelist"</i> approach (only addresses you created will accept mail), you can use Gmail with a <i>"blacklist"</i> approach (all addresses accept mail unless you block them).<br /><br />Assume your email address is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@gmail.com</span>, you can append a + and then any (valid) characters you like to the end, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+facebook@gmail.com</span> and it will still get delivered.<br /><br />If some rogue website starts sending spam to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>, then you can go into the Gmail settings and setup a filter to delete all mail that is sent to: <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>.<br /><br />I don't think it's quite as nice as <i>Address Guard</i>, but it is a bit more convenient because there is no set up. The biggest downside is that quite a few websites consider an email address to be invalid if it has a + symbol in it, but most are fine.
 </div>

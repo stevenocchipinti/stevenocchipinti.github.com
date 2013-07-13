@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: troubleshooting | StevenOcchipinti.com]]></title>
-  <link href="http://stevenocchipinti.github.io/categories/troubleshooting/atom.xml" rel="self"/>
-  <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-12T20:29:34+10:00</updated>
-  <id>http://stevenocchipinti.github.io/</id>
+  <link href="http://blog.stevenocchipinti.com/categories/troubleshooting/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2013-07-13T11:31:56+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA["Safe mode" on the Samsung Galaxy S3]]></title>
-    <link href="http://stevenocchipinti.github.io/2013/05/safe-mode-on-samsung-galaxy-s3.html"/>
+    <link href="http://blog.stevenocchipinti.com/2013/05/safe-mode-on-samsung-galaxy-s3.html"/>
     <updated>2013-05-12T04:36:00+10:00</updated>
-    <id>http://stevenocchipinti.github.io/2013/05/safe-mode-on-samsung-galaxy-s3</id>
+    <id>http://blog.stevenocchipinti.com/2013/05/safe-mode-on-samsung-galaxy-s3</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 I recently had some trouble with my Samsung Galaxy S3. I'm still not sure what caused it, but quite frequently, it would completely freeze up, even after a fresh reboot. It may have been a dodgy app, or something deeper in android, but in the process of fixing it, I was introduced to "safe mode".<br /><br />"Safe mode" here behaves like safe mode in Windows. It basically lets you use your phone just like normal, but without starting the usual plethora of background processes. You can still get to your settings, apps and files, but things won't start automatically.<br /><br />To enter safe mode on the Galaxy S3 is really simple:<br /><br /><ol><li>Restart the phone</li><li>While it is booting up (and you see the Samsung logo) simply hold the volume down button</li></ol><br /><br />When it boots, you should have the stock wallpaper, your shortcuts will be gone and you should see a little watermark in the bottom left corner that says "Safe mode".<br /><br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s1600/Screenshot_2013-05-12-09-41-12.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"> <img border="0" src="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/s640/Screenshot_2013-05-12-09-41-12.png" /> </a> </div><br />From here you can do everything like normal, browse the net, make calls, etc. but more importantly, you can uninstall dodgy apps, change settings, even factory reset the device.<br /><br />
 </div>

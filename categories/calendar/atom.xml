@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: calendar | StevenOcchipinti.com]]></title>
-  <link href="http://stevenocchipinti.github.io/categories/calendar/atom.xml" rel="self"/>
-  <link href="http://stevenocchipinti.github.io/"/>
-  <updated>2013-07-12T20:29:34+10:00</updated>
-  <id>http://stevenocchipinti.github.io/</id>
+  <link href="http://blog.stevenocchipinti.com/categories/calendar/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2013-07-13T11:31:56+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Google Calendar - Repeating an event on the last <weekday> of the month]]></title>
-    <link href="http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last.html"/>
+    <link href="http://blog.stevenocchipinti.com/2012/05/google-calendar-repeating-event-on-last.html"/>
     <updated>2012-05-23T12:19:00+10:00</updated>
-    <id>http://stevenocchipinti.github.io/2012/05/google-calendar-repeating-event-on-last</id>
+    <id>http://blog.stevenocchipinti.com/2012/05/google-calendar-repeating-event-on-last</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 I regularly attend <a href="http://ruby.org.au/" target="_blank"><i>RORO</i> - The Ruby on Rails Oceania</a> meetups.<br />They currently occur on the last Thursday of every month and so naturally I put the event in my calendar. I added the usual details and then selected the "repeat" option and set it to repeat monthly by the day of the week.<br /><br />This worked well for a while, until one day when I rocked up and it wasn't on.<br />A later realised that in that particular month there were 5 Thursdays instead of 4 and my calendar event was actually set to repeat <i>"Monthly on the fourth Thursday"</i>.<br />It turns out that the interface Google provide to set recurring events does not allow you to change this.. or at least not intuitively.<br /><br />After some searching around I found a few solutions:<br /><br /><br /><b>Use English!</b><br /><br />The simplest way is to just write out the event in plain English. For example:<br /><blockquote class="tr_bq"><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">RORO at Inspire9, Richmond on the last Thursday of every month</div></blockquote>This will create an event called "RORO at Inspire9, Richmond", with the location field set to "Inspire9, Richmond" and the repetition set to <i>"Monthly on the last Thursday".</i><br /><br /><br /><b>Start repeating from an appropriate month</b><br /><br />Another fairly easy way is to find a month that actually has 5 Thursdays and make the event start from there. This will set the recurrence to repeat <i>"Monthly on the last Thursday"</i>, instead of <i>"Monthly on the fourth Thursday"</i>.<br /><br /><br /><b>Hack the ICS</b><br /><br />This solution is probably the hardest, but because the <a href="http://en.wikipedia.org/wiki/ICalendar" target="_blank">iCalendar</a> format does support this, you could write the code manually. To do this you would have to export the calendar to a file, hack it and import it back.<br />While it's nice to know this, seems like more effort that just typing what you want in English!<br /><br /><br /><b>A better solution</b><br /><br />.. would be if Google provided an additional option in the little "repeat" popup to allow this!<br /><br />Or maybe the RORO organiser should maintain there own calendar feed that we could all subscribe to. This would also mean that if a particular meetup was moved or cancelled, all the subscribers calendars would automatically be updated!
 </div>
