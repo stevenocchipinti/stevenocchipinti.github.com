@@ -109,40 +109,6 @@
 <div class="entry-content"><div class="css-full-post-content js-full-post-content">
 Back on the 30th of May, I put up a blog post on how to do a <a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html">search and replace in multiple files with Vim</a>.<br />I think this is a great way of doing substitutions in multiple files because you get to see a preview of what it looks like before you actually writing it to disk.<br /><br />This is great for a small number of files, but to do a large directory of files, you don&#8217;t really gain any advantages as you&#8217;re probably not going to open every file in a vim buffer and review each one separately.<br /><br />This is where <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> come in handy!<br /><br />This command will replace every occurrence of the word &#8220;foo&#8221; with the word &#8220;bar&#8221; in all html files recursively from the current directory:<br /><blockquote><pre>find . -name "*.html" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br /><b>The explanation:</b><br /><br />This might look a little confusing, but it essentially 2 parts:<br /><br />The first part will list all the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.html</span> files recursively and for each one, execute the command specified by the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option:<br /><blockquote><pre>find . -name "*.html" -exec ...</pre></blockquote><br />The second part is the command to execute for each found file, which in this case is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span>:<br /><blockquote><pre>sed -i "s/foo/bar/g" &lt;TheFile&gt;</pre></blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8217;{}&#8217;</span> represents the current file and the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\;</span> represents the end of the command to execute as part of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option.<br /><br /><br /><b>Doing more:</b><br /><br />As you can see, the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-name</span> option to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> command takes a <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">glob pattern</a>.<br />If you wanted to be more specific about which files should have the substituion, you could use a regular expression instead, like this:<br /><blockquote><pre>find . -regex ".*[.]html\|.*[.]js" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br />This regex will match all files that end with &#8220;.html&#8221; or &#8220;.js&#8221;.<br /><br />If you wanted to preview your changes before they are actually written to disk, there are a few ways of accomplishing this, but the simpliest is probably to modify the command as follows:<br /><blockquote><pre>find . -name "*.html" -exec sed "s/foo/bar/g" '{}' \; | less</pre></blockquote><br />Removing the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> will mean that instead of writing the changes &#8220;in place&#8221;, the changed output will be written to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">STDOUT</span> instead of the files.<br />Then to capture this (potentially large) output, we pipe it to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span>.<br />From within <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span> you will be able to do searches (with the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/</span>&#8221; key) and scroll through the output to do a quick sanity check.<br />Once your happy, you can remove the pipe and add the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> option again to make it permanent!
 </div>
-<div class="css-full-comments-content js-full-comments-content">
-<div class="css-full-comment js-full-comment">
-  <div class="css-comment-user-link js-comment-user-link">
-  <a href="http://www.blogger.com/profile/06966628689154715916">
-  <div class="css-comment-name js-comment-name">
-    optiks
-  </div>
-  </a>
-  <div class="css-comment-date js-comment-date">
-    2011-07-21T06:50:35.696Z
-  </div>
-  </div>
-  <div class="css-comment-content js-comment-content">
-    That would be very useful if I used Linux more&#8230; instead I fight the Windows tools ;)<br /><br />p.s. [.] looks funny, I thought &#46; would work, but it looks like you have to use &#92;. &#8211; and that looks really ugly and is the same amount of chars anyway!
-  </div>
-  <br/>
-</div>
-<div class="css-full-comment js-full-comment">
-  <div class="css-comment-user-link js-comment-user-link">
-  <a href="http://www.blogger.com/profile/17635851344281945521">
-  <div class="css-comment-name js-comment-name">
-    Steven Occhipinti
-  </div>
-  </a>
-  <div class="css-comment-date js-comment-date">
-    2011-07-21T07:02:39.134Z
-  </div>
-  </div>
-  <div class="css-comment-content js-comment-content">
-    lol, yea, I set up all the linux tools with cygwin in windows when I was forced to use it at my old work, but these things seem lot easier for me in linux!<br /><br />Re: the regex, you could just use &#46; and you shouldn&#39;t need to escape the backslash. <br />Infact that&#39;s what I had first, but I changed it to the square brackets at the last minute.<br />I thought escaping the dots and the | character made it look a bit more complicated - too many backslashes, even though it was lass characters.<br /><br />&quot;.*&#46;html\|.*&#46;js&quot;<br />&quot;.*[.]html\|.*[.]js&quot;<br /><br />It&#39;s all the same really, just trying to make the blog as easy to read as possible for my millions of fans ;)<br />&#8230;jokes
-  </div>
-  <br/>
-</div>
-</div>
 </div>
 
 

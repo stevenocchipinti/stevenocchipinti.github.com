@@ -109,40 +109,6 @@
 <div class="entry-content"><div class="css-full-post-content js-full-post-content">
 Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
 </div>
-<div class="css-full-comments-content js-full-comments-content">
-<div class="css-full-comment js-full-comment">
-  <div class="css-comment-user-link js-comment-user-link">
-  <a href="http://www.blogger.com/profile/06966628689154715916">
-  <div class="css-comment-name js-comment-name">
-    optiks
-  </div>
-  </a>
-  <div class="css-comment-date js-comment-date">
-    2012-09-19T23:20:55.100Z
-  </div>
-  </div>
-  <div class="css-comment-content js-comment-content">
-    Man you&#39;re a geek :P
-  </div>
-  <br/>
-</div>
-<div class="css-full-comment js-full-comment">
-  <div class="css-comment-user-link js-comment-user-link">
-  <a href="http://www.blogger.com/profile/17635851344281945521">
-  <div class="css-comment-name js-comment-name">
-    Steven Occhipinti
-  </div>
-  </a>
-  <div class="css-comment-date js-comment-date">
-    2012-09-19T23:23:03.938Z
-  </div>
-  </div>
-  <div class="css-comment-content js-comment-content">
-    Haha! &#8230; thanks&#8230; I think
-  </div>
-  <br/>
-</div>
-</div>
 </div>
 
 
