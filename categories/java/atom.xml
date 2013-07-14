@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/java/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-07-14T19:49:41+10:00</updated>
+  <updated>2013-07-14T20:45:28+10:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -18,10 +18,40 @@
     <link href="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html"/>
     <updated>2012-02-02T12:25:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-<br />I finally decided to install Minecraft on my new shiny <a href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html" target="_blank">Toshiba Portege z830</a>.<br />Ubuntu ships with an open-source version of Java, which did run Minecraft, but the graphics were terrible, even on the lowest settings. There were artefacts everywhere!<br /><br />So as recommended, I switched to the official JRE, but now the login screen works, but that's about it. After logging in, I just got a black screen and the following exception in the console:<br /><br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;"><div class="de2">Exception in thread "Minecraft main thread" java.lang.ExceptionInInitializerError at net.minecraft.client.Minecraft.a(SourceFile:180) at net.minecraft.client.Minecraft.run(SourceFile:648) at java.lang.Thread.run(Thread.java:662)</div><div class="de2">Caused by: java.lang.ArrayIndexOutOfBoundsException: 0 at org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:234) at org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:196) at org.lwjgl.opengl.XRandR.populate(XRandR.java:87) at org.lwjgl.opengl.XRandR.access$100(XRandR.java:52)at org.lwjgl.opengl.XRandR$1.run(XRandR.java:110) at java.security.AccessController.doPrivileged(Native Method) at org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at org.lwjgl.opengl.Display.&lt;clinit&gt;(Display.java:135)</div><div class="de1">... 3 more</div></blockquote><br />After discussing the problem in IRC, the solution was quite simple. It turns out "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">lwjgl</span>" is a "<i>Light Weight Java Game Library</i>" and the version I had wasn't behaving.<br />On the advice of the helpful IRC'ers, I downloaded the latest "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">lwjgl</span>" from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/" target="_blank">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.<br /><br />To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin<br />cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives</blockquote>Done! Now it works nicely.
-</div>
+    <content type="html"><![CDATA[<p>I finally decided to install Minecraft on my new shiny <a href="/2011/12/toshiba-portege-z830.html">Toshiba Portege z830</a>.<br/>
+Ubuntu ships with an open-source version of Java, which did run Minecraft, but the graphics were terrible, even on the lowest settings. There were artefacts everywhere!</p>
 
+<p>So as recommended, I switched to the official JRE. Now the login screen works, but that&rsquo;s about it. After logging in, I just got a black screen and the following exception in the console:</p>
+
+<p><code>
+Exception in thread "Minecraft main thread"
+java.lang.ExceptionInInitializerError at
+net.minecraft.client.Minecraft.a(SourceFile:180) at
+net.minecraft.client.Minecraft.run(SourceFile:648) at
+java.lang.Thread.run(Thread.java:662)&lt;div class="de2"&gt;Caused by: java.lang.ArrayIndexOutOfBoundsException: 0 at
+org.lwjgl.opengl.XRandR$Screen.&amp;lt;init&amp;gt;(XRandR.java:234) at
+org.lwjgl.opengl.XRandR$Screen.&amp;lt;init&amp;gt;(XRandR.java:196) at
+org.lwjgl.opengl.XRandR.populate(XRandR.java:87) at
+org.lwjgl.opengl.XRandR.access$100(XRandR.java:52)at
+org.lwjgl.opengl.XRandR$1.run(XRandR.java:110) at
+java.security.AccessController.doPrivileged(Native Method) at
+org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at
+org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at
+org.lwjgl.opengl.Display.&amp;lt;clinit&amp;gt;(Display.java:135)
+... 3 more
+</code></p>
+
+<p>After discussing the problem in IRC, the solution was quite simple. It turns out <code>lwjgl</code> is a &ldquo;<em>Light Weight Java Game Library</em>&rdquo; and the version I had wasn&rsquo;t behaving.<br/>
+On the advice of the helpful IRC'ers, I downloaded the latest <code>lwjgl</code> from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.</p>
+
+<p>To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:</p>
+
+<p><code>
+cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
+cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives
+</code></p>
+
+<p>Done! Now it works nicely.</p>
 ]]></content>
   </entry>
   

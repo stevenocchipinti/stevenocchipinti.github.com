@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="E212: Can&#8217;t open file for writingPress ENTER or type command to continueIf you use vim, you have probably come across this error before.It &hellip;">
+  <meta name="description" content="E212: Can't open file for writing with vim">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -106,9 +106,24 @@
   </header>
 
 
-<div class="entry-content"><div class="css-full-post-content js-full-post-content">
-<blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">E212: Can&#8217;t open file for writing<br />Press ENTER or type command to continue</blockquote>If you use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim</span>, you have probably come across this error before.<br />It normally happens when you don&#8217;t have permission to write to your chosen destination.<br /><br />The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> /tmp</span> or ~), then use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">cp</span> it across, or re-open the file in vim with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span>.<br /><br />A collegue at work showed me a great trick to get around this when it happens (Thanks Rich). All you have to do is add this to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.vimrc</span> file:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;command! W w !sudo tee % &gt; /dev/null</div></blockquote>Then when you come across this error again, instead of of using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:w</span> you can use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:W</span> and it will prompt you for your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> password before saving.<br />Works brilliantly!
-</div>
+<div class="entry-content"><blockquote><p>E212: Can&#8217;t open file for writing  <br/>Press ENTER or type command to continue</p></blockquote>
+
+
+<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
+It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
+
+<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
+
+<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
+
+<figure class='code'><figcaption><span>.vimrc </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
+
+<p>Works brilliantly!</p>
 </div>
 
 
