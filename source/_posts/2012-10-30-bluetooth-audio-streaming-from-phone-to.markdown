@@ -6,7 +6,7 @@ uuid: "6139269882284293478"
 guid: "tag:blogger.com,1999:blog-2763821829623367137.post-6139269882284293478"
 date: "2012-10-30 11:27:00"
 updated: "2012-10-30 11:27:10"
-description: 
+description: "Streaming audio from phone via bluetooth to Ubuntu"
 blogger:
     siteid: "2763821829623367137"
     postid: "6139269882284293478"
