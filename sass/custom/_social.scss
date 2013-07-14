@@ -1,0 +1,24 @@
+@import "social/*.png";
+@include all-social-sprites;
+
+aside.sidebar ul.social-icons li {
+  float: left;
+  display: inline-block;
+  margin: 5px;
+  border: none;
+  box-shadow: none;
+}
+a.social-icon {
+  background-color: #B0B0B0;
+  border-radius: 4px;
+  height: 64px;
+  width: 64px;
+  display: inline-block;
+  text-indent: -99999px;
+}
+.social-facebook:hover  { background-color: #3B5998 }
+.social-flickr:hover    { background-color: #0063DB }
+.social-github:hover    { background-color: #DD4B39 }
+.social-linkedin:hover  { background-color: #007FB1 }
+.social-rss:hover       { background-color: #FF8300 }
+.social-twitter:hover   { background-color: #00ACED }

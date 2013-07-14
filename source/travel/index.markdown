@@ -121,3 +121,5 @@ Italy
 <dt><span title="Milan &rarr; Venice &rarr; Florence &rarr; Pisa &rarr; Rome &rarr; Pompeii &rarr; Sorento &rarr; &amp; &rarr; Capri &rarr; Rome">Tour&#42;</span>:</dt>
 <dd>28/03/2005 &rarr; <span title="Not sure about the end date">~12/04/2005</span></dd>
 </dl>
+
+<div style="clear: both"/>
