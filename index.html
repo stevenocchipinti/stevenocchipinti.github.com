@@ -680,9 +680,148 @@ Gone are the days of the nice <span style="font-family: 'Courier New', Courier, 
   </header>
 
 
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-<div>I&#8217;ve been using Ruby on Rails for about a year and half now and I&#8217;m really enjoying it!&nbsp;At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&#8217;s, so it&#8217;s great time to get involved.</div><div>I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</div><ul></ul><br /><b>Join the community!</b><br /><br />Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is &#8221;<i>Ruby On Rails Oceania</i>&#8221; (aka RORO).<br />They have meetups on the <i>last Thursday of every month</i>&nbsp;in Melbourne and a pretty active mailing list:<br /><ul><li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania" target="_blank">Ruby On Rails Oceania Mailing List</a></li><li><a href="http://ruby.org.au/" target="_blank">Ruby.org.au</a></li></ul><br /><b>Ruby and Rails resources:</b><br /><ul><li><a href="http://guides.rubyonrails.org/">Rails Guides</a>&nbsp;- I use these almost everyday!</li><li><a href="http://apidock.com/">ApiDock</a> - API&#8217;s for Ruby, Rails and RSpec in one place</li><li><a href="http://railsforzombies.org/">Rails For Zombies</a>&nbsp;- A great beginners tutorial for rails</li><li><a href="http://railscasts.com/">Rails Casts</a>&nbsp;- Regular video podcast all about rails</li><li><a href="http://ruby5.envylabs.com/">Ruby5</a>&nbsp;- Regular 5 minute audio podcast on the latest news</li><li>&#8230; a plethora of good books, such as &#8220;The RSpec Book&#8221;, &#8220;Design Patterns in Ruby&#8221;, etc. (alot of which I still need to read)</li></ul><div><br /></div><b>Getting started:</b><br /><br />To get started you&#8217;ll need to set up your development environment, here&#8217;s what I use:<br /><ul><li>Vim&#8230; of course&#8230; although there are lots of alternatives, the most popular ones would probably be:</li><ul><li>RubyMine (IDE) - used alot at work (commercial software)</li><li>Sublime Text 2 (Text editor)</li><li>TextMate (Text editor)</li></ul><li>RVM (Ruby Version Manager)</li><ul><li>Get from here: <a href="https://rvm.io/" target="_blank">https://rvm.io</a></li><li>Follow the instructions to configure your shell to use RVM</li><li>Use RVM to install the latest ruby</li><ul><li>$&gt; rvm install 1.9.3</li></ul><li>A newer alternative to RVM is RBenv</li></ul><li>Once you have ruby installed, you will have the &#8216;gem&#8217; command available</li><ul><li>Gems are roughly equivalent to jars in the Java world</li><li>Use gem to install the latest rails</li><ul><li>$&gt; gem install rails</li></ul></ul><li>Once you have rails installed, you will have the &#8216;rails&#8217; command available</li><ul><li>Use the rails command to start a new project</li><ul><li>$&gt; rails new todolist</li><li>$&gt; rails server</li><li>browse to <a href="http://localhost:3000/" target="_blank">http://localhost:3000</a></li></ul></ul><li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li></ul><br /><b>Things to keep in mind for RoR dev:</b><br /><ul><li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.</li><ul><li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li></ul><li>Ruby  on Rails strongly supports DRY principles, don&#8217;t reinvent the wheel,  theres problably a gem that already does what you want.</li><ul><li>To find gems, good places to look are:</li><ul><li><a href="http://ruby-toolbox.com/" target="_blank">Ruby-Toolbox.com</a></li><li><a href="http://railscasts.com/" target="_blank">RailsCasts.com</a></li><li><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></li><li><a href="http://github.com/" target="_blank">GitHub.com</a></li></ul></ul><li>The majority of Ruby projects are:</li><ul><li>Developed using TDD/BDD, so you&#8217;ll need to learn the testing frameworks:</li><ul><li>Test::Unit (default with rails)</li><li>RSpec (a popular replacement for Test::Unit)</li><li>Cucumber (BDD)</li></ul><li>Developed on MacOSX - for new comers (like myself) some essentials are:</li><ul><li>brew - a mac package manager (like apt or yum)</li><li>iterm2 - really good terminal emulator</li></ul><li>Deployed on Linux</li><ul><li>Basic Linux foo is really useful</li></ul><li>Version controlled with git</li><ul><li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li></ul></ul></ul><div><br /></div><div>That&#8217;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</div>
-</div>
+  <div class="entry-content"><p>I&rsquo;ve been using Ruby on Rails for about a year and half now and I&rsquo;m really enjoying it! At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&rsquo;s, so it&rsquo;s great time to get involved.<br/>
+I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</p>
+
+<h2>Join the community!</h2>
+
+<p>Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is <em>Ruby On Rails Oceania</em> (aka RORO).<br/>
+They have meetups on the <em>last Thursday of every month</em> in Melbourne and a pretty active mailing list:</p>
+
+<ul>
+<li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania">Ruby On Rails Oceania Mailing List</a></li>
+<li><a href="http://ruby.org.au/">Ruby.org.au</a></li>
+</ul>
+
+
+<h2>Ruby and Rails resources:</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; I use these almost everyday!</li>
+<li><a href="http://apidock.com/">ApiDock</a> &ndash; API&rsquo;s for Ruby, Rails and RSpec in one place</li>
+<li><a href="http://railsforzombies.org/">Rails For Zombies</a> &ndash; A great beginners tutorial for rails</li>
+<li><a href="http://railscasts.com/">Rails Casts</a> &ndash; Regular video podcast all about rails</li>
+<li><a href="http://ruby5.envylabs.com/">Ruby5</a> &ndash; Regular 5 minute audio podcast on the latest news</li>
+<li>&hellip; a plethora of good books, such as &ldquo;The RSpec Book&rdquo;, &ldquo;Design Patterns in Ruby&rdquo;, etc. (alot of which I still need to read)</li>
+</ul>
+
+
+<h2>Getting started:</h2>
+
+<p>To get started you&rsquo;ll need to set up your development environment, here&rsquo;s what I use:</p>
+
+<ul>
+<li>Vim&hellip; of course&hellip; although there are lots of alternatives, the most popular ones would probably be:
+
+<ul>
+<li>RubyMine (IDE) &ndash; used alot at work (commercial software)</li>
+<li>Sublime Text 2 (Text editor)</li>
+<li>TextMate (Text editor)</li>
+</ul>
+</li>
+<li>RVM (Ruby Version Manager)
+
+<ul>
+<li>Get from here: <a href="https://rvm.io/">https://rvm.io</a></li>
+<li>Follow the instructions to configure your shell to use RVM</li>
+</ul>
+</li>
+<li>Use RVM to install the latest ruby
+
+<ul>
+<li><code>rvm install 1.9.3</code></li>
+<li>A newer alternative to RVM is RBenv</li>
+</ul>
+</li>
+<li>Once you have ruby installed, you will have the &lsquo;gem&rsquo; command available
+
+<ul>
+<li>Gems are roughly equivalent to jars in the Java world</li>
+<li>Use gem to install the latest rails
+
+<ul>
+<li><code>gem install rails</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Once you have rails installed, you will have the &lsquo;rails&rsquo; command available
+
+<ul>
+<li>Use the rails command to start a new project
+
+<ul>
+<li><code>rails new todolist</code></li>
+<li><code>rails server</code></li>
+<li>browse to <a href="http://localhost:3000/">http://localhost:3000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li>
+</ul>
+
+
+<h2>Things to keep in mind for RoR dev:</h2>
+
+<ul>
+<li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.
+
+<ul>
+<li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li>
+</ul>
+</li>
+<li>Ruby on Rails strongly supports DRY principles
+
+<ul>
+<li>Don&rsquo;t reinvent the wheel, theres problably a gem that already does what you want</li>
+<li>To find gems, good places to look are:
+
+<ul>
+<li><a href="http://ruby-toolbox.com/">Ruby-Toolbox.com</a></li>
+<li><a href="http://railscasts.com/">RailsCasts.com</a></li>
+<li><a href="http://rubygems.org/">RubyGems.org</a></li>
+<li><a href="http://github.com/">GitHub.com</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The majority of Ruby projects are:
+
+<ul>
+<li>Developed using TDD/BDD, so you&rsquo;ll need to learn the testing frameworks:
+
+<ul>
+<li>Test::Unit (default with rails)</li>
+<li>RSpec (a popular replacement for Test::Unit)</li>
+<li>Cucumber (BDD)</li>
+</ul>
+</li>
+<li>Developed on MacOSX &ndash; for new comers (like myself) some essentials are:
+
+<ul>
+<li>brew &ndash; a mac package manager (like apt or yum)</li>
+<li>iterm2 &ndash; really good terminal emulator</li>
+</ul>
+</li>
+<li>Deployed on Linux
+
+<ul>
+<li>Basic Linux foo is really useful</li>
+</ul>
+</li>
+<li>Version controlled with git
+
+<ul>
+<li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>That&rsquo;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</p>
 </div>
   
   
