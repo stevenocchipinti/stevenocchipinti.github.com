@@ -118,7 +118,7 @@ Italy
 {% img left http://1.bp.blogspot.com/-ZLUtgwG7lzc/UEwqIo_EcCI/AAAAAAAAAOc/_wSWufl0gRY/s320/Italy.jpg %}
 
 <dl>
-<dt><span title="Milan &rarr; Venice &rarr; Florence &rarr; Pisa &rarr; Rome &rarr; Pompeii &rarr; Sorento &rarr; &amp; &rarr; Capri &rarr; Rome">Tour&#42;</span>:</dt>
+<dt><span title="Milan &#9992; Venice &#9992; Florence &#9992; Pisa &#9992; Rome &#9992; Pompeii &#9992; Sorento &amp; Capri &#9992; Rome">Tour&#42;</span>:</dt>
 <dd>28/03/2005 &rarr; <span title="Not sure about the end date">~12/04/2005</span></dd>
 </dl>
 
