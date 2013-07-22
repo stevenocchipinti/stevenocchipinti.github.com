@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I finally decided to install Minecraft on my new shiny Toshiba Portege z830.
-Ubuntu ships with an open-source version of Java, which did run &hellip;">
+  <meta name="description" content="Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,48 @@ Ubuntu ships with an open-source version of Java, which did run &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/copy-and-paste-over-ssh-with-xclip.html">Copy and Paste Over SSH With Xclip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-12T12:59:00+11:00" pubdate data-updated="true">Feb 12<span>th</span>, 2012</time>
+        
+         | <a href="/2012/02/copy-and-paste-over-ssh-with-xclip.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>&#8220;X selections&#8221;</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -613,48 +654,6 @@ I recently found myself in a situation where I need to comment out  certain line
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/09/code-review-workflow-with-github.html">Code Review Workflow With GitHub</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-09-18T10:06:00+10:00" pubdate data-updated="true">Sep 18<span>th</span>, 2011</time>
-        
-         | <a href="/2011/09/code-review-workflow-with-github.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>&#8220;<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>&#8221;</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known &#8221;<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>&#8221; and describes how they are both good, but Git-Flow is alot more involved, where the aptly known &#8220;GitHub-Flow&#8221; is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else&#8217;s work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>&#8221;.<br /><br />This doesn&#8217;t affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it&#8217;s the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>&#8221; instead of something more descriptive, like &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>&#8221;.<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -683,6 +682,10 @@ The more I use Git, the more I love it and less I prefer my once trusty SVN.<br 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
       </li>
     
@@ -696,10 +699,6 @@ The more I use Git, the more I love it and less I prefer my once trusty SVN.<br 
     
       <li class="post">
         <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/a-few-photography-tips.html">A Few Photography Tips</a>
       </li>
     
   </ul>

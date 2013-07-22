@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: compiz - StevenOcchipinti.com</title>
+  <title>Default values for environment variables - StevenOcchipinti.com</title>
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Category: compiz">
+  <meta name="description" content="Default values for environment variables">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.stevenocchipinti.comcategories/compiz">
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
@@ -75,36 +75,127 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Compiz</h1>
+    
+      <h1 class="entry-title">Default Values for Environment Variables</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-22T22:51:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>In ruby, the <code>||=</code> operator will assign a given value to a variable, if that
+variable does not already have a value.
+For example:</p>
 
-  
-  <h2>2011</h2>
+<figure class='code'><figcaption><span>default_value.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; nil</span>
+</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;bar&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
+</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;baz&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<article>
-  
-<h1><a href="/2011/05/multi-monitor-keyboard-shortcuts-in.html">Multi monitor keyboard shortcuts in Ubuntu</a></h1>
-<time datetime="2011-05-23T05:55:00+10:00" pubdate><span class='month'>May</span> <span class='day'>23</span> <span class='year'>2011</span></time>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/compiz/'>compiz</a>, <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a></span>
-</footer>
+<p>This will assign <code>"bar"</code> to <code>foo</code>, unless <code>foo</code> is already set.
+In other words, it will make <code>"bar"</code> the <em>default value</em> of <code>foo</code>.</p>
 
+<p>I recently had to do this is bash, and it turns out bash has similar
+functionality. This is the bash equivalent:</p>
 
-</article>
+<figure class='code'><figcaption><span>default_value.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;bar&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;baz&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-22T22:51:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/bash/'>bash</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/06/removing-previously-printed-lines.html" title="Previous Post: Printing over previously printed characters and lines">&laquo; Printing over previously printed characters and lines</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -166,7 +257,10 @@
       var disqus_shortname = 'stevenocchipinticom';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
