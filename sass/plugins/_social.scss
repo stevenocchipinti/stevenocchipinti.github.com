@@ -23,6 +23,7 @@ aside.sidebar ul.social-icons {
       &.social-linkedin:hover  { background-color: #007FB1 }
       &.social-rss:hover       { background-color: #FF8300 }
       &.social-twitter:hover   { background-color: #00ACED }
+      @include transition(0.4s);
     }
   }
 }
