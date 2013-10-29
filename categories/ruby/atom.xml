@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-07-22T23:20:19+10:00</updated>
+  <updated>2013-10-30T09:38:14+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rake task with an arbitrary number of arguments]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/"/>
+    <updated>2013-10-18T14:10:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments</id>
+    <content type="html"><![CDATA[<p>Rake gives you a way of specifying arguments for a given task like this:</p>
+
+<p><code>ruby
+desc "A task that can accept a optional 'foo' argument"
+task :thing, [:foo] do |task, args|
+  puts args[:foo]
+end
+</code></p>
+
+<p>This will make the value of <code>foo</code> available in the <code>args</code> variable.
+When you run <code>rake -T</code>, it will show you that argument like this:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+
+<p>But what if you want to allow an arbitrary number of arguments, like a list of
+usernames to report on?</p>
+
+<h2>A solution</h2>
+
+<p>You could use an alternative method of passing arguments in, such as <code>ARGV</code> or
+Environment Variables, but Rake does provide a way.
+The <code>args</code> block parameter behaves like a hash, but it is actually a
+<code>Rake::TaskArguments</code> object. This object responds to an <code>#extras</code> method that
+will return an array of any extra arguments.</p>
+
+<p>For example:</p>
+
+<p><code>ruby
+task :thing, [:foo] do |task, args|
+  puts args[:foo]     # First argument
+  puts args.extras    # The rest of the arguments
+end
+</code></p>
+
+<p>This will allow you to call the task like this:</p>
+
+<pre><code>$&gt; rake thing[foo]
+foo
+
+$&gt; rake thing[foo,extra1,extra2]
+foo
+extra1
+extra2
+</code></pre>
+
+<h2>Caveats</h2>
+
+<p>While you can specify many arguments on the command line, (unless they are
+quoted) the arguments can not be separated by spaces, for example:</p>
+
+<pre><code>$&gt; rake thing[foo,extra1]    # GOOD
+foo
+extra1
+$&gt; rake thing[foo, extra1]   # BAD
+Don't know how to build task 'thing[foo,'
+</code></pre>
+
+<p>This means you may want to include some explanation in the <code>desc</code> section.</p>
+
+<p>Also, <code>rake -T</code> will not show the &ldquo;extra&rdquo; arguments, only the named arguments:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>

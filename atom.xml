@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-07-22T23:20:19+10:00</updated>
+  <updated>2013-10-30T09:38:14+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rake task with an arbitrary number of arguments]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/"/>
+    <updated>2013-10-18T14:10:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments</id>
+    <content type="html"><![CDATA[<p>Rake gives you a way of specifying arguments for a given task like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;A task that can accept a optional &#39;foo&#39; argument&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make the value of <code>foo</code> available in the <code>args</code> variable.
+When you run <code>rake -T</code>, it will show you that argument like this:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+
+<p>But what if you want to allow an arbitrary number of arguments, like a list of
+usernames to report on?</p>
+
+<h2>A solution</h2>
+
+<p>You could use an alternative method of passing arguments in, such as <code>ARGV</code> or
+Environment Variables, but Rake does provide a way.
+The <code>args</code> block parameter behaves like a hash, but it is actually a
+<code>Rake::TaskArguments</code> object. This object responds to an <code>#extras</code> method that
+will return an array of any extra arguments.</p>
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>     <span class="c1"># First argument</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">.</span><span class="n">extras</span>    <span class="c1"># The rest of the arguments</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow you to call the task like this:</p>
+
+<pre><code>$&gt; rake thing[foo]
+foo
+
+$&gt; rake thing[foo,extra1,extra2]
+foo
+extra1
+extra2
+</code></pre>
+
+<h2>Caveats</h2>
+
+<p>While you can specify many arguments on the command line, (unless they are
+quoted) the arguments can not be separated by spaces, for example:</p>
+
+<pre><code>$&gt; rake thing[foo,extra1]    # GOOD
+foo
+extra1
+$&gt; rake thing[foo, extra1]   # BAD
+Don't know how to build task 'thing[foo,'
+</code></pre>
+
+<p>This means you may want to include some explanation in the <code>desc</code> section.</p>
+
+<p>Also, <code>rake -T</code> will not show the &ldquo;extra&rdquo; arguments, only the named arguments:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Default values for environment variables]]></title>
@@ -274,6 +356,53 @@ When you want to use the sauce, it still needs to be cooked, so you can experime
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
 </div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Processing raw photos in linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux.html"/>
+    <updated>2012-12-24T11:49:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux</id>
+    <content type="html"><![CDATA[<p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
+
+<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
+There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
+Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
+
+<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
+Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
+
+<h2>RawTherapee</h2>
+
+<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
+It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
+I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
+The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
+
+<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
+
+
+<h2>My attempt</h2>
+
+<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
+
+<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
+I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
+
+<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
+
+<p><img class="center" src="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG" title="Straight from the camera, with incorrect settings" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg" title="After processing in RawTherapee" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg" title="After adding some minor tweaks in The Gimp" ></p>
+
+<h2>Next steps</h2>
+
+<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
+
+<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
 ]]></content>
   </entry>
   
@@ -777,28 +906,6 @@ At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the 
     <id>http://blog.stevenocchipinti.com/2012/03/spam-defence</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky enough to get an invite for Gmail in its early stages, Yahoo! Mail had (IMO) one killer feature: <i>Address Guard</i><br /><br />The idea behind <i>Address Guard</i> was simple, you make your primary email address, say <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@yahoo.com</span>, and then a secondary <i>&#8220;base name&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007</span>.<br />This <i>base name</i> was not just another email address, infact all mail sent to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007@yahoo.com</span> would get dropped.<br />Instead, use that base name to create an unlimited number of <i>&#8220;disposable addresses&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007-facebook@yahoo.com</span>, etc.<br /><br />The idea was that if you follow the simple 3 click process (settings -&gt; addressGaurd -&gt; add new address!) to create a new disposable email address every time you signed up for a new website, if ever they spammed you, you simply delete that address and they wont be able to bother you any more - brilliant!<br /><br />I avoided Gmail because they didn&#8217;t have the same <i>&#8220;whitelist&#8221;</i> approach to email addresses, but when I bought my domain name and started using Google Apps for email, I decided to use Gmail as my primary email provider.<br />Naturally this forced me to look for a similar way to defend again spam (albeit Gmails spam filtering is quite good).<br /><br />Google Apps provides <i>&#8220;nicknames&#8221;</i>, which works in much the same way, you can have an unlimited number of aliases for an account, except the process was a bit longer (settings -&gt; manage domain -&gt; users -&gt; Your user -&gt; Add a nickname) and I got too lazy for that after a little while.<br />I still use nicknames for certain things, but not for every website I sign up for.<br /><br />That&#8217;s when I discovered the + symbol in Gmail. Unlike Yahoo! Mail that uses the <i>&#8220;whitelist&#8221;</i> approach (only addresses you created will accept mail), you can use Gmail with a <i>&#8220;blacklist&#8221;</i> approach (all addresses accept mail unless you block them).<br /><br />Assume your email address is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@gmail.com</span>, you can append a + and then any (valid) characters you like to the end, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+facebook@gmail.com</span> and it will still get delivered.<br /><br />If some rogue website starts sending spam to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>, then you can go into the Gmail settings and setup a filter to delete all mail that is sent to: <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>.<br /><br />I don&#8217;t think it&#8217;s quite as nice as <i>Address Guard</i>, but it is a bit more convenient because there is no set up. The biggest downside is that quite a few websites consider an email address to be invalid if it has a + symbol in it, but most are fine.
-</div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[XKCD + BeyondPod]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/03/xkcd-beyondpod.html"/>
-    <updated>2012-03-04T04:10:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/03/xkcd-beyondpod</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-On my Android phone, I use an app called &#8221;<a href="https://market.android.com/details?id=mobi.beyondpod&amp;hl=en%20" target="_blank">BeyondPod</a>&#8221;. <br /><br />BeyondPod is great because unlike <a href="https://market.android.com/details?id=com.google.android.apps.reader&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5nb29nbGUuYW5kcm9pZC5hcHBzLnJlYWRlciJd" target="_blank">Google Reader</a> and <a href="https://market.android.com/details?id=com.alphonso.pulse&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5hbHBob25zby5wdWxzZSJd" target="_blank">Pulse</a> (which are other great RSS readers), BeyondPod will download video and audio podcasts on a schedule.<br /><br />What this means for me, is that at 2:30 AM, my phone will use my home ADSL2&#8217;s off-peak downloads and fetch a bunch of regular podcasts so when I wake up and make my way into work, I will have all the latest episodes of my favourite shows to watch and listen to on the train.<br /><br />One of the feeds that I&#8217;m subscribed to is <a href="http://xkcd.com/%20" target="_blank">XKCD</a>. If you look at the comics online, you probably already know that if hover your mouse over the image, you get to see an extra message about the comic.<br /><br />On Google Reader, you can tap and hold the image and use the menu to get to the tooltip, but with BeyondPod, there is no such option.<br /><br />This means that the tooltip is actually included in the <a href="http://xkcd.com/atom.xml" target="_blank">feed</a>, so I thought it would be pretty easy to write a little proxy that pulls out the &#8220;title=&#8221; attribute and appends it to the body.<br /><br />Before I started coding, I thought that surely someone would have already done this, so after a quick Google search I came across a <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=upJ5TUni3BGUZU9yLO2fWQ" target="_blank">Yahoo! Pipe</a> from &#8221;<a href="http://pipes.yahoo.com/pipes/person.info?guid=D4HQ7VIJ2YNE6NZRH3VHJOBREA">Benjamin Cook</a>&#8221; that does exactly that.<br /><br />Ben&#8217;s Pipe appends a &#8220;&lt;br /&gt;&#8221; and then the tooltip, but the &#8220;&lt;br /&gt;&#8221; seems to be getting escaped, so I copied the pipe and removed the &#8220;&lt;br /&gt;&#8221; and the end result was exactly what I wanted.<br /><br />If you have a similar problem, you can add <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=61e54ab0572541bd03cd44f3e601482e" target="_blank">my version of the pipe</a> to your reader and here&#8217;s what it&#8217;ll look like: <br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s1600/2012-02-23_16-14-04.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s320/2012-02-23_16-14-04.jpg" width="192" /></a></div><br />
-</div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git + Hub = GitHub]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/02/git-hub-github.html"/>
-    <updated>2012-02-20T02:37:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/02/git-hub-github</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What&#8217;s nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> &#8220;Open a pull request to merge the current branch into master and attach the pull request to issue 49&#8221;</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don&#8217;t know why this isn&#8217;t built in to the web interface (or maybe it is and I just don&#8217;t know how).
 </div>
 ]]></content>
   </entry>

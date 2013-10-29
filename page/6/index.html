@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="So I started my new job and they use Google Apps!Initially I thought this was fantastic, until I realized that because I also use Google Apps for my &hellip;">
+  <meta name="description" content="So my brother Rob and I have wanted to work on a project together for a while now, and after our awesome Minecraft Server, we came to the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/tank-project.html">The Tank Project!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-22T05:31:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2011</time>
+        
+         | <a href="/2011/05/tank-project.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+So my brother Rob and I have wanted to work on a project together for a while now, and after our awesome <a href="http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw.html">Minecraft Server</a>, we came to the realization that I love doing the functional side of things (setting up the software, etc.) and Rob loves doing the creative, hands-on side of things (putting the hardware together and making it look pro) and so together, this things compliment each other!<br /><br />After scoring a <a href="http://netduino.com/">Netduino</a> (like an Arduino, but I write in C#.net instead of C) for use in a future project, this was the perfect opportunity for our skills to come together as Rob isn&#8217;t keen on programming, and I&#8217;m probably not as good as him at making things, whereas he is quite passionate about that!<br /><br />I&#8217;ve always wanted to have a play with an <a href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> (or Netduino in this case). To actually allow my interest in programming to bridge across to the  hardware world always seemed like a mystical unknown to me, but these  little programmable micro-controllers allow just that - my software to  use hardware!<br /><br />Enter <a href="http://tank.stevenocchipinti.com/"><i>The Tank Project</i></a>!<br /><br />The idea was to build a physical tank that we can use the Netduino to control, but not just limited to controlling the movement of the tank, but then a variety of other features.<br />Things that came to mind were a working (not-so-dangerous, legal) canon, webcam feeds for remote control, mobile application to drive it, 360 degree spinning turret and just about anything else we could think of!<br />Our imagination started going wild with vague memories back to <a href="http://en.wikipedia.org/wiki/Robot_Wars">Robot Wars</a> and so we set aside a day to brainstorm ideas and develop a plan of attack (pardon the pun). That day was yesterday, and it went well! :)<br /><br />We&#8217;re going to try to keep a project blog going if you want to keep track of the progress:<br /><a href="http://tank.stevenocchipinti.com/">http://tank.stevenocchipinti.com</a><br /><br />(&#8220;keep <i>track</i> of the progress&#8221; is also a pun&#8230; theres going to be a few of these, lol!)
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html">DHCP Fixedhosts to /etc/hosts File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-17T12:28:00+10:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS&#8230; I think&#8230; correct me if I&#8217;m wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn&#8217;t need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I&#8217;ve already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo &#8220;admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D&#8221; | nc 192.168.1.1 23 | \grep &#8220;[ ]*[0-9]&#8221; | sed &#8220;s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g&#8221;</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230; <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />&#8230;</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230;<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />&#8230;</span></blockquote>This isn&#8217;t really that useful, but it took a couple of minutes, just to &#8220;see if I could do it&#8221;&#8230; and it worked :)<br /><br />&#8230; I don&#8217;t think I&#8217;ll actually use it, lol, but it was fun anyway :P
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -271,6 +355,10 @@ Not the most creative name for your average blog, but for those that dont know:<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
       </li>
     
@@ -284,10 +372,6 @@ Not the most creative name for your average blog, but for those that dont know:<
     
       <li class="post">
         <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
       </li>
     
   </ul>

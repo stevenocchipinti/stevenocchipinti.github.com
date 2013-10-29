@@ -4,7 +4,7 @@
   <title><![CDATA[Category: photography | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/photography/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-07-22T23:20:19+10:00</updated>
+  <updated>2013-10-30T09:38:14+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -22,6 +22,53 @@
 Every time I go on holiday, I end up writing the same bash script! ... I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it's a really simple script to write, all it does is move the photos from my camera's memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a 'jpg' or 'raw' sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn't really like that.
 </div>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Processing raw photos in linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux.html"/>
+    <updated>2012-12-24T11:49:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux</id>
+    <content type="html"><![CDATA[<p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
+
+<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
+There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
+Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
+
+<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
+Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
+
+<h2>RawTherapee</h2>
+
+<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
+It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
+I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
+The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
+
+<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
+
+
+<h2>My attempt</h2>
+
+<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
+
+<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
+I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
+
+<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
+
+<p><img class="center <a" src="href="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG">http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG</a>" title="Straight from the camera, with incorrect settings" ></p>
+
+<p><img class="center <a" src="href="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg">http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg</a>" title="After processing in RawTherapee" ></p>
+
+<p><img class="center <a" src="href="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg">http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg</a>" title="After adding some minor tweaks in The Gimp" ></p>
+
+<h2>Next steps</h2>
+
+<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
+
+<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
 ]]></content>
   </entry>
   

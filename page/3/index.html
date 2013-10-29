@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem &hellip;">
+  <meta name="description" content="On my Android phone, I use an app called &#8221;BeyondPod&#8221;. BeyondPod is great because unlike Google Reader and Pulse (which are other great &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/xkcd-beyondpod.html">XKCD + BeyondPod</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-03-04T04:10:00+11:00" pubdate data-updated="true">Mar 4<span>th</span>, 2012</time>
+        
+         | <a href="/2012/03/xkcd-beyondpod.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+On my Android phone, I use an app called &#8221;<a href="https://market.android.com/details?id=mobi.beyondpod&amp;hl=en%20" target="_blank">BeyondPod</a>&#8221;. <br /><br />BeyondPod is great because unlike <a href="https://market.android.com/details?id=com.google.android.apps.reader&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5nb29nbGUuYW5kcm9pZC5hcHBzLnJlYWRlciJd" target="_blank">Google Reader</a> and <a href="https://market.android.com/details?id=com.alphonso.pulse&amp;feature=search_result#?t=W251bGwsMSwxLDEsImNvbS5hbHBob25zby5wdWxzZSJd" target="_blank">Pulse</a> (which are other great RSS readers), BeyondPod will download video and audio podcasts on a schedule.<br /><br />What this means for me, is that at 2:30 AM, my phone will use my home ADSL2&#8217;s off-peak downloads and fetch a bunch of regular podcasts so when I wake up and make my way into work, I will have all the latest episodes of my favourite shows to watch and listen to on the train.<br /><br />One of the feeds that I&#8217;m subscribed to is <a href="http://xkcd.com/%20" target="_blank">XKCD</a>. If you look at the comics online, you probably already know that if hover your mouse over the image, you get to see an extra message about the comic.<br /><br />On Google Reader, you can tap and hold the image and use the menu to get to the tooltip, but with BeyondPod, there is no such option.<br /><br />This means that the tooltip is actually included in the <a href="http://xkcd.com/atom.xml" target="_blank">feed</a>, so I thought it would be pretty easy to write a little proxy that pulls out the &#8220;title=&#8221; attribute and appends it to the body.<br /><br />Before I started coding, I thought that surely someone would have already done this, so after a quick Google search I came across a <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=upJ5TUni3BGUZU9yLO2fWQ" target="_blank">Yahoo! Pipe</a> from &#8221;<a href="http://pipes.yahoo.com/pipes/person.info?guid=D4HQ7VIJ2YNE6NZRH3VHJOBREA">Benjamin Cook</a>&#8221; that does exactly that.<br /><br />Ben&#8217;s Pipe appends a &#8220;&lt;br /&gt;&#8221; and then the tooltip, but the &#8220;&lt;br /&gt;&#8221; seems to be getting escaped, so I copied the pipe and removed the &#8220;&lt;br /&gt;&#8221; and the end result was exactly what I wanted.<br /><br />If you have a similar problem, you can add <a href="http://pipes.yahoo.com/pipes/pipe.info?_id=61e54ab0572541bd03cd44f3e601482e" target="_blank">my version of the pipe</a> to your reader and here&#8217;s what it&#8217;ll look like: <br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s1600/2012-02-23_16-14-04.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-lErLdyOZLO8/T0XMYWJY6SI/AAAAAAAAADw/-yKGNhQwHgw/s320/2012-02-23_16-14-04.jpg" width="192" /></a></div><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/git-hub-github.html">Git + Hub = GitHub</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-20T02:37:00+11:00" pubdate data-updated="true">Feb 20<span>th</span>, 2012</time>
+        
+         | <a href="/2012/02/git-hub-github.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What&#8217;s nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> &#8220;Open a pull request to merge the current branch into master and attach the pull request to issue 49&#8221;</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don&#8217;t know why this isn&#8217;t built in to the web interface (or maybe it is and I just don&#8217;t know how).
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -570,90 +654,6 @@ Usually when I need to find things in multiple files, I would use <span style="f
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/10/ruby-parallel-port-leds.html">Ruby + Parallel Port + LEDs</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-10-10T03:49:00+11:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
-        
-         | <a href="/2011/10/ruby-parallel-port-leds.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 &#8220;D&#8221; pins for data with 8 matching &#8220;Ground&#8221; pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED&#8217;s were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED&#8217;s.<br />I found a bunch of tristate LED&#8217;s - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn&#8217;t have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/09/git-diff-and-patch.html">Git Stash, Diff and Patch</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-09-21T10:41:00+10:00" pubdate data-updated="true">Sep 21<span>st</span>, 2011</time>
-        
-         | <a href="/2011/09/git-diff-and-patch.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-I recently found myself in a situation where I need to comment out  certain lines in my code in order to test a particular set of features.<br /><br />These  commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br />In this situation, checking them into Git or making a personal <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.gitignore</span> file are not suitable solutions.<br /><br />I have found 2 good ways of accomplishing this:<br /><br /><br /><b>Git stash:</b><br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git stash save temp workaround for some issue </blockquote><br />Then I continue on with my work. I selectively leave these changes out of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git checkout &#8211; .</span> so I&#8217;m left with a clean repository.<br /><br />When I need to work on a related feature again, I can list my stashes with:<br /><blockquote>git stash list</blockquote><br />Then, apply the most recent stash by running this command:<br /><blockquote>git stash apply</blockquote><br />If you have more than one stash, you can specify which stash you want to apply on the command line. See <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git stash &#8211;help</span> to see more information.<br /><br /><br /><b>Git diff and patch:</b> <br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> are very useful tools to be familiar with if you ever deal with text. Git&#8217;s <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> output is much the same, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> tool is still very handy!<br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git diff &gt; ~/patches/temp_workaround.patch</blockquote><br />Then I continue on with my work. I selectively leave these changes out  of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in  except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git  checkout &#8211; .</span> so I&#8217;m left with a clean repository.<br /><br />When I need to work on a related feature again, I can apply my patch by running this command from the project root:<br /><blockquote>patch -p1 &lt; ~/patches/temp_workaround.patch</blockquote><br /><br />Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -682,6 +682,10 @@ I recently found myself in a situation where I need to comment out  certain line
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
       </li>
     
@@ -695,10 +699,6 @@ I recently found myself in a situation where I need to comment out  certain line
     
       <li class="post">
         <a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a>
       </li>
     
   </ul>

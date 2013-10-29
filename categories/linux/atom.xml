@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-07-22T23:20:19+10:00</updated>
+  <updated>2013-10-30T09:38:14+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -111,6 +111,53 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Processing raw photos in linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux.html"/>
+    <updated>2012-12-24T11:49:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux</id>
+    <content type="html"><![CDATA[<p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
+
+<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
+There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
+Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
+
+<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
+Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
+
+<h2>RawTherapee</h2>
+
+<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
+It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
+I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
+The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
+
+<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
+
+
+<h2>My attempt</h2>
+
+<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
+
+<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
+I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
+
+<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
+
+<p><img class="center <a" src="href="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG">http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG</a>" title="Straight from the camera, with incorrect settings" ></p>
+
+<p><img class="center <a" src="href="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg">http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg</a>" title="After processing in RawTherapee" ></p>
+
+<p><img class="center <a" src="href="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg">http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg</a>" title="After adding some minor tweaks in The Gimp" ></p>
+
+<h2>Next steps</h2>
+
+<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
+
+<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html"/>
     <updated>2012-09-19T11:33:00+10:00</updated>
@@ -164,48 +211,6 @@ sudo system-config-printer
 Have you ever SSH'ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn't seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>"X selections"</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
 </div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Minecraft exception in linux]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html"/>
-    <updated>2012-02-02T12:25:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux</id>
-    <content type="html"><![CDATA[<p>I finally decided to install Minecraft on my new shiny <a href="/2011/12/toshiba-portege-z830.html">Toshiba Portege z830</a>.<br/>
-Ubuntu ships with an open-source version of Java, which did run Minecraft, but the graphics were terrible, even on the lowest settings. There were artefacts everywhere!</p>
-
-<p>So as recommended, I switched to the official JRE. Now the login screen works, but that&rsquo;s about it. After logging in, I just got a black screen and the following exception in the console:</p>
-
-<p><code>
-Exception in thread "Minecraft main thread"
-java.lang.ExceptionInInitializerError at
-net.minecraft.client.Minecraft.a(SourceFile:180) at
-net.minecraft.client.Minecraft.run(SourceFile:648) at
-java.lang.Thread.run(Thread.java:662)&lt;div class="de2"&gt;Caused by: java.lang.ArrayIndexOutOfBoundsException: 0 at
-org.lwjgl.opengl.XRandR$Screen.&amp;lt;init&amp;gt;(XRandR.java:234) at
-org.lwjgl.opengl.XRandR$Screen.&amp;lt;init&amp;gt;(XRandR.java:196) at
-org.lwjgl.opengl.XRandR.populate(XRandR.java:87) at
-org.lwjgl.opengl.XRandR.access$100(XRandR.java:52)at
-org.lwjgl.opengl.XRandR$1.run(XRandR.java:110) at
-java.security.AccessController.doPrivileged(Native Method) at
-org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at
-org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at
-org.lwjgl.opengl.Display.&amp;lt;clinit&amp;gt;(Display.java:135)
-... 3 more
-</code></p>
-
-<p>After discussing the problem in IRC, the solution was quite simple. It turns out <code>lwjgl</code> is a &ldquo;<em>Light Weight Java Game Library</em>&rdquo; and the version I had wasn&rsquo;t behaving.<br/>
-On the advice of the helpful IRC'ers, I downloaded the latest <code>lwjgl</code> from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.</p>
-
-<p>To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:</p>
-
-<p><code>
-cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
-cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives
-</code></p>
-
-<p>Done! Now it works nicely.</p>
 ]]></content>
   </entry>
   
