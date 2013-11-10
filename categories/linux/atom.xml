@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-10-30T09:38:14+11:00</updated>
+  <updated>2013-11-10T14:19:00+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,96 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Minecraft in Linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/"/>
+    <updated>2013-11-10T12:26:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux</id>
+    <content type="html"><![CDATA[<h2>1. Download Oracle Java</h2>
+
+<p>First you will need the official Oracle version of Java (the open source
+alternatives will probably not work as well for Minecraft). I think you can
+just download the runtime, but I personally opt for installing the complete
+Java Development Kit (JDK).</p>
+
+<p>You can download the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">official JDK here</a>.<br/>
+If you run a RedHat based distro, there is a <code>.rpm</code>, otherwise just get the
+<code>.tgz</code> for your system.</p>
+
+<h2>2. Installing Oracle Java</h2>
+
+<p>At the time of writing, the version of java is 7u45.<br/>
+I move this <code>.tar.gz</code> file from my downloads folder to <code>/opt</code> and unzip it
+there, like this:
+<code>
+mv ~/Downloads/jdk-7u45-linux-x64.tar.gz /opt
+cd /opt
+tar xzvf jdk-7u45-linux-x64.tar.gz
+</code></p>
+
+<p>This will create a new directory called <code>jdk1.7.0_45</code>.<br/>
+As there is a good chance we will be updating java in the future, I create a
+symlink that we can easily change to the new versions in the future like this:
+<code>
+ln -s jdk1.7.0_45 jdk
+</code></p>
+
+<p>Now when ever you want to find java, it will be in <code>/opt/jdk</code>.</p>
+
+<p>All we have to do now is make the executables available on the <code>PATH</code>.<br/>
+Edit your <code>.bashrc</code> (or <code>.profile</code>, etc.) and add this line:
+<code>
+export PATH=$PATH:/opt/jdk/bin/
+</code></p>
+
+<h2>3. Install Minecraft</h2>
+
+<p>Get Minecraft from the <a href="https://minecraft.net/download">official Minecraft download page</a>.
+Under the &ldquo;Minecraft for Linux / Other&rdquo; there is a link to download the
+official Minecraft <code>.jar</code> file.  I also put this in <code>/opt</code>:
+<code>
+mkdir /opt/minecraft
+mv ~/Downloads/Minecraft.jar /opt/minecraft
+</code></p>
+
+<p>At this point we can start Minecraft with this:
+<code>
+java -jar Minecraft.jar
+</code></p>
+
+<h2>4. Setting up an Application Launcher for Gnome</h2>
+
+<p>I use Gnome Shell and if I&rsquo;m not in a terminal, I normally use Gnome&rsquo;s
+<em>Activities Overview</em> to launch apps by pressing the &lsquo;super&rsquo; key, typing
+&ldquo;Minecraft&rdquo; and pressing &lsquo;enter&rsquo;.</p>
+
+<p>We want Minecraft to be installed just like any other app, so we will need to
+add a launcher for Minecraft, but before we do that, we need an icon for it.
+I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
+
+<p><code>
+cd /opt/minecraft
+wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
+</code></p>
+
+<p>Then to make an application launcher, you can use this:
+<code>
+gnome-desktop-item-edit --create-new ~/.local/share/applications
+</code></p>
+
+<p><img class="center <a" src="href="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no">https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no</a>"></p>
+
+<p>You can assign it the logo we downloaded earlier and use this for the command:
+<code>
+/opt/jdk/bin/java -jar /opt/minecraft/Minecraft.jar
+</code></p>
+
+<h2>5. Have fun!</h2>
+
+<p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
@@ -107,53 +197,6 @@ This behaviour suits a TUI, and the old contents is still restored when you retu
 I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
 
 <p>Now go and make a cool retro user interface! :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Processing raw photos in linux]]></title>
-    <link href="http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux.html"/>
-    <updated>2012-12-24T11:49:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux</id>
-    <content type="html"><![CDATA[<p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
-
-<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
-There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
-Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
-
-<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
-Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
-
-<h2>RawTherapee</h2>
-
-<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
-It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
-I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
-The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
-
-<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
-
-
-<h2>My attempt</h2>
-
-<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
-
-<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
-I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
-
-<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
-
-<p><img class="center <a" src="href="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG">http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG</a>" title="Straight from the camera, with incorrect settings" ></p>
-
-<p><img class="center <a" src="href="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg">http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg</a>" title="After processing in RawTherapee" ></p>
-
-<p><img class="center <a" src="href="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg">http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg</a>" title="After adding some minor tweaks in The Gimp" ></p>
-
-<h2>Next steps</h2>
-
-<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
-
-<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
 ]]></content>
   </entry>
   

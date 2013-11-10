@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Installing Minecraft in Linux - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="Installing the Minecraft Jar File in Ubuntu with Gnome Shell">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="https://github.com/stevenocchipinti">Code</a></li>
+  <li><a href="http://www.flickr.com/photos/stevenocchipinti">Photography</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Installing Minecraft in Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-10T12:26:00+11:00" pubdate data-updated="true">Nov 10<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. Download Oracle Java</h2>
+
+<p>First you will need the official Oracle version of Java (the open source
+alternatives will probably not work as well for Minecraft). I think you can
+just download the runtime, but I personally opt for installing the complete
+Java Development Kit (JDK).</p>
+
+<p>You can download the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">official JDK here</a>.<br/>
+If you run a RedHat based distro, there is a <code>.rpm</code>, otherwise just get the
+<code>.tgz</code> for your system.</p>
+
+<h2>2. Installing Oracle Java</h2>
+
+<p>At the time of writing, the version of java is 7u45.<br/>
+I move this <code>.tar.gz</code> file from my downloads folder to <code>/opt</code> and unzip it
+there, like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mv ~/Downloads/jdk-7u45-linux-x64.tar.gz /opt
+</span><span class='line'>cd /opt
+</span><span class='line'>tar xzvf jdk-7u45-linux-x64.tar.gz</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will create a new directory called <code>jdk1.7.0_45</code>.<br/>
+As there is a good chance we will be updating java in the future, I create a
+symlink that we can easily change to the new versions in the future like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ln -s jdk1.7.0_45 jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when ever you want to find java, it will be in <code>/opt/jdk</code>.</p>
+
+<p>All we have to do now is make the executables available on the <code>PATH</code>.<br/>
+Edit your <code>.bashrc</code> (or <code>.profile</code>, etc.) and add this line:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=$PATH:/opt/jdk/bin/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Install Minecraft</h2>
+
+<p>Get Minecraft from the <a href="https://minecraft.net/download">official Minecraft download page</a>.
+Under the &ldquo;Minecraft for Linux / Other&rdquo; there is a link to download the
+official Minecraft <code>.jar</code> file.  I also put this in <code>/opt</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir /opt/minecraft
+</span><span class='line'>mv ~/Downloads/Minecraft.jar /opt/minecraft</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point we can start Minecraft with this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>java -jar Minecraft.jar</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Setting up an Application Launcher for Gnome</h2>
+
+<p>I use Gnome Shell and if I&rsquo;m not in a terminal, I normally use Gnome&rsquo;s
+<em>Activities Overview</em> to launch apps by pressing the &lsquo;super&rsquo; key, typing
+&ldquo;Minecraft&rdquo; and pressing &lsquo;enter&rsquo;.</p>
+
+<p>We want Minecraft to be installed just like any other app, so we will need to
+add a launcher for Minecraft, but before we do that, we need an icon for it.
+I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /opt/minecraft
+</span><span class='line'>wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then to make an application launcher, you can use this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gnome-desktop-item-edit --create-new ~/.local/share/applications</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no"></p>
+
+<p>You can assign it the logo we downloaded earlier and use this for the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/opt/jdk/bin/java -jar /opt/minecraft/Minecraft.jar</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>5. Have fun!</h2>
+
+<p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-10T12:26:00+11:00" pubdate data-updated="true">Nov 10<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/game/'>game</a>, <a class='category' href='/categories/java/'>java</a>, <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/minecraft/'>minecraft</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/" title="Previous Post: Rake task with an arbitrary number of arguments">&laquo; Rake task with an arbitrary number of arguments</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">"Safe Mode" on the Samsung Galaxy S3</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

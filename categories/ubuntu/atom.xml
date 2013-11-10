@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-10-30T09:38:14+11:00</updated>
+  <updated>2013-11-10T14:19:00+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,96 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Minecraft in Linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux/"/>
+    <updated>2013-11-10T12:26:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/11/10/installing-minecraft-in-linux</id>
+    <content type="html"><![CDATA[<h2>1. Download Oracle Java</h2>
+
+<p>First you will need the official Oracle version of Java (the open source
+alternatives will probably not work as well for Minecraft). I think you can
+just download the runtime, but I personally opt for installing the complete
+Java Development Kit (JDK).</p>
+
+<p>You can download the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">official JDK here</a>.<br/>
+If you run a RedHat based distro, there is a <code>.rpm</code>, otherwise just get the
+<code>.tgz</code> for your system.</p>
+
+<h2>2. Installing Oracle Java</h2>
+
+<p>At the time of writing, the version of java is 7u45.<br/>
+I move this <code>.tar.gz</code> file from my downloads folder to <code>/opt</code> and unzip it
+there, like this:
+<code>
+mv ~/Downloads/jdk-7u45-linux-x64.tar.gz /opt
+cd /opt
+tar xzvf jdk-7u45-linux-x64.tar.gz
+</code></p>
+
+<p>This will create a new directory called <code>jdk1.7.0_45</code>.<br/>
+As there is a good chance we will be updating java in the future, I create a
+symlink that we can easily change to the new versions in the future like this:
+<code>
+ln -s jdk1.7.0_45 jdk
+</code></p>
+
+<p>Now when ever you want to find java, it will be in <code>/opt/jdk</code>.</p>
+
+<p>All we have to do now is make the executables available on the <code>PATH</code>.<br/>
+Edit your <code>.bashrc</code> (or <code>.profile</code>, etc.) and add this line:
+<code>
+export PATH=$PATH:/opt/jdk/bin/
+</code></p>
+
+<h2>3. Install Minecraft</h2>
+
+<p>Get Minecraft from the <a href="https://minecraft.net/download">official Minecraft download page</a>.
+Under the &ldquo;Minecraft for Linux / Other&rdquo; there is a link to download the
+official Minecraft <code>.jar</code> file.  I also put this in <code>/opt</code>:
+<code>
+mkdir /opt/minecraft
+mv ~/Downloads/Minecraft.jar /opt/minecraft
+</code></p>
+
+<p>At this point we can start Minecraft with this:
+<code>
+java -jar Minecraft.jar
+</code></p>
+
+<h2>4. Setting up an Application Launcher for Gnome</h2>
+
+<p>I use Gnome Shell and if I&rsquo;m not in a terminal, I normally use Gnome&rsquo;s
+<em>Activities Overview</em> to launch apps by pressing the &lsquo;super&rsquo; key, typing
+&ldquo;Minecraft&rdquo; and pressing &lsquo;enter&rsquo;.</p>
+
+<p>We want Minecraft to be installed just like any other app, so we will need to
+add a launcher for Minecraft, but before we do that, we need an icon for it.
+I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
+
+<p><code>
+cd /opt/minecraft
+wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
+</code></p>
+
+<p>Then to make an application launcher, you can use this:
+<code>
+gnome-desktop-item-edit --create-new ~/.local/share/applications
+</code></p>
+
+<p><img class="center <a" src="href="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no">https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no</a>"></p>
+
+<p>You can assign it the logo we downloaded earlier and use this for the command:
+<code>
+/opt/jdk/bin/java -jar /opt/minecraft/Minecraft.jar
+</code></p>
+
+<h2>5. Have fun!</h2>
+
+<p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
@@ -151,95 +241,6 @@ cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives
 </code></p>
 
 <p>Done! Now it works nicely.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[13" Core i7 Samsung Series 9 Ultrabook]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook.html"/>
-    <updated>2011-11-28T00:34:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook</id>
-    <content type="html"><![CDATA[<p>Back in my first year of uni, I bought one of the early Core Duo (not Core 2 Duo) 15" Asus laptops which at the time was great and it had a decent graphics card for games, etc.<br/>
-Roughly 6 years later, its showing its age. The battery lasts less than an hour now, it weighs about 3kg not including the adapter and performance is lacking compared to todays technology.</p>
-
-<p>After a recent shoulder injury and a busy week that involved me carrying my laptop from place to place, I decided it was time to reward myself with an early Christmas present and buy a new machine.</p>
-
-<p>My requirements were:</p>
-
-<ul>
-<li>13" screen</li>
-<li>As thin and as light as possible to aid portability</li>
-<li>Powerful enough to do almost anything my daily activities could involve</li>
-<li>&lt;~ $2000</li>
-</ul>
-
-
-<p>I compared as many of these 13" <em>&ldquo;ultrabooks&rdquo;</em> as I could and before long I had created a shortlist of my top 3 &ndash; which included an Asus u-Series, a Macbook Air and a Samsung Series 9.</p>
-
-<h2>Asus u-Series</h2>
-
-<p>The <a href="http://www.asus.com.au/Notebooks/Superior_Mobility/U36SD/#specifications">Asus machines</a>, as usual, had a very good bang-for-buck, a nice thickness of 19mm and unlike most others, some models had full size video output and ethernet plugs.<br/>
-While the price and size were right, the highest spec'ed machines were not quite as impressive as its competition. If budget was the number one concern, the Asus u-Series and Zenbook range offer pretty good value.</p>
-
-<h2>Macbook Air</h2>
-
-<p>I have never been a <em>&ldquo;Mac person&rdquo;</em> due to the traditional heavy pricing and proprietary nature of alot of their products, but these days (after some convincing) I believe the hardware and even price does have a surprisingly strong position in the competition.<br/>
-The <a href="http://store.apple.com/au/browse/home/shop_mac/family/macbook_pro">13" Macbook Pro</a> and <a href="http://www.apple.com/au/macbookair/specs.html">Macbook Air</a> both had very good specs to offer for around the $2000 price tag, both with Core i7&rsquo;s, 4-8GB RAM and SSD&rsquo;s, not to mention pretty attractive packaging.<br/>
-After seeing a Macbook Air up close, I really liked how the thickest point is about 17mm or so at the back but it tapers off to next to nothing at the front.</p>
-
-<p>So the model I chose for comparison purposes was worth $1928.99 and had the following specs:</p>
-
-<ul>
-<li>1.8GHz Dual-Core Intel Core i7</li>
-<li>4GB 1333MHz DDR3 SDRAM</li>
-<li>256GB flash storage</li>
-<li>Mini DisplayPort to DVI adapter ($30)</li>
-</ul>
-
-
-<p>I don&rsquo;t like the very proprietary DisplayPort and its $30 adapters, but its not too bad as almost <em>everyone</em> at my office uses a Mac so finding a spare adapter when needed wouldn&rsquo;t be too hard (I guess popularity offsets proprietary-ness).</p>
-
-<p>The operating system did not bother me too much either as I intended to be running Linux as my primary OS anyway, but having a Mac would give me more familiarity with OSX which would be helpful considering its popularity in my line of work.</p>
-
-<p>The minor annoyances would be: expensive adapters for video and ethernet ports, unfamiliar keyboard layout (command key where alt should be, etc), non-upgradeable ram, glossy screen, etc. &ndash; but those are pretty minor.</p>
-
-<h2>Samsung Series 9</h2>
-
-<p>I found these ultrabooks to have a very unique look and one of the first well thought out, thin designs that are not just another Mac look-a-like.<br/>
-The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;&ndash; which is a light and strong material used in aircrafts and while it looks stunning and adds sophistication and uniqueness to the overall design on the unit, this material along with the black plastic are both fingerprint magnets!</p>
-
-<p>The <a href="http://www.samsung.com/au/consumer/pc-peripherals/notebook-pc/thin-light/NP900X3A-A03AU/index.idx?pagetype=prd_detail&amp;amp;tab=specification">specs of the Series 9 unit</a> I used for comparison (and ultimately bought) was quite good:</p>
-
-<ul>
-<li>1.5GHz Core i7</li>
-<li>8GB RAM</li>
-<li>256GB SSD</li>
-<li>Micro-HDMI to HDMI adapter ($15)</li>
-</ul>
-
-
-<p>Initially I thought 1.5 GHz was kinda low, but after conversations with quite a few people and some <a href="http://ark.intel.com/compare/54616">research</a>, this speed is its sort-of <em>&ldquo;resting&rdquo;</em> frequency and will automatically scale up to 2.6GHz when required.</p>
-
-<p>The one big catch with this system is the RRP of ~$2700, while most Aussie shops sold them for ~$2500. This made me consider the Mac even more!</p>
-
-<p>But during my research I saw <a href="https://www.mln.com.au/">MLN</a>&rsquo;s price drop down to a much more attractive $1997 and immediately rang them to find out more details and how long the special would last. It turns out that Samsung are starting to phase them out of stores (presumably to make way for a new product next year) and naturally they had sold alot of units and only had a few left.</p>
-
-<p>I did a bit more research and found that to save space, the ports are hidden behind very aircraft-like flaps, but as with the Mac, they are reduced size ports.<br/>
-The video output is provided in the form of a micro-HDMI port &ndash; which is at least a more common format and I don&rsquo;t need to go through apple.com.<br/>
-The other space-saving trade-off was a (sadly) proprietary ethernet port that comes bundled with an adapter to convert it to RJ45 &ndash; but unlike the Mac where you need to buy a USB network adapter, this actually has the network card built in, it just has an unusual plug &ndash; which I don&rsquo;t intend to use much anyway.</p>
-
-<p>Another plus is this model comes with 1x USB 3.0 port (and a 2.0 port) which is great considering the speeds my brother gets with his USB 3.0 flash drive.</p>
-
-<p>So I went to MLN and inspected the unit up close and what eventually made my decision for the Samsung was that for about the same price I get a machine with double the RAM (handy for VMs), a windows licence for portable gaming and a bunch of freebies from MLN including the HDMI to micro-HDMI cable, a set of Sennheiser headphones and a padded sleeve to carry it.</p>
-
-<p>I was able to get the cable and sleeve free because I opted to purchase the extended 3 year pickup warranty for an additional $180ish and the headphones were a Christmas present :)</p>
-
-<p>Initial impressions are very positive, the screen is incredibly bright and vibrant and with a smooth matte finish, I have had no issues using it outdoors.<br/>
-The backlit keyboard is quite nice too, although the brightness of this light is controlled via windows drivers, so in linux (at this stage) I cant control its brightness.<br/>
-The touchpad is large and seems to employ the same technique as the Mac Magic Mouse where there is one click-able button (the lower part of the pad) and depending on where your finger is when you click determines a right or left mouse click and once again, this doesnt work in Linux out of the box, but the standard 2 finger tap works as per normal.<br/>
-Using Ubuntu 11.10 the rest of the hardware works out of the box, so no need to fiddle with drivers for network, graphics, webcam, etc.</p>
-
-<p>Overall I am very happy with my purchase and its a huge step up from my old 15.4" 3kg laptop!</p>
 ]]></content>
   </entry>
   
