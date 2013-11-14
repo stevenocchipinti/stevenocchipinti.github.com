@@ -5,7 +5,7 @@ description: "How to create a rake task that accepts any number of parameters, i
 date: 2013-10-18 14:10
 comments: true
 published: true
-categories: programming, ruby
+categories: programming ruby
 ---
 
 Rake gives you a way of specifying arguments for a given task like this:
