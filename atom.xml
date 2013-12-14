@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-11-10T14:19:00+11:00</updated>
+  <updated>2013-12-14T23:27:35+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Preparing for TrailWalker]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/12/14/preparing-for-trailwalker/"/>
+    <updated>2013-12-14T22:49:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/12/14/preparing-for-trailwalker</id>
+    <content type="html"><![CDATA[<p>Back in 2011, I attempted <a href="trailwalker.oxfam.org.au">The Oxfam TrailWalker</a>.<br/>
+I didn&rsquo;t finish the full 100km &ndash; due to injuries I had to stop at about 60km,
+but it was quite an experience none the less.</p>
+
+<p>Recently a friend asked me what I did to prepare for TrailWalker, so here is a
+quick post to explain some key points that helped me.</p>
+
+<h2>1. Do as much training as possible!</h2>
+
+<p>Expect to spend many months of weekends leading up to the event for training.<br/>
+Start small (short, flat walks. Yarra trail, etc.) and work your way up to the
+harder ones (hill climbs, longer distances, etc.)<br/>
+Try to go every weekend, the more you do, the more your body will become
+conditioned for hiking.<br/>
+Go rain, hail, shine, day, night, etc. It&rsquo;ll help you realize what you need
+(food, water-proof shoes/pants, stronger torch, etc.).<br/>
+Try to fit in at least one night hike and one long hike well before the event
+to see how you cope.<br/>
+You could pick a different segment of the actual track every weekend so you get
+an idea of what the event will be like.</p>
+
+<h2>2. Find your weak points</h2>
+
+<p>My first training hike, I got blisters.<br/>
+For me, I had to use better socks (didn&rsquo;t think it would actually help, but it
+made a huge difference!).<br/>
+I also spoke to professionals and learned how to strap my feet properly and
+ensured my laces were done up tight enough.<br/>
+All this with shoes that actually fit my feet properly meant I never got
+blisters again.<br/>
+I&rsquo;m glad too, in the medical tents, there were people with epic blisters!
+&hellip;Scary stuff!</p>
+
+<h2>3. Hydration</h2>
+
+<p>It&rsquo;s worth reading up on how to hydrate properly. My memory is a little
+sketchy, but you have to pace yourself with water.<br/>
+Too much and you flush your body of minerals, feel bloated, etc.<br/>
+Not enough and you are more likely to suffer from exhaustion.<br/>
+Sip instead of gulp.<br/>
+You may want to supplement with electrolytes. This is also available in a
+powder that you can mix into your water.</p>
+
+<h2>4. Food</h2>
+
+<p>Something worth reading up on too.<br/>
+I found having frequent small meals with a mix of high-GI and low-GI
+ingredients worked the best.<br/>
+For example, a single snack would be a slice of multi-grain bread (low-GI) with
+jam (high-GI), folded in half and individually wrapped.<br/>
+This made it easy to pull one out of a bad on the go. Sugary muesli bars also
+work pretty well.<br/>
+Make sure you drink water whenever you eat too, it&rsquo;ll help with digestion and
+keep you from feeling too hungry.</p>
+
+<h2>5. Shoes</h2>
+
+<p>Like I said earlier, get shoes that fit your feet properly &ndash; Movement and
+rubbing will get pretty bad as you work towards 100km!<br/>
+Don&rsquo;t buy new shoes just before they event, they need time to be broken in. If
+you want to buy new shoes, allow at least 3 or 4 training hikes in them first
+(preferably the smaller training hikes).</p>
+
+<h2>6. Sleeping</h2>
+
+<p>We decided against sleeping, we thought it would be harder to get going again
+afterwards.<br/>
+In hindsight I think a couple of powernaps would have helped a fair bit.<br/>
+If you do decide to sleep, I would probably recommend getting your support crew
+to bring blankets and also wake you up before you sleep for too long.</p>
+
+<h2>7. Team dynamics</h2>
+
+<p>Teams can get on each others nerves after spending so long with each other,
+especially when your extremely exhausted.<br/>
+Patience is key, but also sticking together is very important.<br/>
+Sometimes, some team members will want to go faster than others, this can cause
+issues and may result in the team splitting up during the event &ndash; this is not
+ideal and should be avoided.<br/>
+Make sure your team has the same goal for the event (i.e. &ldquo;just finishing&rdquo; or
+&ldquo;getting a good time&rdquo;).<br/>
+One strategy is to let the slowest in the team lead the way.</p>
+
+<h2>Conclusion</h2>
+
+<p>TrailWalker was a great experience (other than the injuries I incurred).<br/>
+You have to work quite hard (especially if you&rsquo;ve never done hiking before, like
+myself) but it all adds to a fantastic sense of accomplishment at the end &ndash;
+even if you don&rsquo;t finish.<br/>
+I learned a lot by doing this and even though training every weekend was tiring,
+it was actually a lot of fun.<br/>
+It was definitely a step out of my comfort zone, but I would recommend others
+to give it a go &ndash; and it&rsquo;s for a great cause!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Minecraft in Linux]]></title>
@@ -949,17 +1050,6 @@ The only things left to do now are configure my media sources, install some plug
     <id>http://blog.stevenocchipinti.com/2012/03/rooting-htc-desire-hd-cyanogenmod-7</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the new version of <i>HTC Sense</i> - the same version that the <i>HTC Sensation</i> is running.<br />At the time I thought it was quite cool, having shortcuts on the lock screen is great and the new eye candy looks pretty nice too.<br /><br />But there were some very unwelcome changes with this new version too&#8230; lag and poor battery life!<br />I generally keep my phone on charge at work, so I didn&#8217;t think this would bother me, but it got so bad that if I went out after work, by the time I got home it was flat (from 6pm to later that night). Even swiping between home screens would lag! So I figured it was time for a new phone, but in the meantime I thought I may as well experiment with rooting and other OS&#8217;s.<br /><br />To root the Desire HD is quite simple. The first thing to do is go get the &#8221;<i><a href="http://forum.xda-developers.com/showthread.php?t=1259821" target="_blank"><u>Advanced Ace Hack Kit</u></a></i>&#8221; from the XDA Forums. In the zip file is all the tools you need to run the hack and most importantly, the aptly named &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">effen-manual.html</span>&#8221;, which is <i>very</i> important!<br /><br />The manual explains everything you need to know, but the first step is checking that the version of android that you are running can be exploited.<br />I had software  version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">3.12.405.1</span>, which judging by the <i>effen manual</i>, the hack tool can automatically downgrade to version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2.50.405.2</span> where there exists a flaw that can be exploited to give you root access.<br />Keep in mind that doing this will wipe your phone, so backup <i>everything</i>.<br /><br />The <i>effen manual</i> also explains how to setup your computer to enable the hack tool to work properly. There are very few steps for linux which was great!<br /><br />If you follow the instructions correctly, you will then have a stock standard install of an older version of HTC Sense. There are some advantages to having root access such as apps like titanium backup, ad blockers, etc. but the real fun comes from installing new Android ROMs.<br /><br />I looked at 2 third party ROMs, the first was <a href="http://www.cyanogenmod.com/" target="_blank">Cyanogen Mod</a> and the second was <a href="http://forum.xda-developers.com/showthread.php?t=840040" target="_blank">Android Revolution</a>.<br /><br />Android Revolution looks pretty good. Visually it looks and behaves just like HTC Sense but they have made lots of improvements under the hood which in turn increases performance and battery life. As good as this looked, I haven&#8217;t actually tried this option yet. Instead, I opted to go for a bigger change of scenery and give Cyanogen Mod a go.<br /><br /><br />Cyanogen Mod does not look like HTC Sense at all. Instead it is based on stock standard Android 2.3. They have then implemented a slew of changes that come as default, such as an audio equaliser, <a href="https://play.google.com/store/apps/details?id=org.adw.launcher&amp;hl=en" target="_blank">ADWLauncher</a>, the super-user app, a completely customisable button widget in the notification bar, customizable lock screens and a pretty cool torch app that lets you over charge the LEDs for super brightness!<br />This mod also lets you overclock the hardware, put limiters in place and lots of other options I was not used to seeing in the HTC Sense ROM.<br /><br />The 2 most important advantages of this change are that the UI is now quick and responsive again, I now have complete control over which effects are used and things like how long the animations should last, etc. and I have the best battery life I&#8217;ve ever had with this phone - I can now use the phone pretty heavily all day without needing a charge until I go to bed!<br /><br />Very happy with it now and it should keep me tied over until the Samsung Galaxy SIII is released :)
-</div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Spam defence]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/03/spam-defence.html"/>
-    <updated>2012-03-07T11:14:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/03/spam-defence</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky enough to get an invite for Gmail in its early stages, Yahoo! Mail had (IMO) one killer feature: <i>Address Guard</i><br /><br />The idea behind <i>Address Guard</i> was simple, you make your primary email address, say <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@yahoo.com</span>, and then a secondary <i>&#8220;base name&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007</span>.<br />This <i>base name</i> was not just another email address, infact all mail sent to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007@yahoo.com</span> would get dropped.<br />Instead, use that base name to create an unlimited number of <i>&#8220;disposable addresses&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007-facebook@yahoo.com</span>, etc.<br /><br />The idea was that if you follow the simple 3 click process (settings -&gt; addressGaurd -&gt; add new address!) to create a new disposable email address every time you signed up for a new website, if ever they spammed you, you simply delete that address and they wont be able to bother you any more - brilliant!<br /><br />I avoided Gmail because they didn&#8217;t have the same <i>&#8220;whitelist&#8221;</i> approach to email addresses, but when I bought my domain name and started using Google Apps for email, I decided to use Gmail as my primary email provider.<br />Naturally this forced me to look for a similar way to defend again spam (albeit Gmails spam filtering is quite good).<br /><br />Google Apps provides <i>&#8220;nicknames&#8221;</i>, which works in much the same way, you can have an unlimited number of aliases for an account, except the process was a bit longer (settings -&gt; manage domain -&gt; users -&gt; Your user -&gt; Add a nickname) and I got too lazy for that after a little while.<br />I still use nicknames for certain things, but not for every website I sign up for.<br /><br />That&#8217;s when I discovered the + symbol in Gmail. Unlike Yahoo! Mail that uses the <i>&#8220;whitelist&#8221;</i> approach (only addresses you created will accept mail), you can use Gmail with a <i>&#8220;blacklist&#8221;</i> approach (all addresses accept mail unless you block them).<br /><br />Assume your email address is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@gmail.com</span>, you can append a + and then any (valid) characters you like to the end, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+facebook@gmail.com</span> and it will still get delivered.<br /><br />If some rogue website starts sending spam to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>, then you can go into the Gmail settings and setup a filter to delete all mail that is sent to: <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>.<br /><br />I don&#8217;t think it&#8217;s quite as nice as <i>Address Guard</i>, but it is a bit more convenient because there is no set up. The biggest downside is that quite a few websites consider an email address to be invalid if it has a + symbol in it, but most are fine.
 </div>
 ]]></content>
   </entry>

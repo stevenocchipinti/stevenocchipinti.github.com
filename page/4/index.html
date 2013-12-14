@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="In the initial R&amp;D stages for our Tank Project we have to work out the most suitable way to interface from software to hardware - which I have &hellip;">
+  <meta name="description" content="Usually when I need to find things in multiple files, I would use grep or ack from a terminal and then open those files in vim to do whatever it is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/10/recursive-search-with-vimgrep.html">Recursive Search With Vimgrep</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-12T02:46:00+11:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+         | <a href="/2011/10/recursive-search-with-vimgrep.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Usually when I need to find things in multiple files, I would use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ack</span> from a terminal and then open those files in vim to do whatever it is that I have to do.<br /><br />This is ok, but sometimes this can be a little annoying.<br />Vim has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:grep</span> function which will use the system <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> command, but it also has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> function that is built in to vim.<br /><br />I had left a bunch of TODO&#8217;s through out my code as a reminder to come back to them, so using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> I was able to quickly jump between them:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep TODO **/*</div></blockquote><br />This tells vim to search for the pattern &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">TODO</span>&#8221; recursively from the current directory.<br />The &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/</span>&#8221; means recursive and the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">*</span>&#8221; means any file - therefore &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/*.rb</span>&#8221; would just search the ruby scripts.<br /><br />The results are loaded into the &#8220;quickfix window&#8221;. This means if you want to see all the occurences, you can open the list with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:copen</span><br />Naturally, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cfirst</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:clast</span>, etc. will allow you to jump between them or you can use the quicklist window and press enter on the filename, or in gvim you can even use the mouse.<br /><br />In addition, I use <a href="https://github.com/tpope/vim-unimpaired">Tim Pope&#8217;s Unimpaired vim plugin</a>,which provides the easy shortcuts &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[q</span>&#8217; and &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">]q</span>&#8217; for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span> (respectively)
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -455,48 +497,6 @@ Back on the 30th of May, I put up a blog post on how to do a <a href="http://blo
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/07/ssh-copy-id-with-alternative-port.html">Ssh-copy-id With an Alternative Port</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-07-14T16:05:00+10:00" pubdate data-updated="true">Jul 14<span>th</span>, 2011</time>
-        
-         | <a href="/2011/07/ssh-copy-id-with-alternative-port.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-If you use ssh on a regular basis, you probably already know about setting up ssk-keys.<br />If you dont know about ssh-keys, you should! - its worth reading up on.<br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> is a helper script that will copy your public key across to the remote machine and append it to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">authorized_keys</span> file.<br /><br />This is all well and good if the server is on port 22, but for non-standard ports, this script does not support a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-p</span> option.<br /><br />Instead of copying across the key manually, I googled for workarounds and came across <a href="http://mikegerwitz.com/2009/10/07/ssh-copy-id-and-sshd-port/">this post</a> where the author explains that the arguments to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id</span> are simply passed on to the ssh command.<br /><br />This means by using quotes, everything inside of them will be passed straight through and that allows a command like this to achieve the desired result:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh-copy-id -i ~/.ssh/id_rsa.pub ‘-p xxxx username@host’</span></blockquote><br />Kudos to Mike Gerwitz for the tip.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/5/">&larr; Older</a>
@@ -525,6 +525,10 @@ If you use ssh on a regular basis, you probably already know about setting up ss
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
       </li>
     
@@ -538,10 +542,6 @@ If you use ssh on a regular basis, you probably already know about setting up ss
     
       <li class="post">
         <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
       </li>
     
   </ul>

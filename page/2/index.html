@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&rsquo;ve been using Ruby on Rails for about a year and half now and I&rsquo;m really enjoying it! At the time of writing (at least in Melbourne) &hellip;">
+  <meta name="description" content="Gone are the days of the nice /boot/grub/menu.lst file, but with new tools comes new features.Changing the default boot itemIn Grub2 you can change &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/09/changing-default-boot-option-with-grub2.html">Changing the Default Boot Option With GRUB2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-09-19T11:33:00+10:00" pubdate data-updated="true">Sep 19<span>th</span>, 2012</time>
+        
+         | <a href="/2012/09/changing-default-boot-option-with-grub2.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -716,48 +758,6 @@ At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/spam-defence.html">Spam Defence</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-03-07T11:14:00+11:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
-        
-         | <a href="/2012/03/spam-defence.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky enough to get an invite for Gmail in its early stages, Yahoo! Mail had (IMO) one killer feature: <i>Address Guard</i><br /><br />The idea behind <i>Address Guard</i> was simple, you make your primary email address, say <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@yahoo.com</span>, and then a secondary <i>&#8220;base name&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007</span>.<br />This <i>base name</i> was not just another email address, infact all mail sent to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007@yahoo.com</span> would get dropped.<br />Instead, use that base name to create an unlimited number of <i>&#8220;disposable addresses&#8221;</i>, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">johno007-facebook@yahoo.com</span>, etc.<br /><br />The idea was that if you follow the simple 3 click process (settings -&gt; addressGaurd -&gt; add new address!) to create a new disposable email address every time you signed up for a new website, if ever they spammed you, you simply delete that address and they wont be able to bother you any more - brilliant!<br /><br />I avoided Gmail because they didn&#8217;t have the same <i>&#8220;whitelist&#8221;</i> approach to email addresses, but when I bought my domain name and started using Google Apps for email, I decided to use Gmail as my primary email provider.<br />Naturally this forced me to look for a similar way to defend again spam (albeit Gmails spam filtering is quite good).<br /><br />Google Apps provides <i>&#8220;nicknames&#8221;</i>, which works in much the same way, you can have an unlimited number of aliases for an account, except the process was a bit longer (settings -&gt; manage domain -&gt; users -&gt; Your user -&gt; Add a nickname) and I got too lazy for that after a little while.<br />I still use nicknames for certain things, but not for every website I sign up for.<br /><br />That&#8217;s when I discovered the + symbol in Gmail. Unlike Yahoo! Mail that uses the <i>&#8220;whitelist&#8221;</i> approach (only addresses you created will accept mail), you can use Gmail with a <i>&#8220;blacklist&#8221;</i> approach (all addresses accept mail unless you block them).<br /><br />Assume your email address is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith@gmail.com</span>, you can append a + and then any (valid) characters you like to the end, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+facebook@gmail.com</span> and it will still get delivered.<br /><br />If some rogue website starts sending spam to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>, then you can go into the Gmail settings and setup a filter to delete all mail that is sent to: <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">john.smith+dodgysite@gmail.com</span>.<br /><br />I don&#8217;t think it&#8217;s quite as nice as <i>Address Guard</i>, but it is a bit more convenient because there is no set up. The biggest downside is that quite a few websites consider an email address to be invalid if it has a + symbol in it, but most are fine.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/3/">&larr; Older</a>
@@ -786,6 +786,10 @@ For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky en
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
       </li>
     
@@ -799,10 +803,6 @@ For quite a long time I used to use Yahoo! Mail.<br />Even though I was lucky en
     
       <li class="post">
         <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
       </li>
     
   </ul>
