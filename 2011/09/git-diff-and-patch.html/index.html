@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.These &hellip;">
+  <meta name="description" content="I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features. These &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -106,9 +106,56 @@
   </header>
 
 
-<div class="entry-content"><div class="css-full-post-content js-full-post-content">
-I recently found myself in a situation where I need to comment out  certain lines in my code in order to test a particular set of features.<br /><br />These  commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br />In this situation, checking them into Git or making a personal <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.gitignore</span> file are not suitable solutions.<br /><br />I have found 2 good ways of accomplishing this:<br /><br /><br /><b>Git stash:</b><br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git stash save temp workaround for some issue </blockquote><br />Then I continue on with my work. I selectively leave these changes out of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git checkout &#8211; .</span> so I&#8217;m left with a clean repository.<br /><br />When I need to work on a related feature again, I can list my stashes with:<br /><blockquote>git stash list</blockquote><br />Then, apply the most recent stash by running this command:<br /><blockquote>git stash apply</blockquote><br />If you have more than one stash, you can specify which stash you want to apply on the command line. See <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git stash &#8211;help</span> to see more information.<br /><br /><br /><b>Git diff and patch:</b> <br /><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> are very useful tools to be familiar with if you ever deal with text. Git&#8217;s <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">diff</span> output is much the same, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">patch</span> tool is still very handy!<br /><br />Starting from a clean checkout, I put my temporary changes in place, then run this command:<br /><blockquote>git diff &gt; ~/patches/temp_workaround.patch</blockquote><br />Then I continue on with my work. I selectively leave these changes out  of all my commits using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git add -i</span> then once everything is checked in  except my temporary changes, I revert these temporary changes with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git  checkout &#8211; .</span> so I&#8217;m left with a clean repository.<br /><br />When I need to work on a related feature again, I can apply my patch by running this command from the project root:<br /><blockquote>patch -p1 &lt; ~/patches/temp_workaround.patch</blockquote><br /><br />Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.
-</div>
+<div class="entry-content"><p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
+
+<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
+In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
+
+<p>I have found two good ways of accomplishing this.</p>
+
+<h2>Git stash</h2>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can list my stashes with:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, apply the most recent stash by running this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash apply</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
+
+<h2>Git diff and patch:</h2>
+
+<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git diff &gt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>patch -p1 &lt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
 </div>
 
 
@@ -220,7 +267,7 @@ I recently found myself in a situation where I need to comment out  certain line
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhipinti -
+  Copyright &copy; 2014 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

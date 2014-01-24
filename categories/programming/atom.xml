@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: programming, | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: programming | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/programming/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2013-12-14T23:27:35+11:00</updated>
+  <updated>2014-01-24T14:08:00+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -84,6 +84,318 @@ Don't know how to build task 'thing[foo,'
 <pre><code>$&gt; rake -T
 rake thing[foo]  # A task that can accept a optional 'foo' argument
 </code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
+    <updated>2013-06-08T15:27:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
+    <content type="html"><![CDATA[<p>I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker">Ruby Gem</a> that provides a command line interface to Melbourne&rsquo;s <a href="http://yarratrams.com.au/tramtracker">TramTracker service</a>.</p>
+
+<p>One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br/>
+In the past, I used the command line utility watch to achieve this, but I couldn&rsquo;t find a way to enforce a &ldquo;max iterations&rdquo; option.
+If it gets forgotten about in the background, TramTracker will eventually block that IP address!</p>
+
+<p>So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.</p>
+
+<p>In this post, I&rsquo;ll outline a couple of ways of achieving this.</p>
+
+<h2>Using the \b (backspace) character</h2>
+
+<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
+
+<p>``` ruby
+puts &ldquo;foo\b\b\bbar&rdquo;</p>
+
+<h1>=> bar</h1>
+
+<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
+
+<h1>=> Cheesy, old-school spinner</h1>
+
+<p>```</p>
+
+<p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
+
+<p>``` ruby
+puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
+
+<h1>=> foo\nbar</h1>
+
+<p>```</p>
+
+<h2>Using the \r (carriage return) character</h2>
+
+<p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
+
+<p><code>ruby
+100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></p>
+
+<p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
+
+<p>```
+puts &ldquo;foo\rp&rdquo;</p>
+
+<h1>=> poo</h1>
+
+<p>```</p>
+
+<p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
+
+<h2>Using curses</h2>
+
+<p>The most common answer to overwriting characters across multiple lines, is to use <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)">curses</a>.
+Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
+Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
+
+<p><code>ruby
+setpos(lines/2, cols/2) # Start in the middle
+addstr("Hello world")
+</code></p>
+
+<p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
+
+<p>Curses is pretty good for this sort of stuff, it gives you a lot for free.
+The thing that I didn&rsquo;t like about using the curses library was that when it initialises, it clears the screen.
+This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&rsquo;t want that.</p>
+
+<h2>Using individual cursor movement characters</h2>
+
+<p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
+
+<p><code>
+\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+\033[&lt;N&gt;A     # Move the cursor up N lines
+\033[&lt;N&gt;B     # Move the cursor down N lines
+\033[&lt;N&gt;C     # Move the cursor forward N columns
+\033[&lt;N&gt;D     # Move the cursor backward N columns
+\033[2J       # Clear the screen, move to (0,0)
+\033[K        # Erase to end of line
+</code></p>
+
+<p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
+I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
+
+<p>Now go and make a cool retro user interface! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
+    <link href="http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails.html"/>
+    <updated>2012-09-11T13:29:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using Ruby on Rails for about a year and half now and I&rsquo;m really enjoying it! At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&rsquo;s, so it&rsquo;s great time to get involved.<br/>
+I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</p>
+
+<h2>Join the community!</h2>
+
+<p>Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is <em>Ruby On Rails Oceania</em> (aka RORO).<br/>
+They have meetups on the <em>last Thursday of every month</em> in Melbourne and a pretty active mailing list:</p>
+
+<ul>
+<li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania">Ruby On Rails Oceania Mailing List</a></li>
+<li><a href="http://ruby.org.au/">Ruby.org.au</a></li>
+</ul>
+
+
+<h2>Ruby and Rails resources:</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; I use these almost everyday!</li>
+<li><a href="http://apidock.com/">ApiDock</a> &ndash; API&rsquo;s for Ruby, Rails and RSpec in one place</li>
+<li><a href="http://railsforzombies.org/">Rails For Zombies</a> &ndash; A great beginners tutorial for rails</li>
+<li><a href="http://railscasts.com/">Rails Casts</a> &ndash; Regular video podcast all about rails</li>
+<li><a href="http://ruby5.envylabs.com/">Ruby5</a> &ndash; Regular 5 minute audio podcast on the latest news</li>
+<li>&hellip; a plethora of good books, such as &ldquo;The RSpec Book&rdquo;, &ldquo;Design Patterns in Ruby&rdquo;, etc. (alot of which I still need to read)</li>
+</ul>
+
+
+<h2>Getting started:</h2>
+
+<p>To get started you&rsquo;ll need to set up your development environment, here&rsquo;s what I use:</p>
+
+<ul>
+<li>Vim&hellip; of course&hellip; although there are lots of alternatives, the most popular ones would probably be:
+
+<ul>
+<li>RubyMine (IDE) &ndash; used alot at work (commercial software)</li>
+<li>Sublime Text 2 (Text editor)</li>
+<li>TextMate (Text editor)</li>
+</ul>
+</li>
+<li>RVM (Ruby Version Manager)
+
+<ul>
+<li>Get from here: <a href="https://rvm.io/">https://rvm.io</a></li>
+<li>Follow the instructions to configure your shell to use RVM</li>
+</ul>
+</li>
+<li>Use RVM to install the latest ruby
+
+<ul>
+<li><code>rvm install 1.9.3</code></li>
+<li>A newer alternative to RVM is RBenv</li>
+</ul>
+</li>
+<li>Once you have ruby installed, you will have the &lsquo;gem&rsquo; command available
+
+<ul>
+<li>Gems are roughly equivalent to jars in the Java world</li>
+<li>Use gem to install the latest rails
+
+<ul>
+<li><code>gem install rails</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Once you have rails installed, you will have the &lsquo;rails&rsquo; command available
+
+<ul>
+<li>Use the rails command to start a new project
+
+<ul>
+<li><code>rails new todolist</code></li>
+<li><code>rails server</code></li>
+<li>browse to <a href="http://localhost:3000/">http://localhost:3000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li>
+</ul>
+
+
+<h2>Things to keep in mind for RoR dev:</h2>
+
+<ul>
+<li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.
+
+<ul>
+<li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li>
+</ul>
+</li>
+<li>Ruby on Rails strongly supports DRY principles
+
+<ul>
+<li>Don&rsquo;t reinvent the wheel, theres problably a gem that already does what you want</li>
+<li>To find gems, good places to look are:
+
+<ul>
+<li><a href="http://ruby-toolbox.com/">Ruby-Toolbox.com</a></li>
+<li><a href="http://railscasts.com/">RailsCasts.com</a></li>
+<li><a href="http://rubygems.org/">RubyGems.org</a></li>
+<li><a href="http://github.com/">GitHub.com</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The majority of Ruby projects are:
+
+<ul>
+<li>Developed using TDD/BDD, so you&rsquo;ll need to learn the testing frameworks:
+
+<ul>
+<li>Test::Unit (default with rails)</li>
+<li>RSpec (a popular replacement for Test::Unit)</li>
+<li>Cucumber (BDD)</li>
+</ul>
+</li>
+<li>Developed on MacOSX &ndash; for new comers (like myself) some essentials are:
+
+<ul>
+<li>brew &ndash; a mac package manager (like apt or yum)</li>
+<li>iterm2 &ndash; really good terminal emulator</li>
+</ul>
+</li>
+<li>Deployed on Linux
+
+<ul>
+<li>Basic Linux foo is really useful</li>
+</ul>
+</li>
+<li>Version controlled with git
+
+<ul>
+<li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>That&rsquo;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds.html"/>
+    <updated>2011-10-10T03:49:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 "D" pins for data with 8 matching "Ground" pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED's were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED's.<br />I found a bunch of tristate LED's - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn't have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch.html"/>
+    <updated>2011-09-21T10:41:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch</id>
+    <content type="html"><![CDATA[<p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
+
+<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
+In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
+
+<p>I have found two good ways of accomplishing this.</p>
+
+<h2>Git stash</h2>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git stash
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can list my stashes with:
+<code>
+git stash list
+</code></p>
+
+<p>Then, apply the most recent stash by running this command:
+<code>
+git stash apply
+</code></p>
+
+<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
+
+<h2>Git diff and patch:</h2>
+
+<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git diff &amp;gt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:
+<code>
+patch -p1 &amp;lt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
 ]]></content>
   </entry>
   

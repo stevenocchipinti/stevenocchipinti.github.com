@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&#8217;m now using Ubuntu 11.04 with Unity as my primary OS for my desktop at work.I&#8217;m still coming to grips with Unity - somethings I like, &hellip;">
+  <meta name="description" content="By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don&#8217;t use! &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html">Cleaning Up Indicator-applet in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-23T10:33:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don&#8217;t use!<br /><br />But, its quite easy to get rid of them! All you have to do is remove the appropriate file in /usr/share/indicators/messages/applications<br /><br />Instead of removing them, I just removed all read permissions (root can still do anything with it of course)<br /><blockquote>$ cd /usr/share/indicators/messages/applications<br />$ sudo chmod 000 empathy evolution</blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -425,7 +467,7 @@ Not the most creative name for your average blog, but for those that dont know:<
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhipinti -
+  Copyright &copy; 2014 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

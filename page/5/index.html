@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="If you use ssh on a regular basis, you probably already know about setting up ssk-keys.If you dont know about ssh-keys, you should! - its worth &hellip;">
+  <meta name="description" content="Back on the 30th of May, I put up a blog post on how to do a search and replace in multiple files with Vim.I think this is a great way of doing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/07/search-and-replace-in-multiple-files.html">Search and Replace in Multiple Files With Sed</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-07-20T04:25:00+10:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
+        
+         | <a href="/2011/07/search-and-replace-in-multiple-files.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Back on the 30th of May, I put up a blog post on how to do a <a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html">search and replace in multiple files with Vim</a>.<br />I think this is a great way of doing substitutions in multiple files because you get to see a preview of what it looks like before you actually writing it to disk.<br /><br />This is great for a small number of files, but to do a large directory of files, you don&#8217;t really gain any advantages as you&#8217;re probably not going to open every file in a vim buffer and review each one separately.<br /><br />This is where <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> come in handy!<br /><br />This command will replace every occurrence of the word &#8220;foo&#8221; with the word &#8220;bar&#8221; in all html files recursively from the current directory:<br /><blockquote><pre>find . -name "*.html" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br /><b>The explanation:</b><br /><br />This might look a little confusing, but it essentially 2 parts:<br /><br />The first part will list all the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.html</span> files recursively and for each one, execute the command specified by the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option:<br /><blockquote><pre>find . -name "*.html" -exec ...</pre></blockquote><br />The second part is the command to execute for each found file, which in this case is <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed</span>:<br /><blockquote><pre>sed -i "s/foo/bar/g" &lt;TheFile&gt;</pre></blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8217;{}&#8217;</span> represents the current file and the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\;</span> represents the end of the command to execute as part of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-exec</span> option.<br /><br /><br /><b>Doing more:</b><br /><br />As you can see, the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-name</span> option to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">find</span> command takes a <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">glob pattern</a>.<br />If you wanted to be more specific about which files should have the substituion, you could use a regular expression instead, like this:<br /><blockquote><pre>find . -regex ".*[.]html\|.*[.]js" -exec sed -i "s/foo/bar/g" '{}' \;</pre></blockquote><br />This regex will match all files that end with &#8220;.html&#8221; or &#8220;.js&#8221;.<br /><br />If you wanted to preview your changes before they are actually written to disk, there are a few ways of accomplishing this, but the simpliest is probably to modify the command as follows:<br /><blockquote><pre>find . -name "*.html" -exec sed "s/foo/bar/g" '{}' \; | less</pre></blockquote><br />Removing the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> will mean that instead of writing the changes &#8220;in place&#8221;, the changed output will be written to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">STDOUT</span> instead of the files.<br />Then to capture this (potentially large) output, we pipe it to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span>.<br />From within <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">less</span> you will be able to do searches (with the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/</span>&#8221; key) and scroll through the output to do a quick sanity check.<br />Once your happy, you can remove the pipe and add the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8220;-i&#8221;</span> option again to make it permanent!
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,48 +512,6 @@ There are plenty of ways of doing a search and replace in multiple files in linu
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html">Cleaning Up Indicator-applet in Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-05-23T10:33:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
-        
-         | <a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don&#8217;t use!<br /><br />But, its quite easy to get rid of them! All you have to do is remove the appropriate file in /usr/share/indicators/messages/applications<br /><br />Instead of removing them, I just removed all read permissions (root can still do anything with it of course)<br /><blockquote>$ cd /usr/share/indicators/messages/applications<br />$ sudo chmod 000 empathy evolution</blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -568,7 +568,7 @@ By default, the indicator applet in the Unity panel has an item in the list for 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhipinti -
+  Copyright &copy; 2014 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

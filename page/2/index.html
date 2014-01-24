@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Gone are the days of the nice /boot/grub/menu.lst file, but with new tools comes new features.Changing the default boot itemIn Grub2 you can change &hellip;">
+  <meta name="description" content="I was toying with the idea of making my own &ldquo;Car Computer&rdquo; and one of the crucial parts is a Bluetooth connection, but not for P2P file &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,109 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html">Bluetooth Audio Streaming From Phone to Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-10-30T11:27:00+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was toying with the idea of making my own &ldquo;Car Computer&rdquo; and one of the crucial parts is a Bluetooth connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a Bluetooth stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&rsquo;s quite easy with Ubuntu :)</p>
+
+<p>PulseAudio is pretty awesome!<br/>
+First step is ensure Pulse has the Bluetooth module loaded (mine did by default), you can check this by looking at this file <code>/etc/pulse/default.pa</code></p>
+
+<p>The next step is to configure the Bluetooth daemon to enable <code>Source</code> (and/or <code>Gateway</code> mode).<br/>
+To do this, I added the following line to <code>/etc/bluetooth/audio.conf</code>:</p>
+
+<figure class='code'><figcaption><span>/etc/bluetooth/audio.conf </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">Enable</span><span class="o">=</span>Gateway,Source,Socket
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then restart the Bluetooth daemon:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo service bluetooth restart</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you&rsquo;ll have to pair the computer with the phone as per normal.<br/>
+Once the devices are paired, an <code>Audio Source</code> connection needs to be created.<br/>
+For this, the easiest way is via DBus, but so we don&rsquo;t have to write a script, an easy way to test this in an ad-hoc manner is to use a tool called <code>d-feet</code>, which is available in the Ubuntu repos.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo apt-get install d-feet</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using <code>d-feet</code>, navigate to the <code>system bus</code> and find the <code>org.bluez</code> key.<br/>
+In here, there will be another key that has a device number in it.<br/>
+(for me this was <code>/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</code>)<br/>
+Under this key, execute <code>org.bluez.AudioSource &gt; methods &gt; Connect()</code> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.</p>
+
+<p>At this point, I started playing some music so I could tell when it was working, but you probably won&rsquo;t be able to hear anything just yet.<br/>
+That is because Pulse does not automatically send every source to every output &ndash; that could get messy!<br/>
+To configure pulse to send the audio from the Bluetooth connection to your speakers you need to determine the name of the audio source and the name of the &ldquo;<em>sink</em>&rdquo; (or output) and join them together.<br/>
+You can do this with the PulseAudio shell like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; pacmd
+</span><span class='line'>&gt;&gt;&gt; list-sources
+</span><span class='line'>&gt;&gt;&gt; list-sinks
+</span><span class='line'>&gt;&gt;&gt; load-module module-loopback source=bluez_source.xxxx sink=alsa_output.pci-xxxx</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Replace the <code>source=</code> and <code>sink=</code> parts with the names from the preceding two commands)</p>
+
+<p>Now all audio from your phone should be streaming through your computer.<br/>
+DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc.</p>
+
+<p>I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br/>
+I used <code>AudioSource</code> in this example, but the other fun option is the <code>HandsFreeGateway</code>, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.</p>
+
+<p>The resources that helped me with this where:</p>
+
+<ul>
+<li><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a></li>
+<li><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a></li>
+<li><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -716,48 +819,6 @@ The only things left to do now are configure my media sources, install some plug
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/rooting-htc-desire-hd-cyanogenmod-7.html">Rooting the HTC Desire HD & Cyanogenmod 7</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-03-31T07:10:00+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2012</time>
-        
-         | <a href="/2012/03/rooting-htc-desire-hd-cyanogenmod-7.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the new version of <i>HTC Sense</i> - the same version that the <i>HTC Sensation</i> is running.<br />At the time I thought it was quite cool, having shortcuts on the lock screen is great and the new eye candy looks pretty nice too.<br /><br />But there were some very unwelcome changes with this new version too&#8230; lag and poor battery life!<br />I generally keep my phone on charge at work, so I didn&#8217;t think this would bother me, but it got so bad that if I went out after work, by the time I got home it was flat (from 6pm to later that night). Even swiping between home screens would lag! So I figured it was time for a new phone, but in the meantime I thought I may as well experiment with rooting and other OS&#8217;s.<br /><br />To root the Desire HD is quite simple. The first thing to do is go get the &#8221;<i><a href="http://forum.xda-developers.com/showthread.php?t=1259821" target="_blank"><u>Advanced Ace Hack Kit</u></a></i>&#8221; from the XDA Forums. In the zip file is all the tools you need to run the hack and most importantly, the aptly named &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">effen-manual.html</span>&#8221;, which is <i>very</i> important!<br /><br />The manual explains everything you need to know, but the first step is checking that the version of android that you are running can be exploited.<br />I had software  version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">3.12.405.1</span>, which judging by the <i>effen manual</i>, the hack tool can automatically downgrade to version <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2.50.405.2</span> where there exists a flaw that can be exploited to give you root access.<br />Keep in mind that doing this will wipe your phone, so backup <i>everything</i>.<br /><br />The <i>effen manual</i> also explains how to setup your computer to enable the hack tool to work properly. There are very few steps for linux which was great!<br /><br />If you follow the instructions correctly, you will then have a stock standard install of an older version of HTC Sense. There are some advantages to having root access such as apps like titanium backup, ad blockers, etc. but the real fun comes from installing new Android ROMs.<br /><br />I looked at 2 third party ROMs, the first was <a href="http://www.cyanogenmod.com/" target="_blank">Cyanogen Mod</a> and the second was <a href="http://forum.xda-developers.com/showthread.php?t=840040" target="_blank">Android Revolution</a>.<br /><br />Android Revolution looks pretty good. Visually it looks and behaves just like HTC Sense but they have made lots of improvements under the hood which in turn increases performance and battery life. As good as this looked, I haven&#8217;t actually tried this option yet. Instead, I opted to go for a bigger change of scenery and give Cyanogen Mod a go.<br /><br /><br />Cyanogen Mod does not look like HTC Sense at all. Instead it is based on stock standard Android 2.3. They have then implemented a slew of changes that come as default, such as an audio equaliser, <a href="https://play.google.com/store/apps/details?id=org.adw.launcher&amp;hl=en" target="_blank">ADWLauncher</a>, the super-user app, a completely customisable button widget in the notification bar, customizable lock screens and a pretty cool torch app that lets you over charge the LEDs for super brightness!<br />This mod also lets you overclock the hardware, put limiters in place and lots of other options I was not used to seeing in the HTC Sense ROM.<br /><br />The 2 most important advantages of this change are that the UI is now quick and responsive again, I now have complete control over which effects are used and things like how long the animations should last, etc. and I have the best battery life I&#8217;ve ever had with this phone - I can now use the phone pretty heavily all day without needing a charge until I go to bed!<br /><br />Very happy with it now and it should keep me tied over until the Samsung Galaxy SIII is released :)
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/3/">&larr; Older</a>
@@ -814,7 +875,7 @@ At the end of last year my <i>HTC Desire HD</i> got its firmware upgrade to the 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhipinti -
+  Copyright &copy; 2014 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

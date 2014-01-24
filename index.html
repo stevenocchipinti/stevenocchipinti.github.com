@@ -872,6 +872,84 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
       
   <header>
     
+      <h1 class="entry-title"><a href="/Processing-raw-photos-in-linux.html">Processing Raw Photos in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-12-24T11:49:00+11:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+        
+         | <a href="/Processing-raw-photos-in-linux.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
+
+<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
+There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
+Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
+
+<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
+Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
+
+<h2>RawTherapee</h2>
+
+<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
+It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
+I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
+The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
+
+<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
+
+
+<h2>My attempt</h2>
+
+<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
+
+<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
+I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
+
+<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
+
+<p><img class="center" src="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG" title="Straight from the camera, with incorrect settings" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg" title="After processing in RawTherapee" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg" title="After adding some minor tweaks in The Gimp" ></p>
+
+<h2>Next steps</h2>
+
+<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
+
+<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/2012/12/a-few-photography-tips.html">A Few Photography Tips</a></h1>
     
     
@@ -948,109 +1026,6 @@ I think the most valuable aspect of a course like this is not so much the materi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html">Bluetooth Audio Streaming From Phone to Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-10-30T11:27:00+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2012</time>
-        
-         | <a href="/2012/10/bluetooth-audio-streaming-from-phone-to.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was toying with the idea of making my own &ldquo;Car Computer&rdquo; and one of the crucial parts is a Bluetooth connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a Bluetooth stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&rsquo;s quite easy with Ubuntu :)</p>
-
-<p>PulseAudio is pretty awesome!<br/>
-First step is ensure Pulse has the Bluetooth module loaded (mine did by default), you can check this by looking at this file <code>/etc/pulse/default.pa</code></p>
-
-<p>The next step is to configure the Bluetooth daemon to enable <code>Source</code> (and/or <code>Gateway</code> mode).<br/>
-To do this, I added the following line to <code>/etc/bluetooth/audio.conf</code>:</p>
-
-<figure class='code'><figcaption><span>/etc/bluetooth/audio.conf </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">Enable</span><span class="o">=</span>Gateway,Source,Socket
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then restart the Bluetooth daemon:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo service bluetooth restart</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you&rsquo;ll have to pair the computer with the phone as per normal.<br/>
-Once the devices are paired, an <code>Audio Source</code> connection needs to be created.<br/>
-For this, the easiest way is via DBus, but so we don&rsquo;t have to write a script, an easy way to test this in an ad-hoc manner is to use a tool called <code>d-feet</code>, which is available in the Ubuntu repos.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo apt-get install d-feet</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Using <code>d-feet</code>, navigate to the <code>system bus</code> and find the <code>org.bluez</code> key.<br/>
-In here, there will be another key that has a device number in it.<br/>
-(for me this was <code>/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</code>)<br/>
-Under this key, execute <code>org.bluez.AudioSource &gt; methods &gt; Connect()</code> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.</p>
-
-<p>At this point, I started playing some music so I could tell when it was working, but you probably won&rsquo;t be able to hear anything just yet.<br/>
-That is because Pulse does not automatically send every source to every output &ndash; that could get messy!<br/>
-To configure pulse to send the audio from the Bluetooth connection to your speakers you need to determine the name of the audio source and the name of the &ldquo;<em>sink</em>&rdquo; (or output) and join them together.<br/>
-You can do this with the PulseAudio shell like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; pacmd
-</span><span class='line'>&gt;&gt;&gt; list-sources
-</span><span class='line'>&gt;&gt;&gt; list-sinks
-</span><span class='line'>&gt;&gt;&gt; load-module module-loopback source=bluez_source.xxxx sink=alsa_output.pci-xxxx</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(Replace the <code>source=</code> and <code>sink=</code> parts with the names from the preceding two commands)</p>
-
-<p>Now all audio from your phone should be streaming through your computer.<br/>
-DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc.</p>
-
-<p>I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br/>
-I used <code>AudioSource</code> in this example, but the other fun option is the <code>HandsFreeGateway</code>, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.</p>
-
-<p>The resources that helped me with this where:</p>
-
-<ul>
-<li><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a></li>
-<li><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a></li>
-<li><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1105,7 +1080,7 @@ I used <code>AudioSource</code> in this example, but the other fun option is the
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Steven Occhipinti -
+  Copyright &copy; 2014 - Steven Occhipinti -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
