@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="The Unity global menubar in Ubuntu can take a bit of getting used to, especially if you don&#8217;t come from a Mac background, but once you do, the &hellip;">
+  <meta name="description" content="The way my desk is positioned means that when I&#8217;m on my computer I face the corner of the room, which means the door is behind me.Quite often &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/11/motion-detection.html">Motion Detection</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T11:30:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/11/motion-detection.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The way my desk is positioned means that when I&#8217;m on my computer  I face the corner of the room, which means the door is behind me.<br />Quite often I&#8217;ll stay up late working away till early hours of the morning and usually music comes hand-in-hand with coding (for me anyway), so when it&#8217;s late, I use headphones so I don&#8217;t disturb anyone else.<br /><br />This has caused me some grief as sometimes someone will come into my room for whatever reason and find me with my back to the them and headphones in, so knocking at the door or saying my name does not get my attention.<br />This leaves the last resort of tapping me on the shoulder which scares the crap out of me!<br /><br />A while ago I invested in a convex mirror designed to go on your computer screen so you can see who&#8217;s coming up from behind.<br />Well, with a 24-inch screen and deep concentration, this small mirror doesn&#8217;t catch me eye at all, so I still hit the ceiling when someone taps me on the shoulder.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s1600/mirror.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s320/mirror.jpg" width="251" /></a></div><br /><br />For my birthday I got this amazing <a href="http://www.astrogaming.com/a40-audio-system-astro-edition">Astro A40</a> headset. Sound clarity is absolutely stunning, they are really comfortable to wear and they block out a lot of surrounding background noise.<br />While I absolutely love the headset and wear it all the time,  you can probably guess this  adds to my jumpy-ness!<br /><br />So I finally found a solution!<br /><br />There is a package in the Ubuntu repositories called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span>&#8221; - which is a really simple motion detection server that utilises a webcam.<br />I had a look at &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">zoneminder</span>&#8221; too, but it seems very over-kill for my needs. <br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> will detect movement (above a configurable threshold), store &#8220;movement&#8221; snapshots and video files, log to a database and more importantly it provides a few hooks to fire commands upon events such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_motion_detected</span>, etc.<br /><br />I disabled almost every option except the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span> hook.<br />This hook will execute the given command when motion has been detected after a (configurable) &#8220;gap&#8221; period of time of no motion - which I set to 10 seconds.<br /><br />The command I set it to execute is this:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve notify-send &#8211;hint=int:transient:1 -i &#8216;/usr/share/icons/hicolor/scalable/mimetypes/text-x-apport.svg&#8217; &#8216;LOOK BEHIND YOU!&#8217;</span></blockquote><br />As mentioned in an <a href="http://blog.stevenocchipinti.com/2011/09/gtalksms.html">earlier blog post</a>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> can be found in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package <br /><br />Note: the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8211;hint=int:transient:1</span> is for Gnome-Shell which has introduced persistent notifcations and I didn&#8217;t want to acknowledge a notification everytime someone walks past!<br /><br />The end result of this little hack is when someone walks anywhere near my doorway, that command gets my attention with a standard Gnome-Shell notification from the bottom of the screen like this:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s1600/Screenshot+at+2011-11-06+00%253A15%253A39.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="45" src="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s320/Screenshot+at+2011-11-06+00%253A15%253A39.png" width="320" /></a></div><br /><br />The reason I am using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> here is that <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> needs to be run as root, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> command will also be run as root.<br />I guess because I had Unity installed before Gnome-Shell, when root runs <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span>, I get the Unity style notifications - which is still nice, but as I&#8217;m road testing Gnome-Shell, I figured I may as well use its notification look-n-feel too.<br /><br />Here&#8217;s what it looks like if you leave out the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve</span> part:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s1600/Screenshot+at+2011-11-06+00%253A09%253A32.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="212" src="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s320/Screenshot+at+2011-11-06+00%253A09%253A32.png" width="320" /></a></div><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -502,48 +544,6 @@ At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubun
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/regex-substitution-101.html">Regex Substitution 101</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-08-01T07:42:00+10:00" pubdate data-updated="true">Aug 1<span>st</span>, 2011</time>
-        
-         | <a href="/2011/08/regex-substitution-101.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching&#8230;<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn&#8217;t enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word &#8216;hello&#8217;<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed &#8220;s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/&#8221; &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed &#8216;s/PATTERN/REPLACEMENT/&#8217;</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /&#8217;s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/5/">&larr; Older</a>
@@ -572,6 +572,10 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
       </li>
     
@@ -580,15 +584,11 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
       </li>
     
       <li class="post">
+        <a href="/TCPDump.html">TCPDump</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
       </li>
     
   </ul>

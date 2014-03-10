@@ -9,9 +9,8 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Back in 2011, I attempted The Oxfam TrailWalker.
-I didn&rsquo;t finish the full 100km &ndash; due to injuries I had to stop at about 60km,
-but it was &hellip;">
+  <meta name="description" content="I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository. The first reaction is to remove that &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +77,195 @@ but it was &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-10T15:07:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2014</time>
+        
+         | <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository.</p>
+
+<p>The first reaction is to remove that sensitive information. While that is a good
+first step, making a new commit to remove the information means that when anyone
+looks at the commit history, the sensitive information will still be visible.</p>
+
+<h2>Re-writing history</h2>
+
+<p>The next step is to re-write the git history.<br/>
+This can be done a few ways, but I took a simple approach and sqaushed the
+commits down such that the addition and removal of the sensitive information
+cancel each other out and the new commit doesn&rsquo;t contain any sensitive
+information.</p>
+
+<p>To demonstrate, here is the history of a git respository where some sensitive
+information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>a120437 Ooops... remove sensitive data!
+</span><span class='line'>bbd80c4 Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show bbd80c4
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..afbbccd 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,3 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data
+</span><span class='line'>+PASSWORD=secret
+</span><span class='line'>
+</span><span class='line'>$&gt; git show a120437
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index afbbccd..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1,3 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'> MORE=data
+</span><span class='line'>-PASSWORD=secret
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
+commits. In this case, I chose the commit just before the sensitive data was
+added, like this: <code>git rebase -i 0115d7b</code></p>
+
+<p>In the interactive editor, I did the following and then provided a new commit
+message:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pick a120437 Ooops... remove sensitive data!
+</span><span class='line'>squash bbd80c4 Add some more data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This resulted in the last 2 commits being merged into a new one.<br/>
+Here is the history:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>fd04bfc Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show fd04bfc
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rewriting commits that have already been pushed to a remote means a couple of
+things.<br/>
+For one, when you push this new history to the remote, you may require
+the <code>--force</code> option to disregard the existing history.<br/>
+Also, anyone who has an existing clone of the repository will have issues when
+they pull down the latest changes but in the case of sensitive information, this
+is a necessary side-effect.</p>
+
+<h2>Cleaning up the cached commits</h2>
+
+<p>We&rsquo;re not done yet!<br/>
+Git keeps track of all changes made to a repository, even though the history
+does not show the <em>bad</em> commits, they are still there! You can view all changes
+to the repository using <code>git reflog</code>. From this command you can find the SHA of
+the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
+
+<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
+you will be able to find that sensitive information again.
+To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
+
+<p>You can clear the your local reflog by issuing these commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rm -rf .git/refs/original/
+</span><span class='line'>git reflog expire --expire=now --all
+</span><span class='line'>git gc --prune=now
+</span><span class='line'>git gc --aggressive --prune=now</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
+nature of git, simply deleting the repository and pushing a new copy of your
+local repository to GitHub will effectively destroy that cache.</p>
+
+<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -332,6 +520,124 @@ I just found one online, so lets download it to our <code>/opt/minecraft</code> 
 <h2>5. Have fun!</h2>
 
 <p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/TCPDump.html">TCPDump</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-11-08T01:35:00+11:00" pubdate data-updated="true">Nov 8<span>th</span>, 2013</time>
+        
+         | <a href="/TCPDump.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Example</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  sudo tcpdump -A -s 500 -vvv -i lo0  src host 1.2.3.4
+</span><span class='line'>              |_____________________||________________|
+</span><span class='line'>                      options            expression</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Options</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  -D                  # list interfaces
+</span><span class='line'>  -i en0              # use en0 interface
+</span><span class='line'>  -vv                 # very verbose
+</span><span class='line'>  -nn                 # Dont resolve hostnames
+</span><span class='line'>  -c                  # count packets
+</span><span class='line'>  -A                  # show in ASCII
+</span><span class='line'>  -X                  # show in HEX
+</span><span class='line'>  -tttt               # display date and time
+</span><span class='line'>  -S                  # print absolute sequence numbers (instead of relative)
+</span><span class='line'>  -s                  # number of byte (-s 0 is unlimited)
+</span><span class='line'>  -w file.pcap        # write packets to file.pcap
+</span><span class='line'>  -r file.pcap        # read packets from file.pcap</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Expressions</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  src host 1.2.3.4    # source address
+</span><span class='line'>  src net 1.2.3.0/24  # source network
+</span><span class='line'>  dst host 1.2.3.4    # destination network
+</span><span class='line'>  dst net 1.2.3.0/24  # destination network
+</span><span class='line'>  port 53             # port number</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Capturing HTTP traffic</h2>
+
+<p><a href="http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body">http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body</a></p>
+
+<p>GET requests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x47455420'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>POST requests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -lnA 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x504f5354)'</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Wireshark</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  edit -&gt; preferences -&gt; protocols -&gt; http -&gt; tcp ports</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>NGrep</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ngrep -q -d en1 -W byline -O sas.pcap host reatst.aimatch.com and port 80</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -867,165 +1173,6 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/Processing-raw-photos-in-linux.html">Processing Raw Photos in Linux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-12-24T11:49:00+11:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
-        
-         | <a href="/Processing-raw-photos-in-linux.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
-
-<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
-There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
-Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
-
-<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
-Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
-
-<h2>RawTherapee</h2>
-
-<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
-It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
-I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
-The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
-
-<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
-
-
-<h2>My attempt</h2>
-
-<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
-
-<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
-I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
-
-<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
-
-<p><img class="center" src="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG" title="Straight from the camera, with incorrect settings" ></p>
-
-<p><img class="center" src="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg" title="After processing in RawTherapee" ></p>
-
-<p><img class="center" src="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg" title="After adding some minor tweaks in The Gimp" ></p>
-
-<h2>Next steps</h2>
-
-<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
-
-<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/12/a-few-photography-tips.html">A Few Photography Tips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-12-14T13:44:00+11:00" pubdate data-updated="true">Dec 14<span>th</span>, 2012</time>
-        
-         | <a href="/2012/12/a-few-photography-tips.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A little while ago, my brother got me a photography course as a gift, so I asked a friend of mine, Amy, to join me and last Thursday night we attended the course. The course was a &ldquo;Night Landscape&rdquo; tutorial where we all brought our own cameras and a professional photographer guides us through how to take photos at night. The class was quite small, it consisted of Amy and I with one other student.</p>
-
-<p>The course started out quite basic and we went though some fundamental theory, a lot of which Amy and I already knew, but the other student was a little less experienced so the photographer needed to cater for all of us.<br/>
-Luckily it was just a small class, because instead of following the standard course structure, the photographer spent more time in conversations with us, answering all our specific questions.</p>
-
-<p>Being self-taught, I am grateful for that, because these conversations were what lead me to learn a few new things that I hadn&rsquo;t picked up in my own research so far.<br/>
-Here is a quick summary of the things I learned:</p>
-
-<h2>1. Blowing out the sky, intentionally</h2>
-
-<p>The first new tip I learned was a trick the photographer used when the scene has an unusable sky, such as a dull cloud cover (like last night in the rain). He would take another photo that was intentionally over-exposed so the sky was as white as possible. By doing this, afterwards in Photoshop a pure white sky is very easy to select, even through the leaves of a tree or someone&rsquo;s hair using tools like the magic wand, or a color-based selection and can be replaced with a more dramatic sky from another shoot.</p>
-
-<h2>2. Hand-holding at night</h2>
-
-<p>At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</p>
-
-<blockquote><p>Make the denominator of the shutter speed match the focal length</p></blockquote>
-
-
-<p>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&rsquo;t a perfect rule, but it is a great place to start and you can adjust from there.</p>
-
-<h2>3. Freezing human motion</h2>
-
-<p>So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends:</p>
-
-<blockquote><p>Use a shutter speed of 1/125 as a baseline to freeze human motion</p></blockquote>
-
-
-<p>It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as necessary.</p>
-
-<h2>4. Filters to allow for more creativity</h2>
-
-<p>So far the only filters I have used are a &ldquo;Circular Polariser&rdquo; to enhance sky&rsquo;s, cut out reflections, etc. and a &ldquo;UV&rdquo; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &ldquo;Neutral Density&rdquo; (or &ldquo;ND&rdquo;) filter and a &ldquo;Graduated Blue-Yellow&rdquo; filter.<br/>
-Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day &ndash; it looked fantastic!<br/>
-The &ldquo;Graduated Blue-Yellow&rdquo; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.</p>
-
-<h2>Summary</h2>
-
-<p>So at the end of the day, the course was quite basic, but in our tangential conversations I gained some pretty cool tips and tricks.<br/>
-I think the most valuable aspect of a course like this is not so much the material presented, but just to experience another photographers style. It&rsquo;s always interesting to see how everyone thinks about things in their own unique way, and going through other peoples photos with a conversation is really intriguing.</p>
-
-<p>Thanks to Rob and Sarah for the gift and Amy for keeping me company!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1052,6 +1199,10 @@ I think the most valuable aspect of a course like this is not so much the materi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
       </li>
     
@@ -1060,15 +1211,11 @@ I think the most valuable aspect of a course like this is not so much the materi
       </li>
     
       <li class="post">
+        <a href="/TCPDump.html">TCPDump</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
       </li>
     
   </ul>

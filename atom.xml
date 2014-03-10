@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-01-24T14:08:00+11:00</updated>
+  <updated>2014-03-10T16:50:52+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,166 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Completely removing a git commit due to sensitive information]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/"/>
+    <updated>2014-03-10T15:07:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information</id>
+    <content type="html"><![CDATA[<p>I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository.</p>
+
+<p>The first reaction is to remove that sensitive information. While that is a good
+first step, making a new commit to remove the information means that when anyone
+looks at the commit history, the sensitive information will still be visible.</p>
+
+<h2>Re-writing history</h2>
+
+<p>The next step is to re-write the git history.<br/>
+This can be done a few ways, but I took a simple approach and sqaushed the
+commits down such that the addition and removal of the sensitive information
+cancel each other out and the new commit doesn&rsquo;t contain any sensitive
+information.</p>
+
+<p>To demonstrate, here is the history of a git respository where some sensitive
+information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>a120437 Ooops... remove sensitive data!
+</span><span class='line'>bbd80c4 Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show bbd80c4
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..afbbccd 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,3 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data
+</span><span class='line'>+PASSWORD=secret
+</span><span class='line'>
+</span><span class='line'>$&gt; git show a120437
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index afbbccd..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1,3 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'> MORE=data
+</span><span class='line'>-PASSWORD=secret
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
+commits. In this case, I chose the commit just before the sensitive data was
+added, like this: <code>git rebase -i 0115d7b</code></p>
+
+<p>In the interactive editor, I did the following and then provided a new commit
+message:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pick a120437 Ooops... remove sensitive data!
+</span><span class='line'>squash bbd80c4 Add some more data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This resulted in the last 2 commits being merged into a new one.<br/>
+Here is the history:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>fd04bfc Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show fd04bfc
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rewriting commits that have already been pushed to a remote means a couple of
+things.<br/>
+For one, when you push this new history to the remote, you may require
+the <code>--force</code> option to disregard the existing history.<br/>
+Also, anyone who has an existing clone of the repository will have issues when
+they pull down the latest changes but in the case of sensitive information, this
+is a necessary side-effect.</p>
+
+<h2>Cleaning up the cached commits</h2>
+
+<p>We&rsquo;re not done yet!<br/>
+Git keeps track of all changes made to a repository, even though the history
+does not show the <em>bad</em> commits, they are still there! You can view all changes
+to the repository using <code>git reflog</code>. From this command you can find the SHA of
+the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
+
+<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
+you will be able to find that sensitive information again.
+To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
+
+<p>You can clear the your local reflog by issuing these commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rm -rf .git/refs/original/
+</span><span class='line'>git reflog expire --expire=now --all
+</span><span class='line'>git gc --prune=now
+</span><span class='line'>git gc --aggressive --prune=now</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
+nature of git, simply deleting the repository and pushing a new copy of your
+local repository to GitHub will effectively destroy that cache.</p>
+
+<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Preparing for TrailWalker]]></title>
@@ -212,6 +372,93 @@ I just found one online, so lets download it to our <code>/opt/minecraft</code> 
 <h2>5. Have fun!</h2>
 
 <p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[TCPDump]]></title>
+    <link href="http://blog.stevenocchipinti.com/TCPDump.html"/>
+    <updated>2013-11-08T01:35:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/TCPDump</id>
+    <content type="html"><![CDATA[<h2>Example</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  sudo tcpdump -A -s 500 -vvv -i lo0  src host 1.2.3.4
+</span><span class='line'>              |_____________________||________________|
+</span><span class='line'>                      options            expression</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Options</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  -D                  # list interfaces
+</span><span class='line'>  -i en0              # use en0 interface
+</span><span class='line'>  -vv                 # very verbose
+</span><span class='line'>  -nn                 # Dont resolve hostnames
+</span><span class='line'>  -c                  # count packets
+</span><span class='line'>  -A                  # show in ASCII
+</span><span class='line'>  -X                  # show in HEX
+</span><span class='line'>  -tttt               # display date and time
+</span><span class='line'>  -S                  # print absolute sequence numbers (instead of relative)
+</span><span class='line'>  -s                  # number of byte (-s 0 is unlimited)
+</span><span class='line'>  -w file.pcap        # write packets to file.pcap
+</span><span class='line'>  -r file.pcap        # read packets from file.pcap</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Expressions</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  src host 1.2.3.4    # source address
+</span><span class='line'>  src net 1.2.3.0/24  # source network
+</span><span class='line'>  dst host 1.2.3.4    # destination network
+</span><span class='line'>  dst net 1.2.3.0/24  # destination network
+</span><span class='line'>  port 53             # port number</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Capturing HTTP traffic</h2>
+
+<p><a href="http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body">http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body</a></p>
+
+<p>GET requests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x47455420'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>POST requests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -lnA 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x504f5354)'</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Wireshark</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  edit -&gt; preferences -&gt; protocols -&gt; http -&gt; tcp ports</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>NGrep</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ngrep -q -d en1 -W byline -O sas.pcap host reatst.aimatch.com and port 80</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -558,53 +805,6 @@ When you want to use the sauce, it still needs to be cooked, so you can experime
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Processing raw photos in linux]]></title>
-    <link href="http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux.html"/>
-    <updated>2012-12-24T11:49:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/Processing-raw-photos-in-linux</id>
-    <content type="html"><![CDATA[<p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
-
-<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
-There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
-Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
-
-<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
-Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
-
-<h2>RawTherapee</h2>
-
-<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
-It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
-I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
-The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
-
-<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
-
-
-<h2>My attempt</h2>
-
-<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
-
-<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
-I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
-
-<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
-
-<p><img class="center" src="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG" title="Straight from the camera, with incorrect settings" ></p>
-
-<p><img class="center" src="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg" title="After processing in RawTherapee" ></p>
-
-<p><img class="center" src="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg" title="After adding some minor tweaks in The Gimp" ></p>
-
-<h2>Next steps</h2>
-
-<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
-
-<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
 ]]></content>
   </entry>
   
@@ -1033,60 +1233,6 @@ While it&rsquo;s nice to know this, seems like more effort that just typing what
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 <div><p>Today marks 1 year since my first blog post.<br>In that time I have written 40 posts and this site has received over 7000 views from all over the world!<br>I&#8217;ve had some great feedback (even from total strangers), which has been fantastic - It&#8217;s a good feeling to know that my ramblings can actually be useful for others too.</p><p>I started this blog because as a fairly technical person, I am constantly learning, but one of the caveats of this constant learning culture is that some people (such as myself) find it quite hard to remember all the cool stuff we pick up over the years, so this blog&#8217;s primary purpose was to act as a &#8221;<i>memory supplement</i>&#8221;.</p><p>The idea being that when you read something new, it will only stay in your head if you keep using it (or, unlike me, if you have a really good memory), but sometimes what ever it is that we just learned won&#8217;t be totally relevant or useful until much later. </p><p>One of the best ways that I have found to retain this knowledge is to use it! For example, if you are reading up on a new programming language, use it! Write little scripts, re-write other existing programs in this new language and just get used to using it regularly.<br>If this isn&#8217;t available (or suitable) I find talking about it with other like-minded people will reinforce the knowledge too. Alot of the time, you can really reinforce your knowledge of a topic by teaching it to someone else. Meetups and groups of like minded friends are great for this. </p><p>This is part of the reason I started this blog. Once I learn something new (that I have a desire to remember) I try to write up a quick blog post as soon as I can.<br>Not only does this reinforce my knowledge, but if I do happen to forget, instead of using Google to re-learn it, I can simply use my blog&#8217;s search to find my own post on the topic and has the convenience of being written in my own way of thinking/writing.<br>Even if my post is out-of-date, or not complete enough, it will still refresh my memory and give me a better foundation to start learning up on that particular topic once again. </p><p>This blog has served its purpose well and will continue to do so. If you have a similar way of thinking (or a similar memory) as me, I highly recommend starting a blog! </p><p>Thanks to everyone that has been reading so far! :-) </p></div>
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[XBMC Eden + Ubuntu]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/04/xbmc-eden-ubuntu.html"/>
-    <updated>2012-04-06T10:23:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/04/xbmc-eden-ubuntu</id>
-    <content type="html"><![CDATA[<p>Back when I started uni, I bought a new <a href="http://www.notebookreview.com/default.asp?newsID=2886">Asus A6J laptop</a>. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) and decently powerful graphics (ATI X1600).<br/>
-The A6J  is very dated now and weighing in at 2.85kg, its not very portable by today&rsquo;s standard (considering my <a href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html">Toshiba Portege</a> weighs just 1.13kg).<br/>
-A couple of years after I bought it, I got sick of carrying it around, so I bought an Asus EeePc as a replacement for uni, so the A6J stayed at home and was rarely used &ndash; it was just a spare for a long time.</p>
-
-<p>Up until recently, I was using I used it as a (stationary) desktop replacement at work but I now have a new job where I am provided a  Macbook Pro so this old machine is now spare once again. This with the recent release of <a href="http://xbmc.org/natethomas/2012/03/24/xbmc-11-0-eden/">XBMC 11 Eden</a>, I thought I may as well re-purpose it as a permanent HTPC.</p>
-
-<p>I considered quite a few options, such as running Arch Linux, OpenElec or Ubuntu with XBMC installed, or going with the recently improved XBMCbuntu (formerly known as XBMC Live).</p>
-
-<h2>XBMCbuntu</h2>
-
-<p>I downloaded the iso and had a bit of a play. I love how it boots directly into XBMC without the need to startup Unity or anything like that, although it does let you exit to the login screen and select either &ldquo;XBMCbuntu&rdquo; (LXDE) or &ldquo;OpenBox&rdquo; which is nice.</p>
-
-<p>Once it had booted, it behaved so slow! I figured it mustn&rsquo;t have the correct drivers installed, so I tried to use the restricted drivers from the repo and after hitting quite a few problems I consulted the AMD site.<br/>
-The <a href="http://support.amd.com/us/gpudownload/linux/Legacy/Pages/radeon_linux.aspx?type=2.4.1&amp;amp;product=2.4.1.3.12&amp;amp;lang=English">AMD site explains</a> that my ATI X1600 is now &ldquo;legacy&rdquo; and is supported by the ATI Catalyst 9.3 proprietary linux driver.<br/>
-So I downloaded that and yet again hit a bunch of other issues.</p>
-
-<p>I spent a fair portion of the day battling with this and couldn&rsquo;t help but think back to how easy Ubuntu Desktop handled all this, so I thought I&rsquo;d just give that another go.</p>
-
-<h2>Ubuntu Desktop + XBMC</h2>
-
-<p>I downloaded the Ubuntu 11.10 iso and installed that over the top of XBMCbuntu and configured the user account as &lsquo;xbmc&rsquo; and to automatically login at startup.<br/>
-I then followed the <a href="http://wiki.xbmc.org/index.php?title=Installing_XBMC_for_Linux">instructions to install XBMC from their PPA</a>. I did a quick update, installed SSH, reconfigured grub to auto-boot in 1 second (instead of 10) and rebooted the machine.</p>
-
-<p>When I launched XBMC, it was perfect! It was very snappy and there was no lag whatsoever.<br/>
-I noticed that the power menu was missing the shutdown options that were in XBMCbuntu and that the suspend option did not work.<br/>
-After a bit if research, I found a <a href="http://wiki.xbmc.org/index.php?title=HOW-TO:Suspend_and_wake_in_Ubuntu">wiki page</a> that explains how to modify <code>policykit</code> to allow xbmc access to all the power functions.<br/>
-With this change, shutdown, suspend and hibernate were all working great.</p>
-
-<p>I had already configured Wake-On-Lan in the past, so all that I needed to do was setup the <a href="https://play.google.com/store/apps/details?id=org.xbmc.android.remote&amp;amp;feature=search_result#?t=W251bGwsMSwxLDEsIm9yZy54Ym1jLmFuZHJvaWQucmVtb3RlIl0.">Android XBMC remote app</a> on my phone. After configuring the app with the laptops IP address, MAC address, etc. I was now able to use the &ldquo;Turn your XBMC&rsquo;s Power On&rdquo; button from the mobile app to fire up the laptop.<br/>
-Of course to actually allow control of XBMC I needed to go into the settings screen and enable control via HTTP, etc.</p>
-
-<p>So now I can power up the laptop and shut it down from my phone, but when it boots, I am brought into a Unity environment. In the past I would add XBMC to the startup applications, but with XBMC Eden, there is a better way.<br/>
-XBMC Eden adds it self to the choice of desktop environments from the login screen (in other words, you get a choice: Unity or straight into XBMC like the live cd).<br/>
-Unfortunately it doesn&rsquo;t remember the last choice with XBMC, so if I boot straight into it and then shut it down, next time it will still automatically boot in to Unity.</p>
-
-<p>I then came across an <a href="https://help.ubuntu.com/community/AutoLogin#For_Ubuntu_10.04_.28Lucid_Lynx.29">Ubuntu community page</a> that pointed in the direction the the LightDM config file. (LightDM is the thing that manages the login screen).<br/>
-I opened <code>/etc/lightdm/lightdm.conf</code> and saw this line:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>user-session=ubuntu</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I replaced the <code>ubuntu</code> part of this line with <code>XBMC</code>, rebooted and low and behold, it booted straight into XBMC!</p>
-
-<p>I now have a fully functional HTPC that I can completely control from my phone.<br/>
-The only things left to do now are configure my media sources, install some plugins and maybe play with some new skins.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-01-24T14:08:00+11:00</updated>
+  <updated>2014-03-10T16:50:52+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,125 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Completely removing a git commit due to sensitive information]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/"/>
+    <updated>2014-03-10T15:07:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information</id>
+    <content type="html"><![CDATA[<p>I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository.</p>
+
+<p>The first reaction is to remove that sensitive information. While that is a good
+first step, making a new commit to remove the information means that when anyone
+looks at the commit history, the sensitive information will still be visible.</p>
+
+<h2>Re-writing history</h2>
+
+<p>The next step is to re-write the git history.<br/>
+This can be done a few ways, but I took a simple approach and sqaushed the
+commits down such that the addition and removal of the sensitive information
+cancel each other out and the new commit doesn&rsquo;t contain any sensitive
+information.</p>
+
+<p>To demonstrate, here is the history of a git respository where some sensitive
+information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
+
+<p>```
+$> git log &mdash;oneline
+a120437 Ooops&hellip; remove sensitive data!
+bbd80c4 Add some more data
+0115d7b Add some data
+20133f4 Initial commit</p>
+
+<p>$> git show bbd80c4
+diff &mdash;git a/data b/data
+index f8327c3..afbbccd 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1 +1,3 @@
+ KEY=value
++MORE=data
++PASSWORD=secret</p>
+
+<p>$> git show a120437
+diff &mdash;git a/data b/data
+index afbbccd..1f0aa11 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1,3 +1,2 @@
+ KEY=value
+ MORE=data
+-PASSWORD=secret</p>
+
+<p>```</p>
+
+<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
+commits. In this case, I chose the commit just before the sensitive data was
+added, like this: <code>git rebase -i 0115d7b</code></p>
+
+<p>In the interactive editor, I did the following and then provided a new commit
+message:</p>
+
+<p><code>
+pick a120437 Ooops... remove sensitive data!
+squash bbd80c4 Add some more data
+</code></p>
+
+<p>This resulted in the last 2 commits being merged into a new one.<br/>
+Here is the history:</p>
+
+<p>```
+$> git log &mdash;oneline
+fd04bfc Add some more data
+0115d7b Add some data
+20133f4 Initial commit</p>
+
+<p>$> git show fd04bfc
+diff &mdash;git a/data b/data
+index f8327c3..1f0aa11 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1 +1,2 @@
+ KEY=value
++MORE=data
+```</p>
+
+<p>Rewriting commits that have already been pushed to a remote means a couple of
+things.<br/>
+For one, when you push this new history to the remote, you may require
+the <code>--force</code> option to disregard the existing history.<br/>
+Also, anyone who has an existing clone of the repository will have issues when
+they pull down the latest changes but in the case of sensitive information, this
+is a necessary side-effect.</p>
+
+<h2>Cleaning up the cached commits</h2>
+
+<p>We&rsquo;re not done yet!<br/>
+Git keeps track of all changes made to a repository, even though the history
+does not show the <em>bad</em> commits, they are still there! You can view all changes
+to the repository using <code>git reflog</code>. From this command you can find the SHA of
+the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
+
+<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
+you will be able to find that sensitive information again.
+To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
+
+<p>You can clear the your local reflog by issuing these commands:
+<code>
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git gc --prune=now
+git gc --aggressive --prune=now
+</code></p>
+
+<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
+nature of git, simply deleting the repository and pushing a new copy of your
+local repository to GitHub will effectively destroy that cache.</p>
+
+<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git + Hub = GitHub]]></title>

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="At the end of last year my HTC Desire HD got its firmware upgrade to the new version of HTC Sense - the same version that the HTC Sensation is &hellip;">
+  <meta name="description" content="Back when I started uni, I bought a new Asus A6J laptop. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/xbmc-eden-ubuntu.html">XBMC Eden + Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-04-06T10:23:00+10:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+        
+         | <a href="/2012/04/xbmc-eden-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Back when I started uni, I bought a new <a href="http://www.notebookreview.com/default.asp?newsID=2886">Asus A6J laptop</a>. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) and decently powerful graphics (ATI X1600).<br/>
+The A6J  is very dated now and weighing in at 2.85kg, its not very portable by today&rsquo;s standard (considering my <a href="/2011/12/toshiba-portege-z830.html">Toshiba Portege</a> weighs just 1.13kg).<br/>
+A couple of years after I bought it, I got sick of carrying it around, so I bought an Asus EeePc as a replacement for uni, so the A6J stayed at home and was rarely used &ndash; it was just a spare for a long time.</p>
+
+<p>Up until recently, I was using I used it as a (stationary) desktop replacement at work but I now have a new job where I am provided a  Macbook Pro so this old machine is now spare once again. This with the recent release of <a href="http://xbmc.org/natethomas/2012/03/24/xbmc-11-0-eden/">XBMC 11 Eden</a>, I thought I may as well re-purpose it as a permanent HTPC.</p>
+
+<p>I considered quite a few options, such as running Arch Linux, OpenElec or Ubuntu with XBMC installed, or going with the recently improved XBMCbuntu (formerly known as XBMC Live).</p>
+
+<h2>XBMCbuntu</h2>
+
+<p>I downloaded the iso and had a bit of a play. I love how it boots directly into XBMC without the need to startup Unity or anything like that, although it does let you exit to the login screen and select either &ldquo;XBMCbuntu&rdquo; (LXDE) or &ldquo;OpenBox&rdquo; which is nice.</p>
+
+<p>Once it had booted, it behaved so slow! I figured it mustn&rsquo;t have the correct drivers installed, so I tried to use the restricted drivers from the repo and after hitting quite a few problems I consulted the AMD site.<br/>
+The <a href="http://support.amd.com/us/gpudownload/linux/Legacy/Pages/radeon_linux.aspx?type=2.4.1&amp;amp;product=2.4.1.3.12&amp;amp;lang=English">AMD site explains</a> that my ATI X1600 is now &ldquo;legacy&rdquo; and is supported by the ATI Catalyst 9.3 proprietary linux driver.<br/>
+So I downloaded that and yet again hit a bunch of other issues.</p>
+
+<p>I spent a fair portion of the day battling with this and couldn&rsquo;t help but think back to how easy Ubuntu Desktop handled all this, so I thought I&rsquo;d just give that another go.</p>
+
+<h2>Ubuntu Desktop + XBMC</h2>
+
+<p>I downloaded the Ubuntu 11.10 iso and installed that over the top of XBMCbuntu and configured the user account as &lsquo;xbmc&rsquo; and to automatically login at startup.<br/>
+I then followed the <a href="http://wiki.xbmc.org/index.php?title=Installing_XBMC_for_Linux">instructions to install XBMC from their PPA</a>. I did a quick update, installed SSH, reconfigured grub to auto-boot in 1 second (instead of 10) and rebooted the machine.</p>
+
+<p>When I launched XBMC, it was perfect! It was very snappy and there was no lag whatsoever.<br/>
+I noticed that the power menu was missing the shutdown options that were in XBMCbuntu and that the suspend option did not work.<br/>
+After a bit if research, I found a <a href="http://wiki.xbmc.org/index.php?title=HOW-TO:Suspend_and_wake_in_Ubuntu">wiki page</a> that explains how to modify <code>policykit</code> to allow xbmc access to all the power functions.<br/>
+With this change, shutdown, suspend and hibernate were all working great.</p>
+
+<p>I had already configured Wake-On-Lan in the past, so all that I needed to do was setup the <a href="https://play.google.com/store/apps/details?id=org.xbmc.android.remote&amp;amp;feature=search_result#?t=W251bGwsMSwxLDEsIm9yZy54Ym1jLmFuZHJvaWQucmVtb3RlIl0.">Android XBMC remote app</a> on my phone. After configuring the app with the laptops IP address, MAC address, etc. I was now able to use the &ldquo;Turn your XBMC&rsquo;s Power On&rdquo; button from the mobile app to fire up the laptop.<br/>
+Of course to actually allow control of XBMC I needed to go into the settings screen and enable control via HTTP, etc.</p>
+
+<p>So now I can power up the laptop and shut it down from my phone, but when it boots, I am brought into a Unity environment. In the past I would add XBMC to the startup applications, but with XBMC Eden, there is a better way.<br/>
+XBMC Eden adds it self to the choice of desktop environments from the login screen (in other words, you get a choice: Unity or straight into XBMC like the live cd).<br/>
+Unfortunately it doesn&rsquo;t remember the last choice with XBMC, so if I boot straight into it and then shut it down, next time it will still automatically boot in to Unity.</p>
+
+<p>I then came across an <a href="https://help.ubuntu.com/community/AutoLogin#For_Ubuntu_10.04_.28Lucid_Lynx.29">Ubuntu community page</a> that pointed in the direction the the LightDM config file. (LightDM is the thing that manages the login screen).<br/>
+I opened <code>/etc/lightdm/lightdm.conf</code> and saw this line:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user-session=ubuntu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I replaced the <code>ubuntu</code> part of this line with <code>XBMC</code>, rebooted and low and behold, it booted straight into XBMC!</p>
+
+<p>I now have a fully functional HTPC that I can completely control from my phone.<br/>
+The only things left to do now are configure my media sources, install some plugins and maybe play with some new skins.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -612,48 +697,6 @@ Just a quick note, these days most cameras automatically geotag photos which is 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/11/motion-detection.html">Motion Detection</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-11-05T11:30:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
-        
-         | <a href="/2011/11/motion-detection.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-The way my desk is positioned means that when I&#8217;m on my computer  I face the corner of the room, which means the door is behind me.<br />Quite often I&#8217;ll stay up late working away till early hours of the morning and usually music comes hand-in-hand with coding (for me anyway), so when it&#8217;s late, I use headphones so I don&#8217;t disturb anyone else.<br /><br />This has caused me some grief as sometimes someone will come into my room for whatever reason and find me with my back to the them and headphones in, so knocking at the door or saying my name does not get my attention.<br />This leaves the last resort of tapping me on the shoulder which scares the crap out of me!<br /><br />A while ago I invested in a convex mirror designed to go on your computer screen so you can see who&#8217;s coming up from behind.<br />Well, with a 24-inch screen and deep concentration, this small mirror doesn&#8217;t catch me eye at all, so I still hit the ceiling when someone taps me on the shoulder.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s1600/mirror.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s320/mirror.jpg" width="251" /></a></div><br /><br />For my birthday I got this amazing <a href="http://www.astrogaming.com/a40-audio-system-astro-edition">Astro A40</a> headset. Sound clarity is absolutely stunning, they are really comfortable to wear and they block out a lot of surrounding background noise.<br />While I absolutely love the headset and wear it all the time,  you can probably guess this  adds to my jumpy-ness!<br /><br />So I finally found a solution!<br /><br />There is a package in the Ubuntu repositories called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span>&#8221; - which is a really simple motion detection server that utilises a webcam.<br />I had a look at &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">zoneminder</span>&#8221; too, but it seems very over-kill for my needs. <br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> will detect movement (above a configurable threshold), store &#8220;movement&#8221; snapshots and video files, log to a database and more importantly it provides a few hooks to fire commands upon events such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_motion_detected</span>, etc.<br /><br />I disabled almost every option except the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span> hook.<br />This hook will execute the given command when motion has been detected after a (configurable) &#8220;gap&#8221; period of time of no motion - which I set to 10 seconds.<br /><br />The command I set it to execute is this:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve notify-send &#8211;hint=int:transient:1 -i &#8216;/usr/share/icons/hicolor/scalable/mimetypes/text-x-apport.svg&#8217; &#8216;LOOK BEHIND YOU!&#8217;</span></blockquote><br />As mentioned in an <a href="http://blog.stevenocchipinti.com/2011/09/gtalksms.html">earlier blog post</a>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> can be found in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package <br /><br />Note: the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8211;hint=int:transient:1</span> is for Gnome-Shell which has introduced persistent notifcations and I didn&#8217;t want to acknowledge a notification everytime someone walks past!<br /><br />The end result of this little hack is when someone walks anywhere near my doorway, that command gets my attention with a standard Gnome-Shell notification from the bottom of the screen like this:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s1600/Screenshot+at+2011-11-06+00%253A15%253A39.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="45" src="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s320/Screenshot+at+2011-11-06+00%253A15%253A39.png" width="320" /></a></div><br /><br />The reason I am using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> here is that <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> needs to be run as root, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> command will also be run as root.<br />I guess because I had Unity installed before Gnome-Shell, when root runs <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span>, I get the Unity style notifications - which is still nice, but as I&#8217;m road testing Gnome-Shell, I figured I may as well use its notification look-n-feel too.<br /><br />Here&#8217;s what it looks like if you leave out the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve</span> part:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s1600/Screenshot+at+2011-11-06+00%253A09%253A32.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="212" src="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s320/Screenshot+at+2011-11-06+00%253A09%253A32.png" width="320" /></a></div><br />
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -682,6 +725,10 @@ The way my desk is positioned means that when I&#8217;m on my computer  I face t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
       </li>
     
@@ -690,15 +737,11 @@ The way my desk is positioned means that when I&#8217;m on my computer  I face t
       </li>
     
       <li class="post">
+        <a href="/TCPDump.html">TCPDump</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a>
       </li>
     
   </ul>
