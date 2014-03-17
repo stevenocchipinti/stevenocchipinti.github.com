@@ -532,124 +532,6 @@ I just found one online, so lets download it to our <code>/opt/minecraft</code> 
       
   <header>
     
-      <h1 class="entry-title"><a href="/TCPDump.html">TCPDump</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2013-11-08T01:35:00+11:00" pubdate data-updated="true">Nov 8<span>th</span>, 2013</time>
-        
-         | <a href="/TCPDump.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Example</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  sudo tcpdump -A -s 500 -vvv -i lo0  src host 1.2.3.4
-</span><span class='line'>              |_____________________||________________|
-</span><span class='line'>                      options            expression</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Options</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  -D                  # list interfaces
-</span><span class='line'>  -i en0              # use en0 interface
-</span><span class='line'>  -vv                 # very verbose
-</span><span class='line'>  -nn                 # Dont resolve hostnames
-</span><span class='line'>  -c                  # count packets
-</span><span class='line'>  -A                  # show in ASCII
-</span><span class='line'>  -X                  # show in HEX
-</span><span class='line'>  -tttt               # display date and time
-</span><span class='line'>  -S                  # print absolute sequence numbers (instead of relative)
-</span><span class='line'>  -s                  # number of byte (-s 0 is unlimited)
-</span><span class='line'>  -w file.pcap        # write packets to file.pcap
-</span><span class='line'>  -r file.pcap        # read packets from file.pcap</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Expressions</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  src host 1.2.3.4    # source address
-</span><span class='line'>  src net 1.2.3.0/24  # source network
-</span><span class='line'>  dst host 1.2.3.4    # destination network
-</span><span class='line'>  dst net 1.2.3.0/24  # destination network
-</span><span class='line'>  port 53             # port number</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Capturing HTTP traffic</h2>
-
-<p><a href="http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body">http://stackoverflow.com/questions/4777042/can-i-use-tcpdump-to-get-http-requests-response-header-and-response-body</a></p>
-
-<p>GET requests:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -s 0 -A 'tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x47455420'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>POST requests:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -lnA 'tcp dst port 80 and (tcp[((tcp[12:1] & 0xf0) &gt;&gt; 2):4] = 0x504f5354)'</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Wireshark</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  edit -&gt; preferences -&gt; protocols -&gt; http -&gt; tcp ports</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>NGrep</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ngrep -q -d en1 -W byline -O sas.pcap host reatst.aimatch.com and port 80</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a></h1>
     
     
@@ -1173,6 +1055,84 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/Processing-raw-photos-in-linux.html">Processing Raw Photos in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-12-24T11:49:00+11:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+        
+         | <a href="/Processing-raw-photos-in-linux.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For quite a while now I&rsquo;ve had my camera set to store a <code>.jpg</code> file and a raw <code>.nef</code> file for every shot, but my theory was always that memory is so cheap that I may as well store everything and I&rsquo;ll only use the raw files if the JPG&rsquo;s turned out really bad. That has saved me a few times, but I never really learned how to process raw files properly.</p>
+
+<p>Last year we had a Christmas lunch at our place, and I was quite happy with some of the photos I took.
+There was one set of photos I took of my little cousin and her expressions were just beautiful, except I really stuffed up my white balance and picture control! I was shooting inside, then went outside and spontaneously took these photos without reconfiguring.<br/>
+Due to privacy reasons, I can&rsquo;t show you these photos, but I will still demonstrate the effect with an example below.</p>
+
+<p>My Nikon D90 has a raw file processor built in, so I could do post processing from the camera itself, but most professionals use Adobe Lightroom or something like that so they can use a nice big screen and have a lot more options for tweaking the photos.
+Being a linux nerd, I decided to do a little research into open source alternatives and soon realised what my favourite is&hellip;</p>
+
+<h2>RawTherapee</h2>
+
+<p><a href="http://rawtherapee.com">RawTherapee</a> is really easy to use and they have builds for Linux, Mac and Windows.<br/>
+It provides an interface to process the raw files, then export them either straight to a file or into an editor like The Gimp for further alterations.
+I found the video below to be a good run down of the basic features, but there is even more than this.<br/>
+The RawTherapee website provides quite a <a href="http://rawtherapee.com/blog/documentation">detailed manual</a> on every feature in the app.</p>
+
+<div style="text-align: center;"><iframe allowfullscreen="allowfullscreen" frameborder="0" height="315" src="http://www.youtube.com/embed/1c3c33JVKVE" width="420"></iframe></div>
+
+
+<h2>My attempt</h2>
+
+<p>I am still fairly new to raw processing, so a professional could probably do a better job than me, but I was fairly happy with the result so far &ndash; although with that said, my screen is not calibrated so it might only look good for me :P</p>
+
+<p>To dive straight in, the main things I adjusted in RawTherapee were the <em>&lsquo;exposure compensation&rsquo;</em>, <em>&lsquo;black level&rsquo;</em>, <em>&lsquo;contrast&rsquo;</em>, <em>&lsquo;saturation&rsquo;</em>, <em>&lsquo;sharpening&rsquo;</em>, <em>&lsquo;curves&rsquo;</em>, <em>&lsquo;white balance&rsquo;</em> and <em>&lsquo;vibrance&rsquo;</em>.<br/>
+I&rsquo;m used to adjusting these things in The Gimp, but the two most powerful tools here for me were the ability to easily change the <em>&lsquo;exposure compensation&rsquo;</em> and <em>&lsquo;white balance&rsquo;</em> &ndash; I normally find these things either pretty hard or sometimes impossible to get right from a processed JPG.</p>
+
+<p>Here are my results, the first photo is straight from the camera, the next is after processing in RawTherapee and the last is after some minor tweaks in The Gimp.</p>
+
+<p><img class="center" src="http://1.bp.blogspot.com/--giSUfcFUtE/UNg3_Tf6REI/AAAAAAAAAS8/6ETjJcVTG4Y/s320/DSC_5597.JPG" title="Straight from the camera, with incorrect settings" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-ZdA-k_HOPzM/UNg4U1JsKhI/AAAAAAAAATE/8qr7EgoTYI0/s320/DSC_5597e.jpg" title="After processing in RawTherapee" ></p>
+
+<p><img class="center" src="http://4.bp.blogspot.com/-b2Mg3JIDJn4/UNg4zgpbdXI/AAAAAAAAATM/8bBACiQ_cYU/s320/DSC_5597e2.jpg" title="After adding some minor tweaks in The Gimp" ></p>
+
+<h2>Next steps</h2>
+
+<p>So I can do the basics now, but its far from perfect. The next steps for me are to practise more! I should process more files myself. The goal is to get into a easy workflow where I shoot, transfer to my machine, rate and process the raw&rsquo;s, edit the resulting JPG&rsquo;s if they need it, backup the whole lot and then share them with the world!</p>
+
+<p>I still have a lot to learn, but I&rsquo;m looking forward to getting better at this!</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1211,11 +1171,11 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
       </li>
     
       <li class="post">
-        <a href="/TCPDump.html">TCPDump</a>
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
       <li class="post">
-        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+        <a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a>
       </li>
     
   </ul>
