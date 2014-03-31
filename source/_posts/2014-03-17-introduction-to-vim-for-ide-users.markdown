@@ -4,12 +4,9 @@ title: "Introduction to Vim for IDE users"
 description: "Introduction to Vim for IDE users"
 date: 2014-03-17 17:23
 comments: true
-published: false
+published: true
 categories: vim
---
-
-Introduction to Vim for IDE Users
-=================================
+---
 
 > I'd love to learn Street Fighter 2, but there are just so many combos!   
 > - [The Vim Learning Curve is a Myth](http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth), Thoughtbot
@@ -32,7 +29,7 @@ Installing Vim
 
 Most systems will come with a version of vim, but you may want to get the latest version from the systems package manager for a more complete feature set.
 
-On a mac, the standard install of `vim` is missing clipboard support so I would recommend installing MacVim, here is how I do it:
+On a mac, the standard install of `vim` is missing clipboard support so I would recommend installing MacVim, here is how I do it with homebrew:
 
 ```
 brew install macvim
@@ -58,7 +55,7 @@ If vim is completely new to you and you don't know the basics such as the differ
 Configuring Vim
 ---------------
 
-Vim uses a `.vimrc` configuration file in your home directory. There are a plethora of configuration options you put here, but I thought I would offer some basic options to get you started.
+Vim uses a `.vimrc` configuration file in your home directory. There is a plethora of configuration options you can put here, but I thought I would offer some basic options to get you started.
 
 My [`.vimrc`](https://github.com/stevenocchipinti/dotvim/blob/master/vimrc) is quite large, but here is a snippet for some basic options that you can put into your own `.vimrc` to get started:
 
@@ -116,9 +113,9 @@ Now if you open some code, move your cursor over an occurrence of a method or cl
 `crtl` + `]` = Jump to definition (of what is under the cursor)  
 `crtl` + `T` = Jump back from following a tag
 
-The following key bindings do _not_ require ctags:
+The following key bindings are also useful for navigation and do _not_ require ctags:
 
-`/` + `foo` = Search for `foo`  
+`/foo` = Search for `foo`  
 `*` = Search for the word under the cursor  
 `n` = Jump to the next occurrence of the search  
 `N` = Jump to the previous occurrence of the search  
@@ -185,15 +182,12 @@ let g:ctrlp_user_command = {
 
 Now, from within vim, run `:BundleInstall`
 
+Next steps
+----------
 
-Further Learning
-----------------
+At this point, you should have a somewhat powerful installation of vim, the next step is to learn how to use this power. Below are some resources to help you learn how to use vim effectively.
 
-- run `vimtutor` on the command line to learn 
+- run `vimtutor` on the command line to learn
 - [vimcasts](http://vimcasts.org/)
-- [vim community group](https://community.rea-group.com/groups/vim) 
-- \#vim irc channel 
 - [vimgolf](http://www.vimgolf.com/)
-- vimrc
-  - github.com/stevenocchipinti/dotvim
-  - rea.to/vimrc
+- [my .vimrc](github.com/stevenocchipinti/dotvim)
