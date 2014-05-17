@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: raspberrypi | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/raspberrypi/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2014-05-17T12:35:59+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Controlling XBMC from a Samsung TV remote via HDMI-CEC]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/"/>
+    <updated>2014-05-17T11:55:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec</id>
+    <content type="html"><![CDATA[<p>I recently put <a href="http://www.raspbmc.com/">Raspbmc</a> on my Raspberry Pi and
+connected it to my Samsung TV via a HDMI cable. Once XBMC had started up, there
+was a notification telling me XBMC had connected to the TV via a HDMI-CEC
+connection. This means that I can use my standard Samsung TV remote to control
+XBMC on the Raspberry Pi out of the box!</p>
+
+<p>The arrows and select buttons worked as expected. The red, green, yellow and
+blue buttons were shortcuts to jump to the PVR, Video, Music and Pictures
+screens (respectively), the TV Guide button also opened the PVR screen but
+unfortunately the back button was configured to open the context menu.</p>
+
+<p>I decided I wanted the back button to actually go back and since I&rsquo;m not using
+the PVR function of XBMC, I wanted the TV Guide button to go to the home screen
+and the red button to open the context menu.<br/>
+In the end it was very easy, all I had to do was create a
+<code>~/.xbmc/userdata/keymaps/remote.xml</code> file with the following contents in it:</p>
+
+<p>``` xml ~/.xbmc/userdata/keymaps/remote.xml
+<keymap>
+  <global></p>
+
+<pre><code>&lt;remote&gt;
+  &lt;title&gt;Back&lt;/title&gt;
+  &lt;red&gt;ContextMenu&lt;/red&gt;
+  &lt;green&gt;XBMC.ActivateWindow(MyVideos)&lt;/green&gt;
+  &lt;yellow&gt;XBMC.ActivateWindow(MyMusic)&lt;/yellow&gt;
+  &lt;blue&gt;XBMC.ActivateWindow(MyPictures)&lt;/blue&gt;
+  &lt;guide&gt;XBMC.ActivateWindow(Home)&lt;/guide&gt;
+&lt;/remote&gt;
+</code></pre>
+
+<p>  </global>
+</keymap>
+```</p>
+
+<p>For some reason, the back button on the Samsung TV remote seemed to be sending
+the &lsquo;title&rsquo; action, so I changed that to <code>Back</code> and the rest should be fairly
+self-explanatory.</p>
+
+<h2>Some Tips</h2>
+
+<p>There are 2 keymap files that were relevant for me:</p>
+
+<ul>
+<li><code>~/.xbmc/userdata/keymaps/remote.xml</code></li>
+<li><code>/opt/xbmc-bcm/xbmc-bin/share/xbmc/system/keymaps/remote.xml</code></li>
+</ul>
+
+
+<p>The first one provides overrides for the second one. Also note that changing
+these files do not take effect straight away, the easiest way to make these
+changes take effect is to restart the Raspberry Pi. You could also <a href="http://forum.xbmc.org/showthread.php?tid=98096">configure one of the buttons on the remote to reload the configuration</a>.</p>
+
+<p>To get more information about which buttons send which actions, there are two
+things that helped me.</p>
+
+<h3>1. Enable debug level logging</h3>
+
+<p>From the main menu in the UI, go to System &ndash;> System &ndash;> Debugging and &ldquo;Enable
+debug logging&rdquo;. Then you can tail the log by SSH'ing into the Raspberry Pi
+(default credentials are username=pi and password=raspberry) and running this
+command:</p>
+
+<p><code>
+tail -f ~/.xbmc/temp/xbmc.log
+</code></p>
+
+<h3>2. Make all buttons send UI notifications</h3>
+
+<p>This <a href="http://forum.xbmc.org/showthread.php?tid=139145">forum thread</a> shows how
+you can configure the <code>remote.xml</code> file to make all the buttons send a UI
+notification. This is helpful because you can just press the button you wish to
+to change and see which section of the <code>remote.xml</code> you need to modify for your
+own purposes.</p>
+
+<h2>Conclusion</h2>
+
+<p>With the addition of this small customization, HDMI-CEC has provided some
+pretty impressive integration between my devices right out of the box.  With
+the Samsung TV connected to the Samsung Bluray/Surround Sound via a HDMI cable
+and the Raspberry Pi via a HDMI cable I can use the TV remote to control all
+three of these devices seamlessly.</p>
+]]></content>
+  </entry>
+  
+</feed>

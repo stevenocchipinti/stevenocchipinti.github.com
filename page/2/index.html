@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="For quite a while now I&rsquo;ve had my camera set to store a .jpg file and a raw .nef file for every shot, but my theory was always that memory is &hellip;">
+  <meta name="description" content="Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.I really should save the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-01-04T16:38:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+         | <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -809,48 +851,6 @@ While it&rsquo;s nice to know this, seems like more effort that just typing what
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/password-management.html">Password Management</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-05-16T13:46:00+10:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
-        
-         | <a href="/2012/05/password-management.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-<div>Password management is one of those things that can always be improved. If anyone is using a single password for all their accounts in this day and age they are most likely going to experience trouble at some stage! This post is to outline my progression through some approaches I&#8217;ve tried starting from a very young age to present day.<br /><br /><br /><b>Attempt #1: A tiered approach</b><br /><br />For me, the natural progression from a single password (back in primary school) was to go with a tiered approach. I used one password for for the basic sites, spam, etc. - the stuff I don&#8217;t really care about very much. I used another password for the important stuff, like Facebook, Twitter, etc. and this password was a lot stronger than the last. I had a unique and strong password for my email, as someone with access to that would most likely have the power to reset any of my other passwords. And finally I had a completely separate password for banking.<br /><br />While this system is ok, it&#8217;s not the best! Once upon a time, way back before I could touch type, I came to a password prompt, so I looked down at the keyboard, typed out my password, pressed enter and looked back up at the screen. In that time a friend had sent me an IM on MSN messenger (I know, old school!) and the chat window had stolen focus, so I sent my password to him. While I (mostly) trust my friend, in a panic, I frantically raced around to as many sites as I could to change the password to something else.<br /><br />If I had a different password for each site, this wouldn&#8217;t have been a problem. Now obviously most people wouldn&#8217;t IM their passwords to their friends, but there are lots of other ways for your passwords to get out. A few simple examples are the &#8220;Anonymous&#8221; attacks on large systems like the PSN, keyloggers, people looking over your shoulder, phishing attacks and even <a href="http://plaintextoffenders.com/" target="_blank">stupid websites</a> making dumb mistakes! Of course, this isn&#8217;t even thinking about what would happen if you were the target of a good hacker! &#8230; but that&#8217;ll never happen right? ;)<br /><br /><br /><b>Attempt #2: Patterned alterations</b><br /><br />Ok, so if I want a different password for every site I will ever use, how will I ever remember all of them. Well one simple way would be to make careful alterations to the password based on a pattern. This pattern should not be obvious by looking at a given password, but it should be reproducible based on whatever site you are trying to log in to. For example, if your normal password is &#8216;P@$sW0rd&#8217;, one pattern could produce &#8217;<u>T</u>@$sW<u>#Er</u>&#8217; for when you&#8217;re trying to log in to <u>T</u>witt<u>er</u> and &#8221;<u>F</u>@$sW<u>#Ok</u>&#8221; for when you&#8217;re trying to log in to <u>F</u>acebo<u>ok</u>.<br />I&#8217;m sure you can guess the pattern here. Everyone will have their own unique twist on patterns and this can be quite successful if executed correctly, but of course if your pattern is weak and a real person gets your Facebook password of &#8220;P@sS-facebook&#8221;, they can probably guess your twitter password would be &#8220;P@sS-twitter&#8221;.<br /><br /><br /><b>Attempt #3: Stored, centralised and synchronised passwords</b><br /><br />Alot of people think that letting your browser remember passwords is a bad thing, and while it does have particular cons, there are some pros to it too.<br />For one, you can have completely random passwords and not have to remember them. Also, two of the methods of disclosing a password that I mentioned earlier were keyloggers and someone looking over your shoulder. Both of these scenarios are a lot less likely if your browser does the typing for you (but of course there are other considerations with this approach). The obvious con would be that if someone gets a hold of what the browser knows, they have <i>all</i> your passwords!<br /><br />Firefox provides a &#8220;master password&#8221; facility to encrypt all your passwords (one of my pet hates is that Chrome lacks this) so when a password is needed, you type in your master password once, and it will then autofill any field after that. (Just remember to lock your screen if you leave your pc unattended).<br />Special consideration to make this password super strong should obviously be taken to avoid any brute force possibilities and of course a master password can be stolen just the same, but this password is useless online and it reduces the probability of others being stolen. (1 chance to steal the master password, as opposed to many chances to steal individual passwords).<br /><br />Now throw Firefox Sync into the mix. Now all your encrypted passwords are in the cloud and available on any machine running Firefox. I found this to be really handy, but it represents its own risks. This is also just limited to Firefox, what about mobile browsers? What about Chrome or your friends computer?<br />Again, not a perfect solution, but not too bad either.<br /><br /><br /><b>Attempt #4: Personal vault</b><br /><br />Some really paranoid people will say &#8220;But what if Mozilla aren&#8217;t encrypting your passwords properly?&#8221;, or &#8220;I don&#8217;t trust other people to store my passwords regardless of encryption&#8221;. Well, in that case, if you want to store all your random passwords, and ensure they are encrypted, you could always do it yourself.<br />I played with a nifty command line tool called &#8221;<a href="https://github.com/janlelis/pws" target="_blank">PWS</a>&#8221; and its open source so you can see exactly how they secure your passwords. The beauty about this method is that you are in complete control. For example, I could use a central repo to store my encrypted passwords and keep this synchronised across all machines, and if I don&#8217;t want to check out the repo (say, on a friends computer), I could just SSH to my VPS where I could get the password. It doesn&#8217;t fill forms in browsers, but it will copy the password to the clipboard for 10 seconds so you can just paste it in the browser (which is vulnerable to clipboard monitoring software/viruses).<br />It even has a random password generator for new sites. <br />While this method is great for paranoid people, its lacking a lot of features I would expect.<br /><br /><br /><b>Attempt #5: Hosted password services</b><br /><br />If you were to combine the best parts of the previous methods, you would get a hosted service that provides browser plugins for form filling on any browser, is centralised and synchronised across all machines, is encrypted with a master password, has an easy way to pull out any existing passwords from a &#8220;vault&#8221; and makes it simple to sign up for new sites with a unique random password.<br />As it turns out there are quite a few of these services available, such as 1Password and LastPass.<br /><br /></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div><a href="https://agilebits.com/onepassword" target="_blank">1Password</a> is quite popular, especially among Mac users and provides clients for Mac, Windows, iPhones, Androids, etc. The interface is quite polished (as you could have guessed) but it costs about $50 for a Mac licence (or $70 if you want to use it on Windows and Mac). One feature that a lot people like is that you can choose where you would like to store the passwords, for example using dropbox to synchronise across machines, but personally I don&#8217;t think that provides any real advantage.</div><div></div><div></div><div><a href="https://lastpass.com/" target="_blank">LastPass</a> is very similar in terms of features, but they host your encrypted passwords for you and it is free! They have plugins and clients for almost every conceivable device, but the only catch is that if you want to use the mobile browser plugins, you need a premium account, which costs $12 per year.<br /><br />I&#8217;ve been using LastPass for a little while now and one thing I like the configurable random password generator. You can choose just how complex the generated passwords are by configuring length and character set. When you sign up for a new site, you can generate a ramdom password with one click and it will get entered into the site&#8217;s form and saved in your vault for future. It can fill in standard forms with your personal details (name, email address, etc.) It is accessible anyway by logging into the web interface and its all secured using a master password, which I recommend using a super strong passphrase for, something in the order of 20-30 characters would be good. Remember if someone can log in here, they can get everything!<br /><br />Another layer of protection is using 2 factor authentication. They have a few varieties for this, but the one I like is the Google Authenticator method. Basically when ever a new device is used to attempt to log in with your account, either using a plugin, app or just the website, they will need to provide the email address, the password and a token. To get this token I configured the Google Authenticator app on my Android, which means that even if someone was to somehow get my super strong master password, they would also need my phone before they can do anything.<br />I use this approach on my Gmail account too, but Gmail&#8217;s 2 factor authentication uses SMS&#8217;s instead of the Google Authenticator app.<br /><br /><br /><b>Conclusion</b><br /><br />So far I am pretty happy with LastPass. I now type in my super strong master password once a day and the rest is filled automatically. Signing up to new sites is a breeze and uses a completely random and unique password per site. My passwords are available in Firefox and Chrome; in Linux, Mac or Windows and potentially for my mobile browsers too (if I decide to pay $1 per month). Not only is my master password really strong, but it is backed up with 2 factor authentication using my phone. I can even get to my passwords from a public computer via the web interface and my phone (without needing to go via dropbox or anything). Best of all, I get all this security and convenience with minimal effort and without paying a cent!</div>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/3/">&larr; Older</a>
@@ -879,6 +879,10 @@ While it&rsquo;s nice to know this, seems like more effort that just typing what
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/">Controlling XBMC From a Samsung TV Remote via HDMI-CEC</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -892,10 +896,6 @@ While it&rsquo;s nice to know this, seems like more effort that just typing what
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>

@@ -9,7 +9,9 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! &ndash; The Vim Learning Curve is a Myth, Thoughtbot A lot of people are &hellip;">
+  <meta name="description" content="I recently put Raspbmc on my Raspberry Pi and
+connected it to my Samsung TV via a HDMI cable. Once XBMC had started up, there
+was a notification &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +78,135 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/">Controlling XBMC From a Samsung TV Remote via HDMI-CEC</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-17T11:55:00+10:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+        
+         | <a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently put <a href="http://www.raspbmc.com/">Raspbmc</a> on my Raspberry Pi and
+connected it to my Samsung TV via a HDMI cable. Once XBMC had started up, there
+was a notification telling me XBMC had connected to the TV via a HDMI-CEC
+connection. This means that I can use my standard Samsung TV remote to control
+XBMC on the Raspberry Pi out of the box!</p>
+
+<p>The arrows and select buttons worked as expected. The red, green, yellow and
+blue buttons were shortcuts to jump to the PVR, Video, Music and Pictures
+screens (respectively), the TV Guide button also opened the PVR screen but
+unfortunately the back button was configured to open the context menu.</p>
+
+<p>I decided I wanted the back button to actually go back and since I&rsquo;m not using
+the PVR function of XBMC, I wanted the TV Guide button to go to the home screen
+and the red button to open the context menu.<br/>
+In the end it was very easy, all I had to do was create a
+<code>~/.xbmc/userdata/keymaps/remote.xml</code> file with the following contents in it:</p>
+
+<figure class='code'><figcaption><span>~/.xbmc/userdata/keymaps/remote.xml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;keymap&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;global&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;remote&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;title&gt;</span>Back<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;red&gt;</span>ContextMenu<span class="nt">&lt;/red&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;green&gt;</span>XBMC.ActivateWindow(MyVideos)<span class="nt">&lt;/green&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;yellow&gt;</span>XBMC.ActivateWindow(MyMusic)<span class="nt">&lt;/yellow&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;blue&gt;</span>XBMC.ActivateWindow(MyPictures)<span class="nt">&lt;/blue&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;guide&gt;</span>XBMC.ActivateWindow(Home)<span class="nt">&lt;/guide&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/remote&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/global&gt;</span>
+</span><span class='line'><span class="nt">&lt;/keymap&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For some reason, the back button on the Samsung TV remote seemed to be sending
+the &lsquo;title&rsquo; action, so I changed that to <code>Back</code> and the rest should be fairly
+self-explanatory.</p>
+
+<h2>Some Tips</h2>
+
+<p>There are 2 keymap files that were relevant for me:</p>
+
+<ul>
+<li><code>~/.xbmc/userdata/keymaps/remote.xml</code></li>
+<li><code>/opt/xbmc-bcm/xbmc-bin/share/xbmc/system/keymaps/remote.xml</code></li>
+</ul>
+
+
+<p>The first one provides overrides for the second one. Also note that changing
+these files do not take effect straight away, the easiest way to make these
+changes take effect is to restart the Raspberry Pi. You could also <a href="http://forum.xbmc.org/showthread.php?tid=98096">configure one of the buttons on the remote to reload the configuration</a>.</p>
+
+<p>To get more information about which buttons send which actions, there are two
+things that helped me.</p>
+
+<h3>1. Enable debug level logging</h3>
+
+<p>From the main menu in the UI, go to System &ndash;> System &ndash;> Debugging and &ldquo;Enable
+debug logging&rdquo;. Then you can tail the log by SSH&#8217;ing into the Raspberry Pi
+(default credentials are username=pi and password=raspberry) and running this
+command:</p>
+
+<figure class='code'><figcaption><span>~/.xbmc/userdata/keymaps/remote.xml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'>tail -f ~/.xbmc/temp/xbmc.log
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. Make all buttons send UI notifications</h3>
+
+<p>This <a href="http://forum.xbmc.org/showthread.php?tid=139145">forum thread</a> shows how
+you can configure the <code>remote.xml</code> file to make all the buttons send a UI
+notification. This is helpful because you can just press the button you wish to
+to change and see which section of the <code>remote.xml</code> you need to modify for your
+own purposes.</p>
+
+<h2>Conclusion</h2>
+
+<p>With the addition of this small customization, HDMI-CEC has provided some
+pretty impressive integration between my devices right out of the box.  With
+the Samsung TV connected to the Samsung Bluray/Surround Sound via a HDMI cable
+and the Raspberry Pi via a HDMI cable I can use the TV remote to control all
+three of these devices seamlessly.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1291,48 +1422,6 @@ When you want to use the sauce, it still needs to be cooked, so you can experime
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2013-01-04T16:38:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
-        
-         | <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1359,6 +1448,10 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/">Controlling XBMC From a Samsung TV Remote via HDMI-CEC</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -1372,10 +1465,6 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>
