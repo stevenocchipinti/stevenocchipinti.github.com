@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the poweroff command you will &hellip;">
+  <meta name="description" content="A while ago I was helping a friend with a regex.He wanted to extract parts of the /etc/passwd file, so I explained my basic thought process to him &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,8 +66,7 @@
 <ul class="main-navigation">
   <li><a href="/">Home</a></li>
   <li><a href="/archives">Archives</a></li>
-  <li><a href="https://github.com/stevenocchipinti">Code</a></li>
-  <li><a href="http://www.flickr.com/photos/stevenocchipinti">Photography</a></li>
+  <li><a href="/projects">Projects</a></li>
   <li><a href="/travel">Travel</a></li>
 </ul>
 
@@ -76,90 +75,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/poweroff-without-password.html">Poweroff Without a Password</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-08-21T07:29:00+10:00" pubdate data-updated="true">Aug 21<span>st</span>, 2011</time>
-        
-         | <a href="/2011/08/poweroff-without-password.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/mounting-nfs-in-ubuntu.html">Mounting NFS in Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-08-05T06:17:00+10:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
-        
-         | <a href="/2011/08/mounting-nfs-in-ubuntu.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -497,6 +412,105 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/cant-open-file-for-writing.html">Can&#8217;t Open File for Writing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-18T13:09:00+10:00" pubdate data-updated="true">Jun 18<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/cant-open-file-for-writing.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>E212: Can&#8217;t open file for writing  <br/>Press ENTER or type command to continue</p></blockquote>
+
+
+<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
+It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
+
+<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
+
+<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
+
+<figure class='code'><figcaption><span>.vimrc </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
+
+<p>Works brilliantly!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/flashy-prezis-ddd.html">Flashy Prezis @ DDD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-01T10:49:00+10:00" pubdate data-updated="true">Jun 1<span>st</span>, 2011</time>
+        
+         | <a href="/2011/06/flashy-prezis-ddd.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<a href="http://www.dddmelbourne.com/">DDD Melbourne</a> was on at Swinburne Uni on last weekend and a couple of friends and I went along.<br /><br />This event was more targeted at Microsoft technologies, but there was a bit of other stuff to keep me interested.<br />I got to see some pretty neat JavaScript stuff, learned a thing or two about the vast range of Microsoft technologies, got to re-visit Android 101 and eat plenty of junk food!<br />I love that us nerds love pizza and cake! :)<br /><br />Now as good as the day was, the topic I picked to blog about actually has nothing to do with the content of any of the talks.<br />This is partially because a fair amount of the MS tech stuff went over my head, but more to do with the website that I&#8217;m about to talk about is something I might consider for my own use in the future.<br /><br />One of the speakers had a really neat presentation that kept the audiences attention with fancy transitions and clever choice of images and at the end of the presentation, we found out that it was all done through a site called <a href="http://prezi.com/">prezi.com</a><br /><br />Anyway, instead of me ranting on about it, it really has to be seen.<br />Here is a quick &#8220;Prezi&#8221; I knocked up, but this doesn&#8217;t compare to the impressive prezi I saw at DDD:<br /><a href="http://prezi.com/8p2z_a_ua4mh/my-first-prezi/">http://prezi.com/8p2z_a_ua4mh/my-first-prezi/</a><br /><br />Browsing through the community prezi&#8217;s would probably give you a better Idea :)<br /><a href="http://prezi.com/8p2z_a_ua4mh/my-first-prezi/"><br /></a>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -525,10 +539,6 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/">Controlling XBMC From a Samsung TV Remote via HDMI-CEC</a>
-      </li>
-    
-      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -542,6 +552,10 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>

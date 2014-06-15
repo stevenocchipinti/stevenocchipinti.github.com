@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Password management is one of those things that can always be improved. If anyone is using a single password for all their accounts in this day and &hellip;">
+  <meta name="description" content="Back when I started uni, I bought a new Asus A6J laptop. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,8 +66,7 @@
 <ul class="main-navigation">
   <li><a href="/">Home</a></li>
   <li><a href="/archives">Archives</a></li>
-  <li><a href="https://github.com/stevenocchipinti">Code</a></li>
-  <li><a href="http://www.flickr.com/photos/stevenocchipinti">Photography</a></li>
+  <li><a href="/projects">Projects</a></li>
   <li><a href="/travel">Travel</a></li>
 </ul>
 
@@ -76,90 +75,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/password-management.html">Password Management</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-05-16T13:46:00+10:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
-        
-         | <a href="/2012/05/password-management.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-<div>Password management is one of those things that can always be improved. If anyone is using a single password for all their accounts in this day and age they are most likely going to experience trouble at some stage! This post is to outline my progression through some approaches I&#8217;ve tried starting from a very young age to present day.<br /><br /><br /><b>Attempt #1: A tiered approach</b><br /><br />For me, the natural progression from a single password (back in primary school) was to go with a tiered approach. I used one password for for the basic sites, spam, etc. - the stuff I don&#8217;t really care about very much. I used another password for the important stuff, like Facebook, Twitter, etc. and this password was a lot stronger than the last. I had a unique and strong password for my email, as someone with access to that would most likely have the power to reset any of my other passwords. And finally I had a completely separate password for banking.<br /><br />While this system is ok, it&#8217;s not the best! Once upon a time, way back before I could touch type, I came to a password prompt, so I looked down at the keyboard, typed out my password, pressed enter and looked back up at the screen. In that time a friend had sent me an IM on MSN messenger (I know, old school!) and the chat window had stolen focus, so I sent my password to him. While I (mostly) trust my friend, in a panic, I frantically raced around to as many sites as I could to change the password to something else.<br /><br />If I had a different password for each site, this wouldn&#8217;t have been a problem. Now obviously most people wouldn&#8217;t IM their passwords to their friends, but there are lots of other ways for your passwords to get out. A few simple examples are the &#8220;Anonymous&#8221; attacks on large systems like the PSN, keyloggers, people looking over your shoulder, phishing attacks and even <a href="http://plaintextoffenders.com/" target="_blank">stupid websites</a> making dumb mistakes! Of course, this isn&#8217;t even thinking about what would happen if you were the target of a good hacker! &#8230; but that&#8217;ll never happen right? ;)<br /><br /><br /><b>Attempt #2: Patterned alterations</b><br /><br />Ok, so if I want a different password for every site I will ever use, how will I ever remember all of them. Well one simple way would be to make careful alterations to the password based on a pattern. This pattern should not be obvious by looking at a given password, but it should be reproducible based on whatever site you are trying to log in to. For example, if your normal password is &#8216;P@$sW0rd&#8217;, one pattern could produce &#8217;<u>T</u>@$sW<u>#Er</u>&#8217; for when you&#8217;re trying to log in to <u>T</u>witt<u>er</u> and &#8221;<u>F</u>@$sW<u>#Ok</u>&#8221; for when you&#8217;re trying to log in to <u>F</u>acebo<u>ok</u>.<br />I&#8217;m sure you can guess the pattern here. Everyone will have their own unique twist on patterns and this can be quite successful if executed correctly, but of course if your pattern is weak and a real person gets your Facebook password of &#8220;P@sS-facebook&#8221;, they can probably guess your twitter password would be &#8220;P@sS-twitter&#8221;.<br /><br /><br /><b>Attempt #3: Stored, centralised and synchronised passwords</b><br /><br />Alot of people think that letting your browser remember passwords is a bad thing, and while it does have particular cons, there are some pros to it too.<br />For one, you can have completely random passwords and not have to remember them. Also, two of the methods of disclosing a password that I mentioned earlier were keyloggers and someone looking over your shoulder. Both of these scenarios are a lot less likely if your browser does the typing for you (but of course there are other considerations with this approach). The obvious con would be that if someone gets a hold of what the browser knows, they have <i>all</i> your passwords!<br /><br />Firefox provides a &#8220;master password&#8221; facility to encrypt all your passwords (one of my pet hates is that Chrome lacks this) so when a password is needed, you type in your master password once, and it will then autofill any field after that. (Just remember to lock your screen if you leave your pc unattended).<br />Special consideration to make this password super strong should obviously be taken to avoid any brute force possibilities and of course a master password can be stolen just the same, but this password is useless online and it reduces the probability of others being stolen. (1 chance to steal the master password, as opposed to many chances to steal individual passwords).<br /><br />Now throw Firefox Sync into the mix. Now all your encrypted passwords are in the cloud and available on any machine running Firefox. I found this to be really handy, but it represents its own risks. This is also just limited to Firefox, what about mobile browsers? What about Chrome or your friends computer?<br />Again, not a perfect solution, but not too bad either.<br /><br /><br /><b>Attempt #4: Personal vault</b><br /><br />Some really paranoid people will say &#8220;But what if Mozilla aren&#8217;t encrypting your passwords properly?&#8221;, or &#8220;I don&#8217;t trust other people to store my passwords regardless of encryption&#8221;. Well, in that case, if you want to store all your random passwords, and ensure they are encrypted, you could always do it yourself.<br />I played with a nifty command line tool called &#8221;<a href="https://github.com/janlelis/pws" target="_blank">PWS</a>&#8221; and its open source so you can see exactly how they secure your passwords. The beauty about this method is that you are in complete control. For example, I could use a central repo to store my encrypted passwords and keep this synchronised across all machines, and if I don&#8217;t want to check out the repo (say, on a friends computer), I could just SSH to my VPS where I could get the password. It doesn&#8217;t fill forms in browsers, but it will copy the password to the clipboard for 10 seconds so you can just paste it in the browser (which is vulnerable to clipboard monitoring software/viruses).<br />It even has a random password generator for new sites. <br />While this method is great for paranoid people, its lacking a lot of features I would expect.<br /><br /><br /><b>Attempt #5: Hosted password services</b><br /><br />If you were to combine the best parts of the previous methods, you would get a hosted service that provides browser plugins for form filling on any browser, is centralised and synchronised across all machines, is encrypted with a master password, has an easy way to pull out any existing passwords from a &#8220;vault&#8221; and makes it simple to sign up for new sites with a unique random password.<br />As it turns out there are quite a few of these services available, such as 1Password and LastPass.<br /><br /></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div><a href="https://agilebits.com/onepassword" target="_blank">1Password</a> is quite popular, especially among Mac users and provides clients for Mac, Windows, iPhones, Androids, etc. The interface is quite polished (as you could have guessed) but it costs about $50 for a Mac licence (or $70 if you want to use it on Windows and Mac). One feature that a lot people like is that you can choose where you would like to store the passwords, for example using dropbox to synchronise across machines, but personally I don&#8217;t think that provides any real advantage.</div><div></div><div></div><div><a href="https://lastpass.com/" target="_blank">LastPass</a> is very similar in terms of features, but they host your encrypted passwords for you and it is free! They have plugins and clients for almost every conceivable device, but the only catch is that if you want to use the mobile browser plugins, you need a premium account, which costs $12 per year.<br /><br />I&#8217;ve been using LastPass for a little while now and one thing I like the configurable random password generator. You can choose just how complex the generated passwords are by configuring length and character set. When you sign up for a new site, you can generate a ramdom password with one click and it will get entered into the site&#8217;s form and saved in your vault for future. It can fill in standard forms with your personal details (name, email address, etc.) It is accessible anyway by logging into the web interface and its all secured using a master password, which I recommend using a super strong passphrase for, something in the order of 20-30 characters would be good. Remember if someone can log in here, they can get everything!<br /><br />Another layer of protection is using 2 factor authentication. They have a few varieties for this, but the one I like is the Google Authenticator method. Basically when ever a new device is used to attempt to log in with your account, either using a plugin, app or just the website, they will need to provide the email address, the password and a token. To get this token I configured the Google Authenticator app on my Android, which means that even if someone was to somehow get my super strong master password, they would also need my phone before they can do anything.<br />I use this approach on my Gmail account too, but Gmail&#8217;s 2 factor authentication uses SMS&#8217;s instead of the Google Authenticator app.<br /><br /><br /><b>Conclusion</b><br /><br />So far I am pretty happy with LastPass. I now type in my super strong master password once a day and the rest is filled automatically. Signing up to new sites is a breeze and uses a completely random and unique password per site. My passwords are available in Firefox and Chrome; in Linux, Mac or Windows and potentially for my mobile browsers too (if I decide to pay $1 per month). Not only is my master password really strong, but it is backed up with 2 factor authentication using my phone. I can even get to my passwords from a public computer via the web interface and my phone (without needing to go via dropbox or anything). Best of all, I get all this security and convenience with minimal effort and without paying a cent!</div>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/1-year-and-40-posts.html">1 Year and 40 Posts!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-04-16T07:07:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2012</time>
-        
-         | <a href="/2012/04/1-year-and-40-posts.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-<div><p>Today marks 1 year since my first blog post.<br>In that time I have written 40 posts and this site has received over 7000 views from all over the world!<br>I&#8217;ve had some great feedback (even from total strangers), which has been fantastic - It&#8217;s a good feeling to know that my ramblings can actually be useful for others too.</p><p>I started this blog because as a fairly technical person, I am constantly learning, but one of the caveats of this constant learning culture is that some people (such as myself) find it quite hard to remember all the cool stuff we pick up over the years, so this blog&#8217;s primary purpose was to act as a &#8221;<i>memory supplement</i>&#8221;.</p><p>The idea being that when you read something new, it will only stay in your head if you keep using it (or, unlike me, if you have a really good memory), but sometimes what ever it is that we just learned won&#8217;t be totally relevant or useful until much later. </p><p>One of the best ways that I have found to retain this knowledge is to use it! For example, if you are reading up on a new programming language, use it! Write little scripts, re-write other existing programs in this new language and just get used to using it regularly.<br>If this isn&#8217;t available (or suitable) I find talking about it with other like-minded people will reinforce the knowledge too. Alot of the time, you can really reinforce your knowledge of a topic by teaching it to someone else. Meetups and groups of like minded friends are great for this. </p><p>This is part of the reason I started this blog. Once I learn something new (that I have a desire to remember) I try to write up a quick blog post as soon as I can.<br>Not only does this reinforce my knowledge, but if I do happen to forget, instead of using Google to re-learn it, I can simply use my blog&#8217;s search to find my own post on the topic and has the convenience of being written in my own way of thinking/writing.<br>Even if my post is out-of-date, or not complete enough, it will still refresh my memory and give me a better foundation to start learning up on that particular topic once again. </p><p>This blog has served its purpose well and will continue to do so. If you have a similar way of thinking (or a similar memory) as me, I highly recommend starting a blog! </p><p>Thanks to everyone that has been reading so far! :-) </p></div>
-</div>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -619,6 +534,168 @@ While it&rsquo;s no Samsung Series 9, its pretty nice and the cut in performance
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/11/13-core-i7-samsung-series-9-ultrabook.html">13&#8221; Core I7 Samsung Series 9 Ultrabook</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-28T00:34:00+11:00" pubdate data-updated="true">Nov 28<span>th</span>, 2011</time>
+        
+         | <a href="/2011/11/13-core-i7-samsung-series-9-ultrabook.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Back in my first year of uni, I bought one of the early Core Duo (not Core 2 Duo) 15&#8221; Asus laptops which at the time was great and it had a decent graphics card for games, etc.<br/>
+Roughly 6 years later, its showing its age. The battery lasts less than an hour now, it weighs about 3kg not including the adapter and performance is lacking compared to todays technology.</p>
+
+<p>After a recent shoulder injury and a busy week that involved me carrying my laptop from place to place, I decided it was time to reward myself with an early Christmas present and buy a new machine.</p>
+
+<p>My requirements were:</p>
+
+<ul>
+<li>13&#8221; screen</li>
+<li>As thin and as light as possible to aid portability</li>
+<li>Powerful enough to do almost anything my daily activities could involve</li>
+<li>&lt;~ $2000</li>
+</ul>
+
+
+<p>I compared as many of these 13&#8221; <em>&ldquo;ultrabooks&rdquo;</em> as I could and before long I had created a shortlist of my top 3 &ndash; which included an Asus u-Series, a Macbook Air and a Samsung Series 9.</p>
+
+<h2>Asus u-Series</h2>
+
+<p>The <a href="http://www.asus.com.au/Notebooks/Superior_Mobility/U36SD/#specifications">Asus machines</a>, as usual, had a very good bang-for-buck, a nice thickness of 19mm and unlike most others, some models had full size video output and ethernet plugs.<br/>
+While the price and size were right, the highest spec&#8217;ed machines were not quite as impressive as its competition. If budget was the number one concern, the Asus u-Series and Zenbook range offer pretty good value.</p>
+
+<h2>Macbook Air</h2>
+
+<p>I have never been a <em>&ldquo;Mac person&rdquo;</em> due to the traditional heavy pricing and proprietary nature of alot of their products, but these days (after some convincing) I believe the hardware and even price does have a surprisingly strong position in the competition.<br/>
+The <a href="http://store.apple.com/au/browse/home/shop_mac/family/macbook_pro">13&#8221; Macbook Pro</a> and <a href="http://www.apple.com/au/macbookair/specs.html">Macbook Air</a> both had very good specs to offer for around the $2000 price tag, both with Core i7&rsquo;s, 4-8GB RAM and SSD&rsquo;s, not to mention pretty attractive packaging.<br/>
+After seeing a Macbook Air up close, I really liked how the thickest point is about 17mm or so at the back but it tapers off to next to nothing at the front.</p>
+
+<p>So the model I chose for comparison purposes was worth $1928.99 and had the following specs:</p>
+
+<ul>
+<li>1.8GHz Dual-Core Intel Core i7</li>
+<li>4GB 1333MHz DDR3 SDRAM</li>
+<li>256GB flash storage</li>
+<li>Mini DisplayPort to DVI adapter ($30)</li>
+</ul>
+
+
+<p>I don&rsquo;t like the very proprietary DisplayPort and its $30 adapters, but its not too bad as almost <em>everyone</em> at my office uses a Mac so finding a spare adapter when needed wouldn&rsquo;t be too hard (I guess popularity offsets proprietary-ness).</p>
+
+<p>The operating system did not bother me too much either as I intended to be running Linux as my primary OS anyway, but having a Mac would give me more familiarity with OSX which would be helpful considering its popularity in my line of work.</p>
+
+<p>The minor annoyances would be: expensive adapters for video and ethernet ports, unfamiliar keyboard layout (command key where alt should be, etc), non-upgradeable ram, glossy screen, etc. &ndash; but those are pretty minor.</p>
+
+<h2>Samsung Series 9</h2>
+
+<p>I found these ultrabooks to have a very unique look and one of the first well thought out, thin designs that are not just another Mac look-a-like.<br/>
+The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;&ndash; which is a light and strong material used in aircrafts and while it looks stunning and adds sophistication and uniqueness to the overall design on the unit, this material along with the black plastic are both fingerprint magnets!</p>
+
+<p>The <a href="http://www.samsung.com/au/consumer/pc-peripherals/notebook-pc/thin-light/NP900X3A-A03AU/index.idx?pagetype=prd_detail&amp;amp;tab=specification">specs of the Series 9 unit</a> I used for comparison (and ultimately bought) was quite good:</p>
+
+<ul>
+<li>1.5GHz Core i7</li>
+<li>8GB RAM</li>
+<li>256GB SSD</li>
+<li>Micro-HDMI to HDMI adapter ($15)</li>
+</ul>
+
+
+<p>Initially I thought 1.5 GHz was kinda low, but after conversations with quite a few people and some <a href="http://ark.intel.com/compare/54616">research</a>, this speed is its sort-of <em>&ldquo;resting&rdquo;</em> frequency and will automatically scale up to 2.6GHz when required.</p>
+
+<p>The one big catch with this system is the RRP of ~$2700, while most Aussie shops sold them for ~$2500. This made me consider the Mac even more!</p>
+
+<p>But during my research I saw <a href="https://www.mln.com.au/">MLN</a>&rsquo;s price drop down to a much more attractive $1997 and immediately rang them to find out more details and how long the special would last. It turns out that Samsung are starting to phase them out of stores (presumably to make way for a new product next year) and naturally they had sold alot of units and only had a few left.</p>
+
+<p>I did a bit more research and found that to save space, the ports are hidden behind very aircraft-like flaps, but as with the Mac, they are reduced size ports.<br/>
+The video output is provided in the form of a micro-HDMI port &ndash; which is at least a more common format and I don&rsquo;t need to go through apple.com.<br/>
+The other space-saving trade-off was a (sadly) proprietary ethernet port that comes bundled with an adapter to convert it to RJ45 &ndash; but unlike the Mac where you need to buy a USB network adapter, this actually has the network card built in, it just has an unusual plug &ndash; which I don&rsquo;t intend to use much anyway.</p>
+
+<p>Another plus is this model comes with 1x USB 3.0 port (and a 2.0 port) which is great considering the speeds my brother gets with his USB 3.0 flash drive.</p>
+
+<p>So I went to MLN and inspected the unit up close and what eventually made my decision for the Samsung was that for about the same price I get a machine with double the RAM (handy for VMs), a windows licence for portable gaming and a bunch of freebies from MLN including the HDMI to micro-HDMI cable, a set of Sennheiser headphones and a padded sleeve to carry it.</p>
+
+<p>I was able to get the cable and sleeve free because I opted to purchase the extended 3 year pickup warranty for an additional $180ish and the headphones were a Christmas present :)</p>
+
+<p>Initial impressions are very positive, the screen is incredibly bright and vibrant and with a smooth matte finish, I have had no issues using it outdoors.<br/>
+The backlit keyboard is quite nice too, although the brightness of this light is controlled via windows drivers, so in linux (at this stage) I cant control its brightness.<br/>
+The touchpad is large and seems to employ the same technique as the Mac Magic Mouse where there is one click-able button (the lower part of the pad) and depending on where your finger is when you click determines a right or left mouse click and once again, this doesnt work in Linux out of the box, but the standard 2 finger tap works as per normal.<br/>
+Using Ubuntu 11.10 the rest of the hardware works out of the box, so no need to fiddle with drivers for network, graphics, webcam, etc.</p>
+
+<p>Overall I am very happy with my purchase and its a huge step up from my old 15.4&#8221; 3kg laptop!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/11/removing-geotag-data-from-jpgs.html">Removing Geotag Data From JPGs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T13:48:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/11/removing-geotag-data-from-jpgs.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Just a quick note, these days most cameras automatically geotag photos which is pretty cool, especially when taking travel photos, but sometimes you may not want everyone to know where a photo was actually taken.<br />For example, a photo of your backyard could give away your home address which is probably not a great thing.<br /><br />Its really easy to clear the geotag data with a great little tool called <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span>.<br />I used this tool in an <a href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html">earlier blog post</a> too and I find it really useful!<br /><br />To install <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> in Ubuntu:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo apt-get install libimage-exiftool-perl</blockquote><br />Then executing <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> followed by a jpg filename will output a whole bunch of exif data for you - some of which may have geolocation data:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool image.jpg <br />ExifTool Version Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 8.60<br />File Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : image.jpg<br />Directory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : .<br />File Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 14 kB<br />&#8230;</blockquote><br />The clear this geotag data out, simply issue this command:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool -gps:all= image.jpg</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -647,10 +724,6 @@ While it&rsquo;s no Samsung Series 9, its pretty nice and the cut in performance
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2014/05/17/controlling-xbmc-from-a-samsung-tv-remote-via-hdmi-cec/">Controlling XBMC From a Samsung TV Remote via HDMI-CEC</a>
-      </li>
-    
-      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -664,6 +737,10 @@ While it&rsquo;s no Samsung Series 9, its pretty nice and the cut in performance
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>
