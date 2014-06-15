@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "travel"
+title: "Travel"
 date: 2013-07-12 21:07
 comments: false
 sharing: false
