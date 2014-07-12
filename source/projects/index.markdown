@@ -17,7 +17,7 @@ Snooker
 
 My second AngularJS app - A responsive, mobile-friendly, offline-enabled, client-side scoreboard app.
 
-[Snooker](http://snooker.stevenocchipinti.com)  
+[Snooker](http://www.poosnooker.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/snooker)
 
 
