@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2014-06-15T17:08:57+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Completely removing a git commit due to sensitive information]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/"/>
+    <updated>2014-03-10T15:07:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information</id>
+    <content type="html"><![CDATA[<p>I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository.</p>
+
+<p>The first reaction is to remove that sensitive information. While that is a good
+first step, making a new commit to remove the information means that when anyone
+looks at the commit history, the sensitive information will still be visible.</p>
+
+<h2>Re-writing history</h2>
+
+<p>The next step is to re-write the git history.<br/>
+This can be done a few ways, but I took a simple approach and sqaushed the
+commits down such that the addition and removal of the sensitive information
+cancel each other out and the new commit doesn&rsquo;t contain any sensitive
+information.</p>
+
+<p>To demonstrate, here is the history of a git respository where some sensitive
+information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
+
+<p>```
+$> git log &mdash;oneline
+a120437 Ooops&hellip; remove sensitive data!
+bbd80c4 Add some more data
+0115d7b Add some data
+20133f4 Initial commit</p>
+
+<p>$> git show bbd80c4
+diff &mdash;git a/data b/data
+index f8327c3..afbbccd 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1 +1,3 @@
+ KEY=value
++MORE=data
++PASSWORD=secret</p>
+
+<p>$> git show a120437
+diff &mdash;git a/data b/data
+index afbbccd..1f0aa11 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1,3 +1,2 @@
+ KEY=value
+ MORE=data
+-PASSWORD=secret</p>
+
+<p>```</p>
+
+<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
+commits. In this case, I chose the commit just before the sensitive data was
+added, like this: <code>git rebase -i 0115d7b</code></p>
+
+<p>In the interactive editor, I did the following and then provided a new commit
+message:</p>
+
+<p><code>
+pick a120437 Ooops... remove sensitive data!
+squash bbd80c4 Add some more data
+</code></p>
+
+<p>This resulted in the last 2 commits being merged into a new one.<br/>
+Here is the history:</p>
+
+<p>```
+$> git log &mdash;oneline
+fd04bfc Add some more data
+0115d7b Add some data
+20133f4 Initial commit</p>
+
+<p>$> git show fd04bfc
+diff &mdash;git a/data b/data
+index f8327c3..1f0aa11 100644
+&mdash;&ndash; a/data
++++ b/data
+@@ -1 +1,2 @@
+ KEY=value
++MORE=data
+```</p>
+
+<p>Rewriting commits that have already been pushed to a remote means a couple of
+things.<br/>
+For one, when you push this new history to the remote, you may require
+the <code>--force</code> option to disregard the existing history.<br/>
+Also, anyone who has an existing clone of the repository will have issues when
+they pull down the latest changes but in the case of sensitive information, this
+is a necessary side-effect.</p>
+
+<h2>Cleaning up the cached commits</h2>
+
+<p>We&rsquo;re not done yet!<br/>
+Git keeps track of all changes made to a repository, even though the history
+does not show the <em>bad</em> commits, they are still there! You can view all changes
+to the repository using <code>git reflog</code>. From this command you can find the SHA of
+the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
+
+<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
+you will be able to find that sensitive information again.
+To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
+
+<p>You can clear the your local reflog by issuing these commands:
+<code>
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git gc --prune=now
+git gc --aggressive --prune=now
+</code></p>
+
+<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
+nature of git, simply deleting the repository and pushing a new copy of your
+local repository to GitHub will effectively destroy that cache.</p>
+
+<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git + Hub = GitHub]]></title>
+    <link href="http://blog.stevenocchipinti.com/2012/02/git-hub-github.html"/>
+    <updated>2012-02-20T02:37:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2012/02/git-hub-github</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What's nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> "Open a pull request to merge the current branch into master and attach the pull request to issue 49"</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don't know why this isn't built in to the web interface (or maybe it is and I just don't know how).
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch.html"/>
+    <updated>2011-09-21T10:41:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch</id>
+    <content type="html"><![CDATA[<p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
+
+<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
+In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
+
+<p>I have found two good ways of accomplishing this.</p>
+
+<h2>Git stash</h2>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git stash
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can list my stashes with:
+<code>
+git stash list
+</code></p>
+
+<p>Then, apply the most recent stash by running this command:
+<code>
+git stash apply
+</code></p>
+
+<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
+
+<h2>Git diff and patch:</h2>
+
+<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git diff &amp;gt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:
+<code>
+patch -p1 &amp;lt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Code review workflow with GitHub]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html"/>
+    <updated>2011-09-18T10:06:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>"<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>"</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known "<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>" and describes how they are both good, but Git-Flow is alot more involved, where the aptly known "GitHub-Flow" is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else's work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>".<br /><br />This doesn't affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it's the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>" instead of something more descriptive, like "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>".<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

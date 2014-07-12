@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.$&gt; vim firstfile secondfile &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/page/6">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/search-and-replace-in-multiple-files.html">Search and Replace in Multiple Files With Vim</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-30T09:11:00+10:00" pubdate data-updated="true">May 30<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/search-and-replace-in-multiple-files.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; vim firstfile secondfile theothers*<br />:all<br />:windo %s/this/that/g</blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:all</span> will split the window to show you all the files at once.<br />This would not be the best option for lots of files, but for a small number you get to see the changes that are made. <br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo</span> will execute the given command for all the files in the current window.<br />Note this wont affect windows in other tabs.<br /><br />If you want to undo that change in all buffers, you can use the same method:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo undo</span></blockquote>When your finished, you can save and quit with:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:wqall</span></blockquote>There are plenty of variations, for more infomation checkout the help pages for these:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:tabdo</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:bufdo</div><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:argdo</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html">Cleaning Up Indicator-applet in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-23T10:33:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/05/cleaning-up-indicator-applet-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+By default, the indicator applet in the Unity panel has an item in the list for evolution and another for empathy - two programs I don&#8217;t use!<br /><br />But, its quite easy to get rid of them! All you have to do is remove the appropriate file in /usr/share/indicators/messages/applications<br /><br />Instead of removing them, I just removed all read permissions (root can still do anything with it of course)<br /><blockquote>$ cd /usr/share/indicators/messages/applications<br />$ sudo chmod 000 empathy evolution</blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/multi-monitor-keyboard-shortcuts-in.html">Multi Monitor Keyboard Shortcuts in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-23T05:55:00+10:00" pubdate data-updated="true">May 23<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/05/multi-monitor-keyboard-shortcuts-in.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I&#8217;m now using  Ubuntu 11.04 with Unity as my primary OS for my desktop at work.<br />I&#8217;m still coming to grips with Unity - somethings I like, others I don&#8217;t. <br /><br />One of the things I do like is the compiz plugin called &#8220;Grid&#8221;.<br />At first I thought it was just a clone of Windows 7 where you can drag a window to the left and it will fill the left half of the screen, drag it to the top and it will maximize, but after taking a look at the key bindings it does a bit more!<br /><br />Using alt + ctrl + the number pad, you get more options!<br />Alt+ctrl+4 will make the window fill the left half (like dragging), 6 will do right, 8 will do the top half, 2 will do the bottom half and 7, 9, 1 and 3 will put the window in the appropriate corner, 5 will put it in the middle and 0 will maximize it.<br />On top of this, if you press the key repeatedly it will adjust from 1/2 screen, to a 1/3, to 1/4, to 3/4 and to 2/3. This is surprisingly easy to use and really helpful!<br /><br />The only thing I couldn&#8217;t work out how to do was move a window from one monitor to the other as these actions occur per monitor (i.e. 1/2 of one screen).<br /><br />The answer was quite easy though, I just needed to enable one more plugin: &#8220;Put&#8221;.<br />The &#8220;Put&#8221; plugin looks like it does similar actions to &#8220;Grid&#8221;, so before I enabled it, I disabled all the key bindings (there was only about 2 enabled anyway).<br />Then I set the keyboard binding for &#8220;Put To Next Output&#8221; to &#8220;&lt;Control&gt;&lt;Alt&gt;KPEnter&#8221;.<br /><br />When I enabled it, the Unity panel got a little screwed up (which is evidently not hard to break), so I restarted X and everything worked how I expected it to.<br />Now atl+ctrl+keypad-enter will move the window between my left monitor and my right monitor!
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/tank-project.html">The Tank Project!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-22T05:31:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2011</time>
+        
+         | <a href="/2011/05/tank-project.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+So my brother Rob and I have wanted to work on a project together for a while now, and after our awesome <a href="http://blog.stevenocchipinti.com/2011/04/minecraft-and-arch-linux-ftw.html">Minecraft Server</a>, we came to the realization that I love doing the functional side of things (setting up the software, etc.) and Rob loves doing the creative, hands-on side of things (putting the hardware together and making it look pro) and so together, this things compliment each other!<br /><br />After scoring a <a href="http://netduino.com/">Netduino</a> (like an Arduino, but I write in C#.net instead of C) for use in a future project, this was the perfect opportunity for our skills to come together as Rob isn&#8217;t keen on programming, and I&#8217;m probably not as good as him at making things, whereas he is quite passionate about that!<br /><br />I&#8217;ve always wanted to have a play with an <a href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> (or Netduino in this case). To actually allow my interest in programming to bridge across to the  hardware world always seemed like a mystical unknown to me, but these  little programmable micro-controllers allow just that - my software to  use hardware!<br /><br />Enter <a href="http://tank.stevenocchipinti.com/"><i>The Tank Project</i></a>!<br /><br />The idea was to build a physical tank that we can use the Netduino to control, but not just limited to controlling the movement of the tank, but then a variety of other features.<br />Things that came to mind were a working (not-so-dangerous, legal) canon, webcam feeds for remote control, mobile application to drive it, 360 degree spinning turret and just about anything else we could think of!<br />Our imagination started going wild with vague memories back to <a href="http://en.wikipedia.org/wiki/Robot_Wars">Robot Wars</a> and so we set aside a day to brainstorm ideas and develop a plan of attack (pardon the pun). That day was yesterday, and it went well! :)<br /><br />We&#8217;re going to try to keep a project blog going if you want to keep track of the progress:<br /><a href="http://tank.stevenocchipinti.com/">http://tank.stevenocchipinti.com</a><br /><br />(&#8220;keep <i>track</i> of the progress&#8221; is also a pun&#8230; theres going to be a few of these, lol!)
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html">DHCP Fixedhosts to /etc/hosts File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-17T12:28:00+10:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS&#8230; I think&#8230; correct me if I&#8217;m wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn&#8217;t need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I&#8217;ve already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo &#8220;admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D&#8221; | nc 192.168.1.1 23 | \grep &#8220;[ ]*[0-9]&#8221; | sed &#8220;s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g&#8221;</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230; <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />&#8230;</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230;<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />&#8230;</span></blockquote>This isn&#8217;t really that useful, but it took a couple of minutes, just to &#8220;see if I could do it&#8221;&#8230; and it worked :)<br /><br />&#8230; I don&#8217;t think I&#8217;ll actually use it, lol, but it was fun anyway :P
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/multiple-google-accounts-at-once.html">Multiple Google Accounts at Once!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-16T23:36:00+10:00" pubdate data-updated="true">May 16<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/multiple-google-accounts-at-once.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+So I started my new job and they use Google Apps!<br />Initially I thought this was fantastic, until I realized that because I also use Google Apps for my personal email, I couldn&#8217;t have 2 simultaneous gmail logins (by default). <br /><br />I found some out-of-date firefox plugins to work around this, but they weren&#8217;t very nice, so I just pinned my work gmail as an app tab and left it at that.<br /><br />Then I noticed a co-worker had about 3 gmail app tabs, and too my surprise it wasnt some dodgy plugin that allowed this, but an official Google solution!<br /><br />The answer:<br /><a href="http://www.google.com/support/accounts/bin/answer.py?answer=181599">http://www.google.com/support/accounts/bin/answer.py?answer=181599</a><br /><br />This allows you to have multiple Google accounts signed in at once, with a few caveats.<br />Once enabled, the first account you sign into is your &#8220;primary&#8221; and behaves normal, the subsequent logins will only work on particular products (gmail is the obvious one) but will work in isolation to your other logins.<br /><br />I chose my personal account as my primary because things like blogger do not work as a secondary account.. and I don&#8217;t have a work-blogger account :P<br /><br />This <strike>is</strike> was only really an issue if you want to use a single browser on a computer, as my phones gmail app handles multiple logins fine.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html">24-70mm f2.8 vs 17-50mm f2.8</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-04-16T09:12:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
+        
+         | <a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having a play with it and looking at his photos I have had a little bit of gear-envy.<br />The extra speed and frequent bokeh was really nice! <br />Naturally I started looking at prices.. and the Nikon equivalent is&#8230; not cheap!<br /><br />I cant justify <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=1917">$1969</a> on a lens! Especially considering that I dont actually need it, and I am just a hobbyist (therefore: return on investment == profit from my work == $0).<br /><br />I then read up on some more affordable <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2221">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=374">Tamron</a> lenses that were similar and liked the prices much better!<br />&#8230; but im still really indecisive :(<br /><br />Then I saw the 17-50mm f2.8 lenses (from <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2416">Tamron</a>, <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=3013">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2278">Tokina</a>), and this made me think..<br />When I was travelling to Japan (with Sarma, the Canon guy) I remember him complaining about not being able to get a wide enough shot and he would often stand pretty far back to get the shot he wanted or swap to his 10-20mm lens.<br />This probably wouldn&#8217;t be an issue with a full-frame camera, but the 50d&#8217;s smaller sensor means it is already quite &#8220;zoomed-in&#8221; at its widest setting.<br /><br />I started writing up an email to ask Sarma what he thought and realized I have all his photos from our Japan trip, so with a bit of linux command line fun, I came up with this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool -p &#8216;$focallength&#8217; -q -f `find -L .` | sort -n | uniq -c</span></blockquote>Now for the explanation: <br /><dl><dt><b>exiftool -p &#8216;$focallength&#8217; -q -f</b></dt><dd>exiftool extracts exif information from jpg&#8217;s.The -p prints a formatted string, which I inserted just the $focallength variable.The -q means quiet (basically, dont print too much).The -f is the list of files, which I use a sub-command (wrapped in backticks) to get.</dd><dt><b>find -L . </b></dt><dd>As all of our groups photos were kind-of mixed in together, I created a directory with symlinks to just Sarma&#8217;s photos (hence the find -L, where -L will follow symlinks to the appropriate directories).</dd><dt><b>sort -n</b></dt><dd>This just sorts the data by numberic value (so 10 &gt; 1), this is mainly so the uniq command works properly.</dd><dt><b>uniq -c</b></dt><dd>This will collapse the data down to unique values and with the -c, it will also print the number of occurences have been collapsed down.</dd> </dl>The output of this command included all of Sarma&#8217;s photos (not just taken with the 24-70) but it still gave me a pretty good idea.<br />The output looked like this:<br /><br /><pre>86    10.0 mm<br />2     11.0 mm<br />2     15.0 mm<br />14    16.0 mm<br />2     18.0 mm<br />108   20.0 mm<br />2362  24.0 mm<br />142   28.0 mm<br />176   32.0 mm<br />138   35.0 mm<br />104   40.0 mm<br />118   45.0 mm<br />136   47.0 mm<br />120   50.0 mm<br />94    55.0 mm<br />78    58.0 mm<br />76    60.0 mm<br />76    65.0 mm<br />70    67.0 mm<br />52    70.0 mm<br />52    73.0 mm<br />34    75.0 mm<br />14    80.0 mm<br />48    82.0 mm<br />56    84.0 mm<br />18    85.0 mm<br />24    88.0 mm<br />10    90.0 mm<br />14    92.0 mm<br />12    93.0 mm<br />16    95.0 mm<br />10    96.0 mm<br />4     97.0 mm<br />8     98.0 mm<br />8     99.0 mm<br />12    100.0 mm<br />10    102.0 mm<br />404   105.0 mm<br /><br /></pre>With the majority of Sarma&#8217;s photos clearly being taken at 24mm, it made me think that as I too have a cropped sensor camera, the wider 17-50mm lenses are probably a better choice for me as I really dont have any plans to lash out on a full frame camera anytime soon :P
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/minecraft-and-arch-linux-ftw.html">(Minecraft and) Arch Linux FTW!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-04-16T08:25:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
+        
+         | <a href="/2011/04/minecraft-and-arch-linux-ftw.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+I haven&#8217;t really played a game properly since back in my Counter Strike days, but recently my brother and I started playing <a href="http://www.minecraft.net/">Minecraft</a>&#8230; and its incredibly addictive!<br /><br />Minecraft give you the option of running a Java based dedicated server and so as we were starting out, my brother would start up a dedicated server and we would both connect to it.<br />As time went on, we thought it would be really cool to have a dedicated Minecraft box and thought we could build one out of some old hardware, which brings me to the HTPC!<br /><br />A little while ago, my brother built this (the black box):<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s1600/IMAG0146.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="191" src="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s320/IMAG0146.jpg" width="320" /></a></div><br /><br />He did an awesome job!<br />Basically gutted our very first dvd player (which was great for its time) and got some cheap (physically small) hardware off eBay and managed to fit it all inside! <br />It involved making alot of little brackets, extender cables, etc. but with a lot of effort it turned out pretty impressive!<br /><br />Unfortunately, using it as a media pc was a bit tough as it wasn&#8217;t the most powerful of machines around and the graphics drivers weren&#8217;t working too well so this got left in the dust for a while&#8230; until Minecraft came along!<br /><br />Last weekend we decided to make this our dedicated server :)<br />A while ago a friend of a friend was talking about how good Arch Linux was for its simplicity and ease of administration, so I started reading up on it and I am impressed!<br /><br />On the <a href="https://wiki.archlinux.org/">Arch Linux wiki</a> they have a couple of <a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide">guides</a> to help you get going, but my favorite page was the <a href="https://wiki.archlinux.org/index.php/Boot">explanation of the boot process</a>.<br />After a bit of reading I worked out my plan of attack:<br /><ul><li>Burn ISO to cd</li><li>Install Arch Linux</li><li>Install sudo (via pacman)&nbsp;</li><li>Setup &#8216;minecraft&#8217; user with sudo access to the poweroff command</li><li>Install Java (via pacman)</li><li>Install rungetty (via AUR)</li><li>Replace &#8216;agetty&#8217; with &#8216;rungetty&#8217; and make the minecraft server startup on tty1, followed by a &#8216;poweroff&#8217;</li><li>Configure Wake-On-Lan</li></ul><br />After the server was all setup, I wrote a little client side wrapper that will:<br /><ul><li>Launch minecraft</li><li>Broadcast a magic-packet to power on the server</li><li>Start pinging it and when it is available, notify me via Ubuntu&#8217;s &#8216;notify-send&#8217; command</li></ul><br />So now when I want to play Minecraft, I launch my script and it will power on the server and launch the client, I log in, wait about 5 seconds until my fancy fade-in notification appears, then join the server, play, and when im done, I issue the &#8216;/stop&#8217; command in Minecraft and it will stop the server and power it self off!<br /><br />This was a great first experiment with Arch Linux and I didn&#8217;t even know what getty was before this day.<br /><br />Needless to say I was pretty happy with this setup and all in a days work :)
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/intro-to-braindumping.html">Intro to Braindumping!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-04-16T07:26:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
+        
+         | <a href="/2011/04/intro-to-braindumping.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Not the most creative name for your average blog, but for those that dont know:<br /><div style="text-align: left;"><blockquote><span style="font-size: x-small;"><i>&#8220;the transfer of a large quantity of information from one person to  another or to a piece of paper can be referred to as a &#8216;brain dump&#8217;.&#8221;</i></span><br /><div style="text-align: right;"><div style="text-align: right;"><span style="font-size: x-small;"><i>- <a href="http://en.wikipedia.org/wiki/Brain_dump">Wikipedia</a></i></span></div></div></blockquote></div><br />I created this blog mainly as a place to keep a record of things I&#8217;m likely to forget, such as cool command line tricks, handy websites, etc.<br />Nothing very important, just random thoughts really.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/5/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

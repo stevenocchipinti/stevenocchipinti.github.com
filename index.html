@@ -1,1 +1,1429 @@
-My Octopress Page is coming soon &hellip;
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! &ndash; The Vim Learning Curve is a Myth, Thoughtbot A lot of people are &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-17T17:23:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2014</time>
+        
+         | <a href="/2014/03/17/introduction-to-vim-for-ide-users/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! <br/>
+&ndash; <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
+
+<p>A lot of people are scared of learning of vim because of the initial learning curve.</p>
+
+<p>When learning vim for the first time there are lots of approaches, but two common ways are:</p>
+
+<ol>
+<li>Learn &ldquo;pure&rdquo; vi/vim, then introduce vimrc options and then plugins</li>
+<li>Start with an existing &ldquo;customization&rdquo; (from someone else), then learn what things do</li>
+</ol>
+
+
+<p>Once upon a time, I would have suggested learning the basic features of vim before getting into customization, but there are quite a lot of people who are not interested in learning the tool unless they can be productive straight away.<br/>
+When coming from an IDE, the apparent shortcomings of a less integrated text editor will scare them away before they have discovered the power of editing text with vim.</p>
+
+<p>This guide is aimed at those people. I want to outline some steps to learn vim that makes the transition from IDE to vim as easy as possible with the hope of making vim a less scary step.</p>
+
+<h2>Installing Vim</h2>
+
+<p>Most systems will come with a version of vim, but you may want to get the latest version from the systems package manager for a more complete feature set.</p>
+
+<p>On a mac, the standard install of <code>vim</code> is missing clipboard support so I would recommend installing MacVim, here is how I do it with homebrew:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install macvim
+</span><span class='line'>brew linkapps</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This package provides <code>mvim</code> on the command line, but <code>vim</code> will still refer to the system version, so I setup a couple of aliases in my <code>.bash_profile</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias vim="mvim -v"
+</span><span class='line'>alias vi="vim"</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Basic Usage</h2>
+
+<p>This guide is more about setting up vim in a manner that won&rsquo;t seem too crippling when coming from an IDE, so I won&rsquo;t focus too much on editing effectively with vim here.</p>
+
+<p>If vim is completely new to you and you don&rsquo;t know the basics such as the difference between <em>command mode</em> and <em>insert mode</em> or how to quit vim, I would recommend pausing the guide here and running <code>vimtutor</code> in your terminal to learn the basics.</p>
+
+<h2>Configuring Vim</h2>
+
+<p>Vim uses a <code>.vimrc</code> configuration file in your home directory. There is a plethora of configuration options you can put here, but I thought I would offer some basic options to get you started.</p>
+
+<p>My <a href="https://github.com/stevenocchipinti/dotvim/blob/master/vimrc"><code>.vimrc</code></a> is quite large, but here is a snippet for some basic options that you can put into your own <code>.vimrc</code> to get started:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>filetype plugin indent on
+</span><span class='line'>syntax on
+</span><span class='line'>
+</span><span class='line'>set ts=2 sw=2         " Use 2 spaces for tabs
+</span><span class='line'>set expandtab         " Use spaces instead of tab characters
+</span><span class='line'>set wrap              " Wrap the display lines (not actual text)
+</span><span class='line'>set linebreak
+</span><span class='line'>set backspace=indent,eol,start
+</span><span class='line'>set incsearch         " Show matching search results as typing
+</span><span class='line'>set ruler             " Show row and column in status bar
+</span><span class='line'>set wildmenu          " Nicer tab completion for :ex commands
+</span><span class='line'>set ignorecase        " Case insensitive search by default
+</span><span class='line'>set smartcase         " Use case sensitive search in a capital letter is used
+</span><span class='line'>set warn              " Show what mode your in (insert, etc.)
+</span><span class='line'>set scrolloff=3       " Number of lines to always show at at the top and bottom
+</span><span class='line'>set autoindent        " Copy the indentation from the previous line
+</span><span class='line'>set colorcolumn=81    " Highlight the 81st column (shorthand = :set cc=81)
+</span><span class='line'>set cursorline        " Highlight the line which the cursor is on
+</span><span class='line'>set laststatus=2      " Always show a status bar
+</span><span class='line'>set mouse=a           " Make the mouse work - even in terminals
+</span><span class='line'>set list              " Show `listchars` characters
+</span><span class='line'>set listchars=tab:=»,trail:·
+</span><span class='line'>
+</span><span class='line'>" Easier way to copy and paste from the global clipboard
+</span><span class='line'>map &lt;leader&gt;p "+p
+</span><span class='line'>map &lt;leader&gt;y "+y</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Navigating code</h2>
+
+<p>Vim has builtin support for <code>ctags</code>, which indexes your code and allows you to jump to the definition of a method or class. As usual, on a mac you will have a standard version of <code>ctags</code> installed, but it&rsquo;s not very good, so I recommend installing the <em>exuberant ctags</em> package from homebrew:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install ctags
+</span><span class='line'>sudo mv /usr/bin/ctags{,-bsd}
+</span><span class='line'>sudo ln -s /usr/local/Cellar/ctags/5.8/bin/ctags /usr/bin/ctags</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To make use of ctags, in the root of a project run the following command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ctags -R .</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will need to be run when the code changes to keep the tags file up to date, so I have setup <a href="http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html">git hooks</a> to automate this. If you don&rsquo;t want to setup git hooks, you can execute this command from within vim with <code>:!ctags -R .</code></p>
+
+<p>Now if you open some code, move your cursor over an occurrence of a method or class, you can jump into the definition of that method or class with the following key bindings:</p>
+
+<p><code>crtl</code> + <code>]</code> = Jump to definition (of what is under the cursor)<br/>
+<code>crtl</code> + <code>T</code> = Jump back from following a tag</p>
+
+<p>The following key bindings are also useful for navigation and do <em>not</em> require ctags:</p>
+
+<p><code>/foo</code> = Search for <code>foo</code><br/>
+<code>*</code> = Search for the word under the cursor<br/>
+<code>n</code> = Jump to the next occurrence of the search<br/>
+<code>N</code> = Jump to the previous occurrence of the search<br/>
+<code>crtl</code> + <code>o</code> = Go back from the last jump<br/>
+<code>crtl</code> + <code>i</code> = Go forward to the recent jump</p>
+
+<h2>Vim Plugins</h2>
+
+<p>Vim has a plugin system, but by default it does not do a good job of keeping plugins isolated from each other. To improve this, there are plugins that manage plugins.<br/>
+I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is how to set it up along with a few useful vim plugins:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then place the following at the top of your <code>.vimrc</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>filetype off
+</span><span class='line'>set rtp+=~/.vim/bundle/vundle/
+</span><span class='line'>call vundle#rc()
+</span><span class='line'>Bundle 'gmarik/vundle'
+</span><span class='line'>Bundle 'kien/ctrlp.vim'
+</span><span class='line'>Bundle 'scrooloose/nerdtree'
+</span><span class='line'>Bundle 'tpope/vim-rails'
+</span><span class='line'>Bundle 'tpope/vim-fugitive'
+</span><span class='line'>Bundle 'tpope/vim-commentary'
+</span><span class='line'>Bundle 'tpope/vim-repeat'
+</span><span class='line'>Bundle 'tpope/vim-surround'
+</span><span class='line'>Bundle 'tpope/vim-cucumber'
+</span><span class='line'>Bundle 'bogado/file-line'
+</span><span class='line'>Bundle 'godlygeek/tabular'
+</span><span class='line'>Bundle 'ecomba/vim-ruby-refactoring'
+</span><span class='line'>Bundle 'scrooloose/syntastic'
+</span><span class='line'>Bundle 'tsaleh/vim-matchit'
+</span><span class='line'>Bundle 'kchmck/vim-coffee-script'
+</span><span class='line'>Bundle 'cakebaker/scss-syntax.vim'
+</span><span class='line'>filetype plugin indent on</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, I choose configure some of those plugins towards the bottom of the <code>.vimrc</code> like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>" NERDTREE PLUGIN - (mnemonic: Files)
+</span><span class='line'>nmap &lt;leader&gt;f :NERDTreeToggle
+</span><span class='line'>nmap &lt;leader&gt;F :NERDTreeFind
+</span><span class='line'>
+</span><span class='line'>" AIRLINE PLUGIN
+</span><span class='line'>let g:airline#extensions#tabline#enabled = 1
+</span><span class='line'>let g:airline#extensions#tabline#show_buffers = 0
+</span><span class='line'>
+</span><span class='line'>" CTRL-P PLUGIN
+</span><span class='line'>let g:ctrlp_user_command = {
+</span><span class='line'>\   'types': {
+</span><span class='line'>\     1: ['.git/', 'cd %s && git ls-files'],
+</span><span class='line'>\     2: ['.hg/', 'hg --cwd %s locate -I .'],
+</span><span class='line'>\   },
+</span><span class='line'>\   'fallback': 'find %s -type f'
+</span><span class='line'>\ }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, from within vim, run <code>:BundleInstall</code></p>
+
+<h2>Next steps</h2>
+
+<p>At this point, you should have a somewhat powerful installation of vim, the next step is to learn how to use this power. Below are some resources to help you learn how to use vim effectively.</p>
+
+<ul>
+<li>run <code>vimtutor</code> on the command line to learn</li>
+<li><a href="http://vimcasts.org/">vimcasts</a></li>
+<li><a href="http://www.vimgolf.com/">vimgolf</a></li>
+<li><a href="github.com/stevenocchipinti/dotvim">my .vimrc</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-10T15:07:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2014</time>
+        
+         | <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently made a big mistake and checked in some sensitive information into a
+public GitHub repository.</p>
+
+<p>The first reaction is to remove that sensitive information. While that is a good
+first step, making a new commit to remove the information means that when anyone
+looks at the commit history, the sensitive information will still be visible.</p>
+
+<h2>Re-writing history</h2>
+
+<p>The next step is to re-write the git history.<br/>
+This can be done a few ways, but I took a simple approach and sqaushed the
+commits down such that the addition and removal of the sensitive information
+cancel each other out and the new commit doesn&rsquo;t contain any sensitive
+information.</p>
+
+<p>To demonstrate, here is the history of a git respository where some sensitive
+information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>a120437 Ooops... remove sensitive data!
+</span><span class='line'>bbd80c4 Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show bbd80c4
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..afbbccd 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,3 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data
+</span><span class='line'>+PASSWORD=secret
+</span><span class='line'>
+</span><span class='line'>$&gt; git show a120437
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index afbbccd..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1,3 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'> MORE=data
+</span><span class='line'>-PASSWORD=secret
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
+commits. In this case, I chose the commit just before the sensitive data was
+added, like this: <code>git rebase -i 0115d7b</code></p>
+
+<p>In the interactive editor, I did the following and then provided a new commit
+message:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pick a120437 Ooops... remove sensitive data!
+</span><span class='line'>squash bbd80c4 Add some more data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This resulted in the last 2 commits being merged into a new one.<br/>
+Here is the history:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; git log --oneline
+</span><span class='line'>fd04bfc Add some more data
+</span><span class='line'>0115d7b Add some data
+</span><span class='line'>20133f4 Initial commit
+</span><span class='line'>
+</span><span class='line'>$&gt; git show fd04bfc
+</span><span class='line'>diff --git a/data b/data
+</span><span class='line'>index f8327c3..1f0aa11 100644
+</span><span class='line'>--- a/data
+</span><span class='line'>+++ b/data
+</span><span class='line'>@@ -1 +1,2 @@
+</span><span class='line'> KEY=value
+</span><span class='line'>+MORE=data</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rewriting commits that have already been pushed to a remote means a couple of
+things.<br/>
+For one, when you push this new history to the remote, you may require
+the <code>--force</code> option to disregard the existing history.<br/>
+Also, anyone who has an existing clone of the repository will have issues when
+they pull down the latest changes but in the case of sensitive information, this
+is a necessary side-effect.</p>
+
+<h2>Cleaning up the cached commits</h2>
+
+<p>We&rsquo;re not done yet!<br/>
+Git keeps track of all changes made to a repository, even though the history
+does not show the <em>bad</em> commits, they are still there! You can view all changes
+to the repository using <code>git reflog</code>. From this command you can find the SHA of
+the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
+
+<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
+you will be able to find that sensitive information again.
+To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
+
+<p>You can clear the your local reflog by issuing these commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rm -rf .git/refs/original/
+</span><span class='line'>git reflog expire --expire=now --all
+</span><span class='line'>git gc --prune=now
+</span><span class='line'>git gc --aggressive --prune=now</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
+nature of git, simply deleting the repository and pushing a new copy of your
+local repository to GitHub will effectively destroy that cache.</p>
+
+<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-14T22:49:00+11:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
+        
+         | <a href="/2013/12/14/preparing-for-trailwalker/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Back in 2011, I attempted <a href="trailwalker.oxfam.org.au">The Oxfam TrailWalker</a>.<br/>
+I didn&rsquo;t finish the full 100km &ndash; due to injuries I had to stop at about 60km,
+but it was quite an experience none the less.</p>
+
+<p>Recently a friend asked me what I did to prepare for TrailWalker, so here is a
+quick post to explain some key points that helped me.</p>
+
+<h2>1. Do as much training as possible!</h2>
+
+<p>Expect to spend many months of weekends leading up to the event for training.<br/>
+Start small (short, flat walks. Yarra trail, etc.) and work your way up to the
+harder ones (hill climbs, longer distances, etc.)<br/>
+Try to go every weekend, the more you do, the more your body will become
+conditioned for hiking.<br/>
+Go rain, hail, shine, day, night, etc. It&rsquo;ll help you realize what you need
+(food, water-proof shoes/pants, stronger torch, etc.).<br/>
+Try to fit in at least one night hike and one long hike well before the event
+to see how you cope.<br/>
+You could pick a different segment of the actual track every weekend so you get
+an idea of what the event will be like.</p>
+
+<h2>2. Find your weak points</h2>
+
+<p>My first training hike, I got blisters.<br/>
+For me, I had to use better socks (didn&rsquo;t think it would actually help, but it
+made a huge difference!).<br/>
+I also spoke to professionals and learned how to strap my feet properly and
+ensured my laces were done up tight enough.<br/>
+All this with shoes that actually fit my feet properly meant I never got
+blisters again.<br/>
+I&rsquo;m glad too, in the medical tents, there were people with epic blisters!
+&hellip;Scary stuff!</p>
+
+<h2>3. Hydration</h2>
+
+<p>It&rsquo;s worth reading up on how to hydrate properly. My memory is a little
+sketchy, but you have to pace yourself with water.<br/>
+Too much and you flush your body of minerals, feel bloated, etc.<br/>
+Not enough and you are more likely to suffer from exhaustion.<br/>
+Sip instead of gulp.<br/>
+You may want to supplement with electrolytes. This is also available in a
+powder that you can mix into your water.</p>
+
+<h2>4. Food</h2>
+
+<p>Something worth reading up on too.<br/>
+I found having frequent small meals with a mix of high-GI and low-GI
+ingredients worked the best.<br/>
+For example, a single snack would be a slice of multi-grain bread (low-GI) with
+jam (high-GI), folded in half and individually wrapped.<br/>
+This made it easy to pull one out of a bad on the go. Sugary muesli bars also
+work pretty well.<br/>
+Make sure you drink water whenever you eat too, it&rsquo;ll help with digestion and
+keep you from feeling too hungry.</p>
+
+<h2>5. Shoes</h2>
+
+<p>Like I said earlier, get shoes that fit your feet properly &ndash; Movement and
+rubbing will get pretty bad as you work towards 100km!<br/>
+Don&rsquo;t buy new shoes just before they event, they need time to be broken in. If
+you want to buy new shoes, allow at least 3 or 4 training hikes in them first
+(preferably the smaller training hikes).</p>
+
+<h2>6. Sleeping</h2>
+
+<p>We decided against sleeping, we thought it would be harder to get going again
+afterwards.<br/>
+In hindsight I think a couple of powernaps would have helped a fair bit.<br/>
+If you do decide to sleep, I would probably recommend getting your support crew
+to bring blankets and also wake you up before you sleep for too long.</p>
+
+<h2>7. Team dynamics</h2>
+
+<p>Teams can get on each others nerves after spending so long with each other,
+especially when your extremely exhausted.<br/>
+Patience is key, but also sticking together is very important.<br/>
+Sometimes, some team members will want to go faster than others, this can cause
+issues and may result in the team splitting up during the event &ndash; this is not
+ideal and should be avoided.<br/>
+Make sure your team has the same goal for the event (i.e. &ldquo;just finishing&rdquo; or
+&ldquo;getting a good time&rdquo;).<br/>
+One strategy is to let the slowest in the team lead the way.</p>
+
+<h2>Conclusion</h2>
+
+<p>TrailWalker was a great experience (other than the injuries I incurred).<br/>
+You have to work quite hard (especially if you&rsquo;ve never done hiking before, like
+myself) but it all adds to a fantastic sense of accomplishment at the end &ndash;
+even if you don&rsquo;t finish.<br/>
+I learned a lot by doing this and even though training every weekend was tiring,
+it was actually a lot of fun.<br/>
+It was definitely a step out of my comfort zone, but I would recommend others
+to give it a go &ndash; and it&rsquo;s for a great cause!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-10T12:26:00+11:00" pubdate data-updated="true">Nov 10<span>th</span>, 2013</time>
+        
+         | <a href="/2013/11/10/installing-minecraft-in-linux/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1. Download Oracle Java</h2>
+
+<p>First you will need the official Oracle version of Java (the open source
+alternatives will probably not work as well for Minecraft). I think you can
+just download the runtime, but I personally opt for installing the complete
+Java Development Kit (JDK).</p>
+
+<p>You can download the <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">official JDK here</a>.<br/>
+If you run a RedHat based distro, there is a <code>.rpm</code>, otherwise just get the
+<code>.tgz</code> for your system.</p>
+
+<h2>2. Installing Oracle Java</h2>
+
+<p>At the time of writing, the version of java is 7u45.<br/>
+I move this <code>.tar.gz</code> file from my downloads folder to <code>/opt</code> and unzip it
+there, like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mv ~/Downloads/jdk-7u45-linux-x64.tar.gz /opt
+</span><span class='line'>cd /opt
+</span><span class='line'>tar xzvf jdk-7u45-linux-x64.tar.gz</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will create a new directory called <code>jdk1.7.0_45</code>.<br/>
+As there is a good chance we will be updating java in the future, I create a
+symlink that we can easily change to the new versions in the future like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ln -s jdk1.7.0_45 jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when ever you want to find java, it will be in <code>/opt/jdk</code>.</p>
+
+<p>All we have to do now is make the executables available on the <code>PATH</code>.<br/>
+Edit your <code>.bashrc</code> (or <code>.profile</code>, etc.) and add this line:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=$PATH:/opt/jdk/bin/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Install Minecraft</h2>
+
+<p>Get Minecraft from the <a href="https://minecraft.net/download">official Minecraft download page</a>.
+Under the &ldquo;Minecraft for Linux / Other&rdquo; there is a link to download the
+official Minecraft <code>.jar</code> file.  I also put this in <code>/opt</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir /opt/minecraft
+</span><span class='line'>mv ~/Downloads/Minecraft.jar /opt/minecraft</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point we can start Minecraft with this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>java -jar Minecraft.jar</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Setting up an Application Launcher for Gnome</h2>
+
+<p>I use Gnome Shell and if I&rsquo;m not in a terminal, I normally use Gnome&rsquo;s
+<em>Activities Overview</em> to launch apps by pressing the &lsquo;super&rsquo; key, typing
+&ldquo;Minecraft&rdquo; and pressing &lsquo;enter&rsquo;.</p>
+
+<p>We want Minecraft to be installed just like any other app, so we will need to
+add a launcher for Minecraft, but before we do that, we need an icon for it.
+I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /opt/minecraft
+</span><span class='line'>wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then to make an application launcher, you can use this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gnome-desktop-item-edit --create-new ~/.local/share/applications</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no"></p>
+
+<p>You can assign it the logo we downloaded earlier and use this for the command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/opt/jdk/bin/java -jar /opt/minecraft/Minecraft.jar</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>5. Have fun!</h2>
+
+<p>Now you can launch Minecraft just like the other apps in Gnome Shell!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-18T14:10:00+11:00" pubdate data-updated="true">Oct 18<span>th</span>, 2013</time>
+        
+         | <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rake gives you a way of specifying arguments for a given task like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;A task that can accept a optional &#39;foo&#39; argument&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make the value of <code>foo</code> available in the <code>args</code> variable.
+When you run <code>rake -T</code>, it will show you that argument like this:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+
+<p>But what if you want to allow an arbitrary number of arguments, like a list of
+usernames to report on?</p>
+
+<h2>A solution</h2>
+
+<p>You could use an alternative method of passing arguments in, such as <code>ARGV</code> or
+Environment Variables, but Rake does provide a way.
+The <code>args</code> block parameter behaves like a hash, but it is actually a
+<code>Rake::TaskArguments</code> object. This object responds to an <code>#extras</code> method that
+will return an array of any extra arguments.</p>
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>     <span class="c1"># First argument</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">.</span><span class="n">extras</span>    <span class="c1"># The rest of the arguments</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow you to call the task like this:</p>
+
+<pre><code>$&gt; rake thing[foo]
+foo
+
+$&gt; rake thing[foo,extra1,extra2]
+foo
+extra1
+extra2
+</code></pre>
+
+<h2>Caveats</h2>
+
+<p>While you can specify many arguments on the command line, (unless they are
+quoted) the arguments can not be separated by spaces, for example:</p>
+
+<pre><code>$&gt; rake thing[foo,extra1]    # GOOD
+foo
+extra1
+$&gt; rake thing[foo, extra1]   # BAD
+Don't know how to build task 'thing[foo,'
+</code></pre>
+
+<p>This means you may want to include some explanation in the <code>desc</code> section.</p>
+
+<p>Also, <code>rake -T</code> will not show the &ldquo;extra&rdquo; arguments, only the named arguments:</p>
+
+<pre><code>$&gt; rake -T
+rake thing[foo]  # A task that can accept a optional 'foo' argument
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-22T22:51:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2013</time>
+        
+         | <a href="/2013/07/22/default-values-for-environment-variables/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In ruby, the <code>||=</code> operator will assign a given value to a variable, if that
+variable does not already have a value.
+For example:</p>
+
+<figure class='code'><figcaption><span>default_value.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; nil</span>
+</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;bar&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
+</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;baz&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will assign <code>"bar"</code> to <code>foo</code>, unless <code>foo</code> is already set.
+In other words, it will make <code>"bar"</code> the <em>default value</em> of <code>foo</code>.</p>
+
+<p>I recently had to do this is bash, and it turns out bash has similar
+functionality. This is the bash equivalent:</p>
+
+<figure class='code'><figcaption><span>default_value.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;bar&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;baz&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-06-08T15:27:00+10:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
+        
+         | <a href="/2013/06/removing-previously-printed-lines.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker">Ruby Gem</a> that provides a command line interface to Melbourne&rsquo;s <a href="http://yarratrams.com.au/tramtracker">TramTracker service</a>.</p>
+
+<p>One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br/>
+In the past, I used the command line utility watch to achieve this, but I couldn&rsquo;t find a way to enforce a &ldquo;max iterations&rdquo; option.
+If it gets forgotten about in the background, TramTracker will eventually block that IP address!</p>
+
+<p>So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.</p>
+
+<p>In this post, I&rsquo;ll outline a couple of ways of achieving this.</p>
+
+<h2>Using the \b (backspace) character</h2>
+
+<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b\b\b</span><span class="s2">bar&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; bar</span>
+</span><span class='line'><span class="p">(</span><span class="s2">&quot;|/-</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">chars</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="nb">print</span> <span class="n">c</span><span class="p">;</span> <span class="nb">sleep</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; Cheesy, old-school spinner</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\n\b\b\b</span><span class="s2">bar&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; foo\nbar</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Using the \r (carriage return) character</h2>
+
+<p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">100</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span><span class="o">|</span><span class="nb">p</span><span class="o">|</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Downloading %</span><span class="si">#{</span><span class="nb">p</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">;</span> <span class="nb">sleep</span> <span class="mi">1</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\r</span><span class="s2">p&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; poo</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
+
+<h2>Using curses</h2>
+
+<p>The most common answer to overwriting characters across multiple lines, is to use <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)">curses</a>.
+Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
+Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">setpos</span><span class="p">(</span><span class="n">lines</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Start in the middle</span>
+</span><span class='line'><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
+
+<p>Curses is pretty good for this sort of stuff, it gives you a lot for free.
+The thing that I didn&rsquo;t like about using the curses library was that when it initialises, it clears the screen.
+This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&rsquo;t want that.</p>
+
+<h2>Using individual cursor movement characters</h2>
+
+<p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">L</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="n">H</span> <span class="c1"># Move the cursor to line L, column C</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">A</span>     <span class="c1"># Move the cursor up N lines</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">B</span>     <span class="c1"># Move the cursor down N lines</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">C</span>     <span class="c1"># Move the cursor forward N columns</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">D</span>     <span class="c1"># Move the cursor backward N columns</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[</span><span class="mi">2</span><span class="n">J</span>       <span class="c1"># Clear the screen, move to (0,0)</span>
+</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[</span><span class="n">K</span>        <span class="c1"># Erase to end of line</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
+I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
+
+<p>Now go and make a cool retro user interface! :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-05-12T04:36:00+10:00" pubdate data-updated="true">May 12<span>th</span>, 2013</time>
+        
+         | <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently had some trouble with my Samsung Galaxy S3. I&rsquo;m still not sure what caused it, but quite frequently, it would completely freeze up, even after a fresh reboot. It may have been a dodgy app, or something deeper in android, but in the process of fixing it, I was introduced to &ldquo;<em>safe mode</em>&rdquo;.</p>
+
+<p>&ldquo;<em>Safe mode</em>&rdquo; here behaves like safe mode in Windows. It basically lets you use your phone just like normal, but without starting the usual plethora of background processes. You can still get to your settings, apps and files, but things won&rsquo;t start automatically.</p>
+
+<p>To enter safe mode on the Galaxy S3 is really simple:</p>
+
+<blockquote><p>1. Restart the phone<br/>2. While it is booting up (and you see the Samsung logo),  <br/>   simply hold the volume down button</p></blockquote>
+
+
+<p>When it boots, you should have the stock wallpaper, your shortcuts will be gone and you should see a little watermark in the bottom left corner that says &ldquo;<em>Safe mode</em>&rdquo;.</p>
+
+<p><img class="center" src="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/Screenshot_2013-05-12-09-41-12.png"></p>
+
+<p>From here you can do everything like normal, browse the net, make calls, etc. but more importantly, you can uninstall dodgy apps, change settings, even factory reset the device.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/03/how-to-make-tomato-sauce.html">How to Make Tomato Sauce</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-03-17T12:13:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
+        
+         | <a href="/2013/03/how-to-make-tomato-sauce.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This time of year is &ldquo;tomato season&rdquo; and it&rsquo;s an Italian tradition of ours to spend a weekend together and make enough tomato sauce to last us the year. Of course, everyone does this differently, but here I&rsquo;ll outline how our family does it.</p>
+
+<h2>1. Buy some &ldquo;sauce tomatoes&rdquo;</h2>
+
+<p>If you go to any suburbs that have an Italian community you&rsquo;ll most probably see signs for people selling &ldquo;sauce tomatoes&rdquo;. Sauce tomatoes are normally more ripe than usual, which makes them ideal to turn into sauce. We bought 16 boxes of tomatoes from the local Italian social club.</p>
+
+<p><img class="center" src="http://lh6.ggpht.com/-kLmW3G-M82k/UUUUgCR8bmI/AAAAAAAABIs/32XG7TXpzf0/s400/20130316_094831.jpg"></p>
+
+<p><img class="center" src="http://lh3.ggpht.com/-J5tdH_9R4Z8/UUUU4RIw3CI/AAAAAAAABJc/ZygQmWXO5r4/s400/20130316_094840.jpg"></p>
+
+<h2>2. Wash and cut the tomatoes</h2>
+
+<p>This part is where most of the effort is spent!<br/>
+We use large plastic tubs, fill them with two thirds water and empty some tomatoes in. We then pull out a tomato one by one, cut it in half and then cut the hard stem out from the middle, putting all the stems in the compost bin and the washed, cut tomatoes in another bucket. This makes it easier to mince later, but also gives us a chance to inspect the tomato to ensure the inside isn&rsquo;t rotten.<br/>
+Rotten tomatoes are easy to spot, they are either black on the inside or they stink! If ever you&rsquo;re not sure, giving it a smell is normally the easiest way to tell &ndash; and <em>&ldquo;When in doubt, throw it out&rdquo;</em>.</p>
+
+<h2>3. Pre-boil them if they are firm</h2>
+
+<p>&ldquo;Sauce tomatoes&rdquo; are normally very ripe and soft, but sometimes they are quite firm. If this is the case they won&rsquo;t go through the mincer as well. So to help with this, we used a couple of large drums filled with water on a flame to lightly boil them a little. The idea is to only soften them up, so once the skin starts peeling off, you can pull them out of the water and drain them to remove as much as the water as possible (otherwise the sauce will be watery).</p>
+
+<p><img class="center" src="http://lh5.ggpht.com/-3ysJI0FsWwM/UUUU10kcHzI/AAAAAAAABJU/xEjhXwc3AaA/s400/20130316_142524.jpg" title="Pre-boiling the tomatoes" ></p>
+
+<h2>4. Mince the tomatoes</h2>
+
+<p>Now that the tomatoes are soft, washed and cut they can be minced. We scoop out some tomatoes and put them in the mincer. The mincer will separate the tomato sauce from the skin and the seeds. We generally fill one tub at a time.</p>
+
+<p><img class="center" src="http://lh6.ggpht.com/-YgmLdVOWIDw/UUUUqO6wThI/AAAAAAAABJE/5jfEGgAVXX4/s400/20130316_151435.jpg" title="The machine!" ></p>
+
+<p><img class="center" src="http://lh3.ggpht.com/-2r2cTDwHr-M/UUUUntVvJQI/AAAAAAAABI8/Elhw7E87iUs/s400/20130316_151842.jpg" title="Separating the skin, seeds, etc. from the sauce" ></p>
+
+<p><img class="center" src="http://lh6.ggpht.com/-od8P9pb0908/UUUUlBKMtkI/AAAAAAAABI0/Ee81zN89xCA/s400/20130316_152105.jpg" title="Gently pushing the tomatoes down in to the mincer" ></p>
+
+<p><img class="center" src="http://lh4.ggpht.com/-XUSSgoaFCbE/UUUUaV-pFbI/AAAAAAAABIc/heYur21ches/s400/20130316_154657.jpg" title="The left over skin, seeds, etc. from the mincer" ></p>
+
+<h2>5. Second mince</h2>
+
+<p>Once you have a (mostly) full tub of sauce, we actually put the left over skin and seed back through one more time and mix it with the rest of the sauce in the tub. This produces a thicker consistency and really gets the most out of the tomatoes. Be sure to mix the tub up well, otherwise the consistency will not be evenly spread.</p>
+
+<p><img class="center" src="http://lh5.ggpht.com/-9oBg-HzFXvE/UUUUs-jYfqI/AAAAAAAABJM/pdz9BiY1uo4/s400/20130316_154702.jpg" title="The second run - putting the left overs back through one more time" ></p>
+
+<h2>6. Bottling the sauce</h2>
+
+<p>This year we used three different types of bottles: The usual large beer bottles with bottle caps, large jars with screw on lids and for the first time we tried using a few small (crown lager) beer bottles.<br/>
+The first step is to put a spoon of salt and two basil leaves in each bottle, then fill the bottles with the sauce, leaving at least 5cm of an air gap from the top of the bottle.<br/>
+Throughout the year, we collect up the beer bottles so we can re-use them for the next year. Be careful of this though, the bottles shouldn&rsquo;t be reused for more than about three times or so. Every time they are boiled, the bottles get weaker, so if they are reused too many times, they will eventually shatter when they are boiled.</p>
+
+<p><img class="center" src="http://lh5.ggpht.com/-RadhwYybuNg/UUUUdfjqpuI/AAAAAAAABIk/CwYEz0gUd60/s400/20130316_154646.jpg" title="Filling the bottles with the sauce" ></p>
+
+<p><img class="center" src="http://lh4.ggpht.com/-L_qGUWCa8qY/UUUU7GU63MI/AAAAAAAABJk/Dv1e_zh49cs/s400/20130316_165043.jpg" title="The beer bottles we use for the sauce" ></p>
+
+<p><img class="center" src="http://lh6.ggpht.com/-Hs6FLxazQ_0/UUUVEhXaXTI/AAAAAAAABJs/igdYDvmqMtw/s400/20130316_165038.jpg" title="The jars we use for the sauce" ></p>
+
+<h2>7. Cap the bottles</h2>
+
+<p>The jars with the screw on lids are the most risky. They need to be sealed tightly, otherwise they will not preserve correctly and will make a mess in the final stages. The beer bottles on the other hand are more reliable. You can buy bags of new bottle caps fairly cheaply and then using a &ldquo;capper&rdquo;, they normally seal quite well. Just be sure to check they are tight as you go.</p>
+
+<p><img class="center" src="http://lh5.ggpht.com/-xDFjdPPwOAQ/UUUVIcmmNuI/AAAAAAAABJ0/V4-W_PAO6Wk/s400/20130316_165105.jpg" title="The 'capper'" ></p>
+
+<p><img class="center" src="http://lh3.ggpht.com/-hH6Y62LyrLk/UUUEkP6h7qI/AAAAAAAABIU/SHBtwG2FsCs/s400/20130316_165116.jpg"></p>
+
+<h2>8. Boil the bottles</h2>
+
+<p>After the sauce bottles are all sealed and ready to go, they are gently placed in a drum where they are boiled. We generally put a blanket in the bottom of the barrel, then a layer of bottles standing upright, then another blanket, another layer of bottles, etc. Then fill the drum with water and turn the flame on. As this is a large volume to heat up, it takes quite a while to start to boil, but once the boiling and/or steaming has started, we keep the flame on for another two hours. It&rsquo;s very important that once they have boiled for two hours that you leave them in the water until the water goes cold &ndash; this could be a whole day. Taking them out too early can cause the bottles to shatter.<br/>
+This process is what preserves and seals the bottles properly.</p>
+
+<p><img class="center" src="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s400/IMAG0281.jpg" title="Boiling the bottles to seal and preserve them" ></p>
+
+<h2>9. Enjoy!</h2>
+
+<p>After the water has gone cold, the bottles can be pulled out and put away. We try to make enough to last us a whole year, so we put them into crates, keep one crate in the kitchen and store the rest of them in a cool place.<br/>
+When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time &ndash; you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</p>
+
+<p>Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&rsquo;ll never want to buy that stuff again!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2013-01-04T16:38:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+         | <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/2/">&larr; Older</a>
+    
+    <a href="/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

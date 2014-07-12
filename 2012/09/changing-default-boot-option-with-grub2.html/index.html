@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Changing the default boot option with GRUB2 - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="Gone are the days of the nice /boot/grub/menu.lst file, but with new tools comes new features.Changing the default boot itemIn Grub2 you can change &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Changing the Default Boot Option With GRUB2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-09-19T11:33:00+10:00" pubdate data-updated="true">Sep 19<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-09-19T11:33:13+10:00" class="updated">Updated Sep 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/09/getting-started-with-ruby-on-rails.html" title="Previous Post: Getting started with Ruby on Rails">&laquo; Getting started with Ruby on Rails</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/10/bluetooth-audio-streaming-from-phone-to.html" title="Next Post: Bluetooth audio streaming from phone to Ubuntu">Bluetooth audio streaming from phone to Ubuntu &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

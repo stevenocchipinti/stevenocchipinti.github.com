@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: bash | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/bash/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2014-06-15T17:08:57+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Default values for environment variables]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/"/>
+    <updated>2013-07-22T22:51:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables</id>
+    <content type="html"><![CDATA[<p>In ruby, the <code>||=</code> operator will assign a given value to a variable, if that
+variable does not already have a value.
+For example:</p>
+
+<p><code>ruby default_value.rb
+puts foo  # =&gt; nil
+foo ||= "bar"
+puts foo  # =&gt; "bar"
+foo ||= "baz"
+puts foo  # =&gt; "bar"
+</code></p>
+
+<p>This will assign <code>"bar"</code> to <code>foo</code>, unless <code>foo</code> is already set.
+In other words, it will make <code>"bar"</code> the <em>default value</em> of <code>foo</code>.</p>
+
+<p>I recently had to do this is bash, and it turns out bash has similar
+functionality. This is the bash equivalent:</p>
+
+<p><code>bash default_value.sh
+echo $FOO  # =&gt; ""
+export FOO=${FOO:-"bar"}
+echo $FOO  # =&gt; "bar"
+export FOO=${FOO:-"baz"}
+echo $FOO  # =&gt; "bar"
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
+    <updated>2013-06-08T15:27:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
+    <content type="html"><![CDATA[<p>I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker">Ruby Gem</a> that provides a command line interface to Melbourne&rsquo;s <a href="http://yarratrams.com.au/tramtracker">TramTracker service</a>.</p>
+
+<p>One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br/>
+In the past, I used the command line utility watch to achieve this, but I couldn&rsquo;t find a way to enforce a &ldquo;max iterations&rdquo; option.
+If it gets forgotten about in the background, TramTracker will eventually block that IP address!</p>
+
+<p>So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.</p>
+
+<p>In this post, I&rsquo;ll outline a couple of ways of achieving this.</p>
+
+<h2>Using the \b (backspace) character</h2>
+
+<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
+
+<p>``` ruby
+puts &ldquo;foo\b\b\bbar&rdquo;</p>
+
+<h1>=> bar</h1>
+
+<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
+
+<h1>=> Cheesy, old-school spinner</h1>
+
+<p>```</p>
+
+<p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
+
+<p>``` ruby
+puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
+
+<h1>=> foo\nbar</h1>
+
+<p>```</p>
+
+<h2>Using the \r (carriage return) character</h2>
+
+<p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
+
+<p><code>ruby
+100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></p>
+
+<p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
+
+<p>```
+puts &ldquo;foo\rp&rdquo;</p>
+
+<h1>=> poo</h1>
+
+<p>```</p>
+
+<p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
+
+<h2>Using curses</h2>
+
+<p>The most common answer to overwriting characters across multiple lines, is to use <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)">curses</a>.
+Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
+Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
+
+<p><code>ruby
+setpos(lines/2, cols/2) # Start in the middle
+addstr("Hello world")
+</code></p>
+
+<p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
+
+<p>Curses is pretty good for this sort of stuff, it gives you a lot for free.
+The thing that I didn&rsquo;t like about using the curses library was that when it initialises, it clears the screen.
+This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&rsquo;t want that.</p>
+
+<h2>Using individual cursor movement characters</h2>
+
+<p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
+
+<p><code>
+\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+\033[&lt;N&gt;A     # Move the cursor up N lines
+\033[&lt;N&gt;B     # Move the cursor down N lines
+\033[&lt;N&gt;C     # Move the cursor forward N columns
+\033[&lt;N&gt;D     # Move the cursor backward N columns
+\033[2J       # Clear the screen, move to (0,0)
+\033[K        # Erase to end of line
+</code></p>
+
+<p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
+I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
+
+<p>Now go and make a cool retro user interface! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
+    <updated>2013-01-04T16:38:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! ... I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it's a really simple script to write, all it does is move the photos from my camera's memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a 'jpg' or 'raw' sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn't really like that.
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch.html"/>
+    <updated>2011-09-21T10:41:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch</id>
+    <content type="html"><![CDATA[<p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
+
+<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
+In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
+
+<p>I have found two good ways of accomplishing this.</p>
+
+<h2>Git stash</h2>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git stash
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can list my stashes with:
+<code>
+git stash list
+</code></p>
+
+<p>Then, apply the most recent stash by running this command:
+<code>
+git stash apply
+</code></p>
+
+<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
+
+<h2>Git diff and patch:</h2>
+
+<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
+<code>
+git diff &amp;gt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:
+<code>
+patch -p1 &amp;lt; ~/patches/temp_workaround.patch
+</code></p>
+
+<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/08/regex-substitution-101.html"/>
+    <updated>2011-08-01T07:42:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching...<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn't enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word 'hello'<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed "s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/" &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed 's/PATTERN/REPLACEMENT/'</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /'s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

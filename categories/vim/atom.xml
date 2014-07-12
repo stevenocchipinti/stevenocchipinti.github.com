@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vim | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2014-06-15T17:08:57+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introduction to Vim for IDE users]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users/"/>
+    <updated>2014-03-17T17:23:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users</id>
+    <content type="html"><![CDATA[<blockquote><p>I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! <br/>
+&ndash; <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
+
+<p>A lot of people are scared of learning of vim because of the initial learning curve.</p>
+
+<p>When learning vim for the first time there are lots of approaches, but two common ways are:</p>
+
+<ol>
+<li>Learn &ldquo;pure&rdquo; vi/vim, then introduce vimrc options and then plugins</li>
+<li>Start with an existing &ldquo;customization&rdquo; (from someone else), then learn what things do</li>
+</ol>
+
+
+<p>Once upon a time, I would have suggested learning the basic features of vim before getting into customization, but there are quite a lot of people who are not interested in learning the tool unless they can be productive straight away.<br/>
+When coming from an IDE, the apparent shortcomings of a less integrated text editor will scare them away before they have discovered the power of editing text with vim.</p>
+
+<p>This guide is aimed at those people. I want to outline some steps to learn vim that makes the transition from IDE to vim as easy as possible with the hope of making vim a less scary step.</p>
+
+<h2>Installing Vim</h2>
+
+<p>Most systems will come with a version of vim, but you may want to get the latest version from the systems package manager for a more complete feature set.</p>
+
+<p>On a mac, the standard install of <code>vim</code> is missing clipboard support so I would recommend installing MacVim, here is how I do it with homebrew:</p>
+
+<p><code>
+brew install macvim
+brew linkapps
+</code></p>
+
+<p>This package provides <code>mvim</code> on the command line, but <code>vim</code> will still refer to the system version, so I setup a couple of aliases in my <code>.bash_profile</code>:</p>
+
+<p><code>
+alias vim="mvim -v"
+alias vi="vim"
+</code></p>
+
+<h2>Basic Usage</h2>
+
+<p>This guide is more about setting up vim in a manner that won&rsquo;t seem too crippling when coming from an IDE, so I won&rsquo;t focus too much on editing effectively with vim here.</p>
+
+<p>If vim is completely new to you and you don&rsquo;t know the basics such as the difference between <em>command mode</em> and <em>insert mode</em> or how to quit vim, I would recommend pausing the guide here and running <code>vimtutor</code> in your terminal to learn the basics.</p>
+
+<h2>Configuring Vim</h2>
+
+<p>Vim uses a <code>.vimrc</code> configuration file in your home directory. There is a plethora of configuration options you can put here, but I thought I would offer some basic options to get you started.</p>
+
+<p>My <a href="https://github.com/stevenocchipinti/dotvim/blob/master/vimrc"><code>.vimrc</code></a> is quite large, but here is a snippet for some basic options that you can put into your own <code>.vimrc</code> to get started:</p>
+
+<p>```
+filetype plugin indent on
+syntax on</p>
+
+<p>set ts=2 sw=2         &ldquo; Use 2 spaces for tabs
+set expandtab         &rdquo; Use spaces instead of tab characters
+set wrap              &ldquo; Wrap the display lines (not actual text)
+set linebreak
+set backspace=indent,eol,start
+set incsearch         &rdquo; Show matching search results as typing
+set ruler             &ldquo; Show row and column in status bar
+set wildmenu          &rdquo; Nicer tab completion for :ex commands
+set ignorecase        &ldquo; Case insensitive search by default
+set smartcase         &rdquo; Use case sensitive search in a capital letter is used
+set warn              &ldquo; Show what mode your in (insert, etc.)
+set scrolloff=3       &rdquo; Number of lines to always show at at the top and bottom
+set autoindent        &ldquo; Copy the indentation from the previous line
+set colorcolumn=81    &rdquo; Highlight the 81st column (shorthand = :set cc=81)
+set cursorline        &ldquo; Highlight the line which the cursor is on
+set laststatus=2      &rdquo; Always show a status bar
+set mouse=a           &ldquo; Make the mouse work &ndash; even in terminals
+set list              &rdquo; Show <code>listchars</code> characters
+set listchars=tab:=»,trail:·</p>
+
+<p>&ldquo; Easier way to copy and paste from the global clipboard
+map <leader>p &rdquo;+p
+map <leader>y &ldquo;+y
+```</p>
+
+<h2>Navigating code</h2>
+
+<p>Vim has builtin support for <code>ctags</code>, which indexes your code and allows you to jump to the definition of a method or class. As usual, on a mac you will have a standard version of <code>ctags</code> installed, but it&rsquo;s not very good, so I recommend installing the <em>exuberant ctags</em> package from homebrew:</p>
+
+<p><code>
+brew install ctags
+sudo mv /usr/bin/ctags{,-bsd}
+sudo ln -s /usr/local/Cellar/ctags/5.8/bin/ctags /usr/bin/ctags
+</code></p>
+
+<p>To make use of ctags, in the root of a project run the following command:</p>
+
+<p><code>
+ctags -R .
+</code></p>
+
+<p>This will need to be run when the code changes to keep the tags file up to date, so I have setup <a href="http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html">git hooks</a> to automate this. If you don&rsquo;t want to setup git hooks, you can execute this command from within vim with <code>:!ctags -R .</code></p>
+
+<p>Now if you open some code, move your cursor over an occurrence of a method or class, you can jump into the definition of that method or class with the following key bindings:</p>
+
+<p><code>crtl</code> + <code>]</code> = Jump to definition (of what is under the cursor)<br/>
+<code>crtl</code> + <code>T</code> = Jump back from following a tag</p>
+
+<p>The following key bindings are also useful for navigation and do <em>not</em> require ctags:</p>
+
+<p><code>/foo</code> = Search for <code>foo</code><br/>
+<code>*</code> = Search for the word under the cursor<br/>
+<code>n</code> = Jump to the next occurrence of the search<br/>
+<code>N</code> = Jump to the previous occurrence of the search<br/>
+<code>crtl</code> + <code>o</code> = Go back from the last jump<br/>
+<code>crtl</code> + <code>i</code> = Go forward to the recent jump</p>
+
+<h2>Vim Plugins</h2>
+
+<p>Vim has a plugin system, but by default it does not do a good job of keeping plugins isolated from each other. To improve this, there are plugins that manage plugins.<br/>
+I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is how to set it up along with a few useful vim plugins:</p>
+
+<p><code>
+mkdir -p ~/.vim/bundle
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code></p>
+
+<p>Then place the following at the top of your <code>.vimrc</code>:</p>
+
+<p><code>
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-cucumber'
+Bundle 'bogado/file-line'
+Bundle 'godlygeek/tabular'
+Bundle 'ecomba/vim-ruby-refactoring'
+Bundle 'scrooloose/syntastic'
+Bundle 'tsaleh/vim-matchit'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'cakebaker/scss-syntax.vim'
+filetype plugin indent on
+</code></p>
+
+<p>Then, I choose configure some of those plugins towards the bottom of the <code>.vimrc</code> like this:</p>
+
+<p>```
+&ldquo; NERDTREE PLUGIN &ndash; (mnemonic: Files)
+nmap <leader>f :NERDTreeToggle
+nmap <leader>F :NERDTreeFind</p>
+
+<p>&ldquo; AIRLINE PLUGIN
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0</p>
+
+<p>&ldquo; CTRL-P PLUGIN
+let g:ctrlp_user_command = {
+\   &lsquo;types&rsquo;: {
+\     1: [&lsquo;.git/&rsquo;, &lsquo;cd %s &amp;&amp; git ls-files&rsquo;],
+\     2: [&lsquo;.hg/&rsquo;, &lsquo;hg &mdash;cwd %s locate -I .&rsquo;],
+\   },
+\   &lsquo;fallback&rsquo;: &lsquo;find %s -type f&rsquo;
+\ }
+```</p>
+
+<p>Now, from within vim, run <code>:BundleInstall</code></p>
+
+<h2>Next steps</h2>
+
+<p>At this point, you should have a somewhat powerful installation of vim, the next step is to learn how to use this power. Below are some resources to help you learn how to use vim effectively.</p>
+
+<ul>
+<li>run <code>vimtutor</code> on the command line to learn</li>
+<li><a href="http://vimcasts.org/">vimcasts</a></li>
+<li><a href="http://www.vimgolf.com/">vimgolf</a></li>
+<li><a href="github.com/stevenocchipinti/dotvim">my .vimrc</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Recursive search with vimgrep]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep.html"/>
+    <updated>2011-10-12T02:46:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Usually when I need to find things in multiple files, I would use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ack</span> from a terminal and then open those files in vim to do whatever it is that I have to do.<br /><br />This is ok, but sometimes this can be a little annoying.<br />Vim has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:grep</span> function which will use the system <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> command, but it also has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> function that is built in to vim.<br /><br />I had left a bunch of TODO's through out my code as a reminder to come back to them, so using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> I was able to quickly jump between them:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep TODO **/*</div></blockquote><br />This tells vim to search for the pattern "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">TODO</span>" recursively from the current directory.<br />The "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/</span>" means recursive and the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">*</span>" means any file - therefore "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/*.rb</span>" would just search the ruby scripts.<br /><br />The results are loaded into the "quickfix window". This means if you want to see all the occurences, you can open the list with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:copen</span><br />Naturally, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cfirst</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:clast</span>, etc. will allow you to jump between them or you can use the quicklist window and press enter on the filename, or in gvim you can even use the mouse.<br /><br />In addition, I use <a href="https://github.com/tpope/vim-unimpaired">Tim Pope's Unimpaired vim plugin</a>,which provides the easy shortcuts '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[q</span>' and '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">]q</span>' for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span> (respectively)
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/08/regex-substitution-101.html"/>
+    <updated>2011-08-01T07:42:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching...<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn't enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word 'hello'<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed "s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/" &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed 's/PATTERN/REPLACEMENT/'</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /'s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vi mode for Bash]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash.html"/>
+    <updated>2011-06-26T23:22:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this earlier)<br /><br />To enable vi mode, just type this into your shell:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; set -o vi</blockquote><br />That will enable it for this shell so you can try it out, and if you like it, add that line to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file for future.<br /><br />One really useful vi-mode command is pressing '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">v</span>' from command mode. This will put your current command line into vim to modify. <br /><br />To get more help on the commands available in vi-mode, take a look at the bottom of this man page:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; man 3 readline</blockquote><br />To get more information on the various options available for bash, take a look at:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; help set</span></blockquote><br />I'm going to give it ago in the coming weeks to see if its actually useful or not. <br /><br />So far, I've found one small annoyance, I use ctrl+l to clear the terminal, but with the vi key bindings enabled, this only works from command mode (you have to hit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ESC</span> first).<br />To fix this, I added this to my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bind -m vi-insert 'Control-l: clear-screen'</span></blockquote><br />These commands could also be added to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/inputrc</span>, but I'm happy to leave these 2 lines together in my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> so its easier to remember.
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Can't open file for writing]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing.html"/>
+    <updated>2011-06-18T13:09:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing</id>
+    <content type="html"><![CDATA[<p><blockquote><p>E212: Can&rsquo;t open file for writing<br/><br/>Press ENTER or type command to continue</p></blockquote></p>
+
+<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
+It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
+
+<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
+
+<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>.vimrc </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
+
+<p>Works brilliantly!</p>
+]]></content>
+  </entry>
+  
+</feed>

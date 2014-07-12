@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="The way my desk is positioned means that when I&#8217;m on my computer I face the corner of the room, which means the door is behind me.Quite often &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/11/motion-detection.html">Motion Detection</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T11:30:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/11/motion-detection.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The way my desk is positioned means that when I&#8217;m on my computer  I face the corner of the room, which means the door is behind me.<br />Quite often I&#8217;ll stay up late working away till early hours of the morning and usually music comes hand-in-hand with coding (for me anyway), so when it&#8217;s late, I use headphones so I don&#8217;t disturb anyone else.<br /><br />This has caused me some grief as sometimes someone will come into my room for whatever reason and find me with my back to the them and headphones in, so knocking at the door or saying my name does not get my attention.<br />This leaves the last resort of tapping me on the shoulder which scares the crap out of me!<br /><br />A while ago I invested in a convex mirror designed to go on your computer screen so you can see who&#8217;s coming up from behind.<br />Well, with a 24-inch screen and deep concentration, this small mirror doesn&#8217;t catch me eye at all, so I still hit the ceiling when someone taps me on the shoulder.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s1600/mirror.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s320/mirror.jpg" width="251" /></a></div><br /><br />For my birthday I got this amazing <a href="http://www.astrogaming.com/a40-audio-system-astro-edition">Astro A40</a> headset. Sound clarity is absolutely stunning, they are really comfortable to wear and they block out a lot of surrounding background noise.<br />While I absolutely love the headset and wear it all the time,  you can probably guess this  adds to my jumpy-ness!<br /><br />So I finally found a solution!<br /><br />There is a package in the Ubuntu repositories called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span>&#8221; - which is a really simple motion detection server that utilises a webcam.<br />I had a look at &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">zoneminder</span>&#8221; too, but it seems very over-kill for my needs. <br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> will detect movement (above a configurable threshold), store &#8220;movement&#8221; snapshots and video files, log to a database and more importantly it provides a few hooks to fire commands upon events such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_motion_detected</span>, etc.<br /><br />I disabled almost every option except the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span> hook.<br />This hook will execute the given command when motion has been detected after a (configurable) &#8220;gap&#8221; period of time of no motion - which I set to 10 seconds.<br /><br />The command I set it to execute is this:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve notify-send &#8211;hint=int:transient:1 -i &#8216;/usr/share/icons/hicolor/scalable/mimetypes/text-x-apport.svg&#8217; &#8216;LOOK BEHIND YOU!&#8217;</span></blockquote><br />As mentioned in an <a href="http://blog.stevenocchipinti.com/2011/09/gtalksms.html">earlier blog post</a>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> can be found in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package <br /><br />Note: the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8211;hint=int:transient:1</span> is for Gnome-Shell which has introduced persistent notifcations and I didn&#8217;t want to acknowledge a notification everytime someone walks past!<br /><br />The end result of this little hack is when someone walks anywhere near my doorway, that command gets my attention with a standard Gnome-Shell notification from the bottom of the screen like this:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s1600/Screenshot+at+2011-11-06+00%253A15%253A39.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="45" src="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s320/Screenshot+at+2011-11-06+00%253A15%253A39.png" width="320" /></a></div><br /><br />The reason I am using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> here is that <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> needs to be run as root, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> command will also be run as root.<br />I guess because I had Unity installed before Gnome-Shell, when root runs <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span>, I get the Unity style notifications - which is still nice, but as I&#8217;m road testing Gnome-Shell, I figured I may as well use its notification look-n-feel too.<br /><br />Here&#8217;s what it looks like if you leave out the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve</span> part:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s1600/Screenshot+at+2011-11-06+00%253A09%253A32.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="212" src="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s320/Screenshot+at+2011-11-06+00%253A09%253A32.png" width="320" /></a></div><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/10/disabling-unity-global-menu.html">Disabling the Unity Global Menu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-20T11:56:00+11:00" pubdate data-updated="true">Oct 20<span>th</span>, 2011</time>
+        
+         | <a href="/2011/10/disabling-unity-global-menu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The Unity global menubar in Ubuntu can take a bit of getting used to, especially if you don&#8217;t come from a Mac background, but once you do, the screen real estate saving is quite nice, especially on small screens like my eeepc.<br /><br />But sometimes it can be frustrating!<br />For example, if you use The Gimp, alot of its functionality is in the menu, but for that to show, you must have the main window (the one with your work in it) focused, but whenever you select a tool from the toolbox, that window loses focus, and therefore you can&#8217;t get to the menu.<br /><br />I know all it takes is a click in the main window and then a click on the global menu, but this can get quite annoying.<br /><br />Thankfully, there is an off-switch in the form of an env-var which you can either add to your profile to completely disable it, or just prefix it before you run commands like <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gimp</span>.<br /><br />All you need to do to disable it is set this:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">UBUNTU_MENUPROXY=0</blockquote><br />I made an alias so its easier to remember:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">alias dam=&#8217;UBUNTU_MENUPROXY=0 &#8217;</span></blockquote><br />Note that typing (or shouting) <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">dam gimp</span> is not only to relieve the frustration of the global menubar, but it also stands for &#8221;<i><u>D</u>isable <u>A</u>pp<u>M</u>enu</i>&#8221; :)<br /><br />There is a full write up with more details over at <a href="http://www.webupd8.org/2011/03/disable-appmenu-global-menu-in-ubuntu.html">webupd8.org</a>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/10/recursive-search-with-vimgrep.html">Recursive Search With Vimgrep</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-12T02:46:00+11:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time>
+        
+         | <a href="/2011/10/recursive-search-with-vimgrep.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Usually when I need to find things in multiple files, I would use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ack</span> from a terminal and then open those files in vim to do whatever it is that I have to do.<br /><br />This is ok, but sometimes this can be a little annoying.<br />Vim has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:grep</span> function which will use the system <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">grep</span> command, but it also has a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> function that is built in to vim.<br /><br />I had left a bunch of TODO&#8217;s through out my code as a reminder to come back to them, so using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep</span> I was able to quickly jump between them:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:vimgrep TODO **/*</div></blockquote><br />This tells vim to search for the pattern &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">TODO</span>&#8221; recursively from the current directory.<br />The &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/</span>&#8221; means recursive and the &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">*</span>&#8221; means any file - therefore &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">**/*.rb</span>&#8221; would just search the ruby scripts.<br /><br />The results are loaded into the &#8220;quickfix window&#8221;. This means if you want to see all the occurences, you can open the list with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:copen</span><br />Naturally, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cfirst</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:clast</span>, etc. will allow you to jump between them or you can use the quicklist window and press enter on the filename, or in gvim you can even use the mouse.<br /><br />In addition, I use <a href="https://github.com/tpope/vim-unimpaired">Tim Pope&#8217;s Unimpaired vim plugin</a>,which provides the easy shortcuts &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[q</span>&#8217; and &#8217;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">]q</span>&#8217; for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cprevious</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:cnext</span> (respectively)
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/10/ruby-parallel-port-leds.html">Ruby + Parallel Port + LEDs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-10-10T03:49:00+11:00" pubdate data-updated="true">Oct 10<span>th</span>, 2011</time>
+        
+         | <a href="/2011/10/ruby-parallel-port-leds.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/">Tank Project</a> we have to work out the most suitable way to interface from software to hardware - which I have never done before!<br /><br /><br /><b>The parallel port</b><br /><br />One of those options is to use the parallel port, which allows us 8 data pins that we can use for controlling motors, etc.<br />The layout of a parallel port is quite easy, there are 8 &#8220;D&#8221; pins for data with 8 matching &#8220;Ground&#8221; pins (shown in green below).<br /><br /><div style="padding: 32px; text-align: center;"><a href="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">  <img border="0" height="214" src="http://linuxgazette.net/118/misc/chong/parallel_port_diagram.jpg" width="400" /></a></div><b>The test rig</b><br /><br />As the output from the parallel port is about 5 volts, I though LED&#8217;s were a suitable was of testing this out, so I went searching through our garage to find a parallel cable from an old printer and a bunch of LED&#8217;s.<br />I found a bunch of tristate LED&#8217;s - tristates have 3 legs instead of 2 and provide 2 different colors depending on which legs have power to them.<br />For example, if the circuit connects the left leg and the middle leg, it produces green light, whereas the right leg and middle leg produce red light.<br />Soldering 4 of these LEDs to a board meant I could join all the middle legs together which would be what I connect the ground wire from the parallel port to and the other 8 legs to the 8 data wires.<br /><br /><br /><b>The software</b><br /><br />In order to control when each of the data pins has power to it or not, you simply have to write 8 bits (a byte) to the parallel port where each bit corresponds to a data pin.<br />In linux this is quite simple as you can write to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/dev/port</span> just like any other file.<br />To test this out, I wrote a little Ruby script to play a fancy little sequence a few times. The code is quite simple considering some <a href="http://yueda.issp.u-tokyo.ac.jp/weda/ruby/parport.rb">other examples</a> on the net:<br /><br /><script src="https://gist.github.com/1274548.js"></script><br /><br /><b>The fun part!</b> <br /><br />So my computer doesn&#8217;t have a parallel port, but we have some older machines that do. So I found an old pc and booted off a linux live distro that has ruby, plugged in the cable with the LEDs on it, and ran my script, and this is what happens: <br /><div style="padding: 32px; text-align: center;"><embed allowfullscreen="true" src="http://img546.imageshack.us/flvplayer.swf?f=Pjch" type="application/x-shockwave-flash" width="300" wmode="transparent"></embed></div><b>The conclusion</b><br /><br />This is the first time I have ever written a program that uses hardware, albeit really basic hardware, but this has a lot of potential.<br />Instead of turning on lights, this small current could trigger relays to do more exciting things, or in our case power transistors using <a href="http://en.wikipedia.org/wiki/Pulse-width_modulation">PWM</a> to control motor speed for our tank - and its so simple!
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/git-diff-and-patch.html">Git Stash, Diff and Patch</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-21T10:41:00+10:00" pubdate data-updated="true">Sep 21<span>st</span>, 2011</time>
+        
+         | <a href="/2011/09/git-diff-and-patch.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
+
+<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
+In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
+
+<p>I have found two good ways of accomplishing this.</p>
+
+<h2>Git stash</h2>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can list my stashes with:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, apply the most recent stash by running this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git stash apply</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
+
+<h2>Git diff and patch:</h2>
+
+<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
+
+<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git diff &gt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
+
+<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>patch -p1 &lt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/code-review-workflow-with-github.html">Code Review Workflow With GitHub</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-18T10:06:00+10:00" pubdate data-updated="true">Sep 18<span>th</span>, 2011</time>
+        
+         | <a href="/2011/09/code-review-workflow-with-github.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>&#8220;<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>&#8221;</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known &#8221;<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>&#8221; and describes how they are both good, but Git-Flow is alot more involved, where the aptly known &#8220;GitHub-Flow&#8221; is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else&#8217;s work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>&#8221;.<br /><br />This doesn&#8217;t affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it&#8217;s the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>&#8221; instead of something more descriptive, like &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>&#8221;.<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/gtalksms.html">GTalkSMS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-08T10:41:00+10:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time>
+        
+         | <a href="/2011/09/gtalksms.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Continuing on from my last post, I found another great use for Pidgin!<br /><br />GTalkSMS is an Android app that turns your phone into a chat bot.<br />Here is an extract from the <a href="http://code.google.com/p/gtalksms/">GTalkSMS website</a>:<br /><blockquote><span style="font-size: x-small;"><i>GTalkSMS enables you to <b>control your android phone through GTalk/XMPP</b> (send/receive SMS, make calls, locate your phone, etc.). It can be  useful for those who prefer typing sms on a real keyboard. The app also  notifies you about new &#8220;events&#8221; on the phone, like a new text message  (SMS) or an incoming call.</i></span></blockquote><br />Although initially skeptical about security (it has the same functions as a would-be trojan) you have to be buddies with the bot to talk to it, so here is what I did&#8230;<br /><br /><br /><b>Basic Setup:</b> <br /><ul><li>Downloaded and installed GTalkSMS from the <a href="https://market.android.com/details?id=com.googlecode.gtalksms">market</a></li><li>Created a google account for GTalkSMS</li><li>Configured Pidgin with my personal gmail account (obviously) </li><li>Added this new account as a buddy on my personal gmail account</li><li>Configured GTalkSMS to send notifications to my personal gmail account</li></ul><br /><b>Basic Usage:</b> <br /><br />With this done, once I start the bot, it will send me a instant message when I get an SMS, phone call or the battery state changes.<br /><br />What is even better is that if I want to reply to a recently received SMS, I can send the bot an instant message like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">reply:Hey, I got your message</span></blockquote><br />If I want to initiate an SMS to someone else, I can send this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:mymate:Hey, how you goin?</span></blockquote><br />That will lookup <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mymate</span> in my phonebook and send the SMS to them.<br />If you have multiple people with the same name, you can search your phonebook using this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">contact:john</span></blockquote><br />This will list all the <i>John&#8217;s</i> then you can just copy and paste the phone number you want in place of the name, like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:04041111111:Hey John!</span></blockquote><br /><b>Doing more:</b> <br /><br />There are <a href="http://code.google.com/p/gtalksms/wiki/FeaturesAndCommands">heaps of commands</a> available and you can get a list of them all at any time with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">help:all</span></blockquote><br />Some other cool commands allow you to change your ringer volume, take a photo, share clipboards, get geolocation, launch a given URL in the browser and lots more.<br /><br />It also has some options to make GTalkSMS start automatically when the phone boots, or when it is charging, or when its on wifi.<br />I personally only want this connected while I&#8217;m in front of my pc, so I have it set to start when charging and stop when not charging anymore (I use a USB charging dock at my desk).<br /><br />One other noteworthy feature is the &#8220;Incoming SMS&#8221; setting &#8221;<span style="font-size: small;"><span style="color: black;">In separated conversations</span></span>&#8221;. When you receive an sms, not only does the bot send you an IM, but it will start a new &#8220;chat room&#8221; for that particular contact and send you an invite. From within this chat room, you dont need to worry about sending commands, whatever you send in there will be sent as an sms to that client. It makes it look seamlessly like any other chat.<br /><br /><br /><b>Pidgin fun:</b><br /><b><br /></b><br />As you may already know, I like Pidgin because of its configurability.<br />I have Pidgin using the libnotify plugin, which means I get the fancy Ubuntu notifications from Pidgin, but I soon realised there are too many notifications by default (everytime a buddy signs in or out is a bit much with 4 chat accounts signed in at once!) - so I turned those notifications off.<br /><br />But! I wanted these notifications to see when my phone is available to chat, so I set up some little recurring buddy pounces:<br /><ol><li>When my GTalkSMS account signs in, execute this command: <br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/bot.svg&#8221; &#8220;Droid online&#8221; &#8220;Your Android is now contactable via GTalkSMS&#8221;</span></blockquote></li><li>When my GTalkSMS account signs out, execute this command: <br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/unavailable.svg&#8221; &#8220;Droid offline&#8221; &#8220;Your Android has now signed off GTalkSMS&#8221; </blockquote></li></ol><br />Now when I dock my phone, it starts charging, GTalkSMS starts up and signs in and I get this notification appear:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s1600/online.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s320/online.png" width="320" /></a></div><br /><br />Then when I pull it off the dock, GTalkSMS signs out and I get this notification:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s1600/offline.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s320/offline.png" width="320" /></a></div><br /><br />Note: The notify-send command is available from the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package, which can be installed in Ubuntu with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install libnotify-bin</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/meta-contacts-in-pidgin.html">Meta-contacts in Pidgin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-03T00:18:00+10:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/09/meta-contacts-in-pidgin.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<a href="http://pidgin.im/">Pidgin</a> is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.<br />I chose Pidgin not because of a slick UI but because it has some really nice features!<br /><br />The two features that stand out the most in my opinion are the &#8220;buddy pounces&#8221; and the many available plugins:<br /><br /><b>Buddy pounces</b><b>:</b><br />For those that don&#8217;t know about pounces, they are little predefined actions that can be triggered upon some configurable event, such as <i>&#8220;when &lt;SomeContact&gt; returns from away status, open a conversation window&#8221;</i>, or <i>&#8220;when &lt;SomeContact&gt; signs on, send them a predefined message&#8221;</i>.<br /><br /><b>Plugins:</b><br />Not only does Pidgin come with lots of plugins by default, but there are a lot of <a href="http://developer.pidgin.im/wiki/ThirdPartyPlugins">third party plugins</a> available too.<br />There are basic ones that offer a more robust and configurable way of notifying you of messages, etc and some more fun ones like &#8220;psychic mode&#8221; - which listens for when a new contact starts typing a message to you and pops up a convo window before they have even sent it.<br /><br /><b>Meta-contacts:</b><br />The one thing that I missed from other IM clients was meta-contacts.<br />For example, at any one time I have Pidgin signed into my Google chat, MSN and Facebook chat accounts and for those friends of mine that have an account on all three platforms, they appear 3 times in my buddy list.<br />With meta-contacts you can collapse those 3 contacts into just one.<br /><br />Well, it turns out this feature has been in Pidgin for quite a while, I just never noticed as its just not quite as obvious as with other clients.<br /><br /><b>How to use meta-contacts in Pidgin:</b><br />To use this feature, all you have to do is right-mouse click on the contact and click &#8220;expand&#8221; and drag and drop other contacts under the newly expanded name.<br />You should put the most common account at the top as that is the account is used by default when you double click the contact.<br /><br />Even though these features aren&#8217;t exactly ground breaking, when you get used to having them there it becomes a little harder to go back to clients without them.
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/poweroff-without-password.html">Poweroff Without a Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-21T07:29:00+10:00" pubdate data-updated="true">Aug 21<span>st</span>, 2011</time>
+        
+         | <a href="/2011/08/poweroff-without-password.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/mounting-nfs-in-ubuntu.html">Mounting NFS in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-05T06:17:00+10:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/08/mounting-nfs-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/5/">&larr; Older</a>
+    
+    <a href="/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

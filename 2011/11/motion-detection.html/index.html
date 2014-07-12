@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Motion detection - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="The way my desk is positioned means that when I&#8217;m on my computer I face the corner of the room, which means the door is behind me.Quite often &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2011/11/motion-detection.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Motion Detection</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T11:30:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div class="css-full-post-content js-full-post-content">
+The way my desk is positioned means that when I&#8217;m on my computer  I face the corner of the room, which means the door is behind me.<br />Quite often I&#8217;ll stay up late working away till early hours of the morning and usually music comes hand-in-hand with coding (for me anyway), so when it&#8217;s late, I use headphones so I don&#8217;t disturb anyone else.<br /><br />This has caused me some grief as sometimes someone will come into my room for whatever reason and find me with my back to the them and headphones in, so knocking at the door or saying my name does not get my attention.<br />This leaves the last resort of tapping me on the shoulder which scares the crap out of me!<br /><br />A while ago I invested in a convex mirror designed to go on your computer screen so you can see who&#8217;s coming up from behind.<br />Well, with a 24-inch screen and deep concentration, this small mirror doesn&#8217;t catch me eye at all, so I still hit the ceiling when someone taps me on the shoulder.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s1600/mirror.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://1.bp.blogspot.com/-gMLpyxY81Sc/TrUzPCaiQEI/AAAAAAAAACs/h8ZFlPXZhzM/s320/mirror.jpg" width="251" /></a></div><br /><br />For my birthday I got this amazing <a href="http://www.astrogaming.com/a40-audio-system-astro-edition">Astro A40</a> headset. Sound clarity is absolutely stunning, they are really comfortable to wear and they block out a lot of surrounding background noise.<br />While I absolutely love the headset and wear it all the time,  you can probably guess this  adds to my jumpy-ness!<br /><br />So I finally found a solution!<br /><br />There is a package in the Ubuntu repositories called &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span>&#8221; - which is a really simple motion detection server that utilises a webcam.<br />I had a look at &#8221;<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">zoneminder</span>&#8221; too, but it seems very over-kill for my needs. <br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> will detect movement (above a configurable threshold), store &#8220;movement&#8221; snapshots and video files, log to a database and more importantly it provides a few hooks to fire commands upon events such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_motion_detected</span>, etc.<br /><br />I disabled almost every option except the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">on_event_start</span> hook.<br />This hook will execute the given command when motion has been detected after a (configurable) &#8220;gap&#8221; period of time of no motion - which I set to 10 seconds.<br /><br />The command I set it to execute is this:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve notify-send &#8211;hint=int:transient:1 -i &#8216;/usr/share/icons/hicolor/scalable/mimetypes/text-x-apport.svg&#8217; &#8216;LOOK BEHIND YOU!&#8217;</span></blockquote><br />As mentioned in an <a href="http://blog.stevenocchipinti.com/2011/09/gtalksms.html">earlier blog post</a>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> can be found in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package <br /><br />Note: the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8211;hint=int:transient:1</span> is for Gnome-Shell which has introduced persistent notifcations and I didn&#8217;t want to acknowledge a notification everytime someone walks past!<br /><br />The end result of this little hack is when someone walks anywhere near my doorway, that command gets my attention with a standard Gnome-Shell notification from the bottom of the screen like this:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s1600/Screenshot+at+2011-11-06+00%253A15%253A39.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="45" src="http://4.bp.blogspot.com/-lhooeyQqNMA/TrU3gJviK3I/AAAAAAAAAC8/Coim6i9s2KQ/s320/Screenshot+at+2011-11-06+00%253A15%253A39.png" width="320" /></a></div><br /><br />The reason I am using <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> here is that <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">motion</span> needs to be run as root, and so the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span> command will also be run as root.<br />I guess because I had Unity installed before Gnome-Shell, when root runs <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send</span>, I get the Unity style notifications - which is still nice, but as I&#8217;m road testing Gnome-Shell, I figured I may as well use its notification look-n-feel too.<br /><br />Here&#8217;s what it looks like if you leave out the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo -u steve</span> part:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s1600/Screenshot+at+2011-11-06+00%253A09%253A32.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="212" src="http://1.bp.blogspot.com/-pyeLb7iMzpg/TrU14Aj4PvI/AAAAAAAAAC0/qXOG5V5S2k0/s320/Screenshot+at+2011-11-06+00%253A09%253A32.png" width="320" /></a></div><br />
+</div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T13:52:05+11:00" class="updated">Updated Nov 5<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/gnome3/'>gnome3</a>, <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a>, <a class='category' href='/categories/unity/'>unity</a>, <a class='category' href='/categories/webcam/'>webcam</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2011/11/motion-detection.html" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2011/11/motion-detection.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/10/disabling-unity-global-menu.html" title="Previous Post: Disabling the Unity global menu">&laquo; Disabling the Unity global menu</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/11/removing-geotag-data-from-jpgs.html" title="Next Post: Removing geotag data from JPGs">Removing geotag data from JPGs &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2011/11/motion-detection.html';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2011/11/motion-detection.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

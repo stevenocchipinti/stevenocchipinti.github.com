@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: photography | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/photography/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2014-06-15T17:08:57+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
+    <updated>2013-01-04T16:38:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Every time I go on holiday, I end up writing the same bash script! ... I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it's a really simple script to write, all it does is move the photos from my camera's memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a 'jpg' or 'raw' sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn't really like that.
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A few photography tips]]></title>
+    <link href="http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips.html"/>
+    <updated>2012-12-14T13:44:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips</id>
+    <content type="html"><![CDATA[<p>A little while ago, my brother got me a photography course as a gift, so I asked a friend of mine, Amy, to join me and last Thursday night we attended the course. The course was a &ldquo;Night Landscape&rdquo; tutorial where we all brought our own cameras and a professional photographer guides us through how to take photos at night. The class was quite small, it consisted of Amy and I with one other student.</p>
+
+<p>The course started out quite basic and we went though some fundamental theory, a lot of which Amy and I already knew, but the other student was a little less experienced so the photographer needed to cater for all of us.<br/>
+Luckily it was just a small class, because instead of following the standard course structure, the photographer spent more time in conversations with us, answering all our specific questions.</p>
+
+<p>Being self-taught, I am grateful for that, because these conversations were what lead me to learn a few new things that I hadn&rsquo;t picked up in my own research so far.<br/>
+Here is a quick summary of the things I learned:</p>
+
+<h2>1. Blowing out the sky, intentionally</h2>
+
+<p>The first new tip I learned was a trick the photographer used when the scene has an unusable sky, such as a dull cloud cover (like last night in the rain). He would take another photo that was intentionally over-exposed so the sky was as white as possible. By doing this, afterwards in Photoshop a pure white sky is very easy to select, even through the leaves of a tree or someone&rsquo;s hair using tools like the magic wand, or a color-based selection and can be replaced with a more dramatic sky from another shoot.</p>
+
+<h2>2. Hand-holding at night</h2>
+
+<p>At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</p>
+
+<p><blockquote><p>Make the denominator of the shutter speed match the focal length</p></blockquote></p>
+
+<p>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&rsquo;t a perfect rule, but it is a great place to start and you can adjust from there.</p>
+
+<h2>3. Freezing human motion</h2>
+
+<p>So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends:</p>
+
+<p><blockquote><p>Use a shutter speed of 1/125 as a baseline to freeze human motion</p></blockquote></p>
+
+<p>It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as necessary.</p>
+
+<h2>4. Filters to allow for more creativity</h2>
+
+<p>So far the only filters I have used are a &ldquo;Circular Polariser&rdquo; to enhance sky&rsquo;s, cut out reflections, etc. and a &ldquo;UV&rdquo; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &ldquo;Neutral Density&rdquo; (or &ldquo;ND&rdquo;) filter and a &ldquo;Graduated Blue-Yellow&rdquo; filter.<br/>
+Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day &ndash; it looked fantastic!<br/>
+The &ldquo;Graduated Blue-Yellow&rdquo; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.</p>
+
+<h2>Summary</h2>
+
+<p>So at the end of the day, the course was quite basic, but in our tangential conversations I gained some pretty cool tips and tricks.<br/>
+I think the most valuable aspect of a course like this is not so much the material presented, but just to experience another photographers style. It&rsquo;s always interesting to see how everyone thinks about things in their own unique way, and going through other peoples photos with a conversation is really intriguing.</p>
+
+<p>Thanks to Rob and Sarah for the gift and Amy for keeping me company!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Removing geotag data from JPGs]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/11/removing-geotag-data-from-jpgs.html"/>
+    <updated>2011-11-05T13:48:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/11/removing-geotag-data-from-jpgs</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+Just a quick note, these days most cameras automatically geotag photos which is pretty cool, especially when taking travel photos, but sometimes you may not want everyone to know where a photo was actually taken.<br />For example, a photo of your backyard could give away your home address which is probably not a great thing.<br /><br />Its really easy to clear the geotag data with a great little tool called <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span>.<br />I used this tool in an <a href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html">earlier blog post</a> too and I find it really useful!<br /><br />To install <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> in Ubuntu:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo apt-get install libimage-exiftool-perl</blockquote><br />Then executing <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> followed by a jpg filename will output a whole bunch of exif data for you - some of which may have geolocation data:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool image.jpg <br />ExifTool Version Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 8.60<br />File Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : image.jpg<br />Directory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : .<br />File Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 14 kB<br />...</blockquote><br />The clear this geotag data out, simply issue this command:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool -gps:all= image.jpg</span></blockquote>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[24-70mm f2.8 VS 17-50mm f2.8]]></title>
+    <link href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html"/>
+    <updated>2011-04-16T09:12:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28</id>
+    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+A friend of mine has a Canon 24-70mm f2.8 'L' lens and after having a play with it and looking at his photos I have had a little bit of gear-envy.<br />The extra speed and frequent bokeh was really nice! <br />Naturally I started looking at prices.. and the Nikon equivalent is... not cheap!<br /><br />I cant justify <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=1917">$1969</a> on a lens! Especially considering that I dont actually need it, and I am just a hobbyist (therefore: return on investment == profit from my work == $0).<br /><br />I then read up on some more affordable <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2221">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=374">Tamron</a> lenses that were similar and liked the prices much better!<br />... but im still really indecisive :(<br /><br />Then I saw the 17-50mm f2.8 lenses (from <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2416">Tamron</a>, <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=3013">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2278">Tokina</a>), and this made me think..<br />When I was travelling to Japan (with Sarma, the Canon guy) I remember him complaining about not being able to get a wide enough shot and he would often stand pretty far back to get the shot he wanted or swap to his 10-20mm lens.<br />This probably wouldn't be an issue with a full-frame camera, but the 50d's smaller sensor means it is already quite "zoomed-in" at its widest setting.<br /><br />I started writing up an email to ask Sarma what he thought and realized I have all his photos from our Japan trip, so with a bit of linux command line fun, I came up with this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool -p '$focallength' -q -f `find -L .` | sort -n | uniq -c</span></blockquote>Now for the explanation: <br /><dl><dt><b>exiftool -p '$focallength' -q -f</b></dt><dd>exiftool extracts exif information from jpg's.The -p prints a formatted string, which I inserted just the $focallength variable.The -q means quiet (basically, dont print too much).The -f is the list of files, which I use a sub-command (wrapped in backticks) to get.</dd><dt><b>find -L . </b></dt><dd>As all of our groups photos were kind-of mixed in together, I created a directory with symlinks to just Sarma's photos (hence the find -L, where -L will follow symlinks to the appropriate directories).</dd><dt><b>sort -n</b></dt><dd>This just sorts the data by numberic value (so 10 &gt; 1), this is mainly so the uniq command works properly.</dd><dt><b>uniq -c</b></dt><dd>This will collapse the data down to unique values and with the -c, it will also print the number of occurences have been collapsed down.</dd> </dl>The output of this command included all of Sarma's photos (not just taken with the 24-70) but it still gave me a pretty good idea.<br />The output looked like this:<br /><br /><pre>86    10.0 mm<br />2     11.0 mm<br />2     15.0 mm<br />14    16.0 mm<br />2     18.0 mm<br />108   20.0 mm<br />2362  24.0 mm<br />142   28.0 mm<br />176   32.0 mm<br />138   35.0 mm<br />104   40.0 mm<br />118   45.0 mm<br />136   47.0 mm<br />120   50.0 mm<br />94    55.0 mm<br />78    58.0 mm<br />76    60.0 mm<br />76    65.0 mm<br />70    67.0 mm<br />52    70.0 mm<br />52    73.0 mm<br />34    75.0 mm<br />14    80.0 mm<br />48    82.0 mm<br />56    84.0 mm<br />18    85.0 mm<br />24    88.0 mm<br />10    90.0 mm<br />14    92.0 mm<br />12    93.0 mm<br />16    95.0 mm<br />10    96.0 mm<br />4     97.0 mm<br />8     98.0 mm<br />8     99.0 mm<br />12    100.0 mm<br />10    102.0 mm<br />404   105.0 mm<br /><br /></pre>With the majority of Sarma's photos clearly being taken at 24mm, it made me think that as I too have a cropped sensor camera, the wider 17-50mm lenses are probably a better choice for me as I really dont have any plans to lash out on a full frame camera anytime soon :P
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

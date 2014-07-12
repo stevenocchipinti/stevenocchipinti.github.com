@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Minecraft exception in linux - StevenOcchipinti.com</title>
+  <meta name="author" content="Steven Occhipinti">
+
+  
+  <meta name="description" content="How to fix Java exception in Minecraft under linux">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-38345732-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">StevenOcchipinti.com</a></h1>
+  
+    <h2>Coder.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation">
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:blog.stevenocchipinti.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/travel">Travel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Minecraft Exception in Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-02T12:25:00+11:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I finally decided to install Minecraft on my new shiny <a href="/2011/12/toshiba-portege-z830.html">Toshiba Portege z830</a>.<br/>
+Ubuntu ships with an open-source version of Java, which did run Minecraft, but the graphics were terrible, even on the lowest settings. There were artefacts everywhere!</p>
+
+<p>So as recommended, I switched to the official JRE. Now the login screen works, but that&rsquo;s about it. After logging in, I just got a black screen and the following exception in the console:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Exception in thread "Minecraft main thread"
+</span><span class='line'>java.lang.ExceptionInInitializerError at
+</span><span class='line'>net.minecraft.client.Minecraft.a(SourceFile:180) at
+</span><span class='line'>net.minecraft.client.Minecraft.run(SourceFile:648) at
+</span><span class='line'>java.lang.Thread.run(Thread.java:662)&lt;div class="de2"&gt;Caused by: java.lang.ArrayIndexOutOfBoundsException: 0 at
+</span><span class='line'>org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:234) at
+</span><span class='line'>org.lwjgl.opengl.XRandR$Screen.&lt;init&gt;(XRandR.java:196) at
+</span><span class='line'>org.lwjgl.opengl.XRandR.populate(XRandR.java:87) at
+</span><span class='line'>org.lwjgl.opengl.XRandR.access$100(XRandR.java:52)at
+</span><span class='line'>org.lwjgl.opengl.XRandR$1.run(XRandR.java:110) at
+</span><span class='line'>java.security.AccessController.doPrivileged(Native Method) at
+</span><span class='line'>org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at
+</span><span class='line'>org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at
+</span><span class='line'>org.lwjgl.opengl.Display.&lt;clinit&gt;(Display.java:135)
+</span><span class='line'>... 3 more</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After discussing the problem in IRC, the solution was quite simple. It turns out <code>lwjgl</code> is a &ldquo;<em>Light Weight Java Game Library</em>&rdquo; and the version I had wasn&rsquo;t behaving.<br/>
+On the advice of the helpful IRC&#8217;ers, I downloaded the latest <code>lwjgl</code> from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.</p>
+
+<p>To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
+</span><span class='line'>cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Done! Now it works nicely.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-19T00:39:43+11:00" class="updated">Updated Feb 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/java/'>java</a>, <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/minecraft/'>minecraft</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/12/toshiba-portege-z830.html" title="Previous Post: Toshiba Portege Z830">&laquo; Toshiba Portege Z830</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/copy-and-paste-over-ssh-with-xclip.html" title="Next Post: Copy and Paste over SSH with Xclip">Copy and Paste over SSH with Xclip &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul class="social-icons">
+    <li><a class="social-rss" href="/atom.xml" title="subscribe via RSS">RSS</a></li>
+    <li><a class="social-github" href="https://github.com/stevenocchipinti" title="GitHub">GitHub</a></li>
+    <li><a class="social-linkedin" href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750" title="LinkedIn">LinkedIn</a></li>
+    <li><a class="social-flickr" href="http://flickr.com/stevenocchipinti" title="Flickr">Flickr</a></li>
+    <li><a class="social-twitter" href="http://twitter.com/steveocchipinti" title="Twitter">Twitter</a></li>
+    <li><a class="social-facebook" href="http://facebook.com/stevenocchipinti" title="Facebook">Facebook</a></li>
+  </ul>
+  <div style="clear: both;"/>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Occhipinti -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenocchipinticom';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
