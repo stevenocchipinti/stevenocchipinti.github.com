@@ -190,4 +190,4 @@ At this point, you should have a somewhat powerful installation of vim, the next
 - run `vimtutor` on the command line to learn
 - [vimcasts](http://vimcasts.org/)
 - [vimgolf](http://www.vimgolf.com/)
-- [my .vimrc](github.com/stevenocchipinti/dotvim)
+- [my .vimrc](http://github.com/stevenocchipinti/dotvim)
