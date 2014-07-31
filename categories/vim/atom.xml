@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-07-12T14:34:55+10:00</updated>
+  <updated>2014-07-31T10:01:39+10:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -193,7 +193,7 @@ let g:ctrlp_user_command = {
 <li>run <code>vimtutor</code> on the command line to learn</li>
 <li><a href="http://vimcasts.org/">vimcasts</a></li>
 <li><a href="http://www.vimgolf.com/">vimgolf</a></li>
-<li><a href="github.com/stevenocchipinti/dotvim">my .vimrc</a></li>
+<li><a href="http://github.com/stevenocchipinti/dotvim">my .vimrc</a></li>
 </ul>
 
 ]]></content>
