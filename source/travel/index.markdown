@@ -10,10 +10,27 @@ footer: false
 Here is a collection of my holidays.  
 I try to keep travel blogs for my trips, which you can find below.
 
+Perth and Bali
+--------------
+
+{% img left http://2.bp.blogspot.com/-1ZVqkqbQ6yk/VHkuKx9V1FI/AAAAAAAABn8/PmcVnBbSrnU/s320/DSC_1939-1.jpg %}
+
+<dl>
+<dt>Perth:</dt>
+<dd>14/11/2014 &rarr; 17/11/2014</dd>
+<dt>Bali:</dt>
+<dd>18/11/2014 &rarr; 23/11/2014</dd>
+<dt>Perth:</dt>
+<dd>24/11/2014 &rarr; 26/11/2014</dd>
+</dl>
+
+<a href="http://bali2014.stevenocchipinti.com/">Blog</a>
+
+
 Japan
 -----
 
-{% img left http://2.bp.blogspot.com/-By7KfzTiSIk/UQrwsM1l-cI/AAAAAAAABC8/siTLnsdrwzE/s400/DSC_7116_cropped.JPG %}
+{% img left http://2.bp.blogspot.com/-By7KfzTiSIk/UQrwsM1l-cI/AAAAAAAABC8/siTLnsdrwzE/s320/DSC_7116_cropped.JPG %}
 
 <dl>
 <dt>Osaka:</dt>
