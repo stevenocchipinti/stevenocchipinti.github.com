@@ -13,7 +13,7 @@ I try to keep travel blogs for my trips, which you can find below.
 Perth and Bali
 --------------
 
-{% img left http://2.bp.blogspot.com/-1ZVqkqbQ6yk/VHkuKx9V1FI/AAAAAAAABn8/PmcVnBbSrnU/s320/DSC_1939-1.jpg %}
+{% img left https://lh6.googleusercontent.com/Epml7Mlv2ISOGohm4F6bBPG9N9WD1yRBamNKyTmK_aA=s320 %}
 
 <dl>
 <dt>Perth:</dt>
