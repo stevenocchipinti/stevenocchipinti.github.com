@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="The way my desk is positioned means that when I&#8217;m on my computer I face the corner of the room, which means the door is behind me.Quite often &hellip;">
+  <meta name="description" content="Just a quick note, these days most cameras automatically geotag photos which is pretty cool, especially when taking travel photos, but sometimes you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/11/removing-geotag-data-from-jpgs.html">Removing Geotag Data From JPGs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-11-05T13:48:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2011</time>
+        
+         | <a href="/2011/11/removing-geotag-data-from-jpgs.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Just a quick note, these days most cameras automatically geotag photos which is pretty cool, especially when taking travel photos, but sometimes you may not want everyone to know where a photo was actually taken.<br />For example, a photo of your backyard could give away your home address which is probably not a great thing.<br /><br />Its really easy to clear the geotag data with a great little tool called <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span>.<br />I used this tool in an <a href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html">earlier blog post</a> too and I find it really useful!<br /><br />To install <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> in Ubuntu:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo apt-get install libimage-exiftool-perl</blockquote><br />Then executing <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> followed by a jpg filename will output a whole bunch of exif data for you - some of which may have geolocation data:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool image.jpg <br />ExifTool Version Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 8.60<br />File Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : image.jpg<br />Directory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : .<br />File Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 14 kB<br />&#8230;</blockquote><br />The clear this geotag data out, simply issue this command:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool -gps:all= image.jpg</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -502,48 +544,6 @@ Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/08/mounting-nfs-in-ubuntu.html">Mounting NFS in Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-08-05T06:17:00+10:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
-        
-         | <a href="/2011/08/mounting-nfs-in-ubuntu.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/5/">&larr; Older</a>
@@ -572,6 +572,10 @@ At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubun
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -585,10 +589,6 @@ At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubun
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>

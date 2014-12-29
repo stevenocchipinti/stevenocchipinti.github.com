@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! &ndash; The Vim Learning Curve is a Myth, Thoughtbot A lot of people are &hellip;">
+  <meta name="description" content="It&rsquo;s so easy to write little scripts and execute them at a later time with
+the standard command-line tooling available in unix-like operating &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-29T12:50:00+11:00" pubdate data-updated="true">Dec 29<span>th</span>, 2014</time>
+        
+         | <a href="/2014/12/29/sending-email-from-the-command-line/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&rsquo;s so easy to write little scripts and execute them at a later time with
+the standard command-line tooling available in unix-like operating systems, but
+if you plan on having them execute while you are out and about, it would be nice
+to get a notification on your phone that it worked (or didn&rsquo;t work).</p>
+
+<p>If you&rsquo;re happy with a simple email notification, then luckily this can be done
+with one simple line of code!</p>
+
+<p>On a mac:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -f from-addr@example.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On *nix:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -aFrom:from-addr@example.com
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1291,48 +1350,6 @@ When you want to use the sauce, it still needs to be cooked, so you can experime
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/01/script-to-transfer-photos-in-linux.html">Script to Transfer Photos in Linux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2013-01-04T16:38:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
-        
-         | <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1359,6 +1376,10 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
@@ -1372,10 +1393,6 @@ Every time I go on holiday, I end up writing the same bash script! &#8230; I kno
     
       <li class="post">
         <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-12-16T20:52:40+11:00</updated>
+  <updated>2014-12-29T13:07:19+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
+    <updated>2014-12-29T12:50:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s so easy to write little scripts and execute them at a later time with
+the standard command-line tooling available in unix-like operating systems, but
+if you plan on having them execute while you are out and about, it would be nice
+to get a notification on your phone that it worked (or didn&rsquo;t work).</p>
+
+<p>If you&rsquo;re happy with a simple email notification, then luckily this can be done
+with one simple line of code!</p>
+
+<p>On a mac:
+<code>sh
+echo "Hello" | mail -s "Your alert" to-addr@example.com -f from-addr@example.com
+</code></p>
+
+<p>On *nix:
+<code>sh
+echo "Hello" | mail -s "Your alert" to-addr@example.com -aFrom:from-addr@example.com
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Minecraft in Linux]]></title>
@@ -242,18 +267,6 @@ sudo system-config-printer
 <p><img class="center <a" src="href="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/Screenshot+from+2012-08-05+14%253A04%253A55.png">http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/Screenshot+from+2012-08-05+14%253A04%253A55.png</a>" title="The classic printing user interface&hellip; the one that works!" ></p>
 
 <p>Clicking the big &ldquo;Add&rdquo; button in this screen and following the steps worked great for me. Another alternative is to use the CUPS web interface on <a href="http://localhost:631">http://localhost:631</a> but that can be a little more complicated.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Copy and Paste over SSH with Xclip]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/02/copy-and-paste-over-ssh-with-xclip.html"/>
-    <updated>2012-02-12T12:59:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/02/copy-and-paste-over-ssh-with-xclip</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-Have you ever SSH'ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn't seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>"X selections"</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
-</div>
-
 ]]></content>
   </entry>
   

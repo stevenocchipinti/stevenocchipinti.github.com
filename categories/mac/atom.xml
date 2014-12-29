@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Mac | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: mac | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-12-16T20:52:40+11:00</updated>
+  <updated>2014-12-29T13:07:19+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,135 +14,27 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Toshiba Portege Z830]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html"/>
-    <updated>2011-12-10T07:21:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830</id>
-    <content type="html"><![CDATA[<p>If you saw my <a href="/2011/11/13-core-i7-samsung-series-9-ultrabook.html">last post</a>, you would have seen that I recently bought a 13" Samsung Series 9 ultrabook &ndash; I still think these machines are stunning!</p>
+    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
+    <updated>2014-12-29T12:50:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s so easy to write little scripts and execute them at a later time with
+the standard command-line tooling available in unix-like operating systems, but
+if you plan on having them execute while you are out and about, it would be nice
+to get a notification on your phone that it worked (or didn&rsquo;t work).</p>
 
-<h2>The problem</h2>
+<p>If you&rsquo;re happy with a simple email notification, then luckily this can be done
+with one simple line of code!</p>
 
-<p>There are a couple of little complaints floating around about the Samsung, like heat output, easily finger-printed chasis, but none of these <em>really</em> bother me, but there is one thing that does&hellip; alot&hellip; and its the wifi!</p>
+<p>On a mac:
+<code>sh
+echo "Hello" | mail -s "Your alert" to-addr@example.com -f from-addr@example.com
+</code></p>
 
-<p>I could be using the laptop in the next room from my wireless router and it would dropout completely or go incredibly slow, if I move to the other side of the house where my bedroom is, my phone will have full reception, but this laptop will not see the wifi network at all &ndash; and this in unacceptable.</p>
-
-<h2>The transition</h2>
-
-<p>After returning the laptop (twice) I eventually asked for my money back so I could go purchase my second preference &ndash; the Macbook Air.<br/>
-Unfortunately, the shop would not give me a full refund and could only offer me a credit note.<br/>
-I tried to explain that no other units in store could offer me the same specs that I was after, the Samsung&rsquo;s best competition is the Macbook Air, but as they couldn&rsquo;t help me I asked to see what else they have in a light 13".</p>
-
-<p>The sales guy showed me an <a href="http://zenbook.asus.com/">Asus Zenbook</a> and a new product which had just arrived to their store, the <a href="http://us.toshiba.com/computers/laptops/portege/z830/">Toshiba Portege Z830</a>.<br/>
-I was lucky enough to be the first to see this at their store and even got to open the display model and check it out.</p>
-
-<p>The decision between the two was tough!<br/>
-The Asus Zenbook had a very sturdy exterior and had a similar tapered  design to the Macbook Air while the Toshiba Portege had a business feel  to it, but was slightly lighter and thinner. <br/>
-They were both similarly spec'ed with Core i5&rsquo;s, 128GB SSD&rsquo;s and 4GB of RAM, but there were a few notable differences between them.</p>
-
-<p>Although the Asus Zenbook does not have a backlit keyboard and has reduced size ports, it does has a higher resolution screen than the Samsung and Toshiba, but like the Mac it&rsquo;s a glossy screen. I personally prefer matte screens because even in brightly lit areas or even outside in direct sunlight, the screen is alot more visible.</p>
-
-<p>The Toshiba Portege has a matte screen, backlit keyboard, has a full size HDMI port, VGA port, Ethernet port, 2x USB 2.0 ports, 1x USB 3.0 port and SD card reader and its thinner and lighter. Toshiba also give a 3 year warranty out-of-the-box with this model.<br/>
-The screen is quite a bit more flimsy than the others and the system fan does tend to groan a little (compared to the Samsung at least), but this is probably all I can complain about.</p>
-
-<h2>The solution</h2>
-
-<p>I took a day to think about it and eventually made up my mind for the Portege.<br/>
-In the US, there is an i7 variety with 6GB of RAM, but I don&rsquo;t really want to wait for it to get here.<br/>
-I took a look at a <a href="http://ark.intel.com/compare/54616,56858">comparison</a> between the i7 from the Samsung and the i5 from the Toshiba, and while I would have paid the extra for the i7, I don&rsquo;t think I&rsquo;ll really notice the difference in most scenarios.</p>
-
-<p>It seems I am not the only one who ended up swapping a Samsung Series 9 for a Toshiba Portege Z830 either, I came across this <a href="http://thessdreview.com/our-reviews/sata-3/toshiba-z830-13-3-ultrabook-laptop-review-toshiba-creates-one-amazing-ultrabook/">blog post</a> where the author goes into more detail and provides results of quite specific tests.</p>
-
-<p>In the end I paid $1539 for the laptop with a 3 year warranty and then an extra $79 to upgrade it to 6GB of RAM.<br/>
-While it&rsquo;s no Samsung Series 9, its pretty nice and the cut in performance saved me a little more than $600.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[13" Core i7 Samsung Series 9 Ultrabook]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook.html"/>
-    <updated>2011-11-28T00:34:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook</id>
-    <content type="html"><![CDATA[<p>Back in my first year of uni, I bought one of the early Core Duo (not Core 2 Duo) 15" Asus laptops which at the time was great and it had a decent graphics card for games, etc.<br/>
-Roughly 6 years later, its showing its age. The battery lasts less than an hour now, it weighs about 3kg not including the adapter and performance is lacking compared to todays technology.</p>
-
-<p>After a recent shoulder injury and a busy week that involved me carrying my laptop from place to place, I decided it was time to reward myself with an early Christmas present and buy a new machine.</p>
-
-<p>My requirements were:</p>
-
-<ul>
-<li>13" screen</li>
-<li>As thin and as light as possible to aid portability</li>
-<li>Powerful enough to do almost anything my daily activities could involve</li>
-<li>&lt;~ $2000</li>
-</ul>
-
-
-<p>I compared as many of these 13" <em>&ldquo;ultrabooks&rdquo;</em> as I could and before long I had created a shortlist of my top 3 &ndash; which included an Asus u-Series, a Macbook Air and a Samsung Series 9.</p>
-
-<h2>Asus u-Series</h2>
-
-<p>The <a href="http://www.asus.com.au/Notebooks/Superior_Mobility/U36SD/#specifications">Asus machines</a>, as usual, had a very good bang-for-buck, a nice thickness of 19mm and unlike most others, some models had full size video output and ethernet plugs.<br/>
-While the price and size were right, the highest spec'ed machines were not quite as impressive as its competition. If budget was the number one concern, the Asus u-Series and Zenbook range offer pretty good value.</p>
-
-<h2>Macbook Air</h2>
-
-<p>I have never been a <em>&ldquo;Mac person&rdquo;</em> due to the traditional heavy pricing and proprietary nature of alot of their products, but these days (after some convincing) I believe the hardware and even price does have a surprisingly strong position in the competition.<br/>
-The <a href="http://store.apple.com/au/browse/home/shop_mac/family/macbook_pro">13" Macbook Pro</a> and <a href="http://www.apple.com/au/macbookair/specs.html">Macbook Air</a> both had very good specs to offer for around the $2000 price tag, both with Core i7&rsquo;s, 4-8GB RAM and SSD&rsquo;s, not to mention pretty attractive packaging.<br/>
-After seeing a Macbook Air up close, I really liked how the thickest point is about 17mm or so at the back but it tapers off to next to nothing at the front.</p>
-
-<p>So the model I chose for comparison purposes was worth $1928.99 and had the following specs:</p>
-
-<ul>
-<li>1.8GHz Dual-Core Intel Core i7</li>
-<li>4GB 1333MHz DDR3 SDRAM</li>
-<li>256GB flash storage</li>
-<li>Mini DisplayPort to DVI adapter ($30)</li>
-</ul>
-
-
-<p>I don&rsquo;t like the very proprietary DisplayPort and its $30 adapters, but its not too bad as almost <em>everyone</em> at my office uses a Mac so finding a spare adapter when needed wouldn&rsquo;t be too hard (I guess popularity offsets proprietary-ness).</p>
-
-<p>The operating system did not bother me too much either as I intended to be running Linux as my primary OS anyway, but having a Mac would give me more familiarity with OSX which would be helpful considering its popularity in my line of work.</p>
-
-<p>The minor annoyances would be: expensive adapters for video and ethernet ports, unfamiliar keyboard layout (command key where alt should be, etc), non-upgradeable ram, glossy screen, etc. &ndash; but those are pretty minor.</p>
-
-<h2>Samsung Series 9</h2>
-
-<p>I found these ultrabooks to have a very unique look and one of the first well thought out, thin designs that are not just another Mac look-a-like.<br/>
-The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;&ndash; which is a light and strong material used in aircrafts and while it looks stunning and adds sophistication and uniqueness to the overall design on the unit, this material along with the black plastic are both fingerprint magnets!</p>
-
-<p>The <a href="http://www.samsung.com/au/consumer/pc-peripherals/notebook-pc/thin-light/NP900X3A-A03AU/index.idx?pagetype=prd_detail&amp;amp;tab=specification">specs of the Series 9 unit</a> I used for comparison (and ultimately bought) was quite good:</p>
-
-<ul>
-<li>1.5GHz Core i7</li>
-<li>8GB RAM</li>
-<li>256GB SSD</li>
-<li>Micro-HDMI to HDMI adapter ($15)</li>
-</ul>
-
-
-<p>Initially I thought 1.5 GHz was kinda low, but after conversations with quite a few people and some <a href="http://ark.intel.com/compare/54616">research</a>, this speed is its sort-of <em>&ldquo;resting&rdquo;</em> frequency and will automatically scale up to 2.6GHz when required.</p>
-
-<p>The one big catch with this system is the RRP of ~$2700, while most Aussie shops sold them for ~$2500. This made me consider the Mac even more!</p>
-
-<p>But during my research I saw <a href="https://www.mln.com.au/">MLN</a>&rsquo;s price drop down to a much more attractive $1997 and immediately rang them to find out more details and how long the special would last. It turns out that Samsung are starting to phase them out of stores (presumably to make way for a new product next year) and naturally they had sold alot of units and only had a few left.</p>
-
-<p>I did a bit more research and found that to save space, the ports are hidden behind very aircraft-like flaps, but as with the Mac, they are reduced size ports.<br/>
-The video output is provided in the form of a micro-HDMI port &ndash; which is at least a more common format and I don&rsquo;t need to go through apple.com.<br/>
-The other space-saving trade-off was a (sadly) proprietary ethernet port that comes bundled with an adapter to convert it to RJ45 &ndash; but unlike the Mac where you need to buy a USB network adapter, this actually has the network card built in, it just has an unusual plug &ndash; which I don&rsquo;t intend to use much anyway.</p>
-
-<p>Another plus is this model comes with 1x USB 3.0 port (and a 2.0 port) which is great considering the speeds my brother gets with his USB 3.0 flash drive.</p>
-
-<p>So I went to MLN and inspected the unit up close and what eventually made my decision for the Samsung was that for about the same price I get a machine with double the RAM (handy for VMs), a windows licence for portable gaming and a bunch of freebies from MLN including the HDMI to micro-HDMI cable, a set of Sennheiser headphones and a padded sleeve to carry it.</p>
-
-<p>I was able to get the cable and sleeve free because I opted to purchase the extended 3 year pickup warranty for an additional $180ish and the headphones were a Christmas present :)</p>
-
-<p>Initial impressions are very positive, the screen is incredibly bright and vibrant and with a smooth matte finish, I have had no issues using it outdoors.<br/>
-The backlit keyboard is quite nice too, although the brightness of this light is controlled via windows drivers, so in linux (at this stage) I cant control its brightness.<br/>
-The touchpad is large and seems to employ the same technique as the Mac Magic Mouse where there is one click-able button (the lower part of the pad) and depending on where your finger is when you click determines a right or left mouse click and once again, this doesnt work in Linux out of the box, but the standard 2 finger tap works as per normal.<br/>
-Using Ubuntu 11.10 the rest of the hardware works out of the box, so no need to fiddle with drivers for network, graphics, webcam, etc.</p>
-
-<p>Overall I am very happy with my purchase and its a huge step up from my old 15.4" 3kg laptop!</p>
+<p>On *nix:
+<code>sh
+echo "Hello" | mail -s "Your alert" to-addr@example.com -aFrom:from-addr@example.com
+</code></p>
 ]]></content>
   </entry>
   
