@@ -153,7 +153,7 @@ Bundle 'bogado/file-line'
 Bundle 'godlygeek/tabular'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'scrooloose/syntastic'
-Bundle 'tsaleh/vim-matchit'
+Bundle 'vim-scripts/matchit.zip'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'cakebaker/scss-syntax.vim'
 filetype plugin indent on
