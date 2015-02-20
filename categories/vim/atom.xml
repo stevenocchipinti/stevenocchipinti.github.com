@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vim | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2014-12-29T13:07:19+11:00</updated>
+  <updated>2015-02-20T11:36:14+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -156,7 +156,7 @@ Bundle 'bogado/file-line'
 Bundle 'godlygeek/tabular'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'scrooloose/syntastic'
-Bundle 'tsaleh/vim-matchit'
+Bundle 'vim-scripts/matchit.zip'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'cakebaker/scss-syntax.vim'
 filetype plugin indent on
