@@ -8,3 +8,18 @@
 //$heading-font-family: "Verdana", sans-serif;
 //$header-title-font-family: "Futura", sans-serif;
 //$header-subtitle-font-family: "Futura", sans-serif;
+
+th {
+  font-weight: bold;
+}
+
+// Make <code> tags work in tables too!
+code {
+  font-weight: normal;
+  background: #fff;
+  font-size: .8em;
+  color: #555;
+  border: 1px solid #ddd;
+  @include border-radius(0.4em);
+  padding: .3em;
+}
