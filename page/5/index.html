@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="At home we have a NAS that supports NFS!Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local &hellip;">
+  <meta name="description" content="Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the poweroff command you will &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/poweroff-without-password.html">Poweroff Without a Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-08-21T07:29:00+10:00" pubdate data-updated="true">Aug 21<span>st</span>, 2011</time>
+        
+         | <a href="/2011/08/poweroff-without-password.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -455,63 +497,6 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/cant-open-file-for-writing.html">Can&#8217;t Open File for Writing</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-06-18T13:09:00+10:00" pubdate data-updated="true">Jun 18<span>th</span>, 2011</time>
-        
-         | <a href="/2011/06/cant-open-file-for-writing.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>E212: Can&#8217;t open file for writing  <br/>Press ENTER or type command to continue</p></blockquote>
-
-
-<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
-It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
-
-<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
-
-<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
-
-<figure class='code'><figcaption><span>.vimrc </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
-
-<p>Works brilliantly!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -540,6 +525,10 @@ It normally happens when you don&rsquo;t have permission to write to your chosen
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/03/24/git-reset-cheatsheet/">Git Reset Cheatsheet</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
       </li>
     
@@ -553,10 +542,6 @@ It normally happens when you don&rsquo;t have permission to write to your chosen
     
       <li class="post">
         <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/11/10/installing-minecraft-in-linux/">Installing Minecraft in Linux</a>
       </li>
     
   </ul>

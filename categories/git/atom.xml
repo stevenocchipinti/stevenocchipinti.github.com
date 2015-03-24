@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-02-20T11:36:14+11:00</updated>
+  <updated>2015-03-25T10:22:16+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,200 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git reset cheatsheet]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet/"/>
+    <updated>2015-03-24T11:13:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet</id>
+    <content type="html"><![CDATA[<p>The <code>reset</code> command in git does quite a lot, but I always forget all its uses.<br/>
+This is a cheatsheet based on <a href="http://git-scm.com/blog/2011/07/11/reset.html">this blog</a>.</p>
+
+<p>The <code>reset</code> command will:<br/>
+1. Move whatever branch <code>HEAD</code> points to <em>(stop here unless <code>--soft</code>)</em><br/>
+2. THEN, make the Index look like that <em>(stop here unless <code>--hard</code>)</em><br/>
+3. THEN, make the Working Directory look like that</p>
+
+<h2>Commit level</h2>
+
+<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
+<tbody><tr>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Current Branch?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Index?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Working Dir?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Working Dir Safe?
+</th>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>reset --soft [commit]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>reset (--mixed) [commit]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>reset --hard [commit]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<span style="color: rgb(255, 38, 0);">NO</span>
+</th>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>checkout [commit]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+</tr>
+</tbody></table>
+
+
+<p><strong>reset &#45;&#45;soft [commit]</strong><br/>
+When given <code>HEAD~</code>, this undos the git commit<br/>
+Will move the current branch back to the given commit, but not update the index or working directory<br/>
+This provides similar functionality as <code>git checkout --amend</code> (but changing the whole commit, not just the message)</p>
+
+<p><strong>reset (&#45;&#45;mixed) [commit] <span style="color: rgb(160, 160, 160); font-weight: normal;">(default form)</span></strong><br/>
+When given <code>HEAD~</code>, this undos the <code>git commit</code> and the <code>git add</code><br/>
+Will move the current branch and update the index, but working directory will remain untouched</p>
+
+<p><strong>reset &#45;&#45;hard [commit] <span style="color: rgb(255, 38, 0);">(unsafe)</span></strong><br/>
+When given <code>HEAD~</code>, this undos the <code>git commit</code>, <code>git add</code> and also the changes in the working directory<br/>
+Will update all three trees to match the given commit<br/>
+This is useful to remove commits you don’t want<br/>
+From a clean working tree, it is also useful to undo a conflicted (or not conflicted) <code>git merge</code> or a <code>git pull</code><br/>
+From a dirty working tree, use <code>--merge</code> instead, this will safely preserve your local changes<br/>
+The <code>--keep</code> option is useful when removing some of the last commits while safely keeping your local changes</p>
+
+<p><strong>checkout [commit]</strong><br/>
+When given <code>HEAD~</code>, this will safely update the working directory and the index without moving the current branch<br/>
+This will leave you in a <em>detached HEAD</em> state</p>
+
+<h2>File level</h2>
+
+<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
+<tbody><tr>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Current Branch?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Index?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Updates Working Dir?
+</th>
+<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
+Working Dir safe?
+</th>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>reset (commit)&nbsp;[file]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+</tr>
+<tr>
+<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<code>checkout (commit) [file]</code>
+</th>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+NO
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+YES
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
+<span style="color: rgb(255, 38, 0);">NO</span>
+</td>
+</tr>
+</tbody></table>
+
+
+<p><strong>reset (commit) [file]</strong><br/>
+When given a file path, the first step of updating the branch that <code>HEAD</code> points to is skipped<br/>
+Will update the index only to match commit, leaving both working directory and current branch untouched<br/>
+From here, you could use <code>git checkout</code> to make the working directory match the index, although <code>git checkout</code> can do that with one command (see below)<br/>
+The commit parameter will default to <code>HEAD</code> which effectively <em>un-stages</em> files</p>
+
+<p><strong>checkout (commit) [file] <span style="color: rgb(255, 38, 0);">(unsafe)</span></strong><br/>
+Updates the working directory only, without changing the index, current branch or even what <code>HEAD</code> is pointing to<br/>
+This would effectively be <code>git reset --hard [branch] file</code>, but this command does not exist</p>
+
+<p>More info and examples in <code>git reset --help</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Completely removing a git commit due to sensitive information]]></title>
