@@ -23,3 +23,10 @@ code {
   @include border-radius(0.4em);
   padding: .3em;
 }
+
+figure.code code {
+  font-weight: normal;
+  font-size: 1em;
+  border: 0;
+}
+
