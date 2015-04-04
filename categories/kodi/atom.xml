@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: kodi | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/kodi/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2015-04-04T23:10:31+11:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring a HDMI-CEC remote in Kodi]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/"/>
+    <updated>2015-04-04T21:39:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using Raspbmc for a while now, but I only just saw that it has been
+superseded by <a href="https://osmc.tv/">OSMC</a> (and XBMC is now called <a href="http://kodi.tv/">Kodi</a>,
+so with the long weekend I thought I&rsquo;d upgrade.</p>
+
+<p>The upgrade process is really simple. I backed up my existing installtion of
+Raspbmc, downloaded the offical <a href="https://osmc.tv/download/">OSMC installer</a>
+from their site, installed it over the top and booted it up.</p>
+
+<p>From here, there are only a few things to do. I entered my <a href="https://osmc.tv/help/wiki/pi-buycodec">MPG2 and WVC1 codecs</a>,
+setup my video sources and kicked off the scrapers and installed a few addons.
+The only other thing is setting up my TV remote.
+(I did this last time but forgot how, so this time I thought I&rsquo;d blog it!)</p>
+
+<p>Out of the box, my Samsung <em>&ldquo;Smart Touch&rdquo;</em> Remote (<a href="https://osmc.tv/help/wiki/pi-buycodec">this one</a>
+if you&rsquo;re wondering) mostly just works, the only problem is the back button
+opens the context menu instead of going back!</p>
+
+<p>To fix this, the first step is to find out what each button on the remote maps
+to in Kodi. Thanks to this great <a href="http://forum.kodi.tv/showthread.php?tid=139145&amp;pid=1285390#pid1285390">forum post</a>
+by a user called &ldquo;Knapster&rdquo; this is really easy.</p>
+
+<p>Just SSH to the pi, create a new file <code>~/.kodi/userdata/keymaps/remote.xml</code> and
+paste <a href="https://gist.github.com/stevenocchipinti/42f2eca2a9f04ed9e52f">this contents</a>
+in it. Now reboot Kodi and everytime you press a button, you&rsquo;ll get a
+notification on the screen of what command it is sending.</p>
+
+<p>A quick way of doing that from an SSH session is like this:<br/>
+(The default username and password are both <code>osmc</code>)</p>
+
+<p><code>
+ssh osmc@&lt;kodi-ip-address&gt;
+curl https://gist.githubusercontent.com/stevenocchipinti/42f2eca2a9f04ed9e52f/raw/remote.xml &gt; ~/.kodi/userdata/keymaps/remote.xml
+sudo reboot
+</code></p>
+
+<p>In my case, everything seemed to make sense except the back button, which was
+actually sending <code>title</code> instead of <code>back</code>. As I don&rsquo;t have a <em>title</em> button,
+I&rsquo;m going to reassign that to be a back button instead.</p>
+
+<p>First, lets replace our <code>remote.xml</code> with the default configuration, you can get
+these mappings from the installed Kodi files:</p>
+
+<p><code>
+cp /usr/share/kodi/system/keymaps/remote.xml ~/.kodi/userdata/keymaps/remote.xml
+</code></p>
+
+<p>This file has what every command does in every context and makes it easy to
+modify. Here is a diff of the changes I made for my remote:</p>
+
+<p>```
+58c58</p>
+
+<h2>&lt;       <title>ContextMenu</title></h2>
+
+<blockquote><pre><code>  &lt;title&gt;Back&lt;/title&gt;
+</code></pre>
+
+<p>74c74</p>
+
+<h2>&lt;       <guide>ActivateWindow(TVGuide)</guide></h2>
+
+<pre><code>  &lt;guide&gt;ActivateWindow(Home)&lt;/guide&gt;
+</code></pre>
+
+<p>79c79</p>
+
+<h2>&lt;       <red>ActivateWindow(TVChannels)</red></h2>
+
+<pre><code>  &lt;red&gt;ContextMenu&lt;/red&gt;
+</code></pre>
+
+<p>```</p></blockquote>
+
+<p>I&rsquo;ve made the <em>&ldquo;title&rdquo;</em> button send the <code>back</code> command and because I don&rsquo;t have
+a TV tuner connected, I&rsquo;ve also re-assigned the <em>&ldquo;TV Guide&rdquo;</em> button to go to the
+home screen and the <em>&ldquo;Red&rdquo;</em> button to be the context menu button.<br/>
+Interestingly, the channel up and down buttons on my remote we already assigned
+to page up and page down, which suits me great while I don&rsquo;t have a TV Tuner.</p>
+
+<p>After rebooting, I now have a functional remote control!</p>
+]]></content>
+  </entry>
+  
+</feed>

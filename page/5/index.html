@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the poweroff command you will &hellip;">
+  <meta name="description" content="Pidgin is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.I chose Pidgin not because of a slick UI &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/meta-contacts-in-pidgin.html">Meta-contacts in Pidgin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-03T00:18:00+10:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+        
+         | <a href="/2011/09/meta-contacts-in-pidgin.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+<a href="http://pidgin.im/">Pidgin</a> is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.<br />I chose Pidgin not because of a slick UI but because it has some really nice features!<br /><br />The two features that stand out the most in my opinion are the &#8220;buddy pounces&#8221; and the many available plugins:<br /><br /><b>Buddy pounces</b><b>:</b><br />For those that don&#8217;t know about pounces, they are little predefined actions that can be triggered upon some configurable event, such as <i>&#8220;when &lt;SomeContact&gt; returns from away status, open a conversation window&#8221;</i>, or <i>&#8220;when &lt;SomeContact&gt; signs on, send them a predefined message&#8221;</i>.<br /><br /><b>Plugins:</b><br />Not only does Pidgin come with lots of plugins by default, but there are a lot of <a href="http://developer.pidgin.im/wiki/ThirdPartyPlugins">third party plugins</a> available too.<br />There are basic ones that offer a more robust and configurable way of notifying you of messages, etc and some more fun ones like &#8220;psychic mode&#8221; - which listens for when a new contact starts typing a message to you and pops up a convo window before they have even sent it.<br /><br /><b>Meta-contacts:</b><br />The one thing that I missed from other IM clients was meta-contacts.<br />For example, at any one time I have Pidgin signed into my Google chat, MSN and Facebook chat accounts and for those friends of mine that have an account on all three platforms, they appear 3 times in my buddy list.<br />With meta-contacts you can collapse those 3 contacts into just one.<br /><br />Well, it turns out this feature has been in Pidgin for quite a while, I just never noticed as its just not quite as obvious as with other clients.<br /><br /><b>How to use meta-contacts in Pidgin:</b><br />To use this feature, all you have to do is right-mouse click on the contact and click &#8220;expand&#8221; and drag and drop other contacts under the newly expanded name.<br />You should put the most common account at the top as that is the account is used by default when you double click the contact.<br /><br />Even though these features aren&#8217;t exactly ground breaking, when you get used to having them there it becomes a little harder to go back to clients without them.
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -455,48 +497,6 @@ If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite h
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/bash-auto-complete.html">Bash Auto-complete</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-06-20T05:40:00+10:00" pubdate data-updated="true">Jun 20<span>th</span>, 2011</time>
-        
-         | <a href="/2011/06/bash-auto-complete.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -525,6 +525,10 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">Configuring a HDMI-CEC Remote in Kodi</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/03/24/git-reset-cheatsheet/">Git Reset Cheatsheet</a>
       </li>
     
@@ -538,10 +542,6 @@ There are a ton of extended auto-completions that come with Ubuntu, but they are
     
       <li class="post">
         <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/12/14/preparing-for-trailwalker/">Preparing for TrailWalker</a>
       </li>
     
   </ul>

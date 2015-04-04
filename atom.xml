@@ -4,7 +4,7 @@
   <title><![CDATA[StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-03-25T10:28:13+11:00</updated>
+  <updated>2015-04-04T23:10:31+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring a HDMI-CEC remote in Kodi]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/"/>
+    <updated>2015-04-04T21:39:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using Raspbmc for a while now, but I only just saw that it has been
+superseded by <a href="https://osmc.tv/">OSMC</a> (and XBMC is now called <a href="http://kodi.tv/">Kodi</a>,
+so with the long weekend I thought I&rsquo;d upgrade.</p>
+
+<p>The upgrade process is really simple. I backed up my existing installtion of
+Raspbmc, downloaded the offical <a href="https://osmc.tv/download/">OSMC installer</a>
+from their site, installed it over the top and booted it up.</p>
+
+<p>From here, there are only a few things to do. I entered my <a href="https://osmc.tv/help/wiki/pi-buycodec">MPG2 and WVC1 codecs</a>,
+setup my video sources and kicked off the scrapers and installed a few addons.
+The only other thing is setting up my TV remote.
+(I did this last time but forgot how, so this time I thought I&rsquo;d blog it!)</p>
+
+<p>Out of the box, my Samsung <em>&ldquo;Smart Touch&rdquo;</em> Remote (<a href="https://osmc.tv/help/wiki/pi-buycodec">this one</a>
+if you&rsquo;re wondering) mostly just works, the only problem is the back button
+opens the context menu instead of going back!</p>
+
+<p>To fix this, the first step is to find out what each button on the remote maps
+to in Kodi. Thanks to this great <a href="http://forum.kodi.tv/showthread.php?tid=139145&amp;pid=1285390#pid1285390">forum post</a>
+by a user called &ldquo;Knapster&rdquo; this is really easy.</p>
+
+<p>Just SSH to the pi, create a new file <code>~/.kodi/userdata/keymaps/remote.xml</code> and
+paste <a href="https://gist.github.com/stevenocchipinti/42f2eca2a9f04ed9e52f">this contents</a>
+in it. Now reboot Kodi and everytime you press a button, you&rsquo;ll get a
+notification on the screen of what command it is sending.</p>
+
+<p>A quick way of doing that from an SSH session is like this:<br/>
+(The default username and password are both <code>osmc</code>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh osmc@&lt;kodi-ip-address&gt;
+</span><span class='line'>curl https://gist.githubusercontent.com/stevenocchipinti/42f2eca2a9f04ed9e52f/raw/remote.xml &gt; ~/.kodi/userdata/keymaps/remote.xml
+</span><span class='line'>sudo reboot</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In my case, everything seemed to make sense except the back button, which was
+actually sending <code>title</code> instead of <code>back</code>. As I don&rsquo;t have a <em>title</em> button,
+I&rsquo;m going to reassign that to be a back button instead.</p>
+
+<p>First, lets replace our <code>remote.xml</code> with the default configuration, you can get
+these mappings from the installed Kodi files:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp /usr/share/kodi/system/keymaps/remote.xml ~/.kodi/userdata/keymaps/remote.xml</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file has what every command does in every context and makes it easy to
+modify. Here is a diff of the changes I made for my remote:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>58c58
+</span><span class='line'>&lt;       &lt;title&gt;ContextMenu&lt;/title&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;title&gt;Back&lt;/title&gt;
+</span><span class='line'>74c74
+</span><span class='line'>&lt;       &lt;guide&gt;ActivateWindow(TVGuide)&lt;/guide&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;guide&gt;ActivateWindow(Home)&lt;/guide&gt;
+</span><span class='line'>79c79
+</span><span class='line'>&lt;       &lt;red&gt;ActivateWindow(TVChannels)&lt;/red&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;red&gt;ContextMenu&lt;/red&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ve made the <em>&ldquo;title&rdquo;</em> button send the <code>back</code> command and because I don&rsquo;t have
+a TV tuner connected, I&rsquo;ve also re-assigned the <em>&ldquo;TV Guide&rdquo;</em> button to go to the
+home screen and the <em>&ldquo;Red&rdquo;</em> button to be the context menu button.<br/>
+Interestingly, the channel up and down buttons on my remote we already assigned
+to page up and page down, which suits me great while I don&rsquo;t have a TV Tuner.</p>
+
+<p>After rebooting, I now have a functional remote control!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git reset cheatsheet]]></title>
@@ -1557,46 +1649,6 @@ By the end of the night we had the first version of CarDuino!</p>
 <p>In just a few days, we went from no Arduino experience to a working project (or two). Especially with basic programming experience, the entry level for getting into Arduino is really low. When you buy (or build) a board and download the software, you have enough sample code with the IDE to make things happen, and you can get a lot done by simply copying and pasting!</p>
 
 <p>I recommend having a play with this stuff, its really fun and more than likely, one day you will come across a problem that you will be able to solve with an Arduino!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Google Calendar - Repeating an event on the last <weekday> of the month]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/05/google-calendar-repeating-event-on-last.html"/>
-    <updated>2012-05-23T12:19:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/05/google-calendar-repeating-event-on-last</id>
-    <content type="html"><![CDATA[<p>I regularly attend <a href="http://ruby.org.au/">RORO &ndash; The Ruby on Rails Oceania</a> meetups.
-They currently occur on the last Thursday of every month and so naturally I put the event in my calendar. I added the usual details and then selected the &ldquo;repeat&rdquo; option and set it to repeat monthly by the day of the week.</p>
-
-<p>This worked well for a while, until one day when I rocked up and it wasn&rsquo;t on.<br/>
-A later realised that in that particular month there were 5 Thursdays instead of 4 and my calendar event was actually set to repeat <em>&ldquo;Monthly on the fourth Thursday&rdquo;</em>.<br/>
-It turns out that the interface Google provide to set recurring events does not allow you to change this.. or at least not intuitively.</p>
-
-<p>After some searching around I found a few solutions:</p>
-
-<h2>Use English!</h2>
-
-<p>The simplest way is to just write out the event in plain English. For example:</p>
-
-<blockquote><p>RORO at Inspire9, Richmond on the last Thursday of every month</p></blockquote>
-
-
-<p>This will create an event called &ldquo;RORO at Inspire9, Richmond&rdquo;, with the location field set to &ldquo;Inspire9, Richmond&rdquo; and the repetition set to <em>&ldquo;Monthly on the last Thursday&rdquo;.</em></p>
-
-<h2>Start repeating from an appropriate month</h2>
-
-<p>Another fairly easy way is to find a month that actually has 5 Thursdays and make the event start from there. This will set the recurrence to repeat <em>&ldquo;Monthly on the last Thursday&rdquo;</em>, instead of <em>&ldquo;Monthly on the fourth Thursday&rdquo;</em>.</p>
-
-<h2>Hack the ICS</h2>
-
-<p>This solution is probably the hardest, but because the <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar</a> format does support this, you could write the code manually. To do this you would have to export the calendar to a file, hack it and import it back.<br/>
-While it&rsquo;s nice to know this, seems like more effort that just typing what you want in English!</p>
-
-<h2>A better solution</h2>
-
-<p>.. would be if Google provided an additional option in the little &ldquo;repeat&rdquo; popup to allow this!</p>
-
-<p>Or maybe the RORO organiser should maintain there own calendar feed that we could all subscribe to. This would also mean that if a particular meetup was moved or cancelled, all the subscribers calendars would automatically be updated!</p>
 ]]></content>
   </entry>
   
