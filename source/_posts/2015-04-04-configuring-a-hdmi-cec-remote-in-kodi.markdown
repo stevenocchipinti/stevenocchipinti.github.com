@@ -21,7 +21,7 @@ setup my video sources and kicked off the scrapers and installed a few addons.
 The only other thing is setting up my TV remote.
 (I did this last time but forgot how, so this time I thought I'd blog it!)
 
-Out of the box, my Samsung _"Smart Touch"_ Remote ([this one](https://osmc.tv/help/wiki/pi-buycodec)
+Out of the box, my Samsung _"Smart Touch"_ Remote ([this one](http://reviews.lcdtvbuyingguide.com/samsung-lcd-tv/pictures/samsung-f6400-remote.jpg)
 if you're wondering) mostly just works, the only problem is the back button
 opens the context menu instead of going back!
 
