@@ -287,12 +287,18 @@
         <lastmod>2015-04-07T15:11:11+10:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/
+        </loc>
+        <lastmod>2015-04-15T11:59:10+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.stevenocchipinti.com/archives/</loc>
-        <lastmod>2015-04-07T15:11:11+10:00</lastmod>
+        <lastmod>2015-04-15T11:59:10+10:00</lastmod>
     </url>
     <url>
         <loc>http://blog.stevenocchipinti.com/</loc>
-        <lastmod>2015-04-07T15:11:11+10:00</lastmod>
+        <lastmod>2015-04-15T11:59:10+10:00</lastmod>
     </url>
     <url>
         <loc>http://blog.stevenocchipinti.com/projects/</loc>

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Pidgin is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.I chose Pidgin not because of a slick UI &hellip;">
+  <meta name="description" content="Continuing on from my last post, I found another great use for Pidgin!GTalkSMS is an Android app that turns your phone into a chat bot.Here is an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/gtalksms.html">GTalkSMS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-09-08T10:41:00+10:00" pubdate data-updated="true">Sep 8<span>th</span>, 2011</time>
+        
+         | <a href="/2011/09/gtalksms.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+Continuing on from my last post, I found another great use for Pidgin!<br /><br />GTalkSMS is an Android app that turns your phone into a chat bot.<br />Here is an extract from the <a href="http://code.google.com/p/gtalksms/">GTalkSMS website</a>:<br /><blockquote><span style="font-size: x-small;"><i>GTalkSMS enables you to <b>control your android phone through GTalk/XMPP</b> (send/receive SMS, make calls, locate your phone, etc.). It can be  useful for those who prefer typing sms on a real keyboard. The app also  notifies you about new &#8220;events&#8221; on the phone, like a new text message  (SMS) or an incoming call.</i></span></blockquote><br />Although initially skeptical about security (it has the same functions as a would-be trojan) you have to be buddies with the bot to talk to it, so here is what I did&#8230;<br /><br /><br /><b>Basic Setup:</b> <br /><ul><li>Downloaded and installed GTalkSMS from the <a href="https://market.android.com/details?id=com.googlecode.gtalksms">market</a></li><li>Created a google account for GTalkSMS</li><li>Configured Pidgin with my personal gmail account (obviously) </li><li>Added this new account as a buddy on my personal gmail account</li><li>Configured GTalkSMS to send notifications to my personal gmail account</li></ul><br /><b>Basic Usage:</b> <br /><br />With this done, once I start the bot, it will send me a instant message when I get an SMS, phone call or the battery state changes.<br /><br />What is even better is that if I want to reply to a recently received SMS, I can send the bot an instant message like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">reply:Hey, I got your message</span></blockquote><br />If I want to initiate an SMS to someone else, I can send this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:mymate:Hey, how you goin?</span></blockquote><br />That will lookup <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mymate</span> in my phonebook and send the SMS to them.<br />If you have multiple people with the same name, you can search your phonebook using this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">contact:john</span></blockquote><br />This will list all the <i>John&#8217;s</i> then you can just copy and paste the phone number you want in place of the name, like this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sms:04041111111:Hey John!</span></blockquote><br /><b>Doing more:</b> <br /><br />There are <a href="http://code.google.com/p/gtalksms/wiki/FeaturesAndCommands">heaps of commands</a> available and you can get a list of them all at any time with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">help:all</span></blockquote><br />Some other cool commands allow you to change your ringer volume, take a photo, share clipboards, get geolocation, launch a given URL in the browser and lots more.<br /><br />It also has some options to make GTalkSMS start automatically when the phone boots, or when it is charging, or when its on wifi.<br />I personally only want this connected while I&#8217;m in front of my pc, so I have it set to start when charging and stop when not charging anymore (I use a USB charging dock at my desk).<br /><br />One other noteworthy feature is the &#8220;Incoming SMS&#8221; setting &#8221;<span style="font-size: small;"><span style="color: black;">In separated conversations</span></span>&#8221;. When you receive an sms, not only does the bot send you an IM, but it will start a new &#8220;chat room&#8221; for that particular contact and send you an invite. From within this chat room, you dont need to worry about sending commands, whatever you send in there will be sent as an sms to that client. It makes it look seamlessly like any other chat.<br /><br /><br /><b>Pidgin fun:</b><br /><b><br /></b><br />As you may already know, I like Pidgin because of its configurability.<br />I have Pidgin using the libnotify plugin, which means I get the fancy Ubuntu notifications from Pidgin, but I soon realised there are too many notifications by default (everytime a buddy signs in or out is a bit much with 4 chat accounts signed in at once!) - so I turned those notifications off.<br /><br />But! I wanted these notifications to see when my phone is available to chat, so I set up some little recurring buddy pounces:<br /><ol><li>When my GTalkSMS account signs in, execute this command: <br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/bot.svg&#8221; &#8220;Droid online&#8221; &#8220;Your Android is now contactable via GTalkSMS&#8221;</span></blockquote></li><li>When my GTalkSMS account signs out, execute this command: <br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">notify-send -i &#8220;/usr/share/pixmaps/pidgin/emblems/scalable/unavailable.svg&#8221; &#8220;Droid offline&#8221; &#8220;Your Android has now signed off GTalkSMS&#8221; </blockquote></li></ol><br />Now when I dock my phone, it starts charging, GTalkSMS starts up and signs in and I get this notification appear:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s1600/online.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://3.bp.blogspot.com/-PFO4tCzM4hU/TmhBzgUoyxI/AAAAAAAAACk/l2VJNWYCIF0/s320/online.png" width="320" /></a></div><br /><br />Then when I pull it off the dock, GTalkSMS signs out and I get this notification:<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s1600/offline.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="173" src="http://1.bp.blogspot.com/-Xwq4VMTPyNw/TmhB6BYJfrI/AAAAAAAAACo/Hu2KWVTrADw/s320/offline.png" width="320" /></a></div><br /><br />Note: The notify-send command is available from the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libnotify-bin</span> package, which can be installed in Ubuntu with this command:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install libnotify-bin</span></blockquote>
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -455,48 +497,6 @@ So it turns out bash has a vi mode!<br />(Can&#8217;t believe I didn&#8217;t kno
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/06/phpremoteadmin.html">PhpRemoteAdmin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-06-24T02:56:00+10:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
-        
-         | <a href="/2011/06/phpremoteadmin.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy &#8220;Create PHP Code&#8221; button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn&#8217;t create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER[&#8220;REQUEST_URI&#8221;], &#8220;phpremoteadmin&#8221;) &gt; 0) {<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;connect_type&#8217;] = &#8216;tcp&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;port&#8217;] = &#8216;6666&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;host&#8217;] = &#8216;127.0.0.1&#8217;;<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You&#8217;l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo &#8220;Usage: $0 host1 [host2]&#8221;<br />&nbsp; exit 2<br />fi<br /><br />USER=&#8221;steve&#8221;<br />HOST=$1<br /><br />DBHOST=&#8221;localhost&#8221;<br />[ -z &#8220;$2&#8221; ] || DBHOST=&#8221;$2&#8221;<br /><br />echo &#8220;Browse to: http://localhost/phpremoteadmin&#8221;<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server&#8217;s localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn&#8217;t normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -525,6 +525,10 @@ If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite h
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">Configuring a HDMI-CEC Remote in Kodi</a>
       </li>
     
@@ -538,10 +542,6 @@ If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite h
     
       <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
       </li>
     
   </ul>

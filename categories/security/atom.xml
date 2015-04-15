@@ -4,7 +4,7 @@
   <title><![CDATA[Category: security | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/security/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-07T15:11:47+10:00</updated>
+  <updated>2015-04-15T12:00:33+10:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Disabling the Same Origin Policy in Chrome]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/"/>
+    <updated>2015-04-12T16:20:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome</id>
+    <content type="html"><![CDATA[<p>If you ever needed to circumvent the browsers
+<a href="https://en.wikipedia.org/wiki/Same-origin_policy">Same Origin Policy (SOP)</a>
+so you don&rsquo;t need to add
+<a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross Origin Resource Sharing (CORS)</a>
+headers just to test out an idea, here is a quick little hack to open a new
+instance of Chrome that will not enforce these security features:</p>
+
+<p><code>
+alias unsafe-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/Library/Application\ Support/Google/UnsafeChrome --disable-web-security 2&gt; /dev/null'
+</code></p>
+
+<p>The important options here are:</p>
+
+<p><code>--disable-web-security</code> &ndash; This will disable the Same Origin Policy<br/>
+<code>--user-data-dir=...</code> &ndash; This launches a separate instance, with its own user data
+directory.<br/>
+This prevents you from needing to close any current instances of chrome,
+otherwise running this command will just bring the existing instance into focus.</p>
+
+<p>Another good thing about giving this instance its own <code>user-data-dir</code> is that
+you can give this instance its own settings. For example, this instance is not
+signed into my Google account and I&rsquo;ve configured a bright red theme so I can
+easily tell the difference between my normal Chrome and my insecure Chrome!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Password management]]></title>

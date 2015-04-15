@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: xul - StevenOcchipinti.com</title>
+  <title>Disabling the Same Origin Policy in Chrome - StevenOcchipinti.com</title>
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Category: xul">
+  <meta name="description" content="Disabling the Same Origin Policy in Chrome">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.stevenocchipinti.comcategories/xul">
+  <link rel="canonical" href="http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="StevenOcchipinti.com" type="application/atom+xml">
@@ -75,36 +75,115 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Xul</h1>
+    
+      <h1 class="entry-title">Disabling the Same Origin Policy in Chrome</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-12T16:20:00+10:00" pubdate data-updated="true">Apr 12<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>If you ever needed to circumvent the browsers
+<a href="https://en.wikipedia.org/wiki/Same-origin_policy">Same Origin Policy (SOP)</a>
+so you don&rsquo;t need to add
+<a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross Origin Resource Sharing (CORS)</a>
+headers just to test out an idea, here is a quick little hack to open a new
+instance of Chrome that will not enforce these security features:</p>
 
-  
-  <h2>2011</h2>
-
-<article>
-  
-<h1><a href="/2011/07/pencil-for-ui-design.html">Pencil for UI design</a></h1>
-<time datetime="2011-07-09T13:34:00+10:00" pubdate><span class='month'>Jul</span> <span class='day'>09</span> <span class='year'>2011</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/design/'>design</a>, <a class='category' href='/categories/linux/'>linux</a>, <a class='category' href='/categories/ubuntu/'>ubuntu</a>, <a class='category' href='/categories/ui/'>ui</a>, <a class='category' href='/categories/xul/'>xul</a></span>
-</footer>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias unsafe-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/Library/Application\ Support/Google/UnsafeChrome --disable-web-security 2&gt; /dev/null'</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>The important options here are:</p>
 
+<p><code>--disable-web-security</code> &ndash; This will disable the Same Origin Policy<br/>
+<code>--user-data-dir=...</code> &ndash; This launches a separate instance, with its own user data
+directory.<br/>
+This prevents you from needing to close any current instances of chrome,
+otherwise running this command will just bring the existing instance into focus.</p>
+
+<p>Another good thing about giving this instance its own <code>user-data-dir</code> is that
+you can give this instance its own settings. For example, this instance is not
+signed into my Google account and I&rsquo;ve configured a bright red theme so I can
+easily tell the difference between my normal Chrome and my insecure Chrome!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Occhipinti</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-12T16:20:00+10:00" pubdate data-updated="true">Apr 12<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/security/'>security</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/" data-via="steveocchipinti" data-counturl="http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/" title="Previous Post: Configuring a HDMI-CEC remote in Kodi">&laquo; Configuring a HDMI-CEC remote in Kodi</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -166,7 +245,10 @@
       var disqus_shortname = 'stevenocchipinticom';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2015/04/12/disabling-the-single-origin-policy-in-chrome/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

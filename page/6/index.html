@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.Have a look in the /etc/bash_completion.d/ &hellip;">
+  <meta name="description" content="If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/06/phpremoteadmin.html">PhpRemoteAdmin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-06-24T02:56:00+10:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
+        
+         | <a href="/2011/06/phpremoteadmin.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy &#8220;Create PHP Code&#8221; button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn&#8217;t create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER[&#8220;REQUEST_URI&#8221;], &#8220;phpremoteadmin&#8221;) &gt; 0) {<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;connect_type&#8217;] = &#8216;tcp&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;port&#8217;] = &#8216;6666&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;host&#8217;] = &#8216;127.0.0.1&#8217;;<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You&#8217;l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo &#8220;Usage: $0 host1 [host2]&#8221;<br />&nbsp; exit 2<br />fi<br /><br />USER=&#8221;steve&#8221;<br />HOST=$1<br /><br />DBHOST=&#8221;localhost&#8221;<br />[ -z &#8220;$2&#8221; ] || DBHOST=&#8221;$2&#8221;<br /><br />echo &#8220;Browse to: http://localhost/phpremoteadmin&#8221;<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server&#8217;s localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn&#8217;t normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,48 +512,6 @@ So I started my new job and they use Google Apps!<br />Initially I thought this 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html">24-70mm f2.8 vs 17-50mm f2.8</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-04-16T09:12:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
-        
-         | <a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having a play with it and looking at his photos I have had a little bit of gear-envy.<br />The extra speed and frequent bokeh was really nice! <br />Naturally I started looking at prices.. and the Nikon equivalent is&#8230; not cheap!<br /><br />I cant justify <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=1917">$1969</a> on a lens! Especially considering that I dont actually need it, and I am just a hobbyist (therefore: return on investment == profit from my work == $0).<br /><br />I then read up on some more affordable <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2221">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=374">Tamron</a> lenses that were similar and liked the prices much better!<br />&#8230; but im still really indecisive :(<br /><br />Then I saw the 17-50mm f2.8 lenses (from <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2416">Tamron</a>, <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=3013">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2278">Tokina</a>), and this made me think..<br />When I was travelling to Japan (with Sarma, the Canon guy) I remember him complaining about not being able to get a wide enough shot and he would often stand pretty far back to get the shot he wanted or swap to his 10-20mm lens.<br />This probably wouldn&#8217;t be an issue with a full-frame camera, but the 50d&#8217;s smaller sensor means it is already quite &#8220;zoomed-in&#8221; at its widest setting.<br /><br />I started writing up an email to ask Sarma what he thought and realized I have all his photos from our Japan trip, so with a bit of linux command line fun, I came up with this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool -p &#8216;$focallength&#8217; -q -f `find -L .` | sort -n | uniq -c</span></blockquote>Now for the explanation: <br /><dl><dt><b>exiftool -p &#8216;$focallength&#8217; -q -f</b></dt><dd>exiftool extracts exif information from jpg&#8217;s.The -p prints a formatted string, which I inserted just the $focallength variable.The -q means quiet (basically, dont print too much).The -f is the list of files, which I use a sub-command (wrapped in backticks) to get.</dd><dt><b>find -L . </b></dt><dd>As all of our groups photos were kind-of mixed in together, I created a directory with symlinks to just Sarma&#8217;s photos (hence the find -L, where -L will follow symlinks to the appropriate directories).</dd><dt><b>sort -n</b></dt><dd>This just sorts the data by numberic value (so 10 &gt; 1), this is mainly so the uniq command works properly.</dd><dt><b>uniq -c</b></dt><dd>This will collapse the data down to unique values and with the -c, it will also print the number of occurences have been collapsed down.</dd> </dl>The output of this command included all of Sarma&#8217;s photos (not just taken with the 24-70) but it still gave me a pretty good idea.<br />The output looked like this:<br /><br /><pre>86    10.0 mm<br />2     11.0 mm<br />2     15.0 mm<br />14    16.0 mm<br />2     18.0 mm<br />108   20.0 mm<br />2362  24.0 mm<br />142   28.0 mm<br />176   32.0 mm<br />138   35.0 mm<br />104   40.0 mm<br />118   45.0 mm<br />136   47.0 mm<br />120   50.0 mm<br />94    55.0 mm<br />78    58.0 mm<br />76    60.0 mm<br />76    65.0 mm<br />70    67.0 mm<br />52    70.0 mm<br />52    73.0 mm<br />34    75.0 mm<br />14    80.0 mm<br />48    82.0 mm<br />56    84.0 mm<br />18    85.0 mm<br />24    88.0 mm<br />10    90.0 mm<br />14    92.0 mm<br />12    93.0 mm<br />16    95.0 mm<br />10    96.0 mm<br />4     97.0 mm<br />8     98.0 mm<br />8     99.0 mm<br />12    100.0 mm<br />10    102.0 mm<br />404   105.0 mm<br /><br /></pre>With the majority of Sarma&#8217;s photos clearly being taken at 24mm, it made me think that as I too have a cropped sensor camera, the wider 17-50mm lenses are probably a better choice for me as I really dont have any plans to lash out on a full frame camera anytime soon :P
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/7/">&larr; Older</a>
@@ -540,6 +540,10 @@ A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">Configuring a HDMI-CEC Remote in Kodi</a>
       </li>
     
@@ -553,10 +557,6 @@ A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having 
     
       <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
       </li>
     
   </ul>

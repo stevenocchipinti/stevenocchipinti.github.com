@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I haven&#8217;t really played a game properly since back in my Counter Strike days, but recently my brother and I started playing Minecraft&#8230; &hellip;">
+  <meta name="description" content="A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having a play with it and looking at his photos I have had a little bit of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html">24-70mm f2.8 vs 17-50mm f2.8</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-04-16T09:12:00+10:00" pubdate data-updated="true">Apr 16<span>th</span>, 2011</time>
+        
+         | <a href="/2011/04/24-70mm-f28-vs-17-50mm-f28.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having a play with it and looking at his photos I have had a little bit of gear-envy.<br />The extra speed and frequent bokeh was really nice! <br />Naturally I started looking at prices.. and the Nikon equivalent is&#8230; not cheap!<br /><br />I cant justify <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=1917">$1969</a> on a lens! Especially considering that I dont actually need it, and I am just a hobbyist (therefore: return on investment == profit from my work == $0).<br /><br />I then read up on some more affordable <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2221">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=374">Tamron</a> lenses that were similar and liked the prices much better!<br />&#8230; but im still really indecisive :(<br /><br />Then I saw the 17-50mm f2.8 lenses (from <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2416">Tamron</a>, <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=3013">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2278">Tokina</a>), and this made me think..<br />When I was travelling to Japan (with Sarma, the Canon guy) I remember him complaining about not being able to get a wide enough shot and he would often stand pretty far back to get the shot he wanted or swap to his 10-20mm lens.<br />This probably wouldn&#8217;t be an issue with a full-frame camera, but the 50d&#8217;s smaller sensor means it is already quite &#8220;zoomed-in&#8221; at its widest setting.<br /><br />I started writing up an email to ask Sarma what he thought and realized I have all his photos from our Japan trip, so with a bit of linux command line fun, I came up with this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool -p &#8216;$focallength&#8217; -q -f `find -L .` | sort -n | uniq -c</span></blockquote>Now for the explanation: <br /><dl><dt><b>exiftool -p &#8216;$focallength&#8217; -q -f</b></dt><dd>exiftool extracts exif information from jpg&#8217;s.The -p prints a formatted string, which I inserted just the $focallength variable.The -q means quiet (basically, dont print too much).The -f is the list of files, which I use a sub-command (wrapped in backticks) to get.</dd><dt><b>find -L . </b></dt><dd>As all of our groups photos were kind-of mixed in together, I created a directory with symlinks to just Sarma&#8217;s photos (hence the find -L, where -L will follow symlinks to the appropriate directories).</dd><dt><b>sort -n</b></dt><dd>This just sorts the data by numberic value (so 10 &gt; 1), this is mainly so the uniq command works properly.</dd><dt><b>uniq -c</b></dt><dd>This will collapse the data down to unique values and with the -c, it will also print the number of occurences have been collapsed down.</dd> </dl>The output of this command included all of Sarma&#8217;s photos (not just taken with the 24-70) but it still gave me a pretty good idea.<br />The output looked like this:<br /><br /><pre>86    10.0 mm<br />2     11.0 mm<br />2     15.0 mm<br />14    16.0 mm<br />2     18.0 mm<br />108   20.0 mm<br />2362  24.0 mm<br />142   28.0 mm<br />176   32.0 mm<br />138   35.0 mm<br />104   40.0 mm<br />118   45.0 mm<br />136   47.0 mm<br />120   50.0 mm<br />94    55.0 mm<br />78    58.0 mm<br />76    60.0 mm<br />76    65.0 mm<br />70    67.0 mm<br />52    70.0 mm<br />52    73.0 mm<br />34    75.0 mm<br />14    80.0 mm<br />48    82.0 mm<br />56    84.0 mm<br />18    85.0 mm<br />24    88.0 mm<br />10    90.0 mm<br />14    92.0 mm<br />12    93.0 mm<br />16    95.0 mm<br />10    96.0 mm<br />4     97.0 mm<br />8     98.0 mm<br />8     99.0 mm<br />12    100.0 mm<br />10    102.0 mm<br />404   105.0 mm<br /><br /></pre>With the majority of Sarma&#8217;s photos clearly being taken at 24mm, it made me think that as I too have a cropped sensor camera, the wider 17-50mm lenses are probably a better choice for me as I really dont have any plans to lash out on a full frame camera anytime soon :P
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -187,6 +229,10 @@ Not the most creative name for your average blog, but for those that dont know:<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">Configuring a HDMI-CEC Remote in Kodi</a>
       </li>
     
@@ -200,10 +246,6 @@ Not the most creative name for your average blog, but for those that dont know:<
     
       <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
       </li>
     
   </ul>

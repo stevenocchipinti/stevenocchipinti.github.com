@@ -9,9 +9,11 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&rsquo;ve been using Raspbmc for a while now, but I only just saw that it has been
-superseded by OSMC (and XBMC is now called Kodi,
-so with the long &hellip;">
+  <meta name="description" content="If you ever needed to circumvent the browsers
+Same Origin Policy (SOP)
+so you don&rsquo;t need to add
+Cross Origin Resource Sharing (CORS)
+headers &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +80,66 @@ so with the long &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-12T16:20:00+10:00" pubdate data-updated="true">Apr 12<span>th</span>, 2015</time>
+        
+         | <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you ever needed to circumvent the browsers
+<a href="https://en.wikipedia.org/wiki/Same-origin_policy">Same Origin Policy (SOP)</a>
+so you don&rsquo;t need to add
+<a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross Origin Resource Sharing (CORS)</a>
+headers just to test out an idea, here is a quick little hack to open a new
+instance of Chrome that will not enforce these security features:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias unsafe-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/Library/Application\ Support/Google/UnsafeChrome --disable-web-security 2&gt; /dev/null'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The important options here are:</p>
+
+<p><code>--disable-web-security</code> &ndash; This will disable the Same Origin Policy<br/>
+<code>--user-data-dir=...</code> &ndash; This launches a separate instance, with its own user data
+directory.<br/>
+This prevents you from needing to close any current instances of chrome,
+otherwise running this command will just bring the existing instance into focus.</p>
+
+<p>Another good thing about giving this instance its own <code>user-data-dir</code> is that
+you can give this instance its own settings. For example, this instance is not
+signed into my Google account and I&rsquo;ve configured a bright red theme so I can
+easily tell the difference between my normal Chrome and my insecure Chrome!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1392,144 +1454,6 @@ functionality. This is the bash equivalent:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/06/removing-previously-printed-lines.html">Printing Over Previously Printed Characters and Lines</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2013-06-08T15:27:00+10:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
-        
-         | <a href="/2013/06/removing-previously-printed-lines.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently wrote small <a href="https://github.com/stevenocchipinti/tramtracker">Ruby Gem</a> that provides a command line interface to Melbourne&rsquo;s <a href="http://yarratrams.com.au/tramtracker">TramTracker service</a>.</p>
-
-<p>One main feature I wanted was to allow the script to poll TramTracker on a regular basis.<br/>
-In the past, I used the command line utility watch to achieve this, but I couldn&rsquo;t find a way to enforce a &ldquo;max iterations&rdquo; option.
-If it gets forgotten about in the background, TramTracker will eventually block that IP address!</p>
-
-<p>So I turned to Ruby. Now instead of printing the same block of text over and over again and filling up the terminal, I thought it would be better to just have that text overwrite itself in place.</p>
-
-<p>In this post, I&rsquo;ll outline a couple of ways of achieving this.</p>
-
-<h2>Using the \b (backspace) character</h2>
-
-<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
-For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b\b\b</span><span class="s2">bar&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; bar</span>
-</span><span class='line'><span class="p">(</span><span class="s2">&quot;|/-</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">chars</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="nb">print</span> <span class="n">c</span><span class="p">;</span> <span class="nb">sleep</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span><span class="p">}</span>
-</span><span class='line'><span class="c1"># =&gt; Cheesy, old-school spinner</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\n\b\b\b</span><span class="s2">bar&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; foo\nbar</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Using the \r (carriage return) character</h2>
-
-<p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">100</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span><span class="o">|</span><span class="nb">p</span><span class="o">|</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Downloading %</span><span class="si">#{</span><span class="nb">p</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">;</span> <span class="nb">sleep</span> <span class="mi">1</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\r</span><span class="s2">p&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; poo</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
-
-<h2>Using curses</h2>
-
-<p>The most common answer to overwriting characters across multiple lines, is to use <a href="http://en.wikipedia.org/wiki/Curses_(programming_library)">curses</a>.
-Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
-Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">setpos</span><span class="p">(</span><span class="n">lines</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Start in the middle</span>
-</span><span class='line'><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
-
-<p>Curses is pretty good for this sort of stuff, it gives you a lot for free.
-The thing that I didn&rsquo;t like about using the curses library was that when it initialises, it clears the screen.
-This behaviour suits a TUI, and the old contents is still restored when you return, but I was being picky and didn&rsquo;t want that.</p>
-
-<h2>Using individual cursor movement characters</h2>
-
-<p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">L</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="n">H</span> <span class="c1"># Move the cursor to line L, column C</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">A</span>     <span class="c1"># Move the cursor up N lines</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">B</span>     <span class="c1"># Move the cursor down N lines</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">C</span>     <span class="c1"># Move the cursor forward N columns</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="n">D</span>     <span class="c1"># Move the cursor backward N columns</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[</span><span class="mi">2</span><span class="n">J</span>       <span class="c1"># Clear the screen, move to (0,0)</span>
-</span><span class='line'><span class="p">\</span><span class="mo">033</span><span class="o">[</span><span class="n">K</span>        <span class="c1"># Erase to end of line</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
-I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
-
-<p>Now go and make a cool retro user interface! :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1556,6 +1480,10 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">Configuring a HDMI-CEC Remote in Kodi</a>
       </li>
     
@@ -1569,10 +1497,6 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
     
       <li class="post">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/">Completely Removing a Git Commit Due to Sensitive Information</a>
       </li>
     
   </ul>
