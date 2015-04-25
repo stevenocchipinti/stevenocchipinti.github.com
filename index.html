@@ -9,11 +9,8 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="If you ever needed to circumvent the browsers
-Same Origin Policy (SOP)
-so you don&rsquo;t need to add
-Cross Origin Resource Sharing (CORS)
-headers &hellip;">
+  <meta name="description" content="We all know that if you are going to be rendering user provided content on a
+HTML page, it should be sanitized just in case they include a nasty &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +77,77 @@ headers &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-25T17:39:00+10:00" pubdate data-updated="true">Apr 25<span>th</span>, 2015</time>
+        
+         | <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We all know that if you are going to be rendering user provided content on a
+HTML page, it should be sanitized just in case they include a nasty script tag
+or something.</p>
+
+<p><a href="https://facebook.github.io/react/">React</a>
+will automatically sanitize any string being rendered to the screen unless you
+<a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">jump through hoops</a>
+first &ndash; which is great because making this difficult means its somewhat harder
+to inadvertently create a
+<a href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29">XSS vulnerability</a>.</p>
+
+<p>However, if you get a string from a human source and want to display that in a
+<code>div</code> tag while maintaining its newlines, this becomes a little harder because
+you don&rsquo;t want to replace all <code>\n</code> characters with <code>&lt;br /&gt;</code> tags because this
+would mean you would also need to disable the sanitizing.</p>
+
+<p>There are some libraries to deal with this sort of thing that implement white
+listing of tags, etc.<br/>
+Another alternative would be using something like
+<a href="https://daringfireball.net/projects/markdown/">Markdown</a>.<br/>
+Even a simple <code>&lt;pre&gt;</code> tag will get you pretty far, but today I read an article
+that shows how you can achieve this with a little CSS:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.pre</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">white-space</span><span class="o">:</span> <span class="n">pre</span><span class="o">-</span><span class="n">line</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For more details, I recommend having a read of
+<a href="https://css-tricks.com/almanac/properties/w/whitespace/">this article</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1382,78 +1450,6 @@ rake thing[foo]  # A task that can accept a optional 'foo' argument
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/07/22/default-values-for-environment-variables/">Default Values for Environment Variables</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-22T22:51:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2013</time>
-        
-         | <a href="/2013/07/22/default-values-for-environment-variables/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In ruby, the <code>||=</code> operator will assign a given value to a variable, if that
-variable does not already have a value.
-For example:</p>
-
-<figure class='code'><figcaption><span>default_value.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; nil</span>
-</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;bar&quot;</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
-</span><span class='line'><span class="n">foo</span> <span class="o">||=</span> <span class="s2">&quot;baz&quot;</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">foo</span>  <span class="c1"># =&gt; &quot;bar&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will assign <code>"bar"</code> to <code>foo</code>, unless <code>foo</code> is already set.
-In other words, it will make <code>"bar"</code> the <em>default value</em> of <code>foo</code>.</p>
-
-<p>I recently had to do this is bash, and it turns out bash has similar
-functionality. This is the bash equivalent:</p>
-
-<figure class='code'><figcaption><span>default_value.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;&quot;</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;bar&quot;</span><span class="k">}</span>
-</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">FOO</span><span class="o">=</span><span class="k">${</span><span class="nv">FOO</span><span class="k">:-</span><span class="s2">&quot;baz&quot;</span><span class="k">}</span>
-</span><span class='line'><span class="nb">echo</span> <span class="nv">$FOO</span>  <span class="c"># =&gt; &quot;bar&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1480,6 +1476,10 @@ functionality. This is the bash equivalent:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
       </li>
     
@@ -1493,10 +1493,6 @@ functionality. This is the bash equivalent:</p>
     
       <li class="post">
         <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="I&rsquo;ve had an interest in electronics since a very young age, but I never really went further than building simple circuits as a kid and learning &hellip;">
+  <meta name="description" content="In the old days, printing was really hard in linux. It was one of the things that was a deal breaker when trying to switch from Windows for a lot of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/adding-network-printer-in-ubuntu-1204.html">Adding a Network Printer in Ubuntu 12.04</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-08-05T04:11:00+10:00" pubdate data-updated="true">Aug 5<span>th</span>, 2012</time>
+        
+         | <a href="/2012/08/adding-network-printer-in-ubuntu-1204.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the old days, printing was really hard in linux. It was one of the things that was a deal breaker when trying to switch from Windows for a lot of people, but when I first tried Ubuntu (probably around 2006-2007) it made all that pain go away! It was easy! A couple of clicks and you could set up a network printer and its been that easy ever since.</p>
+
+<p>Recently Ubuntu have tried to make their settings screen a bit like a Mac, and to simplify everything they seem to be using a simplified user interface for the printer configuration too:</p>
+
+<p><img class="center" src="http://3.bp.blogspot.com/-Bx9JrDkVYrk/UB3w_5N77aI/AAAAAAAAAKY/5HHdw8ZErB0/Screenshot+from+2012-08-05+14:04:37.png" title="New Settings user interface" >
+<img class="center" src="http://4.bp.blogspot.com/-xO2uGM8R36A/UB3xME_iwZI/AAAAAAAAAKg/kBFbC_MDcv8/Screenshot+from+2012-08-05+14:04:55.png" title="New Printing user interface" ></p>
+
+<p>Well this new interface doesn&rsquo;t work for me, when I try to add a network printer, I get the error message:</p>
+
+<blockquote><p>FirewallD is not running. Network printer detection needs services mdns, ipp, ipp-client and samba-client enabled on firewall.</p></blockquote>
+
+
+<p><img class="center" src="http://1.bp.blogspot.com/-FTpSMga_I2I/UB3xOZVzlDI/AAAAAAAAAKo/4_KILPWTWTg/Screenshot+from+2012-08-05+14%253A03%253A44.png" title="The error that stops me from finding my network printer" ></p>
+
+<p>Well no matter what I did, I couldn&rsquo;t add my printer. After some googling around, I found how to get to the old user interface&hellip; which actually works!
+Just type this into a terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo system-config-printer</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you will be given this old familiar screen:</p>
+
+<p><img class="center" src="http://1.bp.blogspot.com/-SnoWmsgEnX0/UB3xQWJYmhI/AAAAAAAAAK4/LCbtVTqQFZE/Screenshot+from+2012-08-05+14%253A04%253A55.png" title="The classic printing user interface... the one that works!" ></p>
+
+<p>Clicking the big &ldquo;Add&rdquo; button in this screen and following the steps worked great for me. Another alternative is to use the CUPS web interface on <a href="http://localhost:631">http://localhost:631</a> but that can be a little more complicated.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -554,48 +619,6 @@ As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/copy-and-paste-over-ssh-with-xclip.html">Copy and Paste Over SSH With Xclip</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2012-02-12T12:59:00+11:00" pubdate data-updated="true">Feb 12<span>th</span>, 2012</time>
-        
-         | <a href="/2012/02/copy-and-paste-over-ssh-with-xclip.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
-Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem practical?<br />When this happens to me, I normally dump that data to a temp file, start up another terminal and SCP the file back before going back to delete the temp file, but I recently found a better way.<br /><br />I discovered <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span>. Using the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-X</span> option of SSH to enable X11 forwarding, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> allows you to interact with the <i>&#8220;X selections&#8221;</i> clipboard.<br /><br />To use it, log on to a remote server via <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X</span> and ensure <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> is installed, then simply pipe data to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> and you will be able to paste it anywhere locally with the usual X selection paste (mouse wheel click, shift-insert, etc.).<br /><br />Here is an example:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -X steve@example.com<br />sudo apt-get install xclip<br />ps -ef | xclip</blockquote><br />Now anywhere on your local linux machine, you can press &lt;shift&gt;-&lt;insert&gt; (or mouse wheel click) to paste the content.<br />If you need to pipe this data to another process locally, you can retrieve the clipboard from the command like with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip</span> like this:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">xclip -o | less</blockquote>
-</div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -624,6 +647,10 @@ Have you ever SSH&#8217;ed to a server and found you need to copy some data back
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/12/disabling-the-single-origin-policy-in-chrome/">Disabling the Same Origin Policy in Chrome</a>
       </li>
     
@@ -637,10 +664,6 @@ Have you ever SSH&#8217;ed to a server and found you need to copy some data back
     
       <li class="post">
         <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/03/17/introduction-to-vim-for-ide-users/">Introduction to Vim for IDE Users</a>
       </li>
     
   </ul>

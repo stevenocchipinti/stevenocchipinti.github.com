@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: css | StevenOcchipinti.com]]></title>
+  <link href="http://blog.stevenocchipinti.com/categories/css/atom.xml" rel="self"/>
+  <link href="http://blog.stevenocchipinti.com/"/>
+  <updated>2015-04-25T18:05:36+10:00</updated>
+  <id>http://blog.stevenocchipinti.com/</id>
+  <author>
+    <name><![CDATA[Steven Occhipinti]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Safely rendering newlines in HTML with CSS]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css/"/>
+    <updated>2015-04-25T17:39:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css</id>
+    <content type="html"><![CDATA[<p>We all know that if you are going to be rendering user provided content on a
+HTML page, it should be sanitized just in case they include a nasty script tag
+or something.</p>
+
+<p><a href="https://facebook.github.io/react/">React</a>
+will automatically sanitize any string being rendered to the screen unless you
+<a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">jump through hoops</a>
+first &ndash; which is great because making this difficult means its somewhat harder
+to inadvertently create a
+<a href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29">XSS vulnerability</a>.</p>
+
+<p>However, if you get a string from a human source and want to display that in a
+<code>div</code> tag while maintaining its newlines, this becomes a little harder because
+you don&rsquo;t want to replace all <code>\n</code> characters with <code>&lt;br /&gt;</code> tags because this
+would mean you would also need to disable the sanitizing.</p>
+
+<p>There are some libraries to deal with this sort of thing that implement white
+listing of tags, etc.<br/>
+Another alternative would be using something like
+<a href="https://daringfireball.net/projects/markdown/">Markdown</a>.<br/>
+Even a simple <code>&lt;pre&gt;</code> tag will get you pretty far, but today I read an article
+that shows how you can achieve this with a little CSS:</p>
+
+<p><code>css
+.pre {
+  white-space: pre-line;
+}
+</code></p>
+
+<p>For more details, I recommend having a read of
+<a href="https://css-tricks.com/almanac/properties/w/whitespace/">this article</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>
