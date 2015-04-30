@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="We all know that if you are going to be rendering user provided content on a
-HTML page, it should be sanitized just in case they include a nasty &hellip;">
+  <meta name="description" content="It seems the JavaScript community is divided into two camps when it comes to
+indentation conventions: two spaces or four? I personally prefer two &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,96 @@ HTML page, it should be sanitized just in case they include a nasty &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">Rewriting Indentation in Every File and Every Commit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-30T21:51:00+10:00" pubdate data-updated="true">Apr 30<span>th</span>, 2015</time>
+        
+         | <a href="/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It seems the JavaScript community is divided into two camps when it comes to
+indentation conventions: two spaces or four?</p>
+
+<p>I personally prefer two spaces mainly because its what I&rsquo;m used to in Ruby, I
+find it easier on the eyes and just that little bit easier to keep my lines
+under 80 characters long (yes, I still think this is good practice).</p>
+
+<p>Our team had come to a general consensus for using two spaces, but when we were
+starting a new project based on an existing project that used four spaces, we
+thought it would be nice to fix all the whitespace in one go.</p>
+
+<p>In a rush, we made a commit that literally replaced all the whitespace with the
+following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>find . -type f -exec sed -i <span class="s2">&quot;&quot;</span> <span class="s2">&quot;s/    /  /g&quot;</span> <span class="o">{}</span> <span class="se">\;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem with this approach is that it makes going through commit messages
+harder. It means that when you use <code>git annotate</code>, every line with indentation
+is going to have the whitespace fix as the last commit, so then you would have
+to jump back another commit to get the actual commit message for that line,
+which can be fairly annoying.</p>
+
+<p>Luckily, if you are forking an existing repository for a new project you have
+the luxury of being able to rewrite history without causing any pain to others
+as no one else would have checked it out yet.</p>
+
+<p>Git provides a powerful command called <code>filter-branch</code>. It is designed to
+rewrite large amounts of history in one go. This can be useful to purge
+sensitive information from every commit or update an email address in the
+commit data, etc. The only problem with this is, just like rebasing, any
+existing checkouts will not be able to simply use <code>git pull</code> cleanly after the
+history has been rewritten upstream, but this isn&rsquo;t a problem for new projects.</p>
+
+<p>In order to execute the command above for every commit in our repo, we can make
+use of the <code>--tree-filter</code> option like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch --tree-filter <span class="s1">&#39;find . -type f -exec sed -i &quot;&quot; &quot;s/    /  /g&quot; {} \;&#39;</span> HEAD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Please note, this can take quite some time, especially for large repositories.
+You should also make sure there are no files that specifically need four spaces
+(like markdown files, etc.), otherwise you may want to restrict the <code>find</code>
+command to only effect files you know are safe to change (<code>*.js</code> for example).</p>
+
+<p>For more information on rewriting history and <code>git filter-branch</code>, see this
+<a href="https://git-scm.herokuapp.com/book/en/v2/Git-Tools-Rewriting-History#The-Nuclear-Option:-filter-branch">article</a>
+and the
+<a href="https://git-scm.herokuapp.com/docs/git-filter-branch">documentation</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1339,117 +1429,6 @@ I just found one online, so lets download it to our <code>/opt/minecraft</code> 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/">Rake Task With an Arbitrary Number of Arguments</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-18T14:10:00+11:00" pubdate data-updated="true">Oct 18<span>th</span>, 2013</time>
-        
-         | <a href="/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Rake gives you a way of specifying arguments for a given task like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;A task that can accept a optional &#39;foo&#39; argument&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will make the value of <code>foo</code> available in the <code>args</code> variable.
-When you run <code>rake -T</code>, it will show you that argument like this:</p>
-
-<pre><code>$&gt; rake -T
-rake thing[foo]  # A task that can accept a optional 'foo' argument
-</code></pre>
-
-<p>But what if you want to allow an arbitrary number of arguments, like a list of
-usernames to report on?</p>
-
-<h2>A solution</h2>
-
-<p>You could use an alternative method of passing arguments in, such as <code>ARGV</code> or
-Environment Variables, but Rake does provide a way.
-The <code>args</code> block parameter behaves like a hash, but it is actually a
-<code>Rake::TaskArguments</code> object. This object responds to an <code>#extras</code> method that
-will return an array of any extra arguments.</p>
-
-<p>For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">task</span> <span class="ss">:thing</span><span class="p">,</span> <span class="o">[</span><span class="ss">:foo</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="p">,</span> <span class="n">args</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span>     <span class="c1"># First argument</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">args</span><span class="o">.</span><span class="n">extras</span>    <span class="c1"># The rest of the arguments</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will allow you to call the task like this:</p>
-
-<pre><code>$&gt; rake thing[foo]
-foo
-
-$&gt; rake thing[foo,extra1,extra2]
-foo
-extra1
-extra2
-</code></pre>
-
-<h2>Caveats</h2>
-
-<p>While you can specify many arguments on the command line, (unless they are
-quoted) the arguments can not be separated by spaces, for example:</p>
-
-<pre><code>$&gt; rake thing[foo,extra1]    # GOOD
-foo
-extra1
-$&gt; rake thing[foo, extra1]   # BAD
-Don't know how to build task 'thing[foo,'
-</code></pre>
-
-<p>This means you may want to include some explanation in the <code>desc</code> section.</p>
-
-<p>Also, <code>rake -T</code> will not show the &ldquo;extra&rdquo; arguments, only the named arguments:</p>
-
-<pre><code>$&gt; rake -T
-rake thing[foo]  # A task that can accept a optional 'foo' argument
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -1476,6 +1455,10 @@ rake thing[foo]  # A task that can accept a optional 'foo' argument
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">Rewriting Indentation in Every File and Every Commit</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a>
       </li>
     
@@ -1489,10 +1472,6 @@ rake thing[foo]  # A task that can accept a optional 'foo' argument
     
       <li class="post">
         <a href="/2015/03/24/git-reset-cheatsheet/">Git Reset Cheatsheet</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | StevenOcchipinti.com]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-25T18:05:36+10:00</updated>
+  <updated>2015-04-30T22:43:51+10:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rewriting indentation in every file and every commit]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/"/>
+    <updated>2015-04-30T21:51:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit</id>
+    <content type="html"><![CDATA[<p>It seems the JavaScript community is divided into two camps when it comes to
+indentation conventions: two spaces or four?</p>
+
+<p>I personally prefer two spaces mainly because its what I&rsquo;m used to in Ruby, I
+find it easier on the eyes and just that little bit easier to keep my lines
+under 80 characters long (yes, I still think this is good practice).</p>
+
+<p>Our team had come to a general consensus for using two spaces, but when we were
+starting a new project based on an existing project that used four spaces, we
+thought it would be nice to fix all the whitespace in one go.</p>
+
+<p>In a rush, we made a commit that literally replaced all the whitespace with the
+following command:</p>
+
+<p><code>bash
+find . -type f -exec sed -i "" "s/    /  /g" {} \;
+</code></p>
+
+<p>The problem with this approach is that it makes going through commit messages
+harder. It means that when you use <code>git annotate</code>, every line with indentation
+is going to have the whitespace fix as the last commit, so then you would have
+to jump back another commit to get the actual commit message for that line,
+which can be fairly annoying.</p>
+
+<p>Luckily, if you are forking an existing repository for a new project you have
+the luxury of being able to rewrite history without causing any pain to others
+as no one else would have checked it out yet.</p>
+
+<p>Git provides a powerful command called <code>filter-branch</code>. It is designed to
+rewrite large amounts of history in one go. This can be useful to purge
+sensitive information from every commit or update an email address in the
+commit data, etc. The only problem with this is, just like rebasing, any
+existing checkouts will not be able to simply use <code>git pull</code> cleanly after the
+history has been rewritten upstream, but this isn&rsquo;t a problem for new projects.</p>
+
+<p>In order to execute the command above for every commit in our repo, we can make
+use of the <code>--tree-filter</code> option like this:</p>
+
+<p><code>bash
+git filter-branch --tree-filter 'find . -type f -exec sed -i "" "s/    /  /g" {} \;' HEAD
+</code></p>
+
+<p>Please note, this can take quite some time, especially for large repositories.
+You should also make sure there are no files that specifically need four spaces
+(like markdown files, etc.), otherwise you may want to restrict the <code>find</code>
+command to only effect files you know are safe to change (<code>*.js</code> for example).</p>
+
+<p>For more information on rewriting history and <code>git filter-branch</code>, see this
+<a href="https://git-scm.herokuapp.com/book/en/v2/Git-Tools-Rewriting-History#The-Nuclear-Option:-filter-branch">article</a>
+and the
+<a href="https://git-scm.herokuapp.com/docs/git-filter-branch">documentation</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git reset cheatsheet]]></title>
@@ -388,18 +447,6 @@ patch -p1 &amp;lt; ~/patches/temp_workaround.patch
 </code></p>
 
 <p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Code review workflow with GitHub]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html"/>
-    <updated>2011-09-18T10:06:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-The more I use Git, the more I love it and less I prefer my once trusty SVN.<br /><br />A while back I read the book <i>"<a href="http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339">Pro Git</a>"</i> by <a href="http://twitter.com/#%21/chacon">Scott Chacon</a>.<br />The book provides a really good explanation of how Git works and how to use it effectively.<br />I then found that this book is <a href="http://progit.org/">available online</a> for free and it is now a commonly visited bookmark for me.<br /><br />Recently my boss sent me a link to a <a href="http://scottchacon.com/2011/08/31/github-flow.html">blog post</a> by Scott Chacon that explains the Git workflow that is used at GitHub on a daily basis as we are going to give it a go for our own projects.<br /><br />In the post, Scott contrasts this to the commonly known "<a href="http://nvie.com/posts/a-successful-git-branching-model/">Git-Flow</a>" and describes how they are both good, but Git-Flow is alot more involved, where the aptly known "GitHub-Flow" is a lot simpler and therefore easier to follow.<br /><br />For full details, I highly recommend reading the post but  basically it involves keeping a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch that is always stable (and deployable) and using topic branches for development. Once a topic branch is tested locally you open a pull request to have others review it and merge it in to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>.<br /><br />Using pull requests within a single repository for code reviews are really useful!<br />It allows a discussion thread to take place, commenting on individual lines of code and keeps a history of the rational for any changes.<br /><br />A good aspect of this approach is that these topic branches can be pushed to GitHub constantly as it will not affect anyone else's work, and allows the team to have visibility of who is working on what by simply looking at the branch list page.<br />This of course means that your branches should be descriptively named.<br /><br />We have been using this workflow for a little while now and have felt compelled to make a small modification.<br />We have a staging environment which closely matches the production environment and is externally available to show clients new features, etc.<br />To cater for this we have introduced an additional long-term branch called "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>".<br /><br />This doesn't affect our existing workflow for the majority of cases, but every now and then we will merge <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span>, then the topic branch into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> to test/preview/etc. (without the need for pull requests/code review). Once the change is tested/previewed in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> and proven to be good, a pull request is opened for the topic branch to be merged into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> (as per usual).<br /><br />One thing to note here is that it's the topic branch to be merged and not the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> branch. Although in most cases this wont matter, if multiple merges from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">staging</span> into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> occur it can become confusing. Also the merge commit description will contain "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/staging</span>" instead of something more descriptive, like "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">repo/bundler-upgrade</span>".<br /><br />I have really enjoyed using this workflow and it seems to be working quite well so far. In the process of implementing this you really get to see how useful GitHub can be with using pull requests for code reviews and the branch list and network graph features for visualising not only your own progress, but the entire project too.
-</div>
-
 ]]></content>
   </entry>
   

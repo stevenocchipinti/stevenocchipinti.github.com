@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="So I started my new job and they use Google Apps!Initially I thought this was fantastic, until I realized that because I also use Google Apps for my &hellip;">
+  <meta name="description" content="This was a completely random (and not that useful) thought!I have memorized which IPs are assigned to which machines in our home LAN as simply &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html">DHCP Fixedhosts to /etc/hosts File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2011-05-17T12:28:00+10:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+         | <a href="/2011/05/dhcp-fixedhosts-to-etchosts-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS&#8230; I think&#8230; correct me if I&#8217;m wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn&#8217;t need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I&#8217;ve already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo &#8220;admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D&#8221; | nc 192.168.1.1 23 | \grep &#8220;[ ]*[0-9]&#8221; | sed &#8220;s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g&#8221;</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230; <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />&#8230;</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&#8230;<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />&#8230;</span></blockquote>This isn&#8217;t really that useful, but it took a couple of minutes, just to &#8220;see if I could do it&#8221;&#8230; and it worked :)<br /><br />&#8230; I don&#8217;t think I&#8217;ll actually use it, lol, but it was fun anyway :P
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -271,6 +313,10 @@ Not the most creative name for your average blog, but for those that dont know:<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">Rewriting Indentation in Every File and Every Commit</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a>
       </li>
     
@@ -284,10 +330,6 @@ Not the most creative name for your average blog, but for those that dont know:<
     
       <li class="post">
         <a href="/2015/03/24/git-reset-cheatsheet/">Git Reset Cheatsheet</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
       </li>
     
   </ul>

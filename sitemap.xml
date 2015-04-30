@@ -299,12 +299,18 @@
         <lastmod>2015-04-25T18:04:21+10:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/
+        </loc>
+        <lastmod>2015-04-30T22:42:12+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://blog.stevenocchipinti.com/archives/</loc>
-        <lastmod>2015-04-25T18:04:21+10:00</lastmod>
+        <lastmod>2015-04-30T22:42:12+10:00</lastmod>
     </url>
     <url>
         <loc>http://blog.stevenocchipinti.com/</loc>
-        <lastmod>2015-04-25T18:04:21+10:00</lastmod>
+        <lastmod>2015-04-30T22:42:12+10:00</lastmod>
     </url>
     <url>
         <loc>http://blog.stevenocchipinti.com/projects/</loc>

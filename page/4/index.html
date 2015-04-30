@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Occhipinti">
 
   
-  <meta name="description" content="Have you ever SSH&#8217;ed to a server and found you need to copy some data back where a simple selection copy and paste just doesn&#8217;t seem &hellip;">
+  <meta name="description" content="As mentioned in a previous post, we use GitHub-Flow at work and I really like it.In essence, it involves doing work in feature branches, while &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/git-hub-github.html">Git + Hub = GitHub</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+<time datetime="2012-02-20T02:37:00+11:00" pubdate data-updated="true">Feb 20<span>th</span>, 2012</time>
+        
+         | <a href="/2012/02/git-hub-github.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="css-full-post-content js-full-post-content">
+As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What&#8217;s nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> &#8220;Open a pull request to merge the current branch into master and attach the pull request to issue 49&#8221;</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don&#8217;t know why this isn&#8217;t built in to the web interface (or maybe it is and I just don&#8217;t know how).
+</div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -612,95 +654,6 @@ In the initial R&amp;D stages for our <a href="http://tank.stevenocchipinti.com/
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/09/git-diff-and-patch.html">Git Stash, Diff and Patch</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time datetime="2011-09-21T10:41:00+10:00" pubdate data-updated="true">Sep 21<span>st</span>, 2011</time>
-        
-         | <a href="/2011/09/git-diff-and-patch.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
-
-<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
-In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
-
-<p>I have found two good ways of accomplishing this.</p>
-
-<h2>Git stash</h2>
-
-<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git stash</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
-
-<p>When I need to work on a related feature again, I can list my stashes with:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git stash list</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, apply the most recent stash by running this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git stash apply</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
-
-<h2>Git diff and patch:</h2>
-
-<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
-
-<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git diff &gt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
-
-<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>patch -p1 &lt; ~/patches/temp_workaround.patch</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/5/">&larr; Older</a>
@@ -729,6 +682,10 @@ In this situation, checking them into Git or making a personal <code>.gitignore<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">Rewriting Indentation in Every File and Every Commit</a>
+      </li>
+    
+      <li class="post">
         <a href="/2015/04/25/safely-rendering-newlines-in-html-with-css/">Safely Rendering Newlines in HTML With CSS</a>
       </li>
     
@@ -742,10 +699,6 @@ In this situation, checking them into Git or making a personal <code>.gitignore<
     
       <li class="post">
         <a href="/2015/03/24/git-reset-cheatsheet/">Git Reset Cheatsheet</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2014/12/29/sending-email-from-the-command-line/">Sending Email From the Command Line</a>
       </li>
     
   </ul>
