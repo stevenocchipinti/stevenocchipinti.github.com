@@ -1,14 +1,16 @@
 ---
-layout: page
+layout: post-index
 title: "Travel"
+description: "Blogs, photos and dates of my holidays."
 date: 2013-07-12 21:07
 comments: false
 sharing: false
 footer: false
+image:
+  feature: /images/threaded-blue-on-black-cropped.jpg
 ---
 
-Here is a collection of my holidays.  
-I try to keep travel blogs for my trips, which you can find below.
+<article>
 
 Perth and Bali
 --------------
@@ -26,6 +28,9 @@ Perth and Bali
 
 <a href="http://bali2014.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Japan
 -----
@@ -43,6 +48,9 @@ Japan
 
 <a href="http://japan2013.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Singapore and Malaysia
 ----------------------
@@ -58,6 +66,9 @@ Singapore and Malaysia
 
 <a href="http://sinkul2012.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Malaysia and Hong Kong
 ----------------------
@@ -73,6 +84,9 @@ Malaysia and Hong Kong
 
 <a href="http://klhk2010.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Japan
 -----
@@ -86,6 +100,9 @@ Japan
 
 <a href="http://japan2010.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Thailand
 --------
@@ -99,6 +116,9 @@ Thailand
 <dd>05/07/2009 &rarr; 13/07/2009</dd>
 </dl>
 
+</article>
+
+<article>
 
 Vietnam and Cambodia
 --------------------
@@ -114,6 +134,9 @@ Vietnam and Cambodia
 
 <a href="http://vietnam2007.stevenocchipinti.com/">Blog</a>
 
+</article>
+
+<article>
 
 Canada and USA
 --------------
@@ -128,6 +151,9 @@ Canada and USA
 
 </dl>
 
+</article>
+
+<article>
 
 Italy
 -----
@@ -140,3 +166,5 @@ Italy
 </dl>
 
 <div style="clear: both"/>
+
+</article>

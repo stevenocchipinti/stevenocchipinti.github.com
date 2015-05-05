@@ -1,14 +1,17 @@
 ---
-layout: page
+layout: post-index
 title: "Projects"
+description: "A collection of my personal side projects."
 date: 2014-06-15 12:55
 comments: false
 sharing: false
 footer: false
+image:
+  feature: /images/threaded-blue-on-black-cropped.jpg
 ---
 
-Here is a collection of my personal side projects.
 
+<article>
 
 Snooker
 -------
@@ -20,6 +23,9 @@ My second AngularJS app - A responsive, mobile-friendly, offline-enabled, client
 [Snooker](http://www.poosnooker.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/snooker)
 
+</article>
+
+<article>
 
 DWI Lens Visualiser
 -------------------
@@ -33,6 +39,9 @@ This app is a scraper for [DWI Digital Cameras](http://www.dwidigitalcameras.com
 [DWI Lens Visualiser](http://dwi.stevenocchipinti.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/dwi-visualiser)
 
+</article>
+
+<article>
 
 Pomodoro
 --------
@@ -46,6 +55,9 @@ This is useful for increasing communication within a team.
 [Pomodoro Timer](http://pomodoro.stevenocchipinti.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/pomodoro)
 
+</article>
+
+<article>
 
 Bill Split
 ----------
@@ -57,6 +69,9 @@ My first AngularJS app - A simple app that can be used to split the bill for a g
 [Bill Split](http://billsplit.stevenocchipinti.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/billsplit)
 
+</article>
+
+<article>
 
 Schedulator (incomplete)
 ------------------------
@@ -68,6 +83,9 @@ A Rails app that a group of people can use to find a date for an event that suit
 [Schedulator.net](http://schedulator.net)  
 [Code on GitHub](https://github.com/stevenocchipinti/schedulator)
 
+</article>
+
+<article>
 
 TaskBreakDown (incomplete)
 --------------------------
@@ -81,6 +99,9 @@ This is essentually a mind map where each node calculates its completion percent
 [TaskBreakDown.com](http://taskbreakdown.com)  
 [Code on GitHub](https://github.com/stevenocchipinti/taskbreakdown)
 
+</article>
+
+<article>
 
 TramTracker CLI gem
 -------------------
@@ -89,13 +110,14 @@ TramTracker CLI gem
 
 A ruby command line interface for Melbourne's TramTracker.
 
-```
-gem install tramtracker
-```
+`gem install tramtracker`
 
 [Gem on RubyGems](https://rubygems.org/gems/tramtracker)  
 [Code on GitHub](https://github.com/stevenocchipinti/tramtracker)
 
+</article>
+
+<article>
 
 HomeSync
 --------
@@ -106,4 +128,4 @@ A pure Bash tool for keeping "dot" files in sync accross multiple computers by u
 
 [Code on GitHub](https://github.com/stevenocchipinti/homesync)
 
-<div style="clear: both"/>
+</article>
