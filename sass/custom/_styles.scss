@@ -1,12 +1,37 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
-h1,h2 {
-  clear: both;
+table {
+  border: none; /* Turn off all borders */
+  border-top: 1px solid #ccc;
 }
-
-dt {
-  font-weight: bold;
+table caption {
+  color: #545454;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  margin: 0 0 20px 0;
+  padding: 0;
+  text-align: center;
 }
-dd {
-  padding: 0 0 0.5em 0;
+table thead {
+  background: #f8f8f8;
+}
+table th,
+table td {
+  border: none; /* Turn off all borders */
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  padding: 10px;
+  text-align: left;
+}
+table code {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  border: 1px solid #e6e6e6;
+  background-color: #f2f2f2;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }

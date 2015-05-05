@@ -20,93 +20,12 @@ The `reset` command will:
 Commit level
 ------------
 
-<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
-<tbody><tr>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Current Branch?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Index?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Working Dir?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Working Dir Safe?
-</th>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset --soft [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset (--mixed) [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset --hard [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<span style="color: rgb(255, 38, 0);">NO</span>
-</th>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>checkout [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-</tr>
-</tbody></table>
-
+|                            | Updates Current Branch? | Updates Index? | Updates Working Dir? | Working Dir Safe?                               |
+| -------------------------- | ----------------------- | -------------- | -------------------- | ----------------------------------------------- |
+| `reset --soft [commit]`    | YES                     | NO             | NO                   | YES                                             |
+| `reset (--mixed) [commit]` | YES                     | YES            | NO                   | YES                                             |
+| `reset --hard [commit]`    | YES                     | YES            | YES                  | <span style="color: rgb(255, 38, 0);">NO</span> |
+| `checkout [commit]`        | NO                      | YES            | YES                  | YES                                             |
 
 **reset &#45;&#45;soft [commit]**  
 When given `HEAD~`, this undos the git commit  
@@ -133,59 +52,10 @@ This will leave you in a _detached HEAD_ state
 File level
 ----------
 
-<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
-<tbody><tr>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Current Branch?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Index?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Working Dir?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Working Dir safe?
-</th>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset (commit)&nbsp;[file]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-</tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>checkout (commit) [file]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<span style="color: rgb(255, 38, 0);">NO</span>
-</td>
-</tr>
-</tbody></table>
-
+|                            | Updates Current Branch? | Updates Index? | Updates Working Dir? | Working Dir safe?                               |
+| -------------------------- | ----------------------- | -------------- | -------------------- | ----------------------------------------------- |
+| `reset (commit) [file]`    | NO                      | YES            | NO                   | YES                                             |
+| `checkout (commit) [file]` | NO                      | NO             | YES                  | <span style="color: rgb(255, 38, 0);">NO</span> |
 
 **reset (commit) [file]**  
 When given a file path, the first step of updating the branch that `HEAD` points to is skipped  
@@ -196,6 +66,5 @@ The commit parameter will default to `HEAD` which effectively _un-stages_ files
 **checkout (commit) [file] <span style="color: rgb(255, 38, 0);">(unsafe)</span>**  
 Updates the working directory only, without changing the index, current branch or even what `HEAD` is pointing to  
 This would effectively be `git reset --hard [branch] file`, but this command does not exist  
-
 
 More info and examples in `git reset --help`
