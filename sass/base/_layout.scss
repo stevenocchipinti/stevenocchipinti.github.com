@@ -147,7 +147,7 @@ body {
 	}
 	article {
 		background-color: $white;
-		overflow: hidden; // This makes the project and travel pages nice
+		overflow: hidden;
 		box-shadow: 0 0 0 0, 0 6px 12px rgba($base-color,0.10);
 		@include border-radius(3px);
 		margin-bottom: 20px;

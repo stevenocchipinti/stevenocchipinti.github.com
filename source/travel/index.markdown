@@ -26,7 +26,7 @@ Perth and Bali
 <dd>24/11/2014 &rarr; 26/11/2014</dd>
 </dl>
 
-<a href="http://bali2014.stevenocchipinti.com/">Blog</a>
+<a href="http://bali2014.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
@@ -46,7 +46,7 @@ Japan
 <dd>05/01/2013 &rarr; 11/01/2013</dd>
 </dl>
 
-<a href="http://japan2013.stevenocchipinti.com/">Blog</a>
+<a href="http://japan2013.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
@@ -64,7 +64,7 @@ Singapore and Malaysia
 <dd>04/01/2012 &rarr; 11/01/2012</dd>
 </dl>
 
-<a href="http://sinkul2012.stevenocchipinti.com/">Blog</a>
+<a href="http://sinkul2012.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
@@ -82,7 +82,7 @@ Malaysia and Hong Kong
 <dd>27/11/2010 &rarr; 06/12/2010</dd>
 </dl>
 
-<a href="http://klhk2010.stevenocchipinti.com/">Blog</a>
+<a href="http://klhk2010.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
@@ -98,7 +98,7 @@ Japan
 <dd>29/12/2009 &rarr; 12/01/2010</dd>
 </dl>
 
-<a href="http://japan2010.stevenocchipinti.com/">Blog</a>
+<a href="http://japan2010.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
@@ -132,7 +132,7 @@ Vietnam and Cambodia
 <dd>15/12/2007 &rarr; 17/12/2007</dd>
 </dl>
 
-<a href="http://vietnam2007.stevenocchipinti.com/">Blog</a>
+<a href="http://vietnam2007.stevenocchipinti.com/" class="btn">Blog</a>
 
 </article>
 
