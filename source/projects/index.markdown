@@ -37,7 +37,7 @@ This app is a scraper for [DWI Digital Cameras](http://www.dwidigitalcameras.com
 Pomodoro
 --------
 
-[{% img left https://lh3.googleusercontent.com/-7BEHAfKifFk/U06KmWwplmI/AAAAAAAABV8/U1heoGGmRQM/s320/Screenshot+from+2014-04-16+23%253A49%253A00.png %}](http://pomodoro.stevenocchipinti.com)
+[{% img left https://lh6.googleusercontent.com/-OBaztREgymo/VUoHSKNlGJI/AAAAAAAABu4/VcTzbKRFDVE/s320/pomodoro.png %}](http://pomodoro.stevenocchipinti.com)
 
 A Sinatra app that uses Server Sent Events to keep a team's pomodoros in sync.
 
@@ -72,7 +72,7 @@ A Rails app that a group of people can use to find a date for an event that suit
 TaskBreakDown (incomplete)
 --------------------------
 
-[{% img left https://lh3.googleusercontent.com/-ksE4QxCGk3g/U50nzoxZ_VI/AAAAAAAABac/84JAaBFSQ1s/s320/TaskBreakDown.png %}](http://taskbreakdown.com)
+[{% img left https://lh6.googleusercontent.com/-YnHxYVKfq3E/VUoHSLNWeGI/AAAAAAAABu0/CGa6KMhPxBM/s320/taskbreakdown.png %}](http://taskbreakdown.com)
 
 A Rails app that people can use to manage a hierarchical ToDo list.
 
