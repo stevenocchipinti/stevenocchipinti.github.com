@@ -6,8 +6,6 @@ date: 2014-06-15 12:55
 comments: false
 sharing: false
 footer: false
-image:
-  feature: /images/threaded-blue-on-black-cropped.jpg
 ---
 
 
