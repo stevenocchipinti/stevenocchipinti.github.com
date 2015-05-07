@@ -1,25 +1,29 @@
 ---
-layout: page
+layout: post-index
 title: "Projects"
+description: "A collection of my personal side projects."
 date: 2014-06-15 12:55
 comments: false
 sharing: false
 footer: false
 ---
 
-Here is a collection of my personal side projects.
 
+<article>
 
 Snooker
 -------
 
-[{% img left https://lh6.googleusercontent.com/-jWlGrFhqNeA/U50enL5QlrI/AAAAAAAABYc/Pd1CYtcrhN0/s320/snooker.png %}](http://snooker.stevenocchipinti.com)
+[{% img left https://lh6.googleusercontent.com/-jWlGrFhqNeA/U50enL5QlrI/AAAAAAAABYc/Pd1CYtcrhN0/s320/snooker.png %}](http://www.poosnooker.com)
 
 My second AngularJS app - A responsive, mobile-friendly, offline-enabled, client-side scoreboard app.
 
-[Snooker](http://www.poosnooker.com)  
-[Code on GitHub](https://github.com/stevenocchipinti/snooker)
+<a href="http://www.poosnooker.com" class="btn">Snooker</a>  
+<a href="https://github.com/stevenocchipinti/snooker" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 DWI Lens Visualiser
 -------------------
@@ -30,22 +34,28 @@ A small Sinatra app to visualise camera lenses based on their focal-length, aper
 
 This app is a scraper for [DWI Digital Cameras](http://www.dwidigitalcameras.com.au).
 
-[DWI Lens Visualiser](http://dwi.stevenocchipinti.com)  
-[Code on GitHub](https://github.com/stevenocchipinti/dwi-visualiser)
+<a href="http://dwi.stevenocchipinti.com" class="btn">DWI Lens Visualiser</a>
+<a href="https://github.com/stevenocchipinti/dwi-visualiser" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 Pomodoro
 --------
 
-[{% img left https://lh3.googleusercontent.com/-7BEHAfKifFk/U06KmWwplmI/AAAAAAAABV8/U1heoGGmRQM/s320/Screenshot+from+2014-04-16+23%253A49%253A00.png %}](http://pomodoro.stevenocchipinti.com)
+[{% img left https://lh6.googleusercontent.com/-OBaztREgymo/VUoHSKNlGJI/AAAAAAAABu4/VcTzbKRFDVE/s320/pomodoro.png %}](http://pomodoro.stevenocchipinti.com)
 
 A Sinatra app that uses Server Sent Events to keep a team's pomodoros in sync.
 
 This is useful for increasing communication within a team.
 
-[Pomodoro Timer](http://pomodoro.stevenocchipinti.com)  
-[Code on GitHub](https://github.com/stevenocchipinti/pomodoro)
+<a href="http://pomodoro.stevenocchipinti.com" class="btn">Pomodoro Timer</a>  
+<a href="https://github.com/stevenocchipinti/pomodoro" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 Bill Split
 ----------
@@ -54,9 +64,12 @@ Bill Split
 
 My first AngularJS app - A simple app that can be used to split the bill for a group.
 
-[Bill Split](http://billsplit.stevenocchipinti.com)  
-[Code on GitHub](https://github.com/stevenocchipinti/billsplit)
+<a href="http://billsplit.stevenocchipinti.com" class="btn">Bill Split</a>  
+<a href="https://github.com/stevenocchipinti/billsplit" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 Schedulator (incomplete)
 ------------------------
@@ -65,22 +78,28 @@ Schedulator (incomplete)
 
 A Rails app that a group of people can use to find a date for an event that suits every one.
 
-[Schedulator.net](http://schedulator.net)  
-[Code on GitHub](https://github.com/stevenocchipinti/schedulator)
+<a href="http://schedulator.net" class="btn">Schedulator.net</a>  
+<a href="https://github.com/stevenocchipinti/schedulator" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 TaskBreakDown (incomplete)
 --------------------------
 
-[{% img left https://lh3.googleusercontent.com/-ksE4QxCGk3g/U50nzoxZ_VI/AAAAAAAABac/84JAaBFSQ1s/s320/TaskBreakDown.png %}](http://taskbreakdown.com)
+[{% img left https://lh6.googleusercontent.com/-YnHxYVKfq3E/VUoHSLNWeGI/AAAAAAAABu0/CGa6KMhPxBM/s320/taskbreakdown.png %}](http://taskbreakdown.com)
 
 A Rails app that people can use to manage a hierarchical ToDo list.
 
 This is essentually a mind map where each node calculates its completion percentage based on the completion percentage of its child nodes.
 
-[TaskBreakDown.com](http://taskbreakdown.com)  
-[Code on GitHub](https://github.com/stevenocchipinti/taskbreakdown)
+<a href="http://taskbreakdown.com" class="btn">TaskBreakDown.com</a>  
+<a href="https://github.com/stevenocchipinti/taskbreakdown" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 TramTracker CLI gem
 -------------------
@@ -89,13 +108,14 @@ TramTracker CLI gem
 
 A ruby command line interface for Melbourne's TramTracker.
 
-```
-gem install tramtracker
-```
+`gem install tramtracker`
 
-[Gem on RubyGems](https://rubygems.org/gems/tramtracker)  
-[Code on GitHub](https://github.com/stevenocchipinti/tramtracker)
+<a href="https://rubygems.org/gems/tramtracker" class="btn">Gem on RubyGems</a>  
+<a href="https://github.com/stevenocchipinti/tramtracker" class="btn">Code on GitHub</a>
 
+</article>
+
+<article>
 
 HomeSync
 --------
@@ -104,6 +124,6 @@ HomeSync
 
 A pure Bash tool for keeping "dot" files in sync accross multiple computers by uploading to Github.
 
-[Code on GitHub](https://github.com/stevenocchipinti/homesync)
+<a href="https://github.com/stevenocchipinti/homesync" class="btn">Code on GitHub</a>
 
-<div style="clear: both"/>
+</article>

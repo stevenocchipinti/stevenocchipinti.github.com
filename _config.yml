@@ -3,8 +3,8 @@
 # ----------------------- #
 
 url: http://blog.stevenocchipinti.com
-title: StevenOcchipinti.com
-subtitle: Coder.
+title: Steven Occhipinti
+subtitle: Philomathic Coder
 author: Steven Occhipinti
 simple_search: http://google.com/search
 description: "When I learn something cool, I'll try to record it here so I don't forget and maybe someone else may benefit from it too"
@@ -102,3 +102,10 @@ facebook_like: false
 
 # Gravatar
 gravatar_email: dev@stevenocchipinti.com
+
+
+# ------------------------ #
+#   HPSTR Theme Settings   #
+# ------------------------ #
+
+avatar: https://www.gravatar.com/avatar/207d31274969a51f4bbfedf875b54eb5.png?s=500

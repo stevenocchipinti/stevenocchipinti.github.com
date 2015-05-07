@@ -1,14 +1,14 @@
 ---
-layout: page
+layout: post-index
 title: "Travel"
+description: "Blogs, photos and dates of my holidays."
 date: 2013-07-12 21:07
 comments: false
 sharing: false
 footer: false
 ---
 
-Here is a collection of my holidays.  
-I try to keep travel blogs for my trips, which you can find below.
+<article>
 
 Perth and Bali
 --------------
@@ -24,8 +24,11 @@ Perth and Bali
 <dd>24/11/2014 &rarr; 26/11/2014</dd>
 </dl>
 
-<a href="http://bali2014.stevenocchipinti.com/">Blog</a>
+<a href="http://bali2014.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Japan
 -----
@@ -41,8 +44,11 @@ Japan
 <dd>05/01/2013 &rarr; 11/01/2013</dd>
 </dl>
 
-<a href="http://japan2013.stevenocchipinti.com/">Blog</a>
+<a href="http://japan2013.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Singapore and Malaysia
 ----------------------
@@ -56,8 +62,11 @@ Singapore and Malaysia
 <dd>04/01/2012 &rarr; 11/01/2012</dd>
 </dl>
 
-<a href="http://sinkul2012.stevenocchipinti.com/">Blog</a>
+<a href="http://sinkul2012.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Malaysia and Hong Kong
 ----------------------
@@ -71,8 +80,11 @@ Malaysia and Hong Kong
 <dd>27/11/2010 &rarr; 06/12/2010</dd>
 </dl>
 
-<a href="http://klhk2010.stevenocchipinti.com/">Blog</a>
+<a href="http://klhk2010.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Japan
 -----
@@ -84,8 +96,11 @@ Japan
 <dd>29/12/2009 &rarr; 12/01/2010</dd>
 </dl>
 
-<a href="http://japan2010.stevenocchipinti.com/">Blog</a>
+<a href="http://japan2010.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Thailand
 --------
@@ -99,6 +114,9 @@ Thailand
 <dd>05/07/2009 &rarr; 13/07/2009</dd>
 </dl>
 
+</article>
+
+<article>
 
 Vietnam and Cambodia
 --------------------
@@ -112,8 +130,11 @@ Vietnam and Cambodia
 <dd>15/12/2007 &rarr; 17/12/2007</dd>
 </dl>
 
-<a href="http://vietnam2007.stevenocchipinti.com/">Blog</a>
+<a href="http://vietnam2007.stevenocchipinti.com/" class="btn">Blog</a>
 
+</article>
+
+<article>
 
 Canada and USA
 --------------
@@ -128,6 +149,9 @@ Canada and USA
 
 </dl>
 
+</article>
+
+<article>
 
 Italy
 -----
@@ -140,3 +164,5 @@ Italy
 </dl>
 
 <div style="clear: both"/>
+
+</article>

@@ -1,9 +1,74 @@
-{% if site.simple_search %}
-  <form action="{{ site.simple_search }}" method="get">
-    <fieldset role="search">
-      <input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}" />
-      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-    </fieldset>
-  </form>
-{% endif %}
-{% include custom/navigation.html %}
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+  <button class="dl-trigger">Open Menu</button>
+  <ul class="dl-menu">
+    <li>
+      <a href="/"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+      <a href="#"><i class="fa fa-user"></i> About Me</a>
+      <ul class="dl-submenu">
+        <li>
+          <img src="{{ site.avatar }}" alt="{{ site.author }} photo" class="author-photo">
+          <h4>{{ site.author }}</h4>
+          <p>{{ site.author_bio }}</p>
+        </li>
+        {% if site.learn_more_link %}<li><a href="{{ site.learn_more_link }}">Learn More</a></li>{% endif %}
+        {% if site.email %}<li>
+          <a href="mailto:{{ site.email }}"><i class="fa fa-envelope"></i> Email</a>
+        </li>{% endif %}
+        {% if site.github_user %}<li>
+          <a href="https://github.com/{{ site.github_user }}"><i class="fa fa-github"></i> GitHub</a>
+        </li>{% endif %}
+        {% if site.twitter_user %}<li>
+          <a href="https://twitter.com/{{ site.twitter_user }}"><i class="fa fa-twitter"></i> Twitter</a>
+        </li>{% endif %}
+        {% if site.googleplus_user %}<li>
+          <a href="https://plus.google.com/{{ site.googleplus_user }}"><i class="fa fa-google-plus"></i> Google+</a>
+        </li>{% endif %}
+        <li>
+          <a href="http://flickr.com/stevenocchipinti"><i class="fa fa-flickr"></i> Flickr</a>
+        </li>
+        <li>
+          <a href="http://facebook.com/stevenocchipinti"><i class="fa fa-facebook"></i> Facebook</a>
+        </li>
+        <li>
+          <a href="http://au.linkedin.com/pub/steve-occhipinti/18/55/750"><i class="fa fa-linkedin"></i> LinkedIn</a>
+        </li>
+      </ul><!-- /.dl-submenu -->
+    </li>
+    <li>
+      <a href="#"><i class="fa fa-search"></i> Search</a>
+      <ul class="dl-submenu">
+        <li>
+          <style>
+            .searchbox:focus {
+              outline: 0;
+            }
+            .searchbox {
+              background-color: #222;
+              color: white;
+              border: 0;
+              height: 50px;
+              width: 100%;
+              padding-left: 20px;
+            }
+          </style>
+          <form method="get" action="https://www.google.com/search">
+            <input type="hidden" name="q" value="site:blog.stevenocchipinti.com">
+            <input class="searchbox" type="text" name="q" placeholder="Search">
+          </form>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="/posts/"><i class="fa fa-bars"></i> All Posts</a>
+    </li>
+    <li>
+      <a href="/projects/"><i class="fa fa-code"></i> Projects</a>
+    </li>
+    <li>
+      <a href="/travel/"><i class="fa fa-plane"></i> Travel</a>
+    </li>
+    {% for link in site.links %}<li>{% if link.external %}<a href="{{ link.url }}">{{ link.title }}</a>{% else %}<a href="{{ root_url }}{{ link.url }}">{{ link.title }}</a>{% endif %}</li>{% endfor %}
+  </ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
