@@ -37,6 +37,30 @@
       </ul><!-- /.dl-submenu -->
     </li>
     <li>
+      <a href="#"><i class="fa fa-search"></i> Search</a>
+      <ul class="dl-submenu">
+        <li>
+          <style>
+            .searchbox:focus {
+              outline: 0;
+            }
+            .searchbox {
+              background-color: #222;
+              color: white;
+              border: 0;
+              height: 50px;
+              width: 100%;
+              padding-left: 20px;
+            }
+          </style>
+          <form method="get" action="https://www.google.com/search">
+            <input type="hidden" name="q" value="site:blog.stevenocchipinti.com">
+            <input class="searchbox" type="text" name="q" placeholder="Search">
+          </form>
+        </li>
+      </ul>
+    </li>
+    <li>
       <a href="/posts/"><i class="fa fa-bars"></i> All Posts</a>
     </li>
     <li>
