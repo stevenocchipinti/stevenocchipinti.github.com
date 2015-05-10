@@ -14,6 +14,7 @@ group :development do
   gem 'rb-fsevent'
   gem 'stringex'
   gem 'liquid'
+  gem 'pry-byebug'
 end
 
 gem 'sinatra'
