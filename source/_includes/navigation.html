@@ -64,8 +64,7 @@
               padding-left: 20px;
             }
           </style>
-          <form method="get" action="https://www.google.com/search">
-            <input type="hidden" name="q" value="site:blog.stevenocchipinti.com">
+          <form onsubmit="window.location.href='https://google.com/search?q=site:blog.stevenocchipinti.com+' + this.q.value;return false;" action="">
             <input class="searchbox" type="text" name="q" placeholder="Search">
           </form>
         </li>
