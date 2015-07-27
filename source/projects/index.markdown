@@ -57,6 +57,22 @@ This is useful for increasing communication within a team.
 
 <article>
 
+Shopping List
+-------------
+
+[{% img left https://lh3.googleusercontent.com/k9-xAf2srYOl-iwTrrF4RZSYd83Nd2YF5-8Vr6PhYmY=s320 %}](https://github.com/stevenocchipinti/ShoppingList)
+
+A basic shopping list mobile app written in Ionic.
+
+It is simply an ad-free list of items that has auto-complete based on previous entries.
+
+<a href="https://github.com/stevenocchipinti/ShoppingList/releases/latest" class="btn">Download APK</a>  
+<a href="https://github.com/stevenocchipinti/ShoppingList" class="btn">Code on GitHub</a>
+
+</article>
+
+<article>
+
 Bill Split
 ----------
 
