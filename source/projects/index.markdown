@@ -110,7 +110,6 @@ A Rails app that people can use to manage a hierarchical ToDo list.
 
 This is essentually a mind map where each node calculates its completion percentage based on the completion percentage of its child nodes.
 
-<a href="http://taskbreakdown.com" class="btn">TaskBreakDown.com</a>  
 <a href="https://github.com/stevenocchipinti/taskbreakdown" class="btn">Code on GitHub</a>
 
 </article>
