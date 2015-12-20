@@ -10,6 +10,28 @@ footer: false
 
 <article>
 
+Taiwan and Japan
+----------------
+
+{% img left http://2.bp.blogspot.com/-By7KfzTiSIk/UQrwsM1l-cI/AAAAAAAABC8/siTLnsdrwzE/s320/DSC_7116_cropped.JPG %}
+
+<dl>
+<dt>Taipei:</dt>
+<dd>28/12/2015 &rarr; 04/01/2016</dd>
+<dt>Osaka:</dt>
+<dd>04/01/2016 &rarr; 07/01/2016</dd>
+<dt>Hakone:</dt>
+<dd>07/01/2016 &rarr; 08/01/2016</dd>
+<dt>Tokyo:</dt>
+<dd>08/01/2016 &rarr; 16/01/2016</dd>
+</dl>
+
+<a href="http://taipan2016.blogspot.com/" class="btn">Blog</a>
+
+</article>
+
+<article>
+
 Perth and Bali
 --------------
 
