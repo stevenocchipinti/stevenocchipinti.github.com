@@ -130,7 +130,6 @@ Vim has a plugin system, but by default it does not do a good job of keeping plu
 I recommend using [Vundle](https://github.com/gmarik/vundle), here is how to set it up along with a few useful vim plugins:
 
 ```
-mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 ```
 
@@ -140,22 +139,21 @@ Then place the following at the top of your `.vimrc`:
 filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-cucumber'
-Bundle 'bogado/file-line'
-Bundle 'godlygeek/tabular'
-Bundle 'ecomba/vim-ruby-refactoring'
-Bundle 'scrooloose/syntastic'
-Bundle 'vim-scripts/matchit.zip'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'cakebaker/scss-syntax.vim'
+
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'scrooloose/syntastic'
+Plugin 'bogado/file-line'
+
+call vundle#end()
 filetype plugin indent on
 ```
 
@@ -163,12 +161,8 @@ Then, I choose configure some of those plugins towards the bottom of the `.vimrc
 
 ```
 " NERDTREE PLUGIN - (mnemonic: Files)
-nmap <leader>f :NERDTreeToggle
-nmap <leader>F :NERDTreeFind
-
-" AIRLINE PLUGIN
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
+nmap <leader>f :NERDTreeToggle<CR>
+nmap <leader>F :NERDTreeFind<CR>
 
 " CTRL-P PLUGIN
 let g:ctrlp_user_command = {
