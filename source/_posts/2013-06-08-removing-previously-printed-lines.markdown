@@ -25,16 +25,21 @@ So I turned to Ruby. Now instead of printing the same block of text over and ove
 
 In this post, I'll outline a couple of ways of achieving this.
 
+
 Using the \b (backspace) character
 ----------------------------------
 
-Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little "progress" spinners.  
+Printing a \b character does a similar thing as pressing backspace, except instead of removing the character, it nondestructively shifts the cursor back which allows you to then overwrite previously written characters. This is really simple to use and is great for little "progress" spinners.  
 For example, a character that cycles through `|`, `/`, `-`, `\`:
 
 ``` ruby
+puts "foo\b"
+# => foo
+puts "foo\bx"
+# => fox
 puts "foo\b\b\bbar"
 # => bar
-("|/-\\"*10).chars.each {|c| print c; sleep 1; print "\b"}
+1.step {|i| sleep 0.2; print "\b" + "|/-\\"[i%4] }
 # => Cheesy, old-school spinner
 ```
 
@@ -44,6 +49,7 @@ There are two main shortfalls with this approach, one is that it only works on a
 puts "foo\n\b\b\bbar"
 # => foo\nbar
 ```
+
 
 Using the \r (carriage return) character
 ----------------------------------------
