@@ -64,7 +64,7 @@ Taiwan and Japan
 Perth and Bali
 --------------
 
-{% img left https://lh6.googleusercontent.com/Epml7Mlv2ISOGohm4F6bBPG9N9WD1yRBamNKyTmK_aA=s320 %}
+{% img left /images/travel/bali-2014-w320.jpg %}
 
 <dl>
 <dt>Perth:</dt>
@@ -84,7 +84,7 @@ Perth and Bali
 Japan
 -----
 
-{% img left http://2.bp.blogspot.com/-By7KfzTiSIk/UQrwsM1l-cI/AAAAAAAABC8/siTLnsdrwzE/s320/DSC_7116_cropped.JPG %}
+{% img left /images/travel/japan-2013-w320.jpg %}
 
 <dl>
 <dt>Osaka:</dt>
@@ -104,7 +104,7 @@ Japan
 Singapore and Malaysia
 ----------------------
 
-{% img left http://4.bp.blogspot.com/-eC8J4Po1w80/UEwqtAXER_I/AAAAAAAAAOw/2RlTW0tvWio/s320/KualaLumpur.jpg %}
+{% img left /images/travel/sinkul-2012-w320.jpg %}
 
 <dl>
 <dt>Singapore:</dt>
@@ -122,7 +122,7 @@ Singapore and Malaysia
 Malaysia and Hong Kong
 ----------------------
 
-{% img left http://1.bp.blogspot.com/-LRtOhFtAhHU/UEwqFQwLQYI/AAAAAAAAAOU/hyznTQdl0AE/s320/HongKong.jpg %}
+{% img left /images/travel/klhk-2010-w320.jpg %}
 
 <dl>
 <dt>Kuala Lumpur:</dt>
@@ -140,7 +140,7 @@ Malaysia and Hong Kong
 Japan
 -----
 
-{% img left http://4.bp.blogspot.com/-DyJgx7mqU5A/UEwq2X87C_I/AAAAAAAAAO8/gSyDavrmKR4/s320/RainbowBridge.jpg %}
+{% img left /images/travel/japan-2009-w320.jpg %}
 
 <dl>
 <dt>Tokyo:</dt>
@@ -156,7 +156,7 @@ Japan
 Thailand
 --------
 
-{% img left http://1.bp.blogspot.com/-zO3-Mf0p2Yo/UEwqcRWULbI/AAAAAAAAAOo/fJ7TboqVbVQ/s320/JamesBondIsland.JPG %}
+{% img left /images/travel/thailand-2009-w320.jpg %}
 
 <dl>
 <dt>Phuket:</dt>
@@ -172,7 +172,7 @@ Thailand
 Vietnam and Cambodia
 --------------------
 
-{% img left http://1.bp.blogspot.com/-CnVZQ77NEsM/UEwq6LN3-0I/AAAAAAAAAPE/MJAZKsk7-Ak/s320/SiemReap.jpg %}
+{% img left /images/travel/vietnam-2007-w320.jpg %}
 
 <dl>
 <dt>Ho Chi Minh City:</dt>
@@ -190,7 +190,7 @@ Vietnam and Cambodia
 Canada and USA
 --------------
 
-{% img left http://3.bp.blogspot.com/-Efkbdo6GwjQ/UEwq-fHIcLI/AAAAAAAAAPM/xk-ok5Gbjx4/s320/Toronto.jpg %}
+{% img left /images/travel/toronto-2007-w320.jpg %}
 
 <dl>
 <dt>Toronto:</dt>
@@ -207,7 +207,7 @@ Canada and USA
 Italy
 -----
 
-{% img left http://1.bp.blogspot.com/-ZLUtgwG7lzc/UEwqIo_EcCI/AAAAAAAAAOc/_wSWufl0gRY/s320/Italy.jpg %}
+{% img left /images/travel/italy-2005-w320.jpg %}
 
 <dl>
 <dt><span title="Milan &#9992; Venice &#9992; Florence &#9992; Pisa &#9992; Rome &#9992; Pompeii &#9992; Sorento &amp; Capri &#9992; Rome">Tour&#42;</span>:</dt>
