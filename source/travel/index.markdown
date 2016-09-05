@@ -13,7 +13,7 @@ footer: false
 Cook Islands
 ------------
 
-{% img left https://lh3.googleusercontent.com/3Uth5IM6eX8cz5A2K6DmMp5QmKTz794ILGVTY1qRS5pk_Wx1cHJSPNUm__hwuj9DrqO8ICGArCu1-5smle2zJzWvkcKNbXXE3geKZcGW_hjZ9biy8UfkgppP75WIvmX_ZeCXDAMsldHtvhJWwrSc6WMGNIosvKF6bpft8cZ6xr8HFhw4gVc1CoMy7h9M0U4rL5PaUAjkhl5VWwkiAUhCXB2V0qDniaSHxil41z-PrHZZnfb5ihxb5XjcEgHGc1vXT3lWsGAAq6CR4rsSwqKiSLjlwHkFJMvEAyMYqMnJew15EXZ7NIXzmvuxXJI1fbUk7nwN-BhEMUiYNwSPTaXg_pZtvkxImb5yO_eLD2YrZyJWypoRoaNdIwmeS7GN1QMYPSH6bM_w2qgNw2okK1XqTkiZG5KUB1PTZNcpZH4iuonJU8Z12CSSCqFg8zlskEHr6h71epWc-2DrlKmcybtoV0Hqq2lCZYh6lIXAuso68kjigtkAZ-6-87nX9sOFUQ7n0dnRTxs3OSF9RUu98kow9HXXhJHOSmvsM3kdbY2j75E-1GRDbW_Y7x6T37vPL8MOnobq4gA=s320 %}
+{% img left /images/travel/cook-islands-2016-w320.jpg %}
 
 <dl>
 <dt>Rarotonga</dt>
@@ -27,7 +27,7 @@ Cook Islands
 China
 -----
 
-{% img left https://lh3.googleusercontent.com/rcQHrs8QX3lrAVH029z-zGXSq3ubIJWhxfjFZ-WIPxTM4d-c0rbwtBYbCxkD6dNAJxGx3tfMImRx9k6QiqqsfXb2-yeFwtUd9TRDhyvUfQ8p7G-pK_a5nm7HGrtfRrsYyIajhICChScmOLhDrQgG1gsUDqaHlqNyII4gcNoT2f5wHwXAMqHJgojLQa08fmSzuFgM7PRyruiqUBDlnQCB5iud7f0f1jJ4pCUQxEXJ7yGbJi-VGehk8nGYL9cCtq-PtxmGDTFQZ3vMTNCtXsF3X8fGota5wFORsS24ikB7Id0OWdgA-oWCFzpz8waM6Bc5uyI81vA-D_5b4YaqmYFHMF9yxt7ONx7-qjQSLMP8HJTKPi38OG6GYfZt9mBm0bXwN9l8mb9gBEBo-3EpxPZGBwPug7fzLh4QjWI7WCDMfGgmXm6kZr_Su_C-YOP6bQ8BRZlADTGc2cZ672ywZ5MgMfqsPBO7AzDE9N3f0hmysBJ7SsJwqZJX7O0lTF4xwm6qkkNOgIeaFyNykNrtX5tH0BVhbWMKRQw-FMRlqbb9PFr3yMZJid9XgGN0RLdM5HLVKWb8sCA=s320 %}
+{% img left /images/travel/xian-2016-w320.jpg %}
 
 <dl>
 <dt>Xi'an:</dt>
@@ -42,7 +42,7 @@ China
 Taiwan and Japan
 ----------------
 
-{% img left https://lh3.googleusercontent.com/Mp_gCXhYB4j-gVyoHGMsdpQuSy-HgQ7g3tq11RcPFdVYpSpPaTCFg9XeqWk0Ds2-XlSe86WLTNcsnR6mOXvn2DkgVuDk4dmpsKcFcyza46jPruFyK_EXoyioeJDlm4Wb9cud8HlIFvXiHdj0AE-US0XXMLGHQvlORLErUgcNh2_r9Q1WJtwBcUy6sxAcG8DwSLsrxfeda94O9PcBHb1gXyKCnFg0VTpPmTheZqTL3F17XXwP3lrVPdkqcbz67AxGl2ckhjpFaXbByn3Ti5UtyLIxSP-MTiVBJPpNL9Wv-Xp7bi825ylwMgsLYFPwhgupwMUGIVvAyDHKRG2Do98VP7TuD9iB6tknGPoyVlJFPuOw7iJP3GqFzxyjfj0-F522O6J8OsZy9aJFi45pPlhytJcSuUWww77hd0KYWjX5ONlhH4JkgRqbqc44lv5g8D_QfUSZJ3Lkm8LfTuHqk5Q4u_BzohCZEBLgamCIy2cO7Cqhrw30OvMdXl8ddNTRPmz2TbM8IMUvQompdmdhPRKkTh8u8vhS08kBBeoK-tZvG0qQ5yAZXtcozKBrEdiyzJ_hpBVbta8=s320 %}
+{% img left /images/travel/taipan-2016-w320.jpg %}
 
 <dl>
 <dt>Taipei:</dt>
