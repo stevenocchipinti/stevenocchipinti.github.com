@@ -4,7 +4,7 @@
   <title><![CDATA[Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T02:20:32+11:00</updated>
+  <updated>2016-12-28T03:12:28+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,147 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Different Author Email Addresses Per Git Repository]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/different-author-email-addresses-per-git-repository/"/>
+    <updated>2016-12-28T02:30:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/different-author-email-addresses-per-git-repository</id>
+    <content type="html"><![CDATA[<p>Git v2.8 introduced a new configuration option called <code>user.useconfigonly</code>. This
+option prevents git from trying to guess your email address to use for the
+author metadata for a commit and forces you to have configured one.</p>
+
+<p>This is great news because with a good workflow in place you can be sure you
+always have the correct email addresses on your commits.</p>
+
+<h2>Global Configuration</h2>
+
+<p>If <code>user.useconfigonly</code> is set to <code>true</code>, you will need to configure an email
+address. The simplest way is with this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name 'Steve Occhipinti'
+</span><span class='line'>git config --global user.email steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which will result in a configuration like this saved in <code>~/.gitconfig</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[user]
+</span><span class='line'>  name = Steve Occhipinti
+</span><span class='line'>  email = steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is great, but what if you want to work on personal projects and work
+projects on the same machine?</p>
+
+<h2>Per Repository Configuration</h2>
+
+<p>Instead of using the global config in the home directory, git will first look
+for a local configuration in <code>./.git/config</code>. To set per repository
+configuration, all you have to do is <code>cd</code> to the repo and run the same commands
+but without the <code>--global</code> flag:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config user.name 'Steve Occhipinti'
+</span><span class='line'>git config user.email steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Mixing Work And Personal</h2>
+
+<p>If you have a global configuration, all repositories will use that as a default
+unless you remember to set a per-repository config. If you don&rsquo;t set a global
+config, git will normally guess what your email is and use that if its valid.</p>
+
+<p>If you set the <code>useconfigonly</code> option and remove your global config, git will
+not allow you to make a commit until you&rsquo;ve setup your user details and this
+will prevent accidentally using your work email address on a personal project or
+vice-versa.</p>
+
+<p>However, I do leave my name configured globally as that is not going to change
+between repositories.</p>
+
+<h2>Visual Queues</h2>
+
+<p>Having that error appear when you haven&rsquo;t setup an email address is great, but
+rather than waiting for me to make a mistake, I added an exclamation mark
+indicator to my shell prompt to remind me to set up the user details.</p>
+
+<p>The basic idea is something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">local </span>noauthor
+</span><span class='line'>git config user.email &gt; /dev/null <span class="o">||</span> <span class="nv">noauthor</span><span class="o">=</span><span class="s2">&quot;!&quot;</span>
+</span><span class='line'><span class="nb">export</span> <span class="nv">$PS1</span><span class="o">=</span><span class="s2">&quot;$noauthor${PS1}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Quicker Configuration</h2>
+
+<p>If this is something that I will have to do for every repo I create or clone, I
+want to it be pain free. Git makes it really easy to create new sub commands
+simply by putting a script named <code>git-xxxx</code> in the path, where <code>xxxx</code> is the
+sub command name.</p>
+
+<p>I created a <code>git-author</code> script like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="nb">set</span> -e
+</span><span class='line'>
+</span><span class='line'><span class="nv">email_list_file</span><span class="o">=</span><span class="s2">&quot;$HOME/.config/git/author-emails&quot;</span>
+</span><span class='line'><span class="nv">has_pecorb</span><span class="o">=</span><span class="k">$(</span><span class="nb">type </span>pecorb &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Current author: $(git config user.name) &lt;$(git config user.email)&gt;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -f <span class="nv">$email_list_file</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">$has_pecorb</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>  <span class="nv">email</span><span class="o">=</span><span class="k">$(</span>pecorb <span class="nv">$email_list_file</span><span class="k">)</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">echo</span> -n <span class="s2">&quot;Enter a new email address: &quot;</span>
+</span><span class='line'>  <span class="nb">read </span>email
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>git config user.email <span class="nv">$email</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when go to a repo and I see my <code>!</code> indicator, all I have to do is run <code>git
+author</code>.</p>
+
+<p>This allows me to put all my email addresses in a file and then select the one I
+want from a nice menu. Note, I&rsquo;m using <code>pecorb</code> here which is a
+<a href="https://github.com/stevenocchipinti/pecorb">gem I wrote</a> to generate selectable
+menus on the command line, but there are plenty of
+<a href="https://github.com/stevenocchipinti/pecorb#kudos">alternatives</a> or you could
+just use <code>read</code> in <code>bash</code> and type it in (which my script falls back to).</p>
+
+<h2>My Bash Prompt</h2>
+
+<p>The prompt I use may not be the tidiest, but its available
+<a href="https://github.com/stevenocchipinti/homesync/blob/1a345e563afb47b81d405d47e4a6b45b63e82c98/data/.bash_git">here</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows Starting Up by Itself at Random Times]]></title>
@@ -1551,17 +1692,6 @@ This process is what preserves and seals the bottles properly.</p>
 When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time - you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</p>
 
 <p>Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&rsquo;ll never want to buy that stuff again!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Script to Transfer Photos in Linux]]></title>
-    <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
-    <updated>2013-01-04T16:38:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
-</div>
 ]]></content>
   </entry>
   

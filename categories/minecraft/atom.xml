@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Minecraft | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/minecraft/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T02:20:32+11:00</updated>
+  <updated>2016-12-28T03:12:34+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -89,7 +89,7 @@ wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
 gnome-desktop-item-edit --create-new ~/.local/share/applications
 </code></p>
 
-<p><img class="center <a" src="href="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no">https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no</a>"></p>
+<p>{% img center <a href="https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no">https://lh5.googleusercontent.com/-9VnJ9K_nqQo/Un72Np6LzPI/AAAAAAAABTg/PVig82azah8/w435-h224-no</a> %}</p>
 
 <p>You can assign it the logo we downloaded earlier and use this for the command:
 <code>

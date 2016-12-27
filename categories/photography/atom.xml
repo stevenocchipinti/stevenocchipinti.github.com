@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Photography | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/photography/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T02:20:32+11:00</updated>
+  <updated>2016-12-28T03:12:34+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -46,7 +46,9 @@ Here is a quick summary of the things I learned:</p>
 
 <p>At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</p>
 
-<p><blockquote><p>Make the denominator of the shutter speed match the focal length</p></blockquote></p>
+<p>{% blockquote %}
+Make the denominator of the shutter speed match the focal length
+{% endblockquote %}</p>
 
 <p>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&rsquo;t a perfect rule, but it is a great place to start and you can adjust from there.</p>
 
@@ -54,7 +56,9 @@ Here is a quick summary of the things I learned:</p>
 
 <p>So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends:</p>
 
-<p><blockquote><p>Use a shutter speed of 1/125 as a baseline to freeze human motion</p></blockquote></p>
+<p>{% blockquote %}
+Use a shutter speed of 1/125 as a baseline to freeze human motion
+{% endblockquote %}</p>
 
 <p>It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as necessary.</p>
 

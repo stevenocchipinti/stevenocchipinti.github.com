@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T02:20:32+11:00</updated>
+  <updated>2016-12-28T03:12:34+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -226,7 +226,10 @@ So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this
     <link href="http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing.html"/>
     <updated>2011-06-18T13:09:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing</id>
-    <content type="html"><![CDATA[<p><blockquote><p>E212: Can&rsquo;t open file for writing<br/><br/>Press ENTER or type command to continue</p></blockquote></p>
+    <content type="html"><![CDATA[<p>{% blockquote %}
+E212: Can&rsquo;t open file for writing<br/>
+Press ENTER or type command to continue
+{% endblockquote %}</p>
 
 <p>If you use <code>vim</code>, you have probably come across this error before.<br/>
 It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
@@ -235,9 +238,9 @@ It normally happens when you don&rsquo;t have permission to write to your chosen
 
 <p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>.vimrc </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock .vimrc %}
+command! W w !sudo tee % &gt; /dev/null
+{% endcodeblock %}</p>
 
 <p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
 

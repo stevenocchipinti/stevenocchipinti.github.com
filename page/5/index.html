@@ -173,6 +173,51 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2011-11-05T13:48:00+11:00">
+        <a href="/2011/11/removing-geotag-data-from-jpgs.html">November 05, 2011</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2011/11/removing-geotag-data-from-jpgs.html#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2011/11/removing-geotag-data-from-jpgs.html" rel="bookmark" title="Removing Geotag Data From JPGs" itemprop="url">Removing Geotag Data From JPGs</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <div class="css-full-post-content js-full-post-content">
+Just a quick note, these days most cameras automatically geotag photos which is pretty cool, especially when taking travel photos, but sometimes you may not want everyone to know where a photo was actually taken.<br />For example, a photo of your backyard could give away your home address which is probably not a great thing.<br /><br />Its really easy to clear the geotag data with a great little tool called <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span>.<br />I used this tool in an <a href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html">earlier blog post</a> too and I find it really useful!<br /><br />To install <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> in Ubuntu:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; sudo apt-get install libimage-exiftool-perl</blockquote><br />Then executing <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool</span> followed by a jpg filename will output a whole bunch of exif data for you - some of which may have geolocation data:<br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool image.jpg <br />ExifTool Version Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 8.60<br />File Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : image.jpg<br />Directory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : .<br />File Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 14 kB<br />&#8230;</blockquote><br />The clear this geotag data out, simply issue this command:<br /><blockquote class="tr_bq"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; exiftool -gps:all= image.jpg</span></blockquote>
+</div>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2011-11-05T11:30:00+11:00">
         <a href="/2011/11/motion-detection.html">November 05, 2011</a>
       </time>
@@ -605,51 +650,6 @@ Continuing on from my last post, I found another great use for Pidgin!<br /><br 
 <div class="entry-content">
   <div class="css-full-post-content js-full-post-content">
 Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
-</div>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2011-08-05T06:17:00+10:00">
-        <a href="/2011/08/mounting-nfs-in-ubuntu.html">August 05, 2011</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2011/08/mounting-nfs-in-ubuntu.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2011/08/mounting-nfs-in-ubuntu.html" rel="bookmark" title="Mounting NFS in Ubuntu" itemprop="url">Mounting NFS in Ubuntu</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <div class="css-full-post-content js-full-post-content">
-At home we have a NAS that supports NFS!<br /><br />Its quite easy to setup Ubuntu (11.04) as an NFS client - this will allow you to mount the NAS on your local filesystem and it will appear just like any other directory.<br /><br />First step is to install the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nfs-common</span> package:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install nfs-common</span></blockquote><br />You can now mount NFS volumes!<br />To do so temporarily, can use this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount.nfs &lt;IPADDRESS&gt;:&lt;REMOTEPATH&gt; &lt;MOUNTPOINT&gt;</div></blockquote><br />The mount point needs to exist prior to mounting. <br />For example, my nas would be mounted as follows:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mkdir /mnt/nas<br />sudo mount.nfs 192.168.1.10:/nfs/Public /mnt/nas</span></blockquote><br />To make this permanent, you would need to add the following line to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span>:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">192.168.1.10:/nfs/Public&nbsp; /mnt/NAS&nbsp; nfs&nbsp; defaults&nbsp; 0&nbsp; 0</span></blockquote><br />As a bonus, this also allows you to use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mount</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">umount</span> commands by just specifying the mount point as these commands will query the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file.<br /><br />For example, once your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/fstab</span> file is up to date, these commands will work without specifying the remote host and path:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo umount /mnt/nas</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo mount /mnt/nas</div></blockquote>
 </div>
 
   

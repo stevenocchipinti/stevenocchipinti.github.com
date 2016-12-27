@@ -173,6 +173,181 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2016-12-28T02:30:00+11:00">
+        <a href="/2016/12/28/different-author-email-addresses-per-git-repository/">December 28, 2016</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2016/12/28/different-author-email-addresses-per-git-repository/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2016/12/28/different-author-email-addresses-per-git-repository/" rel="bookmark" title="Different Author Email Addresses Per Git Repository" itemprop="url">Different Author Email Addresses Per Git Repository</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Git v2.8 introduced a new configuration option called <code>user.useconfigonly</code>. This
+option prevents git from trying to guess your email address to use for the
+author metadata for a commit and forces you to have configured one.</p>
+
+<p>This is great news because with a good workflow in place you can be sure you
+always have the correct email addresses on your commits.</p>
+
+<h2>Global Configuration</h2>
+
+<p>If <code>user.useconfigonly</code> is set to <code>true</code>, you will need to configure an email
+address. The simplest way is with this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name 'Steve Occhipinti'
+</span><span class='line'>git config --global user.email steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which will result in a configuration like this saved in <code>~/.gitconfig</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[user]
+</span><span class='line'>  name = Steve Occhipinti
+</span><span class='line'>  email = steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is great, but what if you want to work on personal projects and work
+projects on the same machine?</p>
+
+<h2>Per Repository Configuration</h2>
+
+<p>Instead of using the global config in the home directory, git will first look
+for a local configuration in <code>./.git/config</code>. To set per repository
+configuration, all you have to do is <code>cd</code> to the repo and run the same commands
+but without the <code>--global</code> flag:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config user.name 'Steve Occhipinti'
+</span><span class='line'>git config user.email steve@example.com</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Mixing Work And Personal</h2>
+
+<p>If you have a global configuration, all repositories will use that as a default
+unless you remember to set a per-repository config. If you don&rsquo;t set a global
+config, git will normally guess what your email is and use that if its valid.</p>
+
+<p>If you set the <code>useconfigonly</code> option and remove your global config, git will
+not allow you to make a commit until you&rsquo;ve setup your user details and this
+will prevent accidentally using your work email address on a personal project or
+vice-versa.</p>
+
+<p>However, I do leave my name configured globally as that is not going to change
+between repositories.</p>
+
+<h2>Visual Queues</h2>
+
+<p>Having that error appear when you haven&rsquo;t setup an email address is great, but
+rather than waiting for me to make a mistake, I added an exclamation mark
+indicator to my shell prompt to remind me to set up the user details.</p>
+
+<p>The basic idea is something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">local </span>noauthor
+</span><span class='line'>git config user.email &gt; /dev/null <span class="o">||</span> <span class="nv">noauthor</span><span class="o">=</span><span class="s2">&quot;!&quot;</span>
+</span><span class='line'><span class="nb">export</span> <span class="nv">$PS1</span><span class="o">=</span><span class="s2">&quot;$noauthor${PS1}&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Quicker Configuration</h2>
+
+<p>If this is something that I will have to do for every repo I create or clone, I
+want to it be pain free. Git makes it really easy to create new sub commands
+simply by putting a script named <code>git-xxxx</code> in the path, where <code>xxxx</code> is the
+sub command name.</p>
+
+<p>I created a <code>git-author</code> script like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="nb">set</span> -e
+</span><span class='line'>
+</span><span class='line'><span class="nv">email_list_file</span><span class="o">=</span><span class="s2">&quot;$HOME/.config/git/author-emails&quot;</span>
+</span><span class='line'><span class="nv">has_pecorb</span><span class="o">=</span><span class="k">$(</span><span class="nb">type </span>pecorb &gt; /dev/null 2&gt;<span class="p">&amp;</span>1<span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Current author: $(git config user.name) &lt;$(git config user.email)&gt;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -f <span class="nv">$email_list_file</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">$has_pecorb</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>  <span class="nv">email</span><span class="o">=</span><span class="k">$(</span>pecorb <span class="nv">$email_list_file</span><span class="k">)</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">echo</span> -n <span class="s2">&quot;Enter a new email address: &quot;</span>
+</span><span class='line'>  <span class="nb">read </span>email
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>git config user.email <span class="nv">$email</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when go to a repo and I see my <code>!</code> indicator, all I have to do is run <code>git
+author</code>.</p>
+
+<p>This allows me to put all my email addresses in a file and then select the one I
+want from a nice menu. Note, I&rsquo;m using <code>pecorb</code> here which is a
+<a href="https://github.com/stevenocchipinti/pecorb">gem I wrote</a> to generate selectable
+menus on the command line, but there are plenty of
+<a href="https://github.com/stevenocchipinti/pecorb#kudos">alternatives</a> or you could
+just use <code>read</code> in <code>bash</code> and type it in (which my script falls back to).</p>
+
+<h2>My Bash Prompt</h2>
+
+<p>The prompt I use may not be the tidiest, but its available
+<a href="https://github.com/stevenocchipinti/homesync/blob/1a345e563afb47b81d405d47e4a6b45b63e82c98/data/.bash_git">here</a>.</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2016-12-28T01:53:00+11:00">
         <a href="/2016/12/28/windows-starting-up-by-itself-at-random-times/">December 28, 2016</a>
       </time>
@@ -1029,69 +1204,6 @@ Updates the working directory only, without changing the index, current branch o
 This would effectively be <code>git reset --hard [branch] file</code>, but this command does not exist</p>
 
 <p>More info and examples in <code>git reset --help</code></p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2014-12-29T12:50:00+11:00">
-        <a href="/2014/12/29/sending-email-from-the-command-line/">December 29, 2014</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2014/12/29/sending-email-from-the-command-line/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2014/12/29/sending-email-from-the-command-line/" rel="bookmark" title="Sending Email From the Command Line" itemprop="url">Sending Email From the Command Line</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>It&rsquo;s so easy to write little scripts and execute them at a later time with
-the standard command-line tooling available in unix-like operating systems, but
-if you plan on having them execute while you are out and about, it would be nice
-to get a notification on your phone that it worked (or didn&rsquo;t work).</p>
-
-<p>If you&rsquo;re happy with a simple email notification, then luckily this can be done
-with one simple line of code!</p>
-
-<p>On a mac:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -f from-addr@example.com
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>On *nix:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -aFrom:from-addr@example.com
-</span></code></pre></td></tr></table></div></figure>
-
 
   
   

@@ -173,6 +173,69 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2014-12-29T12:50:00+11:00">
+        <a href="/2014/12/29/sending-email-from-the-command-line/">December 29, 2014</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2014/12/29/sending-email-from-the-command-line/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2014/12/29/sending-email-from-the-command-line/" rel="bookmark" title="Sending Email From the Command Line" itemprop="url">Sending Email From the Command Line</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>It&rsquo;s so easy to write little scripts and execute them at a later time with
+the standard command-line tooling available in unix-like operating systems, but
+if you plan on having them execute while you are out and about, it would be nice
+to get a notification on your phone that it worked (or didn&rsquo;t work).</p>
+
+<p>If you&rsquo;re happy with a simple email notification, then luckily this can be done
+with one simple line of code!</p>
+
+<p>On a mac:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -f from-addr@example.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On *nix:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -aFrom:from-addr@example.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2014-03-17T17:23:00+11:00">
         <a href="/2014/03/17/introduction-to-vim-for-ide-users/">March 17, 2014</a>
       </time>
@@ -1403,51 +1466,6 @@ This process is what preserves and seals the bottles properly.</p>
 When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time - you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</p>
 
 <p>Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&rsquo;ll never want to buy that stuff again!</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2013-01-04T16:38:00+11:00">
-        <a href="/2013/01/script-to-transfer-photos-in-linux.html">January 04, 2013</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2013/01/script-to-transfer-photos-in-linux.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2013/01/script-to-transfer-photos-in-linux.html" rel="bookmark" title="Script to Transfer Photos in Linux" itemprop="url">Script to Transfer Photos in Linux</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <div class="css-full-post-content js-full-post-content">
-Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
-</div>
 
   
   

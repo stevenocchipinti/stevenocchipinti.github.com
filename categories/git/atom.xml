@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T02:20:32+11:00</updated>
+  <updated>2016-12-28T03:12:28+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Different Author Email Addresses Per Git Repository]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/different-author-email-addresses-per-git-repository/"/>
+    <updated>2016-12-28T02:30:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/different-author-email-addresses-per-git-repository</id>
+    <content type="html"><![CDATA[<p>Git v2.8 introduced a new configuration option called <code>user.useconfigonly</code>. This
+option prevents git from trying to guess your email address to use for the
+author metadata for a commit and forces you to have configured one.</p>
+
+<p>This is great news because with a good workflow in place you can be sure you
+always have the correct email addresses on your commits.</p>
+
+<h2>Global Configuration</h2>
+
+<p>If <code>user.useconfigonly</code> is set to <code>true</code>, you will need to configure an email
+address. The simplest way is with this command:</p>
+
+<pre><code>git config --global user.name 'Steve Occhipinti'
+git config --global user.email steve@example.com
+</code></pre>
+
+<p>Which will result in a configuration like this saved in <code>~/.gitconfig</code>:</p>
+
+<pre><code>[user]
+  name = Steve Occhipinti
+  email = steve@example.com
+</code></pre>
+
+<p>This is great, but what if you want to work on personal projects and work
+projects on the same machine?</p>
+
+<h2>Per Repository Configuration</h2>
+
+<p>Instead of using the global config in the home directory, git will first look
+for a local configuration in <code>./.git/config</code>. To set per repository
+configuration, all you have to do is <code>cd</code> to the repo and run the same commands
+but without the <code>--global</code> flag:</p>
+
+<pre><code>git config user.name 'Steve Occhipinti'
+git config user.email steve@example.com
+</code></pre>
+
+<h2>Mixing Work And Personal</h2>
+
+<p>If you have a global configuration, all repositories will use that as a default
+unless you remember to set a per-repository config. If you don&rsquo;t set a global
+config, git will normally guess what your email is and use that if its valid.</p>
+
+<p>If you set the <code>useconfigonly</code> option and remove your global config, git will
+not allow you to make a commit until you&rsquo;ve setup your user details and this
+will prevent accidentally using your work email address on a personal project or
+vice-versa.</p>
+
+<p>However, I do leave my name configured globally as that is not going to change
+between repositories.</p>
+
+<h2>Visual Queues</h2>
+
+<p>Having that error appear when you haven&rsquo;t setup an email address is great, but
+rather than waiting for me to make a mistake, I added an exclamation mark
+indicator to my shell prompt to remind me to set up the user details.</p>
+
+<p>The basic idea is something like this:</p>
+
+<pre><code class="bash">local noauthor
+git config user.email &gt; /dev/null || noauthor="!"
+export $PS1="$noauthor${PS1}"
+</code></pre>
+
+<h2>Quicker Configuration</h2>
+
+<p>If this is something that I will have to do for every repo I create or clone, I
+want to it be pain free. Git makes it really easy to create new sub commands
+simply by putting a script named <code>git-xxxx</code> in the path, where <code>xxxx</code> is the
+sub command name.</p>
+
+<p>I created a <code>git-author</code> script like this:</p>
+
+<pre><code class="bash">#!/bin/bash
+set -e
+
+email_list_file="$HOME/.config/git/author-emails"
+has_pecorb=$(type pecorb &gt; /dev/null 2&gt;&amp;1)
+
+echo "Current author: $(git config user.name) &lt;$(git config user.email)&gt;"
+
+if [ -f $email_list_file ] &amp;&amp; $has_pecorb; then
+  email=$(pecorb $email_list_file)
+else
+  echo -n "Enter a new email address: "
+  read email
+fi
+
+git config user.email $email
+</code></pre>
+
+<p>Now when go to a repo and I see my <code>!</code> indicator, all I have to do is run <code>git
+author</code>.</p>
+
+<p>This allows me to put all my email addresses in a file and then select the one I
+want from a nice menu. Note, I&rsquo;m using <code>pecorb</code> here which is a
+<a href="https://github.com/stevenocchipinti/pecorb">gem I wrote</a> to generate selectable
+menus on the command line, but there are plenty of
+<a href="https://github.com/stevenocchipinti/pecorb#kudos">alternatives</a> or you could
+just use <code>read</code> in <code>bash</code> and type it in (which my script falls back to).</p>
+
+<h2>My Bash Prompt</h2>
+
+<p>The prompt I use may not be the tidiest, but its available
+<a href="https://github.com/stevenocchipinti/homesync/blob/1a345e563afb47b81d405d47e4a6b45b63e82c98/data/.bash_git">here</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rewriting Author and Email in Every Commit]]></title>
@@ -366,18 +479,6 @@ nature of git, simply deleting the repository and pushing a new copy of your
 local repository to GitHub will effectively destroy that cache.</p>
 
 <p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git + Hub = GitHub]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/02/git-hub-github.html"/>
-    <updated>2012-02-20T02:37:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/02/git-hub-github</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-As mentioned in a <a href="http://blog.stevenocchipinti.com/2011/09/code-review-workflow-with-github.html" target="_blank">previous post</a>, we use <a href="http://scottchacon.com/2011/08/31/github-flow.html" target="_blank">GitHub-Flow</a> at work and I really like it.<br />In essence, it involves doing work in feature branches, while maintaining an <i>always deployable</i> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span> branch, then opening a pull request to merge a new feature / bugfix into <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">master</span>, which provides a great mechanism for code review / sign-off.<br /><br />So a fairly typical situation would be as follows:<br /><ul><li>Bug found in app</li><li>Create an issue on GitHub with description, assignee, etc.</li><li>Create a new branch off master for the fix</li><li>Code it up, test locally, etc.</li><li>Push branch to GitHub </li><li>Open pull request to merge back into master</li><li>Get review / sign-off inside of the pull request</li><li>Deploy </li></ul>When a pull request is opened on GitHub, it automatically creates an issue for that pull request, which would normally be helpful, but we already created an issue when the bug was discovered.<br />So now we have 2 issues and 1 pull request. What's nice is that if I push more commits to that branch, it will appear in the pull request automatically, but not the initial issue.<br /><br />After looking into this, it seems (AFAIK) GitHub do not provide a way of attaching a pull request to an existing issue via the site, but they do provide that functionality via their API.<br /><br />That is when I discovered <a href="http://defunkt.io/hub/" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a>.<br /><a href="https://github.com/defunkt/hub" target="_blank"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Hub</span></a> is a wrapper for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span> and while it adds more power to alot of the standard git commands, hub adds one command that is really useful for me:<br /><br /><blockquote class="tr_bq" style="font-family: &quot;Courier New&quot;,Courier,monospace;">git pull-request -i 49</blockquote><br />This basically means<i> "Open a pull request to merge the current branch into master and attach the pull request to issue 49"</i>.<br /><br />This means that the initial bug description, the commits, the review conversation and the merge are all encapsulated in a single issue - fantastic!<br />I don't know why this isn't built in to the web interface (or maybe it is and I just don't know how).
-</div>
-
 ]]></content>
   </entry>
   
