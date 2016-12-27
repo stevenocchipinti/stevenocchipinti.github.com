@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: regex | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Regex | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/regex/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,65 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Recursive search with vimgrep]]></title>
+    <title type="html"><![CDATA[Regex Lookaround Cheatsheet]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/05/17/regex-lookaround-cheatsheet/"/>
+    <updated>2015-05-17T18:16:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/05/17/regex-lookaround-cheatsheet</id>
+    <content type="html"><![CDATA[<p>I have a fairly terrible memory but I&rsquo;ve found writing and referring back to
+cheatsheets to be a pretty effective way to memorize things.</p>
+
+<p>I ended up referring back to my previous
+<a href="http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet/">cheatsheet on <code>git reset</code></a>
+quite a few times soon after I wrote it, so when I came across
+<a href="http://idiosyncratic-ruby.com/11-regular-extremism.html">this great post on regex features in ruby</a>
+I thought I&rsquo;d share the lookarounds section because I <em>always</em> forget those too!</p>
+
+<table>
+<thead>
+<tr>
+<th> Syntax   </th>
+<th> Description         </th>
+<th> Example                  </th>
+<th> Result </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>(?=X)</code>  </td>
+<td> Positive lookahead  </td>
+<td> <code>"Ruby"[/.(?=b)/]</code>       </td>
+<td> <code>"u"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?!X)</code>  </td>
+<td> Negative lookahead  </td>
+<td> <code>"Ruby"[/.(?!u)/]</code>       </td>
+<td> <code>"u"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?&lt;=X)</code> </td>
+<td> Positive lookbehind </td>
+<td> <code>"Ruby"[/(?&lt;=u)./]</code>      </td>
+<td> <code>"b"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?&lt;!X)</code> </td>
+<td> Negative lookbehind </td>
+<td> <code>"Ruby"[/(?&lt;!R|^)./]</code>   </td>
+<td> <code>"b"</code>  </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Checkout the <a href="http://idiosyncratic-ruby.com/11-regular-extremism.html">original blog post</a>
+for the rest of the regex tips or the
+<a href="http://idiosyncratic-ruby.com">Idiosyncratic Ruby site</a> for more ruby tips!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Recursive Search With Vimgrep]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep.html"/>
     <updated>2011-10-12T02:46:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep</id>
@@ -26,7 +84,7 @@ Usually when I need to find things in multiple files, I would use <span style="f
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <title type="html"><![CDATA[Regex Substitution 101]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/08/regex-substitution-101.html"/>
     <updated>2011-08-01T07:42:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
@@ -38,7 +96,7 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Search and replace in multiple files with Sed]]></title>
+    <title type="html"><![CDATA[Search and Replace in Multiple Files With Sed]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/07/search-and-replace-in-multiple-files.html"/>
     <updated>2011-07-20T04:25:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/07/search-and-replace-in-multiple-files</id>
@@ -50,24 +108,12 @@ Back on the 30th of May, I put up a blog post on how to do a <a href="http://blo
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Search and replace in multiple files with Vim]]></title>
+    <title type="html"><![CDATA[Search and Replace in Multiple Files With Vim]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html"/>
     <updated>2011-05-30T09:11:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; vim firstfile secondfile theothers*<br />:all<br />:windo %s/this/that/g</blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:all</span> will split the window to show you all the files at once.<br />This would not be the best option for lots of files, but for a small number you get to see the changes that are made. <br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo</span> will execute the given command for all the files in the current window.<br />Note this wont affect windows in other tabs.<br /><br />If you want to undo that change in all buffers, you can use the same method:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo undo</span></blockquote>When your finished, you can save and quit with:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:wqall</span></blockquote>There are plenty of variations, for more infomation checkout the help pages for these:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:tabdo</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:bufdo</div><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:argdo</span></blockquote>
-</div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DHCP fixedhosts to /etc/hosts file]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/05/dhcp-fixedhosts-to-etchosts-file.html"/>
-    <updated>2011-05-17T12:28:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/05/dhcp-fixedhosts-to-etchosts-file</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-This was a completely random (and not that useful) thought!<br /><br />I have memorized which IPs are assigned to which machines in our home LAN as simply pinging a hostname doesnt really work in linux (by default) as it did with windows (unless I setup WINS... I think... correct me if I'm wrong).<br />So short of setting up an in-house DNS server, hosts files come in handy for stuff like this.<br />(I really didn't need to setup a hosts file, but assuming I did want the convenience)<br /><br />I thought I've already defined which hosts get which IPs in the fixed hosts table of the DHCP server in my router, surely I could just use that! <br />I remembered the router has telnet open internally, so I wrote a one-liner to do it:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">echo "admin^M$PASSWORD^Mdhcpserver list fixedhosts^M^]^D" | nc 192.168.1.1 23 | \grep "[ ]*[0-9]" | sed "s/[ 0-9]*| \([^ ]*\)[ ]*| \([^ ]*\).*/\2\t\1/g"</span></blockquote>I echo the username, password, the command to give me the table and logout then grep for the (numbered) entries of the printed table, which gives me entries that look like this:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">... <br />&nbsp;&nbsp; 4 | stevepc&nbsp;&nbsp;&nbsp; | 192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:11:22:33:44:55&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 5 | NAS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 192.168.1.10&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:22:33:44:55:66&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <br />&nbsp;&nbsp; 9 | Minecraft_SVR | 192.168.1.62&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 00:33:44:55:66:77&nbsp; | 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br /><br />...</span></blockquote><br />Then I use sed to put it into the same format as /etc/hosts:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">...<br />192.168.1.3&nbsp;&nbsp;&nbsp;&nbsp; stevepc<br />192.168.1.10&nbsp;&nbsp;&nbsp; NAS<br />192.168.1.62&nbsp;&nbsp;&nbsp; Minecraft_SVR<br />...</span></blockquote>This isn't really that useful, but it took a couple of minutes, just to "see if I could do it"... and it worked :)<br /><br />... I don't think I'll actually use it, lol, but it was fun anyway :P
 </div>
 
 ]]></content>

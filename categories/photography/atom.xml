@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: photography | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Photography | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/photography/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <title type="html"><![CDATA[Script to Transfer Photos in Linux]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
     <updated>2013-01-04T16:38:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
@@ -26,7 +26,7 @@ Every time I go on holiday, I end up writing the same bash script! ... I know, h
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[A few photography tips]]></title>
+    <title type="html"><![CDATA[A Few Photography Tips]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips.html"/>
     <updated>2012-12-14T13:44:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips</id>
@@ -61,7 +61,7 @@ Here is a quick summary of the things I learned:</p>
 <h2>4. Filters to allow for more creativity</h2>
 
 <p>So far the only filters I have used are a &ldquo;Circular Polariser&rdquo; to enhance sky&rsquo;s, cut out reflections, etc. and a &ldquo;UV&rdquo; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &ldquo;Neutral Density&rdquo; (or &ldquo;ND&rdquo;) filter and a &ldquo;Graduated Blue-Yellow&rdquo; filter.<br/>
-Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day &ndash; it looked fantastic!<br/>
+Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day - it looked fantastic!<br/>
 The &ldquo;Graduated Blue-Yellow&rdquo; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.</p>
 
 <h2>Summary</h2>
@@ -74,7 +74,7 @@ I think the most valuable aspect of a course like this is not so much the materi
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Removing geotag data from JPGs]]></title>
+    <title type="html"><![CDATA[Removing Geotag Data From JPGs]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/11/removing-geotag-data-from-jpgs.html"/>
     <updated>2011-11-05T13:48:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/11/removing-geotag-data-from-jpgs</id>
@@ -86,7 +86,7 @@ Just a quick note, these days most cameras automatically geotag photos which is 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[24-70mm f2.8 VS 17-50mm f2.8]]></title>
+    <title type="html"><![CDATA[24-70mm f2.8 vs 17-50mm f2.8]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28.html"/>
     <updated>2011-04-16T09:12:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/04/24-70mm-f28-vs-17-50mm-f28</id>

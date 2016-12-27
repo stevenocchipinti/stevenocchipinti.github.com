@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: arduino | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Arduino | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/arduino/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Arduino Web Server with SD card reader]]></title>
+    <title type="html"><![CDATA[Arduino Web Server With SD Card Reader]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/07/arduino-web-server-with-sd-card-reader.html"/>
     <updated>2012-07-27T02:47:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/07/arduino-web-server-with-sd-card-reader</id>
@@ -31,7 +31,7 @@ So he forwarded it on to our group of friends and a few of us went along to chec
 <p>One really nice bonus was the generous offering from <a href="http://www.freetronics.com/">Freetronics</a>. There were a few people from Freetronics at the event and other than being very knowledgeable, they brought a big bunch of assorted hardware to give away! They had everything from RGB LEDs to full blown Arduino boards.<br/>
 I was lucky enough to score an <a href="http://www.freetronics.com/products/ethermega-arduino-mega-2560-compatible-with-onboard-ethernet#.UA3bC3AwyGo">EtherMega 2650</a>, which from what I can tell is a beefed up Arduino with an Ethernet port (with power over Ethernet) and a MicroSD card reader. Some of my friends got a <a href="http://www.freetronics.com/products/lcd-keypad-shield#.UA4RrXAwyGp">LCD shield</a> that can display 2 rows of 16 characters and has a few buttons on board. For those that aren&rsquo;t up with the lingo, a shield is an attachment for a standard Arduino board to add functionality.</p>
 
-<p>Together we had enough hardware to be able to make something cool! :&ndash;)<br/>
+<p>Together we had enough hardware to be able to make something cool! :-)<br/>
 Needless to say after some great conversations about hardware hacking and being given some gear to get going, we were all pretty keen to get started hacking, so on the following Saturday three of us got together for a hack night.<br/>
 The guys came around that night, we ordered pizzas and worked through the night till about 5:30 AM!   We had one experienced hardware guy, <a href="https://twitter.com/asellitt">@asellitt</a>, but the other two of us, <a href="https://twitter.com/optiks">@optiks</a> and I, were completely new to this, but between Anthony, the sample code that comes with the IDE and the Internet we picked it up pretty fast!<br/>
 By the end of the night we had the first version of CarDuino!</p>

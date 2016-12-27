@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: hardware | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Hardware | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/hardware/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Arduino Web Server with SD card reader]]></title>
+    <title type="html"><![CDATA[Arduino Web Server With SD Card Reader]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/07/arduino-web-server-with-sd-card-reader.html"/>
     <updated>2012-07-27T02:47:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/07/arduino-web-server-with-sd-card-reader</id>
@@ -31,7 +31,7 @@ So he forwarded it on to our group of friends and a few of us went along to chec
 <p>One really nice bonus was the generous offering from <a href="http://www.freetronics.com/">Freetronics</a>. There were a few people from Freetronics at the event and other than being very knowledgeable, they brought a big bunch of assorted hardware to give away! They had everything from RGB LEDs to full blown Arduino boards.<br/>
 I was lucky enough to score an <a href="http://www.freetronics.com/products/ethermega-arduino-mega-2560-compatible-with-onboard-ethernet#.UA3bC3AwyGo">EtherMega 2650</a>, which from what I can tell is a beefed up Arduino with an Ethernet port (with power over Ethernet) and a MicroSD card reader. Some of my friends got a <a href="http://www.freetronics.com/products/lcd-keypad-shield#.UA4RrXAwyGp">LCD shield</a> that can display 2 rows of 16 characters and has a few buttons on board. For those that aren&rsquo;t up with the lingo, a shield is an attachment for a standard Arduino board to add functionality.</p>
 
-<p>Together we had enough hardware to be able to make something cool! :&ndash;)<br/>
+<p>Together we had enough hardware to be able to make something cool! :-)<br/>
 Needless to say after some great conversations about hardware hacking and being given some gear to get going, we were all pretty keen to get started hacking, so on the following Saturday three of us got together for a hack night.<br/>
 The guys came around that night, we ordered pizzas and worked through the night till about 5:30 AM!   We had one experienced hardware guy, <a href="https://twitter.com/asellitt">@asellitt</a>, but the other two of us, <a href="https://twitter.com/optiks">@optiks</a> and I, were completely new to this, but between Anthony, the sample code that comes with the IDE and the Internet we picked it up pretty fast!<br/>
 By the end of the night we had the first version of CarDuino!</p>
@@ -56,17 +56,17 @@ By the end of the night we had the first version of CarDuino!</p>
     <link href="http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830.html"/>
     <updated>2011-12-10T07:21:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/12/toshiba-portege-z830</id>
-    <content type="html"><![CDATA[<p>If you saw my <a href="/2011/11/13-core-i7-samsung-series-9-ultrabook.html">last post</a>, you would have seen that I recently bought a 13" Samsung Series 9 ultrabook &ndash; I still think these machines are stunning!</p>
+    <content type="html"><![CDATA[<p>If you saw my <a href="/2011/11/13-core-i7-samsung-series-9-ultrabook.html">last post</a>, you would have seen that I recently bought a 13" Samsung Series 9 ultrabook - I still think these machines are stunning!</p>
 
 <h2>The problem</h2>
 
 <p>There are a couple of little complaints floating around about the Samsung, like heat output, easily finger-printed chasis, but none of these <em>really</em> bother me, but there is one thing that does&hellip; alot&hellip; and its the wifi!</p>
 
-<p>I could be using the laptop in the next room from my wireless router and it would dropout completely or go incredibly slow, if I move to the other side of the house where my bedroom is, my phone will have full reception, but this laptop will not see the wifi network at all &ndash; and this in unacceptable.</p>
+<p>I could be using the laptop in the next room from my wireless router and it would dropout completely or go incredibly slow, if I move to the other side of the house where my bedroom is, my phone will have full reception, but this laptop will not see the wifi network at all - and this in unacceptable.</p>
 
 <h2>The transition</h2>
 
-<p>After returning the laptop (twice) I eventually asked for my money back so I could go purchase my second preference &ndash; the Macbook Air.<br/>
+<p>After returning the laptop (twice) I eventually asked for my money back so I could go purchase my second preference - the Macbook Air.<br/>
 Unfortunately, the shop would not give me a full refund and could only offer me a credit note.<br/>
 I tried to explain that no other units in store could offer me the same specs that I was after, the Samsung&rsquo;s best competition is the Macbook Air, but as they couldn&rsquo;t help me I asked to see what else they have in a light 13".</p>
 
@@ -96,7 +96,7 @@ While it&rsquo;s no Samsung Series 9, its pretty nice and the cut in performance
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[13" Core i7 Samsung Series 9 Ultrabook]]></title>
+    <title type="html"><![CDATA[13" Core I7 Samsung Series 9 Ultrabook]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook.html"/>
     <updated>2011-11-28T00:34:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/11/13-core-i7-samsung-series-9-ultrabook</id>
@@ -115,7 +115,7 @@ Roughly 6 years later, its showing its age. The battery lasts less than an hour 
 </ul>
 
 
-<p>I compared as many of these 13" <em>&ldquo;ultrabooks&rdquo;</em> as I could and before long I had created a shortlist of my top 3 &ndash; which included an Asus u-Series, a Macbook Air and a Samsung Series 9.</p>
+<p>I compared as many of these 13" <em>&ldquo;ultrabooks&rdquo;</em> as I could and before long I had created a shortlist of my top 3 - which included an Asus u-Series, a Macbook Air and a Samsung Series 9.</p>
 
 <h2>Asus u-Series</h2>
 
@@ -142,12 +142,12 @@ After seeing a Macbook Air up close, I really liked how the thickest point is ab
 
 <p>The operating system did not bother me too much either as I intended to be running Linux as my primary OS anyway, but having a Mac would give me more familiarity with OSX which would be helpful considering its popularity in my line of work.</p>
 
-<p>The minor annoyances would be: expensive adapters for video and ethernet ports, unfamiliar keyboard layout (command key where alt should be, etc), non-upgradeable ram, glossy screen, etc. &ndash; but those are pretty minor.</p>
+<p>The minor annoyances would be: expensive adapters for video and ethernet ports, unfamiliar keyboard layout (command key where alt should be, etc), non-upgradeable ram, glossy screen, etc. - but those are pretty minor.</p>
 
 <h2>Samsung Series 9</h2>
 
 <p>I found these ultrabooks to have a very unique look and one of the first well thought out, thin designs that are not just another Mac look-a-like.<br/>
-The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;&ndash; which is a light and strong material used in aircrafts and while it looks stunning and adds sophistication and uniqueness to the overall design on the unit, this material along with the black plastic are both fingerprint magnets!</p>
+The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;- which is a light and strong material used in aircrafts and while it looks stunning and adds sophistication and uniqueness to the overall design on the unit, this material along with the black plastic are both fingerprint magnets!</p>
 
 <p>The <a href="http://www.samsung.com/au/consumer/pc-peripherals/notebook-pc/thin-light/NP900X3A-A03AU/index.idx?pagetype=prd_detail&amp;amp;tab=specification">specs of the Series 9 unit</a> I used for comparison (and ultimately bought) was quite good:</p>
 
@@ -166,8 +166,8 @@ The sales pitch always includes a spiel about its &ldquo;Duralumin&rdquo;&ndash;
 <p>But during my research I saw <a href="https://www.mln.com.au/">MLN</a>&rsquo;s price drop down to a much more attractive $1997 and immediately rang them to find out more details and how long the special would last. It turns out that Samsung are starting to phase them out of stores (presumably to make way for a new product next year) and naturally they had sold alot of units and only had a few left.</p>
 
 <p>I did a bit more research and found that to save space, the ports are hidden behind very aircraft-like flaps, but as with the Mac, they are reduced size ports.<br/>
-The video output is provided in the form of a micro-HDMI port &ndash; which is at least a more common format and I don&rsquo;t need to go through apple.com.<br/>
-The other space-saving trade-off was a (sadly) proprietary ethernet port that comes bundled with an adapter to convert it to RJ45 &ndash; but unlike the Mac where you need to buy a USB network adapter, this actually has the network card built in, it just has an unusual plug &ndash; which I don&rsquo;t intend to use much anyway.</p>
+The video output is provided in the form of a micro-HDMI port - which is at least a more common format and I don&rsquo;t need to go through apple.com.<br/>
+The other space-saving trade-off was a (sadly) proprietary ethernet port that comes bundled with an adapter to convert it to RJ45 - but unlike the Mac where you need to buy a USB network adapter, this actually has the network card built in, it just has an unusual plug - which I don&rsquo;t intend to use much anyway.</p>
 
 <p>Another plus is this model comes with 1x USB 3.0 port (and a 2.0 port) which is great considering the speeds my brother gets with his USB 3.0 flash drive.</p>
 
@@ -185,7 +185,7 @@ Using Ubuntu 11.10 the rest of the hardware works out of the box, so no need to 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <title type="html"><![CDATA[Ruby + Parallel Port + LEDs]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds.html"/>
     <updated>2011-10-10T03:49:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds</id>

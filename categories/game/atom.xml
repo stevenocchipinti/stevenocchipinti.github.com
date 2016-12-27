@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: game | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Game | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/game/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -80,10 +80,9 @@ java -jar Minecraft.jar
 add a launcher for Minecraft, but before we do that, we need an icon for it.
 I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
 
-<p><code>
-cd /opt/minecraft
+<pre><code>cd /opt/minecraft
 wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
-</code></p>
+</code></pre>
 
 <p>Then to make an application launcher, you can use this:
 <code>

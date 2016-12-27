@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ubuntu | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Ubuntu | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -80,10 +80,9 @@ java -jar Minecraft.jar
 add a launcher for Minecraft, but before we do that, we need an icon for it.
 I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
 
-<p><code>
-cd /opt/minecraft
+<pre><code>cd /opt/minecraft
 wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
-</code></p>
+</code></pre>
 
 <p>Then to make an application launcher, you can use this:
 <code>
@@ -104,7 +103,7 @@ gnome-desktop-item-edit --create-new ~/.local/share/applications
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
+    <title type="html"><![CDATA[Changing the Default Boot Option With GRUB2]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html"/>
     <updated>2012-09-19T11:33:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2</id>
@@ -116,7 +115,7 @@ Gone are the days of the nice <span style="font-family: 'Courier New', Courier, 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Adding a network printer in Ubuntu 12.04]]></title>
+    <title type="html"><![CDATA[Adding a Network Printer in Ubuntu 12.04]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204.html"/>
     <updated>2012-08-05T04:11:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204</id>
@@ -136,9 +135,8 @@ Gone are the days of the nice <span style="font-family: 'Courier New', Courier, 
 <p>Well no matter what I did, I couldn&rsquo;t add my printer. After some googling around, I found how to get to the old user interface&hellip; which actually works!
 Just type this into a terminal:</p>
 
-<p><code>
-sudo system-config-printer
-</code></p>
+<pre><code>sudo system-config-printer
+</code></pre>
 
 <p>And you will be given this old familiar screen:</p>
 
@@ -155,7 +153,7 @@ sudo system-config-printer
     <id>http://blog.stevenocchipinti.com/2012/04/xbmc-eden-ubuntu</id>
     <content type="html"><![CDATA[<p>Back when I started uni, I bought a new <a href="http://www.notebookreview.com/default.asp?newsID=2886">Asus A6J laptop</a>. It was one of the first laptops available with a dual core CPU (Core Duo, not Core 2 Duo) and decently powerful graphics (ATI X1600).<br/>
 The A6J  is very dated now and weighing in at 2.85kg, its not very portable by today&rsquo;s standard (considering my <a href="/2011/12/toshiba-portege-z830.html">Toshiba Portege</a> weighs just 1.13kg).<br/>
-A couple of years after I bought it, I got sick of carrying it around, so I bought an Asus EeePc as a replacement for uni, so the A6J stayed at home and was rarely used &ndash; it was just a spare for a long time.</p>
+A couple of years after I bought it, I got sick of carrying it around, so I bought an Asus EeePc as a replacement for uni, so the A6J stayed at home and was rarely used - it was just a spare for a long time.</p>
 
 <p>Up until recently, I was using I used it as a (stationary) desktop replacement at work but I now have a new job where I am provided a  Macbook Pro so this old machine is now spare once again. This with the recent release of <a href="http://xbmc.org/natethomas/2012/03/24/xbmc-11-0-eden/">XBMC 11 Eden</a>, I thought I may as well re-purpose it as a permanent HTPC.</p>
 
@@ -191,9 +189,8 @@ Unfortunately it doesn&rsquo;t remember the last choice with XBMC, so if I boot 
 <p>I then came across an <a href="https://help.ubuntu.com/community/AutoLogin#For_Ubuntu_10.04_.28Lucid_Lynx.29">Ubuntu community page</a> that pointed in the direction the the LightDM config file. (LightDM is the thing that manages the login screen).<br/>
 I opened <code>/etc/lightdm/lightdm.conf</code> and saw this line:</p>
 
-<p><code>
-user-session=ubuntu
-</code></p>
+<pre><code>user-session=ubuntu
+</code></pre>
 
 <p>I replaced the <code>ubuntu</code> part of this line with <code>XBMC</code>, rebooted and low and behold, it booted straight into XBMC!</p>
 
@@ -203,7 +200,7 @@ The only things left to do now are configure my media sources, install some plug
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Minecraft exception in linux]]></title>
+    <title type="html"><![CDATA[Minecraft Exception in Linux]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html"/>
     <updated>2012-02-02T12:25:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux</id>
@@ -212,8 +209,7 @@ Ubuntu ships with an open-source version of Java, which did run Minecraft, but t
 
 <p>So as recommended, I switched to the official JRE. Now the login screen works, but that&rsquo;s about it. After logging in, I just got a black screen and the following exception in the console:</p>
 
-<p><code>
-Exception in thread "Minecraft main thread"
+<pre><code>Exception in thread "Minecraft main thread"
 java.lang.ExceptionInInitializerError at
 net.minecraft.client.Minecraft.a(SourceFile:180) at
 net.minecraft.client.Minecraft.run(SourceFile:648) at
@@ -228,17 +224,16 @@ org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at
 org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at
 org.lwjgl.opengl.Display.&amp;lt;clinit&amp;gt;(Display.java:135)
 ... 3 more
-</code></p>
+</code></pre>
 
 <p>After discussing the problem in IRC, the solution was quite simple. It turns out <code>lwjgl</code> is a &ldquo;<em>Light Weight Java Game Library</em>&rdquo; and the version I had wasn&rsquo;t behaving.<br/>
 On the advice of the helpful IRC'ers, I downloaded the latest <code>lwjgl</code> from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.</p>
 
 <p>To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:</p>
 
-<p><code>
-cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
+<pre><code>cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
 cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives
-</code></p>
+</code></pre>
 
 <p>Done! Now it works nicely.</p>
 ]]></content>

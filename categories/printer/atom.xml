@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: printer | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Printer | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/printer/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Adding a network printer in Ubuntu 12.04]]></title>
+    <title type="html"><![CDATA[Adding a Network Printer in Ubuntu 12.04]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204.html"/>
     <updated>2012-08-05T04:11:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204</id>
@@ -34,9 +34,8 @@
 <p>Well no matter what I did, I couldn&rsquo;t add my printer. After some googling around, I found how to get to the old user interface&hellip; which actually works!
 Just type this into a terminal:</p>
 
-<p><code>
-sudo system-config-printer
-</code></p>
+<pre><code>sudo system-config-printer
+</code></pre>
 
 <p>And you will be given this old familiar screen:</p>
 

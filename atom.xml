@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[StevenOcchipinti.com]]></title>
+  <title><![CDATA[Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,226 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rewriting indentation in every file and every commit]]></title>
+    <title type="html"><![CDATA[Windows Starting Up by Itself at Random Times]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/windows-starting-up-by-itself-at-random-times/"/>
+    <updated>2016-12-28T01:53:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/windows-starting-up-by-itself-at-random-times</id>
+    <content type="html"><![CDATA[<h2>The Machine</h2>
+
+<p>My gaming computer runs Microsoft Windows 10 and has the following hardware:</p>
+
+<p><strong>Case:</strong> Corsair Carbide Air 240<br/>
+<strong>CPU:</strong> Intel Core i5 4690<br/>
+<strong>Motherboard:</strong> ASUS Z97M-PLUS<br/>
+<strong>RAM:</strong> Corsair Vengence Pro 1600C9R (2x4GB)<br/>
+<strong>GPU:</strong> Sapphire R9 280X Dual-X OC 3GB<br/>
+<strong>PSU:</strong> Silverstone Strider Gold 750w ST75F-GS<br/>
+<strong>SSD:</strong> Corsair Force LS 120GB<br/>
+<strong>Cooler:</strong> Corsair H100i<br/>
+<strong>Fans:</strong> Corsair AIR SP120 Twin Pack</p>
+
+<h2>The Problem</h2>
+
+<p>Sometimes my computer would turn it self on at some random time. It
+wasn&rsquo;t at a particular repeatable time, but just every now and then.</p>
+
+<h2>What I Tried</h2>
+
+<ul>
+<li>Disabling the <em>Fast Boot</em> app</li>
+<li>Uninstalling the <em>Fast Boot</em> app</li>
+<li>Experimenting with various BIOS settings</li>
+<li>Disabling <em>boot from network</em> (from BIOS boot priorities)</li>
+<li>Power options -> power-plan -> advanced -> PCIe -> link state power management</li>
+<li>(&hellip; and a few more that I can&rsquo;t remember)</li>
+</ul>
+
+
+<p>But after all that, it would still turn on every couple of days.</p>
+
+<h2>The Solution</h2>
+
+<p>Eventually I found and disabled <em>Windows Fast Start</em>:</p>
+
+<ul>
+<li>Power options -> system (choose buttons) -> fast startup</li>
+</ul>
+
+
+<p>This turned out to be the culprit and now my computer and I can both stop
+working through the night!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rewriting Author and Email in Every Commit]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit/"/>
+    <updated>2015-06-01T00:08:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit</id>
+    <content type="html"><![CDATA[<p>Following on from a previous post about <a href="http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">rewriting indentation for an entire git repo</a>,
+another reason to rewrite the history of a whole repo is to change the email
+address or name mentioned in commits.</p>
+
+<p>Once again, be aware that rewriting history will cause problems if other people
+have clones of the repo so make sure you understand the risks before doing
+this!</p>
+
+<p>To change the author name and email address for every commit, you can run this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch -f --env-filter <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">  GIT_AUTHOR_NAME=&#39;YOUR_NAME&#39;</span>
+</span><span class='line'><span class="s2">  GIT_AUTHOR_EMAIL=&#39;YOUR_EMAIL&#39;</span>
+</span><span class='line'><span class="s2">  GIT_COMMITTER_NAME=&#39;YOUR_NAME&#39;</span>
+</span><span class='line'><span class="s2">  GIT_COMMITTER_EMAIL=&#39;YOUR_EMAIL&#39;</span>
+</span><span class='line'><span class="s2">&quot;</span> HEAD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will blindly replace all the commits with the details given, but if other
+people have contributed, you may need to be a bit more careful and only replace
+your own:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch --commit-filter <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">  if [ &quot;</span><span class="nv">$GIT_COMMITTER_NAME</span><span class="s2">&quot; = &#39;YOUR_ORIGINAL_NAME&#39;];</span>
+</span><span class='line'><span class="s2">  then</span>
+</span><span class='line'><span class="s2">    GIT_AUTHOR_NAME=&#39;YOUR_NEW_NAME&#39;</span>
+</span><span class='line'><span class="s2">    GIT_AUTHOR_EMAIL=&#39;YOUR_NEW_EMAIL&#39;</span>
+</span><span class='line'><span class="s2">    GIT_COMMITTER_NAME=&#39;YOUR_NEW_NAME&#39;</span>
+</span><span class='line'><span class="s2">    GIT_COMMITTER_EMAIL=&#39;YOUR_NEW_EMAIL&#39;</span>
+</span><span class='line'><span class="s2">    git commit-tree &quot;</span><span class="nv">$@</span><span class="s2">&quot;;</span>
+</span><span class='line'><span class="s2">  else</span>
+</span><span class='line'><span class="s2">    git commit-tree &quot;</span><span class="nv">$@</span><span class="s2">&quot;;</span>
+</span><span class='line'><span class="s2">  fi</span>
+</span><span class='line'><span class="s2">&quot;</span> HEAD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you understand the risks of rewriting history for a shared repository, you
+can force push with the <code>-f</code> flag:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push -f
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, to ensure future commits don&rsquo;t use the wrong name and email, you can set
+it explicity for this particular repo (instead of globally) with these
+commands:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config user.email <span class="s2">&quot;your_email@example.com&quot;</span>
+</span><span class='line'>git config user.email <span class="s2">&quot;your_email@example.com&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Keep in mind this will only work for this particular clone as the details will
+be stored locally in <code>.git/config</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Keep Environment Variables When Using Sudo]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/05/26/how-to-keep-environment-variables-when-using-sudo/"/>
+    <updated>2015-05-26T13:03:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/05/26/how-to-keep-environment-variables-when-using-sudo</id>
+    <content type="html"><![CDATA[<p>By default, the <code>sudo</code> command does not pass your current shell environment to
+the new process.</p>
+
+<p>I&rsquo;ve added the function below to my bash configuration which will gives me an
+<code>esudo</code> command. This command works much like <code>sudo</code> but it will pass my current
+environment to the new process.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function</span> esudo <span class="o">{</span> sudo -E bash -c <span class="s2">&quot;$*&quot;</span><span class="p">;</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you use a ruby version manager, you&rsquo;ll know that they generally rely on
+environment variables, so <code>rvm</code> provide the <code>rvmsudo</code> command for this purpose.
+I&rsquo;ve since switched to <code>chruby</code> and I couldn&rsquo;t seem to find an equivalent, but
+this has solved the issue for me.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Regex Lookaround Cheatsheet]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/05/17/regex-lookaround-cheatsheet/"/>
+    <updated>2015-05-17T18:16:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/05/17/regex-lookaround-cheatsheet</id>
+    <content type="html"><![CDATA[<p>I have a fairly terrible memory but I&rsquo;ve found writing and referring back to
+cheatsheets to be a pretty effective way to memorize things.</p>
+
+<p>I ended up referring back to my previous
+<a href="http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet/">cheatsheet on <code>git reset</code></a>
+quite a few times soon after I wrote it, so when I came across
+<a href="http://idiosyncratic-ruby.com/11-regular-extremism.html">this great post on regex features in ruby</a>
+I thought I&rsquo;d share the lookarounds section because I <em>always</em> forget those too!</p>
+
+<table>
+<thead>
+<tr>
+<th> Syntax   </th>
+<th> Description         </th>
+<th> Example                  </th>
+<th> Result </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>(?=X)</code>  </td>
+<td> Positive lookahead  </td>
+<td> <code>"Ruby"[/.(?=b)/]</code>       </td>
+<td> <code>"u"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?!X)</code>  </td>
+<td> Negative lookahead  </td>
+<td> <code>"Ruby"[/.(?!u)/]</code>       </td>
+<td> <code>"u"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?&lt;=X)</code> </td>
+<td> Positive lookbehind </td>
+<td> <code>"Ruby"[/(?&lt;=u)./]</code>      </td>
+<td> <code>"b"</code>  </td>
+</tr>
+<tr>
+<td> <code>(?&lt;!X)</code> </td>
+<td> Negative lookbehind </td>
+<td> <code>"Ruby"[/(?&lt;!R|^)./]</code>   </td>
+<td> <code>"b"</code>  </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Checkout the <a href="http://idiosyncratic-ruby.com/11-regular-extremism.html">original blog post</a>
+for the rest of the regex tips or the
+<a href="http://idiosyncratic-ruby.com">Idiosyncratic Ruby site</a> for more ruby tips!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rewriting Indentation in Every File and Every Commit]]></title>
     <link href="http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/"/>
     <updated>2015-04-30T21:51:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit</id>
@@ -75,7 +294,7 @@ and the
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Safely rendering newlines in HTML with CSS]]></title>
+    <title type="html"><![CDATA[Safely Rendering Newlines in HTML With CSS]]></title>
     <link href="http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css/"/>
     <updated>2015-04-25T17:39:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css</id>
@@ -86,7 +305,7 @@ or something.</p>
 <p><a href="https://facebook.github.io/react/">React</a>
 will automatically sanitize any string being rendered to the screen unless you
 <a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">jump through hoops</a>
-first &ndash; which is great because making this difficult means its somewhat harder
+first - which is great because making this difficult means its somewhat harder
 to inadvertently create a
 <a href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29">XSS vulnerability</a>.</p>
 
@@ -134,8 +353,8 @@ instance of Chrome that will not enforce these security features:</p>
 
 <p>The important options here are:</p>
 
-<p><code>--disable-web-security</code> &ndash; This will disable the Same Origin Policy<br/>
-<code>--user-data-dir=...</code> &ndash; This launches a separate instance, with its own user data
+<p><code>--disable-web-security</code> - This will disable the Same Origin Policy<br/>
+<code>--user-data-dir=...</code> - This launches a separate instance, with its own user data
 directory.<br/>
 This prevents you from needing to close any current instances of chrome,
 otherwise running this command will just bring the existing instance into focus.</p>
@@ -148,7 +367,7 @@ easily tell the difference between my normal Chrome and my insecure Chrome!</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Configuring a HDMI-CEC remote in Kodi]]></title>
+    <title type="html"><![CDATA[Configuring a HDMI-CEC Remote in Kodi]]></title>
     <link href="http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/"/>
     <updated>2015-04-04T21:39:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi</id>
@@ -240,7 +459,7 @@ to page up and page down, which suits me great while I don&rsquo;t have a TV Tun
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Git reset cheatsheet]]></title>
+    <title type="html"><![CDATA[Git Reset Cheatsheet]]></title>
     <link href="http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet/"/>
     <updated>2015-03-24T11:13:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2015/03/24/git-reset-cheatsheet</id>
@@ -254,92 +473,47 @@ This is a cheatsheet based on <a href="http://git-scm.com/blog/2011/07/11/reset.
 
 <h2>Commit level</h2>
 
-<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
-<tbody><tr>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Current Branch?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Index?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Working Dir?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Working Dir Safe?
-</th>
+<table>
+<thead>
+<tr>
+<th>                            </th>
+<th> Updates Current Branch? </th>
+<th> Updates Index? </th>
+<th> Updates Working Dir? </th>
+<th> Working Dir Safe?                               </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>reset --soft [commit]</code>    </td>
+<td> YES                     </td>
+<td> NO             </td>
+<td> NO                   </td>
+<td> YES                                             </td>
 </tr>
 <tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset --soft [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
+<td> <code>reset (--mixed) [commit]</code> </td>
+<td> YES                     </td>
+<td> YES            </td>
+<td> NO                   </td>
+<td> YES                                             </td>
 </tr>
 <tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset (--mixed) [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
+<td> <code>reset --hard [commit]</code>    </td>
+<td> YES                     </td>
+<td> YES            </td>
+<td> YES                  </td>
+<td> <span style="color: rgb(255, 38, 0);">NO</span> </td>
 </tr>
 <tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset --hard [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<span style="color: rgb(255, 38, 0);">NO</span>
-</th>
+<td> <code>checkout [commit]</code>        </td>
+<td> NO                      </td>
+<td> YES            </td>
+<td> YES                  </td>
+<td> YES                                             </td>
 </tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>checkout [commit]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 
 
 <p><strong>reset &#45;&#45;soft [commit]</strong><br/>
@@ -365,58 +539,33 @@ This will leave you in a <em>detached HEAD</em> state</p>
 
 <h2>File level</h2>
 
-<table style="border-collapse:collapse;margin-bottom:30px;table-layout:fixed;width:100%;">
-<tbody><tr>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:40%;">
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Current Branch?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Index?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Updates Working Dir?
-</th>
-<th style="border: 1px solid rgb(219, 219, 219); padding: 10px; margin: 0px;width:15%;">
-Working Dir safe?
-</th>
+<table>
+<thead>
+<tr>
+<th>                            </th>
+<th> Updates Current Branch? </th>
+<th> Updates Index? </th>
+<th> Updates Working Dir? </th>
+<th> Working Dir safe?                               </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>reset (commit) [file]</code>    </td>
+<td> NO                      </td>
+<td> YES            </td>
+<td> NO                   </td>
+<td> YES                                             </td>
 </tr>
 <tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>reset (commit)&nbsp;[file]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
+<td> <code>checkout (commit) [file]</code> </td>
+<td> NO                      </td>
+<td> NO             </td>
+<td> YES                  </td>
+<td> <span style="color: rgb(255, 38, 0);">NO</span> </td>
 </tr>
-<tr>
-<th style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<code>checkout (commit) [file]</code>
-</th>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-NO
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-YES
-</td>
-<td style="border-style:solid;border-width:1px;border-color:rgb(219,219,219);padding:10px;margin:0px;width:20%;">
-<span style="color: rgb(255, 38, 0);">NO</span>
-</td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 
 
 <p><strong>reset (commit) [file]</strong><br/>
@@ -434,7 +583,7 @@ This would effectively be <code>git reset --hard [branch] file</code>, but this 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <title type="html"><![CDATA[Sending Email From the Command Line]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
     <updated>2014-12-29T12:50:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>
@@ -463,12 +612,12 @@ with one simple line of code!</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Introduction to Vim for IDE users]]></title>
+    <title type="html"><![CDATA[Introduction to Vim for IDE Users]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users/"/>
     <updated>2014-03-17T17:23:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users</id>
     <content type="html"><![CDATA[<blockquote><p>I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! <br/>
-&ndash; <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
+- <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
 
 <p>A lot of people are scared of learning of vim because of the initial learning curve.</p>
 
@@ -611,9 +760,7 @@ When coming from an IDE, the apparent shortcomings of a less integrated text edi
 I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is how to set it up along with a few useful vim plugins:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p ~/.vim/bundle
-</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Then place the following at the top of your <code>.vimrc</code>:</p>
@@ -637,26 +784,24 @@ I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-<span class='line-number'>20</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>filetype off
 </span><span class='line'>set rtp+=~/.vim/bundle/vundle/
 </span><span class='line'>call vundle#rc()
-</span><span class='line'>Bundle 'gmarik/vundle'
-</span><span class='line'>Bundle 'kien/ctrlp.vim'
-</span><span class='line'>Bundle 'scrooloose/nerdtree'
-</span><span class='line'>Bundle 'tpope/vim-rails'
-</span><span class='line'>Bundle 'tpope/vim-fugitive'
-</span><span class='line'>Bundle 'tpope/vim-commentary'
-</span><span class='line'>Bundle 'tpope/vim-repeat'
-</span><span class='line'>Bundle 'tpope/vim-surround'
-</span><span class='line'>Bundle 'tpope/vim-cucumber'
-</span><span class='line'>Bundle 'bogado/file-line'
-</span><span class='line'>Bundle 'godlygeek/tabular'
-</span><span class='line'>Bundle 'ecomba/vim-ruby-refactoring'
-</span><span class='line'>Bundle 'scrooloose/syntastic'
-</span><span class='line'>Bundle 'vim-scripts/matchit.zip'
-</span><span class='line'>Bundle 'kchmck/vim-coffee-script'
-</span><span class='line'>Bundle 'cakebaker/scss-syntax.vim'
+</span><span class='line'>
+</span><span class='line'>Plugin 'gmarik/vundle'
+</span><span class='line'>Plugin 'kien/ctrlp.vim'
+</span><span class='line'>Plugin 'scrooloose/nerdtree'
+</span><span class='line'>Plugin 'tpope/vim-rails'
+</span><span class='line'>Plugin 'tpope/vim-rake'
+</span><span class='line'>Plugin 'tpope/vim-fugitive'
+</span><span class='line'>Plugin 'tpope/vim-commentary'
+</span><span class='line'>Plugin 'tpope/vim-repeat'
+</span><span class='line'>Plugin 'tpope/vim-surround'
+</span><span class='line'>Plugin 'vim-scripts/matchit.zip'
+</span><span class='line'>Plugin 'scrooloose/syntastic'
+</span><span class='line'>Plugin 'bogado/file-line'
+</span><span class='line'>
+</span><span class='line'>call vundle#end()
 </span><span class='line'>filetype plugin indent on</span></code></pre></td></tr></table></div></figure>
 
 
@@ -674,17 +819,9 @@ I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>" NERDTREE PLUGIN - (mnemonic: Files)
-</span><span class='line'>nmap &lt;leader&gt;f :NERDTreeToggle
-</span><span class='line'>nmap &lt;leader&gt;F :NERDTreeFind
-</span><span class='line'>
-</span><span class='line'>" AIRLINE PLUGIN
-</span><span class='line'>let g:airline#extensions#tabline#enabled = 1
-</span><span class='line'>let g:airline#extensions#tabline#show_buffers = 0
+</span><span class='line'>nmap &lt;leader&gt;f :NERDTreeToggle&lt;CR&gt;
+</span><span class='line'>nmap &lt;leader&gt;F :NERDTreeFind&lt;CR&gt;
 </span><span class='line'>
 </span><span class='line'>" CTRL-P PLUGIN
 </span><span class='line'>let g:ctrlp_user_command = {
@@ -713,7 +850,7 @@ I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Completely removing a git commit due to sensitive information]]></title>
+    <title type="html"><![CDATA[Completely Removing a Git Commit Due to Sensitive Information]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/"/>
     <updated>2014-03-10T15:07:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information</id>
@@ -878,7 +1015,7 @@ local repository to GitHub will effectively destroy that cache.</p>
     <updated>2013-12-14T22:49:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/12/14/preparing-for-trailwalker</id>
     <content type="html"><![CDATA[<p>Back in 2011, I attempted <a href="trailwalker.oxfam.org.au">The Oxfam TrailWalker</a>.<br/>
-I didn&rsquo;t finish the full 100km &ndash; due to injuries I had to stop at about 60km,
+I didn&rsquo;t finish the full 100km - due to injuries I had to stop at about 60km,
 but it was quite an experience none the less.</p>
 
 <p>Recently a friend asked me what I did to prepare for TrailWalker, so here is a
@@ -934,7 +1071,7 @@ keep you from feeling too hungry.</p>
 
 <h2>5. Shoes</h2>
 
-<p>Like I said earlier, get shoes that fit your feet properly &ndash; Movement and
+<p>Like I said earlier, get shoes that fit your feet properly - Movement and
 rubbing will get pretty bad as you work towards 100km!<br/>
 Don&rsquo;t buy new shoes just before they event, they need time to be broken in. If
 you want to buy new shoes, allow at least 3 or 4 training hikes in them first
@@ -954,7 +1091,7 @@ to bring blankets and also wake you up before you sleep for too long.</p>
 especially when your extremely exhausted.<br/>
 Patience is key, but also sticking together is very important.<br/>
 Sometimes, some team members will want to go faster than others, this can cause
-issues and may result in the team splitting up during the event &ndash; this is not
+issues and may result in the team splitting up during the event - this is not
 ideal and should be avoided.<br/>
 Make sure your team has the same goal for the event (i.e. &ldquo;just finishing&rdquo; or
 &ldquo;getting a good time&rdquo;).<br/>
@@ -964,12 +1101,12 @@ One strategy is to let the slowest in the team lead the way.</p>
 
 <p>TrailWalker was a great experience (other than the injuries I incurred).<br/>
 You have to work quite hard (especially if you&rsquo;ve never done hiking before, like
-myself) but it all adds to a fantastic sense of accomplishment at the end &ndash;
+myself) but it all adds to a fantastic sense of accomplishment at the end -
 even if you don&rsquo;t finish.<br/>
 I learned a lot by doing this and even though training every weekend was tiring,
 it was actually a lot of fun.<br/>
 It was definitely a step out of my comfort zone, but I would recommend others
-to give it a go &ndash; and it&rsquo;s for a great cause!</p>
+to give it a go - and it&rsquo;s for a great cause!</p>
 ]]></content>
   </entry>
   
@@ -1075,7 +1212,7 @@ I just found one online, so lets download it to our <code>/opt/minecraft</code> 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Rake task with an arbitrary number of arguments]]></title>
+    <title type="html"><![CDATA[Rake Task With an Arbitrary Number of Arguments]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/"/>
     <updated>2013-10-18T14:10:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments</id>
@@ -1157,7 +1294,7 @@ rake thing[foo]  # A task that can accept a optional 'foo' argument
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Default values for environment variables]]></title>
+    <title type="html"><![CDATA[Default Values for Environment Variables]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/"/>
     <updated>2013-07-22T22:51:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables</id>
@@ -1200,7 +1337,7 @@ functionality. This is the bash equivalent:</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <title type="html"><![CDATA[Printing Over Previously Printed Characters and Lines]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
     <updated>2013-06-08T15:27:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
@@ -1216,16 +1353,24 @@ If it gets forgotten about in the background, TramTracker will eventually block 
 
 <h2>Using the \b (backspace) character</h2>
 
-<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+<p>Printing a \b character does a similar thing as pressing backspace, except instead of removing the character, it nondestructively shifts the cursor back which allows you to then overwrite previously written characters. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
 For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b\b\b</span><span class="s2">bar&quot;</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; foo</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b</span><span class="s2">x&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; fox</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;foo</span><span class="se">\b\b\b</span><span class="s2">bar&quot;</span>
 </span><span class='line'><span class="c1"># =&gt; bar</span>
-</span><span class='line'><span class="p">(</span><span class="s2">&quot;|/-</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">chars</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="nb">print</span> <span class="n">c</span><span class="p">;</span> <span class="nb">sleep</span> <span class="mi">1</span><span class="p">;</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="n">step</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="nb">sleep</span> <span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="p">;</span> <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;|/-</span><span class="se">\\</span><span class="s2">&quot;</span><span class="o">[</span><span class="n">i</span><span class="o">%</span><span class="mi">4</span><span class="o">]</span> <span class="p">}</span>
 </span><span class='line'><span class="c1"># =&gt; Cheesy, old-school spinner</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1307,7 +1452,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
-    <title type="html"><![CDATA["Safe mode" on the Samsung Galaxy S3]]></title>
+    <title type="html"><![CDATA["Safe Mode" on the Samsung Galaxy S3]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/05/safe-mode-on-samsung-galaxy-s3.html"/>
     <updated>2013-05-12T04:36:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/05/safe-mode-on-samsung-galaxy-s3</id>
@@ -1329,7 +1474,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[How to make tomato sauce]]></title>
+    <title type="html"><![CDATA[How to Make Tomato Sauce]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/03/how-to-make-tomato-sauce.html"/>
     <updated>2013-03-17T12:13:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/03/how-to-make-tomato-sauce</id>
@@ -1347,7 +1492,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
 
 <p>This part is where most of the effort is spent!<br/>
 We use large plastic tubs, fill them with two thirds water and empty some tomatoes in. We then pull out a tomato one by one, cut it in half and then cut the hard stem out from the middle, putting all the stems in the compost bin and the washed, cut tomatoes in another bucket. This makes it easier to mince later, but also gives us a chance to inspect the tomato to ensure the inside isn&rsquo;t rotten.<br/>
-Rotten tomatoes are easy to spot, they are either black on the inside or they stink! If ever you&rsquo;re not sure, giving it a smell is normally the easiest way to tell &ndash; and <em>&ldquo;When in doubt, throw it out&rdquo;</em>.</p>
+Rotten tomatoes are easy to spot, they are either black on the inside or they stink! If ever you&rsquo;re not sure, giving it a smell is normally the easiest way to tell - and <em>&ldquo;When in doubt, throw it out&rdquo;</em>.</p>
 
 <h2>3. Pre-boil them if they are firm</h2>
 
@@ -1395,7 +1540,7 @@ Throughout the year, we collect up the beer bottles so we can re-use them for th
 
 <h2>8. Boil the bottles</h2>
 
-<p>After the sauce bottles are all sealed and ready to go, they are gently placed in a drum where they are boiled. We generally put a blanket in the bottom of the barrel, then a layer of bottles standing upright, then another blanket, another layer of bottles, etc. Then fill the drum with water and turn the flame on. As this is a large volume to heat up, it takes quite a while to start to boil, but once the boiling and/or steaming has started, we keep the flame on for another two hours. It&rsquo;s very important that once they have boiled for two hours that you leave them in the water until the water goes cold &ndash; this could be a whole day. Taking them out too early can cause the bottles to shatter.<br/>
+<p>After the sauce bottles are all sealed and ready to go, they are gently placed in a drum where they are boiled. We generally put a blanket in the bottom of the barrel, then a layer of bottles standing upright, then another blanket, another layer of bottles, etc. Then fill the drum with water and turn the flame on. As this is a large volume to heat up, it takes quite a while to start to boil, but once the boiling and/or steaming has started, we keep the flame on for another two hours. It&rsquo;s very important that once they have boiled for two hours that you leave them in the water until the water goes cold - this could be a whole day. Taking them out too early can cause the bottles to shatter.<br/>
 This process is what preserves and seals the bottles properly.</p>
 
 <p><img class="center" src="http://3.bp.blogspot.com/-IiRcn9RxY1Q/UU14jO09XnI/AAAAAAAABKE/gzMGrDaoGWQ/s400/IMAG0281.jpg" title="Boiling the bottles to seal and preserve them" ></p>
@@ -1403,303 +1548,20 @@ This process is what preserves and seals the bottles properly.</p>
 <h2>9. Enjoy!</h2>
 
 <p>After the water has gone cold, the bottles can be pulled out and put away. We try to make enough to last us a whole year, so we put them into crates, keep one crate in the kitchen and store the rest of them in a cool place.<br/>
-When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time &ndash; you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</p>
+When you want to use the sauce, it still needs to be cooked, so you can experiment with different recipes at the time - you can add your herbs, spices, wine, etc. and let it cook for anywhere between half an hour and two hours.</p>
 
 <p>Now you know exactly what goes into your sauce, no preservatives and in my opinion, it tastes so much better than the ready made sauces from the shops that you&rsquo;ll never want to buy that stuff again!</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <title type="html"><![CDATA[Script to Transfer Photos in Linux]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
     <updated>2013-01-04T16:38:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 Every time I go on holiday, I end up writing the same bash script! &#8230; I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it&#8217;s a really simple script to write, all it does is move the photos from my camera&#8217;s memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a &#8216;jpg&#8217; or &#8216;raw&#8217; sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn&#8217;t really like that.
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A few photography tips]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips.html"/>
-    <updated>2012-12-14T13:44:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/12/a-few-photography-tips</id>
-    <content type="html"><![CDATA[<p>A little while ago, my brother got me a photography course as a gift, so I asked a friend of mine, Amy, to join me and last Thursday night we attended the course. The course was a &ldquo;Night Landscape&rdquo; tutorial where we all brought our own cameras and a professional photographer guides us through how to take photos at night. The class was quite small, it consisted of Amy and I with one other student.</p>
-
-<p>The course started out quite basic and we went though some fundamental theory, a lot of which Amy and I already knew, but the other student was a little less experienced so the photographer needed to cater for all of us.<br/>
-Luckily it was just a small class, because instead of following the standard course structure, the photographer spent more time in conversations with us, answering all our specific questions.</p>
-
-<p>Being self-taught, I am grateful for that, because these conversations were what lead me to learn a few new things that I hadn&rsquo;t picked up in my own research so far.<br/>
-Here is a quick summary of the things I learned:</p>
-
-<h2>1. Blowing out the sky, intentionally</h2>
-
-<p>The first new tip I learned was a trick the photographer used when the scene has an unusable sky, such as a dull cloud cover (like last night in the rain). He would take another photo that was intentionally over-exposed so the sky was as white as possible. By doing this, afterwards in Photoshop a pure white sky is very easy to select, even through the leaves of a tree or someone&rsquo;s hair using tools like the magic wand, or a color-based selection and can be replaced with a more dramatic sky from another shoot.</p>
-
-<h2>2. Hand-holding at night</h2>
-
-<p>At night, it is normally quite hard to take photos without blurring the shot unless you have a tripod, but there is a simple rule of thumb that can help with selecting an appropriate shutter speed:</p>
-
-<blockquote><p>Make the denominator of the shutter speed match the focal length</p></blockquote>
-
-
-<p>So if you are shooting at a 20mm focal length, the shutter speed should be about 1/20. Of course, this isn&rsquo;t a perfect rule, but it is a great place to start and you can adjust from there.</p>
-
-<h2>3. Freezing human motion</h2>
-
-<p>So the previous tip will make it easy to minimize any blur from yourself when holding the camera, but that wont help with people in your shot moving around. Well this photographer recommends:</p>
-
-<blockquote><p>Use a shutter speed of 1/125 as a baseline to freeze human motion</p></blockquote>
-
-
-<p>It turns out that most movement from people is slow enough for this shutter speed to capture it sharply, and of course you can adjust as necessary.</p>
-
-<h2>4. Filters to allow for more creativity</h2>
-
-<p>So far the only filters I have used are a &ldquo;Circular Polariser&rdquo; to enhance sky&rsquo;s, cut out reflections, etc. and a &ldquo;UV&rdquo; filter to protect the lens. Our photographer had quite an impressive set of filters and gave us a demo of his &ldquo;Neutral Density&rdquo; (or &ldquo;ND&rdquo;) filter and a &ldquo;Graduated Blue-Yellow&rdquo; filter.<br/>
-Long exposures can look really good at night, but they are normally impossible during the day, but with the ND filter, not much light gets through, so long exposures are needed even during the day. Our photographer had a street art photo with blurred clouds and deep dark colors in the middle of the day &ndash; it looked fantastic!<br/>
-The &ldquo;Graduated Blue-Yellow&rdquo; filter changes the color of the light that comes through, and in this case, it enhances the blue colors of a sky at the top of the shot and the earthy yellow tones of the ground on the bottom of the shot. I had only ever known these colors to be improved like this with the use of software, but these filters had a great effect straight from the camera.</p>
-
-<h2>Summary</h2>
-
-<p>So at the end of the day, the course was quite basic, but in our tangential conversations I gained some pretty cool tips and tricks.<br/>
-I think the most valuable aspect of a course like this is not so much the material presented, but just to experience another photographers style. It&rsquo;s always interesting to see how everyone thinks about things in their own unique way, and going through other peoples photos with a conversation is really intriguing.</p>
-
-<p>Thanks to Rob and Sarah for the gift and Amy for keeping me company!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bluetooth audio streaming from phone to Ubuntu]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/10/bluetooth-audio-streaming-from-phone-to.html"/>
-    <updated>2012-10-30T11:27:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/10/bluetooth-audio-streaming-from-phone-to</id>
-    <content type="html"><![CDATA[<p>I was toying with the idea of making my own &ldquo;Car Computer&rdquo; and one of the crucial parts is a Bluetooth connection, but not for P2P file transfer (although that could be useful), I would want this computer to appear the same way a Bluetooth stereo or headset does, so once connected it will stream the audio from my phone through the car speakers. Turns out it&rsquo;s quite easy with Ubuntu :)</p>
-
-<p>PulseAudio is pretty awesome!<br/>
-First step is ensure Pulse has the Bluetooth module loaded (mine did by default), you can check this by looking at this file <code>/etc/pulse/default.pa</code></p>
-
-<p>The next step is to configure the Bluetooth daemon to enable <code>Source</code> (and/or <code>Gateway</code> mode).<br/>
-To do this, I added the following line to <code>/etc/bluetooth/audio.conf</code>:</p>
-
-<figure class='code'><figcaption><span>/etc/bluetooth/audio.conf </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">Enable</span><span class="o">=</span>Gateway,Source,Socket
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then restart the Bluetooth daemon:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo service bluetooth restart</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you&rsquo;ll have to pair the computer with the phone as per normal.<br/>
-Once the devices are paired, an <code>Audio Source</code> connection needs to be created.<br/>
-For this, the easiest way is via DBus, but so we don&rsquo;t have to write a script, an easy way to test this in an ad-hoc manner is to use a tool called <code>d-feet</code>, which is available in the Ubuntu repos.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; sudo apt-get install d-feet</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Using <code>d-feet</code>, navigate to the <code>system bus</code> and find the <code>org.bluez</code> key.<br/>
-In here, there will be another key that has a device number in it.<br/>
-(for me this was <code>/org/bluez/1002/hci0/dev_xx_xx_xx_xx_xx_xx</code>)<br/>
-Under this key, execute <code>org.bluez.AudioSource &gt; methods &gt; Connect()</code> without any parameters and your phone should now indicate that it is connected to the computer as an audio device.</p>
-
-<p>At this point, I started playing some music so I could tell when it was working, but you probably won&rsquo;t be able to hear anything just yet.<br/>
-That is because Pulse does not automatically send every source to every output &ndash; that could get messy!<br/>
-To configure pulse to send the audio from the Bluetooth connection to your speakers you need to determine the name of the audio source and the name of the &ldquo;<em>sink</em>&rdquo; (or output) and join them together.<br/>
-You can do this with the PulseAudio shell like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$&gt; pacmd
-</span><span class='line'>&gt;&gt;&gt; list-sources
-</span><span class='line'>&gt;&gt;&gt; list-sinks
-</span><span class='line'>&gt;&gt;&gt; load-module module-loopback source=bluez_source.xxxx sink=alsa_output.pci-xxxx</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(Replace the <code>source=</code> and <code>sink=</code> parts with the names from the preceding two commands)</p>
-
-<p>Now all audio from your phone should be streaming through your computer.<br/>
-DBus makes it really simple to do this programmatically, so it could easily be (mostly) automated and even controlled by a nice touch friendly GUI to pick the source device, etc.</p>
-
-<p>I thought I would write up a quick post on this because when I finally got my music streaming through my laptop, it was exciting to know that I could actually use this to make a car computer with bluetooth functionality quite easily.<br/>
-I used <code>AudioSource</code> in this example, but the other fun option is the <code>HandsFreeGateway</code>, where instead of streaming stereo sound for music, it will also connect the microphone from the computer to the phone to be used in-call, etc.</p>
-
-<p>The resources that helped me with this where:</p>
-
-<ul>
-<li><a href="http://jprvita.wordpress.com/2009/">http://jprvita.wordpress.com/2009/</a></li>
-<li><a href="http://ubuntuforums.org/showthread.php?t=1464189">http://ubuntuforums.org/showthread.php?t=1464189</a></li>
-<li><a href="http://ubuntuforums.org/showthread.php?t=1904447">http://ubuntuforums.org/showthread.php?t=1904447</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html"/>
-    <updated>2012-09-19T11:33:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-Gone are the days of the nice <span style="font-family: 'Courier New', Courier, monospace;">/boot/grub/menu.lst</span> file, but with new tools comes new features.<br /><br /><br /><b>Changing the default boot item</b><br /><br />In Grub2 you can change the default boot entry by editing the <span style="font-family: 'Courier New', Courier, monospace;">/etc/default/grub</span> file.<br />In this file you&#8217;ll see something like this near the top: <br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;"><span style="background-color: #666666;">GRUB_DEFAULT=0</span><br />#GRUB_HIDDEN_TIMEOUT=0<br />GRUB_HIDDEN_TIMEOUT_QUIET=true<br />GRUB_TIMEOUT=10<br />GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br />GRUB_CMDLINE_LINUX_DEFAULT=&#8221;quiet splash&#8221;<br />GRUB_CMDLINE_LINUX=&#8221;&#8221;</span></blockquote><div><br /></div><div>The first line above tells Grub to boot the first boot entry by default (menu item with index 0).</div><div>You can simply change this to menu entry you prefer, but whenever you make any change to this file you need to run the following command to make the changes take effect:<br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div><div><br /></div><div><b>Changing the default boot entry from the command line</b></div><div><br /></div><div>A new feature that Grub2 provides is to change this option dynamically from the command-line.</div><div>In order for this to work, instead of setting the <span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT</span> option to the desired index, set it to &#8217;<span style="font-family: 'Courier New', Courier, monospace;">saved</span>&#8217; instead, like this:</div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">GRUB_DEFAULT=saved</span></blockquote><br /><div>And run <span style="font-family: 'Courier New', Courier, monospace;">update-grub</span> to make the changes take effect:</div><div><div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; sudo update-grub</span></blockquote></div></div><div><br /></div><div>Now you can use the <span style="font-family: 'Courier New', Courier, monospace;">grub-set-default</span> and the <span style="font-family: 'Courier New', Courier, monospace;">grub-reboot</span> commands.</div><div>Both commands take the index of the boot entry you want as a command line argument:</div><div><br /></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-set-default &lt;entry&gt;</span></blockquote>This command will&nbsp;permanently&nbsp;set the default boot entry to the index specified on the command line, useful if you tend to change the default regularly.<br /><br /><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">$&gt; grub-reboot &lt;entry&gt;</span></blockquote>This command will reboot the machine and boot into the specified boot entry, but only that once. The following boot will use the default.
-</div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
-    <link href="http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails.html"/>
-    <updated>2012-09-11T13:29:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve been using Ruby on Rails for about a year and half now and I&rsquo;m really enjoying it! At the time of writing (at least in Melbourne) there is lots of demand for Rubyist&rsquo;s, so it&rsquo;s great time to get involved.<br/>
-I have a couple of friends who are interested in making the switch from Java to Ruby so I wrote them an email with some pointers on how to get started and then realized it would make a good blog post :)</p>
-
-<h2>Join the community!</h2>
-
-<p>Ruby and Rails are quite well known for their excellent communities, so the first step is to join your local group. For us in Australia, that group is <em>Ruby On Rails Oceania</em> (aka RORO).<br/>
-They have meetups on the <em>last Thursday of every month</em> in Melbourne and a pretty active mailing list:</p>
-
-<ul>
-<li><a href="https://groups.google.com/forum/?fromgroups#%21forum/rails-oceania">Ruby On Rails Oceania Mailing List</a></li>
-<li><a href="http://ruby.org.au/">Ruby.org.au</a></li>
-</ul>
-
-
-<h2>Ruby and Rails resources:</h2>
-
-<ul>
-<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; I use these almost everyday!</li>
-<li><a href="http://apidock.com/">ApiDock</a> &ndash; API&rsquo;s for Ruby, Rails and RSpec in one place</li>
-<li><a href="http://railsforzombies.org/">Rails For Zombies</a> &ndash; A great beginners tutorial for rails</li>
-<li><a href="http://railscasts.com/">Rails Casts</a> &ndash; Regular video podcast all about rails</li>
-<li><a href="http://ruby5.envylabs.com/">Ruby5</a> &ndash; Regular 5 minute audio podcast on the latest news</li>
-<li>&hellip; a plethora of good books, such as &ldquo;The RSpec Book&rdquo;, &ldquo;Design Patterns in Ruby&rdquo;, etc. (alot of which I still need to read)</li>
-</ul>
-
-
-<h2>Getting started:</h2>
-
-<p>To get started you&rsquo;ll need to set up your development environment, here&rsquo;s what I use:</p>
-
-<ul>
-<li>Vim&hellip; of course&hellip; although there are lots of alternatives, the most popular ones would probably be:
-
-<ul>
-<li>RubyMine (IDE) &ndash; used alot at work (commercial software)</li>
-<li>Sublime Text 2 (Text editor)</li>
-<li>TextMate (Text editor)</li>
-</ul>
-</li>
-<li>RVM (Ruby Version Manager)
-
-<ul>
-<li>Get from here: <a href="https://rvm.io/">https://rvm.io</a></li>
-<li>Follow the instructions to configure your shell to use RVM</li>
-</ul>
-</li>
-<li>Use RVM to install the latest ruby
-
-<ul>
-<li><code>rvm install 1.9.3</code></li>
-<li>A newer alternative to RVM is RBenv</li>
-</ul>
-</li>
-<li>Once you have ruby installed, you will have the &lsquo;gem&rsquo; command available
-
-<ul>
-<li>Gems are roughly equivalent to jars in the Java world</li>
-<li>Use gem to install the latest rails
-
-<ul>
-<li><code>gem install rails</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Once you have rails installed, you will have the &lsquo;rails&rsquo; command available
-
-<ul>
-<li>Use the rails command to start a new project
-
-<ul>
-<li><code>rails new todolist</code></li>
-<li><code>rails server</code></li>
-<li>browse to <a href="http://localhost:3000/">http://localhost:3000</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Now you can read the readme, the rails guides and make a simple app with scaffolding!</li>
-</ul>
-
-
-<h2>Things to keep in mind for RoR dev:</h2>
-
-<ul>
-<li>Rails is just a framework written in Ruby, so it will help to learn some straight Ruby too.
-
-<ul>
-<li><a href="http://ruby-lang.org/">ruby-lang.org</a> is a good place to start</li>
-</ul>
-</li>
-<li>Ruby on Rails strongly supports DRY principles
-
-<ul>
-<li>Don&rsquo;t reinvent the wheel, theres problably a gem that already does what you want</li>
-<li>To find gems, good places to look are:
-
-<ul>
-<li><a href="http://ruby-toolbox.com/">Ruby-Toolbox.com</a></li>
-<li><a href="http://railscasts.com/">RailsCasts.com</a></li>
-<li><a href="http://rubygems.org/">RubyGems.org</a></li>
-<li><a href="http://github.com/">GitHub.com</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>The majority of Ruby projects are:
-
-<ul>
-<li>Developed using TDD/BDD, so you&rsquo;ll need to learn the testing frameworks:
-
-<ul>
-<li>Test::Unit (default with rails)</li>
-<li>RSpec (a popular replacement for Test::Unit)</li>
-<li>Cucumber (BDD)</li>
-</ul>
-</li>
-<li>Developed on MacOSX &ndash; for new comers (like myself) some essentials are:
-
-<ul>
-<li>brew &ndash; a mac package manager (like apt or yum)</li>
-<li>iterm2 &ndash; really good terminal emulator</li>
-</ul>
-</li>
-<li>Deployed on Linux
-
-<ul>
-<li>Basic Linux foo is really useful</li>
-</ul>
-</li>
-<li>Version controlled with git
-
-<ul>
-<li>If you need to learn git, I highly recommend <a href="http://git-scm.com/book">Pro git</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>That&rsquo;s a quick overview of what I can recommend to get going based on my own experience, things will obviously change over time, and others may have other opinions, if so feel free to leave comments below.</p>
 ]]></content>
   </entry>
   

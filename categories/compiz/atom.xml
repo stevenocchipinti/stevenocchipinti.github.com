@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: compiz | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Compiz | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/compiz/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Multi monitor keyboard shortcuts in Ubuntu]]></title>
+    <title type="html"><![CDATA[Multi Monitor Keyboard Shortcuts in Ubuntu]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/05/multi-monitor-keyboard-shortcuts-in.html"/>
     <updated>2011-05-23T05:55:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/05/multi-monitor-keyboard-shortcuts-in</id>

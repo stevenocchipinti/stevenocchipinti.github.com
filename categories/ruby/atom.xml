@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ruby | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Ruby | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,18 +14,17 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rake task with an arbitrary number of arguments]]></title>
+    <title type="html"><![CDATA[Rake Task With an Arbitrary Number of Arguments]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments/"/>
     <updated>2013-10-18T14:10:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/10/18/rake-task-with-an-arbitrary-number-of-arguments</id>
     <content type="html"><![CDATA[<p>Rake gives you a way of specifying arguments for a given task like this:</p>
 
-<p><code>ruby
-desc "A task that can accept a optional 'foo' argument"
+<pre><code class="ruby">desc "A task that can accept a optional 'foo' argument"
 task :thing, [:foo] do |task, args|
   puts args[:foo]
 end
-</code></p>
+</code></pre>
 
 <p>This will make the value of <code>foo</code> available in the <code>args</code> variable.
 When you run <code>rake -T</code>, it will show you that argument like this:</p>
@@ -47,12 +46,11 @@ will return an array of any extra arguments.</p>
 
 <p>For example:</p>
 
-<p><code>ruby
-task :thing, [:foo] do |task, args|
+<pre><code class="ruby">task :thing, [:foo] do |task, args|
   puts args[:foo]     # First argument
   puts args.extras    # The rest of the arguments
 end
-</code></p>
+</code></pre>
 
 <p>This will allow you to call the task like this:</p>
 
@@ -88,7 +86,7 @@ rake thing[foo]  # A task that can accept a optional 'foo' argument
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <title type="html"><![CDATA[Printing Over Previously Printed Characters and Lines]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
     <updated>2013-06-08T15:27:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
@@ -104,45 +102,37 @@ If it gets forgotten about in the background, TramTracker will eventually block 
 
 <h2>Using the \b (backspace) character</h2>
 
-<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+<p>Printing a \b character does a similar thing as pressing backspace, except instead of removing the character, it nondestructively shifts the cursor back which allows you to then overwrite previously written characters. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
 For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
 
-<p>``` ruby
-puts &ldquo;foo\b\b\bbar&rdquo;</p>
-
-<h1>=> bar</h1>
-
-<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
-
-<h1>=> Cheesy, old-school spinner</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\b"
+# =&gt; foo
+puts "foo\bx"
+# =&gt; fox
+puts "foo\b\b\bbar"
+# =&gt; bar
+1.step {|i| sleep 0.2; print "\b" + "|/-\\"[i%4] }
+# =&gt; Cheesy, old-school spinner
+</code></pre>
 
 <p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
 
-<p>``` ruby
-puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
-
-<h1>=> foo\nbar</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\n\b\b\bbar"
+# =&gt; foo\nbar
+</code></pre>
 
 <h2>Using the \r (carriage return) character</h2>
 
 <p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
 
-<p><code>ruby
-100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
-</code></p>
+<pre><code class="ruby">100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></pre>
 
 <p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
 
-<p>```
-puts &ldquo;foo\rp&rdquo;</p>
-
-<h1>=> poo</h1>
-
-<p>```</p>
+<pre><code>puts "foo\rp"
+# =&gt; poo
+</code></pre>
 
 <p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
 
@@ -152,10 +142,9 @@ puts &ldquo;foo\rp&rdquo;</p>
 Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
 Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
 
-<p><code>ruby
-setpos(lines/2, cols/2) # Start in the middle
+<pre><code class="ruby">setpos(lines/2, cols/2) # Start in the middle
 addstr("Hello world")
-</code></p>
+</code></pre>
 
 <p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
 
@@ -167,15 +156,14 @@ This behaviour suits a TUI, and the old contents is still restored when you retu
 
 <p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
 
-<p><code>
-\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+<pre><code>\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
 \033[&lt;N&gt;A     # Move the cursor up N lines
 \033[&lt;N&gt;B     # Move the cursor down N lines
 \033[&lt;N&gt;C     # Move the cursor forward N columns
 \033[&lt;N&gt;D     # Move the cursor backward N columns
 \033[2J       # Clear the screen, move to (0,0)
 \033[K        # Erase to end of line
-</code></p>
+</code></pre>
 
 <p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
 I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
@@ -185,7 +173,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
+    <title type="html"><![CDATA[Getting Started With Ruby on Rails]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails.html"/>
     <updated>2012-09-11T13:29:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails</id>
@@ -206,11 +194,11 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <h2>Ruby and Rails resources:</h2>
 
 <ul>
-<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; I use these almost everyday!</li>
-<li><a href="http://apidock.com/">ApiDock</a> &ndash; API&rsquo;s for Ruby, Rails and RSpec in one place</li>
-<li><a href="http://railsforzombies.org/">Rails For Zombies</a> &ndash; A great beginners tutorial for rails</li>
-<li><a href="http://railscasts.com/">Rails Casts</a> &ndash; Regular video podcast all about rails</li>
-<li><a href="http://ruby5.envylabs.com/">Ruby5</a> &ndash; Regular 5 minute audio podcast on the latest news</li>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> - I use these almost everyday!</li>
+<li><a href="http://apidock.com/">ApiDock</a> - API&rsquo;s for Ruby, Rails and RSpec in one place</li>
+<li><a href="http://railsforzombies.org/">Rails For Zombies</a> - A great beginners tutorial for rails</li>
+<li><a href="http://railscasts.com/">Rails Casts</a> - Regular video podcast all about rails</li>
+<li><a href="http://ruby5.envylabs.com/">Ruby5</a> - Regular 5 minute audio podcast on the latest news</li>
 <li>&hellip; a plethora of good books, such as &ldquo;The RSpec Book&rdquo;, &ldquo;Design Patterns in Ruby&rdquo;, etc. (alot of which I still need to read)</li>
 </ul>
 
@@ -223,7 +211,7 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <li>Vim&hellip; of course&hellip; although there are lots of alternatives, the most popular ones would probably be:
 
 <ul>
-<li>RubyMine (IDE) &ndash; used alot at work (commercial software)</li>
+<li>RubyMine (IDE) - used alot at work (commercial software)</li>
 <li>Sublime Text 2 (Text editor)</li>
 <li>TextMate (Text editor)</li>
 </ul>
@@ -306,11 +294,11 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <li>Cucumber (BDD)</li>
 </ul>
 </li>
-<li>Developed on MacOSX &ndash; for new comers (like myself) some essentials are:
+<li>Developed on MacOSX - for new comers (like myself) some essentials are:
 
 <ul>
-<li>brew &ndash; a mac package manager (like apt or yum)</li>
-<li>iterm2 &ndash; really good terminal emulator</li>
+<li>brew - a mac package manager (like apt or yum)</li>
+<li>iterm2 - really good terminal emulator</li>
 </ul>
 </li>
 <li>Deployed on Linux
@@ -335,7 +323,7 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <title type="html"><![CDATA[Ruby + Parallel Port + LEDs]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds.html"/>
     <updated>2011-10-10T03:49:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds</id>

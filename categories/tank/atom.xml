@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: tank | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Tank | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/tank/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ruby + parallel port + LEDs]]></title>
+    <title type="html"><![CDATA[Ruby + Parallel Port + LEDs]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds.html"/>
     <updated>2011-10-10T03:49:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/10/ruby-parallel-port-leds</id>

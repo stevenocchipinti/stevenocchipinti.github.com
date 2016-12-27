@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: bash | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Bash | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/bash/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,29 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <title type="html"><![CDATA[How to Keep Environment Variables When Using Sudo]]></title>
+    <link href="http://blog.stevenocchipinti.com/2015/05/26/how-to-keep-environment-variables-when-using-sudo/"/>
+    <updated>2015-05-26T13:03:00+10:00</updated>
+    <id>http://blog.stevenocchipinti.com/2015/05/26/how-to-keep-environment-variables-when-using-sudo</id>
+    <content type="html"><![CDATA[<p>By default, the <code>sudo</code> command does not pass your current shell environment to
+the new process.</p>
+
+<p>I&rsquo;ve added the function below to my bash configuration which will gives me an
+<code>esudo</code> command. This command works much like <code>sudo</code> but it will pass my current
+environment to the new process.</p>
+
+<pre><code class="bash">function esudo { sudo -E bash -c "$*"; }
+</code></pre>
+
+<p>If you use a ruby version manager, you&rsquo;ll know that they generally rely on
+environment variables, so <code>rvm</code> provide the <code>rvmsudo</code> command for this purpose.
+I&rsquo;ve since switched to <code>chruby</code> and I couldn&rsquo;t seem to find an equivalent, but
+this has solved the issue for me.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sending Email From the Command Line]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
     <updated>2014-12-29T12:50:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>
@@ -39,7 +61,7 @@ echo "Hello" | mail -s "Your alert" to-addr@example.com -aFrom:from-addr@example
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Default values for environment variables]]></title>
+    <title type="html"><![CDATA[Default Values for Environment Variables]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables/"/>
     <updated>2013-07-22T22:51:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/07/22/default-values-for-environment-variables</id>
@@ -47,13 +69,12 @@ echo "Hello" | mail -s "Your alert" to-addr@example.com -aFrom:from-addr@example
 variable does not already have a value.
 For example:</p>
 
-<p><code>ruby default_value.rb
-puts foo  # =&gt; nil
+<pre><code class="ruby default_value.rb">puts foo  # =&gt; nil
 foo ||= "bar"
 puts foo  # =&gt; "bar"
 foo ||= "baz"
 puts foo  # =&gt; "bar"
-</code></p>
+</code></pre>
 
 <p>This will assign <code>"bar"</code> to <code>foo</code>, unless <code>foo</code> is already set.
 In other words, it will make <code>"bar"</code> the <em>default value</em> of <code>foo</code>.</p>
@@ -61,18 +82,17 @@ In other words, it will make <code>"bar"</code> the <em>default value</em> of <c
 <p>I recently had to do this is bash, and it turns out bash has similar
 functionality. This is the bash equivalent:</p>
 
-<p><code>bash default_value.sh
-echo $FOO  # =&gt; ""
+<pre><code class="bash default_value.sh">echo $FOO  # =&gt; ""
 export FOO=${FOO:-"bar"}
 echo $FOO  # =&gt; "bar"
 export FOO=${FOO:-"baz"}
 echo $FOO  # =&gt; "bar"
-</code></p>
+</code></pre>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <title type="html"><![CDATA[Printing Over Previously Printed Characters and Lines]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
     <updated>2013-06-08T15:27:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
@@ -88,45 +108,37 @@ If it gets forgotten about in the background, TramTracker will eventually block 
 
 <h2>Using the \b (backspace) character</h2>
 
-<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+<p>Printing a \b character does a similar thing as pressing backspace, except instead of removing the character, it nondestructively shifts the cursor back which allows you to then overwrite previously written characters. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
 For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
 
-<p>``` ruby
-puts &ldquo;foo\b\b\bbar&rdquo;</p>
-
-<h1>=> bar</h1>
-
-<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
-
-<h1>=> Cheesy, old-school spinner</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\b"
+# =&gt; foo
+puts "foo\bx"
+# =&gt; fox
+puts "foo\b\b\bbar"
+# =&gt; bar
+1.step {|i| sleep 0.2; print "\b" + "|/-\\"[i%4] }
+# =&gt; Cheesy, old-school spinner
+</code></pre>
 
 <p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
 
-<p>``` ruby
-puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
-
-<h1>=> foo\nbar</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\n\b\b\bbar"
+# =&gt; foo\nbar
+</code></pre>
 
 <h2>Using the \r (carriage return) character</h2>
 
 <p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
 
-<p><code>ruby
-100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
-</code></p>
+<pre><code class="ruby">100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></pre>
 
 <p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
 
-<p>```
-puts &ldquo;foo\rp&rdquo;</p>
-
-<h1>=> poo</h1>
-
-<p>```</p>
+<pre><code>puts "foo\rp"
+# =&gt; poo
+</code></pre>
 
 <p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
 
@@ -136,10 +148,9 @@ puts &ldquo;foo\rp&rdquo;</p>
 Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
 Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
 
-<p><code>ruby
-setpos(lines/2, cols/2) # Start in the middle
+<pre><code class="ruby">setpos(lines/2, cols/2) # Start in the middle
 addstr("Hello world")
-</code></p>
+</code></pre>
 
 <p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
 
@@ -151,15 +162,14 @@ This behaviour suits a TUI, and the old contents is still restored when you retu
 
 <p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
 
-<p><code>
-\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+<pre><code>\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
 \033[&lt;N&gt;A     # Move the cursor up N lines
 \033[&lt;N&gt;B     # Move the cursor down N lines
 \033[&lt;N&gt;C     # Move the cursor forward N columns
 \033[&lt;N&gt;D     # Move the cursor backward N columns
 \033[2J       # Clear the screen, move to (0,0)
 \033[K        # Erase to end of line
-</code></p>
+</code></pre>
 
 <p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
 I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
@@ -169,7 +179,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Script to transfer photos in linux]]></title>
+    <title type="html"><![CDATA[Script to Transfer Photos in Linux]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux.html"/>
     <updated>2013-01-04T16:38:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/01/script-to-transfer-photos-in-linux</id>
@@ -177,59 +187,6 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
 Every time I go on holiday, I end up writing the same bash script! ... I know, how nerdy is that, I code on holidays.<br /><br />I really should save the script and bring it with me each time, instead I just re-invent the wheel everytime, so I thought I would write a quick post to record it for next time.<br />Luckily it's a really simple script to write, all it does is move the photos from my camera's memory card to the laptop HDD, but it puts them in a sub-directory for that particular day, then sorts the files into a 'jpg' or 'raw' sub-directory.<br /><br /><script src="https://gist.github.com/4453912.js"></script>The script is quite dumb, it just creates a directory for the current date. On one of the trips, I had the script pull the date the photo was taken from the EXIF information, but when a series of photos goes over mid-night, it splits them up and I didn't really like that.
 </div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git stash, diff and patch]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch.html"/>
-    <updated>2011-09-21T10:41:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/09/git-diff-and-patch</id>
-    <content type="html"><![CDATA[<p>I recently found myself in a situation where I need to comment out certain lines in my code in order to test a particular set of features.</p>
-
-<p>These commented out lines are only for my local development environment but will be useful in the future if this set of features needs work again.<br/>
-In this situation, checking them into Git or making a personal <code>.gitignore</code> file are not really suitable solutions.</p>
-
-<p>I have found two good ways of accomplishing this.</p>
-
-<h2>Git stash</h2>
-
-<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
-<code>
-git stash
-</code></p>
-
-<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
-
-<p>When I need to work on a related feature again, I can list my stashes with:
-<code>
-git stash list
-</code></p>
-
-<p>Then, apply the most recent stash by running this command:
-<code>
-git stash apply
-</code></p>
-
-<p>If you have more than one stash, you can specify which stash you want to apply on the command line. See <code>git stash --help</code> to see more information.</p>
-
-<h2>Git diff and patch:</h2>
-
-<p><code>diff</code> and <code>patch</code> are very useful tools to be familiar with if you ever deal with text. Git&rsquo;s <code>diff</code> output is much the same, and so the <code>patch</code> tool is still very handy!</p>
-
-<p>Starting from a clean checkout, I put my temporary changes in place, then run this command:
-<code>
-git diff &amp;gt; ~/patches/temp_workaround.patch
-</code></p>
-
-<p>Then I continue on with my work. I selectively leave these changes out of all my commits using <code>git add -i</code> then once everything is checked in except my temporary changes, I revert these temporary changes with <code>git checkout -- .</code> so I&rsquo;m left with a clean repository.</p>
-
-<p>When I need to work on a related feature again, I can apply my patch by running this command from the project root:
-<code>
-patch -p1 &amp;lt; ~/patches/temp_workaround.patch
-</code></p>
-
-<p>Both of these methods will put my temporary work arounds in place again which saves me trying to work out which lines I needed to comment out everytime. Saving the stashes and/or patch files with descriptive names means you can find and re-use these temporary changes quite easily in the future.</p>
 ]]></content>
   </entry>
   

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: security | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Security | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/security/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Safely rendering newlines in HTML with CSS]]></title>
+    <title type="html"><![CDATA[Safely Rendering Newlines in HTML With CSS]]></title>
     <link href="http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css/"/>
     <updated>2015-04-25T17:39:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2015/04/25/safely-rendering-newlines-in-html-with-css</id>
@@ -25,7 +25,7 @@ or something.</p>
 <p><a href="https://facebook.github.io/react/">React</a>
 will automatically sanitize any string being rendered to the screen unless you
 <a href="https://facebook.github.io/react/tips/dangerously-set-inner-html.html">jump through hoops</a>
-first &ndash; which is great because making this difficult means its somewhat harder
+first - which is great because making this difficult means its somewhat harder
 to inadvertently create a
 <a href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29">XSS vulnerability</a>.</p>
 
@@ -41,11 +41,10 @@ Another alternative would be using something like
 Even a simple <code>&lt;pre&gt;</code> tag will get you pretty far, but today I read an article
 that shows how you can achieve this with a little CSS:</p>
 
-<p><code>css
-.pre {
+<pre><code class="css">.pre {
   white-space: pre-line;
 }
-</code></p>
+</code></pre>
 
 <p>For more details, I recommend having a read of
 <a href="https://css-tricks.com/almanac/properties/w/whitespace/">this article</a>.</p>
@@ -64,14 +63,13 @@ so you don&rsquo;t need to add
 headers just to test out an idea, here is a quick little hack to open a new
 instance of Chrome that will not enforce these security features:</p>
 
-<p><code>
-alias unsafe-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/Library/Application\ Support/Google/UnsafeChrome --disable-web-security 2&gt; /dev/null'
-</code></p>
+<pre><code>alias unsafe-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=~/Library/Application\ Support/Google/UnsafeChrome --disable-web-security 2&gt; /dev/null'
+</code></pre>
 
 <p>The important options here are:</p>
 
-<p><code>--disable-web-security</code> &ndash; This will disable the Same Origin Policy<br/>
-<code>--user-data-dir=...</code> &ndash; This launches a separate instance, with its own user data
+<p><code>--disable-web-security</code> - This will disable the Same Origin Policy<br/>
+<code>--user-data-dir=...</code> - This launches a separate instance, with its own user data
 directory.<br/>
 This prevents you from needing to close any current instances of chrome,
 otherwise running this command will just bring the existing instance into focus.</p>
@@ -84,7 +82,7 @@ easily tell the difference between my normal Chrome and my insecure Chrome!</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Password management]]></title>
+    <title type="html"><![CDATA[Password Management]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/05/password-management.html"/>
     <updated>2012-05-16T13:46:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/05/password-management</id>

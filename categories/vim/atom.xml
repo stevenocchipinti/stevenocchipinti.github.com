@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: vim | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Vim | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,12 +14,12 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Introduction to Vim for IDE users]]></title>
+    <title type="html"><![CDATA[Introduction to Vim for IDE Users]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users/"/>
     <updated>2014-03-17T17:23:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/03/17/introduction-to-vim-for-ide-users</id>
     <content type="html"><![CDATA[<blockquote><p>I&rsquo;d love to learn Street Fighter 2, but there are just so many combos! <br/>
-&ndash; <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
+- <a href="http://robots.thoughtbot.com/the-vim-learning-curve-is-a-myth">The Vim Learning Curve is a Myth</a>, Thoughtbot</p></blockquote>
 
 <p>A lot of people are scared of learning of vim because of the initial learning curve.</p>
 
@@ -42,17 +42,15 @@ When coming from an IDE, the apparent shortcomings of a less integrated text edi
 
 <p>On a mac, the standard install of <code>vim</code> is missing clipboard support so I would recommend installing MacVim, here is how I do it with homebrew:</p>
 
-<p><code>
-brew install macvim
+<pre><code>brew install macvim
 brew linkapps
-</code></p>
+</code></pre>
 
 <p>This package provides <code>mvim</code> on the command line, but <code>vim</code> will still refer to the system version, so I setup a couple of aliases in my <code>.bash_profile</code>:</p>
 
-<p><code>
-alias vim="mvim -v"
+<pre><code>alias vim="mvim -v"
 alias vi="vim"
-</code></p>
+</code></pre>
 
 <h2>Basic Usage</h2>
 
@@ -66,50 +64,47 @@ alias vi="vim"
 
 <p>My <a href="https://github.com/stevenocchipinti/dotvim/blob/master/vimrc"><code>.vimrc</code></a> is quite large, but here is a snippet for some basic options that you can put into your own <code>.vimrc</code> to get started:</p>
 
-<p>```
-filetype plugin indent on
-syntax on</p>
+<pre><code>filetype plugin indent on
+syntax on
 
-<p>set ts=2 sw=2         &ldquo; Use 2 spaces for tabs
-set expandtab         &rdquo; Use spaces instead of tab characters
-set wrap              &ldquo; Wrap the display lines (not actual text)
+set ts=2 sw=2         " Use 2 spaces for tabs
+set expandtab         " Use spaces instead of tab characters
+set wrap              " Wrap the display lines (not actual text)
 set linebreak
 set backspace=indent,eol,start
-set incsearch         &rdquo; Show matching search results as typing
-set ruler             &ldquo; Show row and column in status bar
-set wildmenu          &rdquo; Nicer tab completion for :ex commands
-set ignorecase        &ldquo; Case insensitive search by default
-set smartcase         &rdquo; Use case sensitive search in a capital letter is used
-set warn              &ldquo; Show what mode your in (insert, etc.)
-set scrolloff=3       &rdquo; Number of lines to always show at at the top and bottom
-set autoindent        &ldquo; Copy the indentation from the previous line
-set colorcolumn=81    &rdquo; Highlight the 81st column (shorthand = :set cc=81)
-set cursorline        &ldquo; Highlight the line which the cursor is on
-set laststatus=2      &rdquo; Always show a status bar
-set mouse=a           &ldquo; Make the mouse work &ndash; even in terminals
-set list              &rdquo; Show <code>listchars</code> characters
-set listchars=tab:=»,trail:·</p>
+set incsearch         " Show matching search results as typing
+set ruler             " Show row and column in status bar
+set wildmenu          " Nicer tab completion for :ex commands
+set ignorecase        " Case insensitive search by default
+set smartcase         " Use case sensitive search in a capital letter is used
+set warn              " Show what mode your in (insert, etc.)
+set scrolloff=3       " Number of lines to always show at at the top and bottom
+set autoindent        " Copy the indentation from the previous line
+set colorcolumn=81    " Highlight the 81st column (shorthand = :set cc=81)
+set cursorline        " Highlight the line which the cursor is on
+set laststatus=2      " Always show a status bar
+set mouse=a           " Make the mouse work - even in terminals
+set list              " Show `listchars` characters
+set listchars=tab:=»,trail:·
 
-<p>&ldquo; Easier way to copy and paste from the global clipboard
-map <leader>p &rdquo;+p
-map <leader>y &ldquo;+y
-```</p>
+" Easier way to copy and paste from the global clipboard
+map &lt;leader&gt;p "+p
+map &lt;leader&gt;y "+y
+</code></pre>
 
 <h2>Navigating code</h2>
 
 <p>Vim has builtin support for <code>ctags</code>, which indexes your code and allows you to jump to the definition of a method or class. As usual, on a mac you will have a standard version of <code>ctags</code> installed, but it&rsquo;s not very good, so I recommend installing the <em>exuberant ctags</em> package from homebrew:</p>
 
-<p><code>
-brew install ctags
+<pre><code>brew install ctags
 sudo mv /usr/bin/ctags{,-bsd}
 sudo ln -s /usr/local/Cellar/ctags/5.8/bin/ctags /usr/bin/ctags
-</code></p>
+</code></pre>
 
 <p>To make use of ctags, in the root of a project run the following command:</p>
 
-<p><code>
-ctags -R .
-</code></p>
+<pre><code>ctags -R .
+</code></pre>
 
 <p>This will need to be run when the code changes to keep the tags file up to date, so I have setup <a href="http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html">git hooks</a> to automate this. If you don&rsquo;t want to setup git hooks, you can execute this command from within vim with <code>:!ctags -R .</code></p>
 
@@ -132,56 +127,47 @@ ctags -R .
 <p>Vim has a plugin system, but by default it does not do a good job of keeping plugins isolated from each other. To improve this, there are plugins that manage plugins.<br/>
 I recommend using <a href="https://github.com/gmarik/vundle">Vundle</a>, here is how to set it up along with a few useful vim plugins:</p>
 
-<p><code>
-mkdir -p ~/.vim/bundle
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-</code></p>
+<pre><code>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code></pre>
 
 <p>Then place the following at the top of your <code>.vimrc</code>:</p>
 
-<p><code>
-filetype off
+<pre><code>filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-cucumber'
-Bundle 'bogado/file-line'
-Bundle 'godlygeek/tabular'
-Bundle 'ecomba/vim-ruby-refactoring'
-Bundle 'scrooloose/syntastic'
-Bundle 'vim-scripts/matchit.zip'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'cakebaker/scss-syntax.vim'
+
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'scrooloose/syntastic'
+Plugin 'bogado/file-line'
+
+call vundle#end()
 filetype plugin indent on
-</code></p>
+</code></pre>
 
 <p>Then, I choose configure some of those plugins towards the bottom of the <code>.vimrc</code> like this:</p>
 
-<p>```
-&ldquo; NERDTREE PLUGIN &ndash; (mnemonic: Files)
-nmap <leader>f :NERDTreeToggle
-nmap <leader>F :NERDTreeFind</p>
+<pre><code>" NERDTREE PLUGIN - (mnemonic: Files)
+nmap &lt;leader&gt;f :NERDTreeToggle&lt;CR&gt;
+nmap &lt;leader&gt;F :NERDTreeFind&lt;CR&gt;
 
-<p>&ldquo; AIRLINE PLUGIN
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0</p>
-
-<p>&ldquo; CTRL-P PLUGIN
+" CTRL-P PLUGIN
 let g:ctrlp_user_command = {
-\   &lsquo;types&rsquo;: {
-\     1: [&lsquo;.git/&rsquo;, &lsquo;cd %s &amp;&amp; git ls-files&rsquo;],
-\     2: [&lsquo;.hg/&rsquo;, &lsquo;hg &mdash;cwd %s locate -I .&rsquo;],
+\   'types': {
+\     1: ['.git/', 'cd %s &amp;&amp; git ls-files'],
+\     2: ['.hg/', 'hg --cwd %s locate -I .'],
 \   },
-\   &lsquo;fallback&rsquo;: &lsquo;find %s -type f&rsquo;
+\   'fallback': 'find %s -type f'
 \ }
-```</p>
+</code></pre>
 
 <p>Now, from within vim, run <code>:BundleInstall</code></p>
 
@@ -200,7 +186,7 @@ let g:ctrlp_user_command = {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Recursive search with vimgrep]]></title>
+    <title type="html"><![CDATA[Recursive Search With Vimgrep]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep.html"/>
     <updated>2011-10-12T02:46:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/10/recursive-search-with-vimgrep</id>
@@ -212,7 +198,7 @@ Usually when I need to find things in multiple files, I would use <span style="f
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <title type="html"><![CDATA[Regex Substitution 101]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/08/regex-substitution-101.html"/>
     <updated>2011-08-01T07:42:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
@@ -224,7 +210,7 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Vi mode for Bash]]></title>
+    <title type="html"><![CDATA[Vi Mode for Bash]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash.html"/>
     <updated>2011-06-26T23:22:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash</id>
@@ -236,7 +222,7 @@ So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Can't open file for writing]]></title>
+    <title type="html"><![CDATA[Can't Open File for Writing]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing.html"/>
     <updated>2011-06-18T13:09:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing</id>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: sed | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Sed | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/sed/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Regex substitution 101]]></title>
+    <title type="html"><![CDATA[Regex Substitution 101]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/08/regex-substitution-101.html"/>
     <updated>2011-08-01T07:42:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
@@ -26,7 +26,7 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Search and replace in multiple files with Sed]]></title>
+    <title type="html"><![CDATA[Search and Replace in Multiple Files With Sed]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/07/search-and-replace-in-multiple-files.html"/>
     <updated>2011-07-20T04:25:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/07/search-and-replace-in-multiple-files</id>
@@ -38,7 +38,7 @@ Back on the 30th of May, I put up a blog post on how to do a <a href="http://blo
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[DHCP fixedhosts to /etc/hosts file]]></title>
+    <title type="html"><![CDATA[DHCP Fixedhosts to /etc/hosts File]]></title>
     <link href="http://blog.stevenocchipinti.com/2011/05/dhcp-fixedhosts-to-etchosts-file.html"/>
     <updated>2011-05-17T12:28:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/05/dhcp-fixedhosts-to-etchosts-file</id>

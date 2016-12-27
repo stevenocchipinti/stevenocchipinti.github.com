@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: rails | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Rails | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/rails/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Getting started with Ruby on Rails]]></title>
+    <title type="html"><![CDATA[Getting Started With Ruby on Rails]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails.html"/>
     <updated>2012-09-11T13:29:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/09/getting-started-with-ruby-on-rails</id>
@@ -35,11 +35,11 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <h2>Ruby and Rails resources:</h2>
 
 <ul>
-<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; I use these almost everyday!</li>
-<li><a href="http://apidock.com/">ApiDock</a> &ndash; API&rsquo;s for Ruby, Rails and RSpec in one place</li>
-<li><a href="http://railsforzombies.org/">Rails For Zombies</a> &ndash; A great beginners tutorial for rails</li>
-<li><a href="http://railscasts.com/">Rails Casts</a> &ndash; Regular video podcast all about rails</li>
-<li><a href="http://ruby5.envylabs.com/">Ruby5</a> &ndash; Regular 5 minute audio podcast on the latest news</li>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> - I use these almost everyday!</li>
+<li><a href="http://apidock.com/">ApiDock</a> - API&rsquo;s for Ruby, Rails and RSpec in one place</li>
+<li><a href="http://railsforzombies.org/">Rails For Zombies</a> - A great beginners tutorial for rails</li>
+<li><a href="http://railscasts.com/">Rails Casts</a> - Regular video podcast all about rails</li>
+<li><a href="http://ruby5.envylabs.com/">Ruby5</a> - Regular 5 minute audio podcast on the latest news</li>
 <li>&hellip; a plethora of good books, such as &ldquo;The RSpec Book&rdquo;, &ldquo;Design Patterns in Ruby&rdquo;, etc. (alot of which I still need to read)</li>
 </ul>
 
@@ -52,7 +52,7 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <li>Vim&hellip; of course&hellip; although there are lots of alternatives, the most popular ones would probably be:
 
 <ul>
-<li>RubyMine (IDE) &ndash; used alot at work (commercial software)</li>
+<li>RubyMine (IDE) - used alot at work (commercial software)</li>
 <li>Sublime Text 2 (Text editor)</li>
 <li>TextMate (Text editor)</li>
 </ul>
@@ -135,11 +135,11 @@ They have meetups on the <em>last Thursday of every month</em> in Melbourne and 
 <li>Cucumber (BDD)</li>
 </ul>
 </li>
-<li>Developed on MacOSX &ndash; for new comers (like myself) some essentials are:
+<li>Developed on MacOSX - for new comers (like myself) some essentials are:
 
 <ul>
-<li>brew &ndash; a mac package manager (like apt or yum)</li>
-<li>iterm2 &ndash; really good terminal emulator</li>
+<li>brew - a mac package manager (like apt or yum)</li>
+<li>iterm2 - really good terminal emulator</li>
 </ul>
 </li>
 <li>Deployed on Linux

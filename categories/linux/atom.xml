@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: linux | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Linux | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/linux/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <title type="html"><![CDATA[Sending Email From the Command Line]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
     <updated>2014-12-29T12:50:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>
@@ -105,10 +105,9 @@ java -jar Minecraft.jar
 add a launcher for Minecraft, but before we do that, we need an icon for it.
 I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
 
-<p><code>
-cd /opt/minecraft
+<pre><code>cd /opt/minecraft
 wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
-</code></p>
+</code></pre>
 
 <p>Then to make an application launcher, you can use this:
 <code>
@@ -129,7 +128,7 @@ gnome-desktop-item-edit --create-new ~/.local/share/applications
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Printing over previously printed characters and lines]]></title>
+    <title type="html"><![CDATA[Printing Over Previously Printed Characters and Lines]]></title>
     <link href="http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines.html"/>
     <updated>2013-06-08T15:27:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2013/06/removing-previously-printed-lines</id>
@@ -145,45 +144,37 @@ If it gets forgotten about in the background, TramTracker will eventually block 
 
 <h2>Using the \b (backspace) character</h2>
 
-<p>Printing a \b character does the same thing as pressing backspace. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
+<p>Printing a \b character does a similar thing as pressing backspace, except instead of removing the character, it nondestructively shifts the cursor back which allows you to then overwrite previously written characters. This is really simple to use and is great for little &ldquo;progress&rdquo; spinners.<br/>
 For example, a character that cycles through <code>|</code>, <code>/</code>, <code>-</code>, <code>\</code>:</p>
 
-<p>``` ruby
-puts &ldquo;foo\b\b\bbar&rdquo;</p>
-
-<h1>=> bar</h1>
-
-<p>(&ldquo;|/&ndash;\&rdquo;*10).chars.each {|c| print c; sleep 1; print &ldquo;\b&rdquo;}</p>
-
-<h1>=> Cheesy, old-school spinner</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\b"
+# =&gt; foo
+puts "foo\bx"
+# =&gt; fox
+puts "foo\b\b\bbar"
+# =&gt; bar
+1.step {|i| sleep 0.2; print "\b" + "|/-\\"[i%4] }
+# =&gt; Cheesy, old-school spinner
+</code></pre>
 
 <p>There are two main shortfalls with this approach, one is that it only works on a single line and two is that if you want to overwrite lots of characters, you&rsquo;d need just as many <code>\b</code> characters (you would probably introduce a loop).</p>
 
-<p>``` ruby
-puts &ldquo;foo\n\b\b\bbar&rdquo;</p>
-
-<h1>=> foo\nbar</h1>
-
-<p>```</p>
+<pre><code class="ruby">puts "foo\n\b\b\bbar"
+# =&gt; foo\nbar
+</code></pre>
 
 <h2>Using the \r (carriage return) character</h2>
 
 <p>To avoid having to repeat just as many <code>\b</code> characters, a simple alternative would be to return the cursor to the start of the line and write over the top of the existing characters. For example:</p>
 
-<p><code>ruby
-100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
-</code></p>
+<pre><code class="ruby">100.times {|p| print "\rDownloading %#{p+1}..."; sleep 1}
+</code></pre>
 
 <p>This approach still won&rsquo;t work across multiple lines, but it has another subtle shortfall too, it doesn&rsquo;t clear the entire line. For example:</p>
 
-<p>```
-puts &ldquo;foo\rp&rdquo;</p>
-
-<h1>=> poo</h1>
-
-<p>```</p>
+<pre><code>puts "foo\rp"
+# =&gt; poo
+</code></pre>
 
 <p>A common work around for this is to pad the end of the string with spaces, but there are better ways (keep reading ;) )</p>
 
@@ -193,10 +184,9 @@ puts &ldquo;foo\rp&rdquo;</p>
 Curses allows you to pick exactly with character you want to update and makes <a href="https://www.google.com.au/search?hl=en&amp;q=command+line+curses&amp;bav=on.2,or.r_cp.r_qf.&amp;bvm=bv.47534661,d.aGc&amp;biw=1366&amp;bih=679&amp;um=1&amp;ie=UTF-8&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;ei=r0WzUbyWF4T-iAfn8IH4DA">menu driven Text User Interfaces</a> (TUI&rsquo;s) easier to develop.
 Ruby happens to have a <a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/curses/rdoc/Curses.html">curses module</a> built in to its standard library, which provides a simple API, for example:</p>
 
-<p><code>ruby
-setpos(lines/2, cols/2) # Start in the middle
+<pre><code class="ruby">setpos(lines/2, cols/2) # Start in the middle
 addstr("Hello world")
-</code></p>
+</code></pre>
 
 <p>I created a more complete (simple) example of using curses in a <a href="https://gist.github.com/stevenocchipinti/5703381">gist here</a>.</p>
 
@@ -208,15 +198,14 @@ This behaviour suits a TUI, and the old contents is still restored when you retu
 
 <p>This last option is the most fundamental of the bunch. Terminals generally support characters that will allow you to move the cursor around at will and would be the basis of things like curses, although not as commonly used. Here are the most common characters to move the cursor around:</p>
 
-<p><code>
-\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
+<pre><code>\033[&lt;L&gt;;&lt;C&gt;H # Move the cursor to line L, column C
 \033[&lt;N&gt;A     # Move the cursor up N lines
 \033[&lt;N&gt;B     # Move the cursor down N lines
 \033[&lt;N&gt;C     # Move the cursor forward N columns
 \033[&lt;N&gt;D     # Move the cursor backward N columns
 \033[2J       # Clear the screen, move to (0,0)
 \033[K        # Erase to end of line
-</code></p>
+</code></pre>
 
 <p>You can read more about these &ldquo;escape sequences&rdquo; <a href="http://www.linuxselfhelp.com/howtos/Bash-Prompt/Bash-Prompt-HOWTO-6.html#ss6.2">here</a>.
 I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
@@ -226,7 +215,7 @@ I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) an
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Changing the default boot option with GRUB2]]></title>
+    <title type="html"><![CDATA[Changing the Default Boot Option With GRUB2]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2.html"/>
     <updated>2012-09-19T11:33:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/09/changing-default-boot-option-with-grub2</id>
@@ -238,7 +227,7 @@ Gone are the days of the nice <span style="font-family: 'Courier New', Courier, 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Adding a network printer in Ubuntu 12.04]]></title>
+    <title type="html"><![CDATA[Adding a Network Printer in Ubuntu 12.04]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204.html"/>
     <updated>2012-08-05T04:11:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/08/adding-network-printer-in-ubuntu-1204</id>
@@ -258,9 +247,8 @@ Gone are the days of the nice <span style="font-family: 'Courier New', Courier, 
 <p>Well no matter what I did, I couldn&rsquo;t add my printer. After some googling around, I found how to get to the old user interface&hellip; which actually works!
 Just type this into a terminal:</p>
 
-<p><code>
-sudo system-config-printer
-</code></p>
+<pre><code>sudo system-config-printer
+</code></pre>
 
 <p>And you will be given this old familiar screen:</p>
 

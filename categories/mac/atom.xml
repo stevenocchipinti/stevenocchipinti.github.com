@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: mac | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Mac | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Sending email from the command line]]></title>
+    <title type="html"><![CDATA[Sending Email From the Command Line]]></title>
     <link href="http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line/"/>
     <updated>2014-12-29T12:50:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2014/12/29/sending-email-from-the-command-line</id>

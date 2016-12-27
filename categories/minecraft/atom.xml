@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: minecraft | StevenOcchipinti.com]]></title>
+  <title><![CDATA[Category: Minecraft | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/minecraft/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2015-04-30T22:43:51+10:00</updated>
+  <updated>2016-12-28T02:20:32+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -80,10 +80,9 @@ java -jar Minecraft.jar
 add a launcher for Minecraft, but before we do that, we need an icon for it.
 I just found one online, so lets download it to our <code>/opt/minecraft</code> directory.</p>
 
-<p><code>
-cd /opt/minecraft
+<pre><code>cd /opt/minecraft
 wget http://images.wikia.com/yogbox/images/d/dd/Minecraft_Block.svg
-</code></p>
+</code></pre>
 
 <p>Then to make an application launcher, you can use this:
 <code>
@@ -104,7 +103,7 @@ gnome-desktop-item-edit --create-new ~/.local/share/applications
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Minecraft exception in linux]]></title>
+    <title type="html"><![CDATA[Minecraft Exception in Linux]]></title>
     <link href="http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux.html"/>
     <updated>2012-02-02T12:25:00+11:00</updated>
     <id>http://blog.stevenocchipinti.com/2012/02/minecraft-exception-in-linux</id>
@@ -113,8 +112,7 @@ Ubuntu ships with an open-source version of Java, which did run Minecraft, but t
 
 <p>So as recommended, I switched to the official JRE. Now the login screen works, but that&rsquo;s about it. After logging in, I just got a black screen and the following exception in the console:</p>
 
-<p><code>
-Exception in thread "Minecraft main thread"
+<pre><code>Exception in thread "Minecraft main thread"
 java.lang.ExceptionInInitializerError at
 net.minecraft.client.Minecraft.a(SourceFile:180) at
 net.minecraft.client.Minecraft.run(SourceFile:648) at
@@ -129,17 +127,16 @@ org.lwjgl.opengl.XRandR.getConfiguration(XRandR.java:108) at
 org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:618) at
 org.lwjgl.opengl.Display.&amp;lt;clinit&amp;gt;(Display.java:135)
 ... 3 more
-</code></p>
+</code></pre>
 
 <p>After discussing the problem in IRC, the solution was quite simple. It turns out <code>lwjgl</code> is a &ldquo;<em>Light Weight Java Game Library</em>&rdquo; and the version I had wasn&rsquo;t behaving.<br/>
 On the advice of the helpful IRC'ers, I downloaded the latest <code>lwjgl</code> from <a href="http://sourceforge.net/projects/java-game-lib/files/Official%20Releases/">here</a> (which at time of writing is 2.8.3) to get it all to work nicely.</p>
 
 <p>To install it, I downloaded the zip file, extracted it to a temporary directory, then copied across these files:</p>
 
-<p><code>
-cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
+<pre><code>cp lwjgl-2.8.3/jar/lwjgl.jar ~/.minecraft/bin
 cp lwjgl-2.8.3/native/linux/* ~/.minecraft/bin/natives
-</code></p>
+</code></pre>
 
 <p>Done! Now it works nicely.</p>
 ]]></content>
