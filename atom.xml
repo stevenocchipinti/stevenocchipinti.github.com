@@ -4,7 +4,7 @@
   <title><![CDATA[Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T15:44:05+11:00</updated>
+  <updated>2016-12-28T15:52:11+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Search and Replace, Vim and Git]]></title>
-    <link href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/"/>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-vim-and-git/"/>
     <updated>2016-12-28T14:04:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git</id>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-vim-and-git</id>
     <content type="html"><![CDATA[<p>Git provides some nice utility functionality that can make a vim development
 environment much nicer. With recent updates to Vim it can now execute a command
 for every item in the quickfix list (<code>:cdo</code>) and location list (<code>:ldo</code>). These

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Regex | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/regex/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T15:44:05+11:00</updated>
+  <updated>2016-12-28T15:52:11+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -112,7 +112,14 @@ Back on the 30th of May, I put up a blog post on how to do a <a href="http://blo
     <link href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html"/>
     <updated>2011-05-30T09:11:00+10:00</updated>
     <id>http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
+    <content type="html"><![CDATA[<p>
+  <b>Update:</b> I have a newer version of this post available <a href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-vim-and-git/">here</a>
+</p>
+
+
+
+
+<div class="css-full-post-content js-full-post-content">
 There are plenty of ways of doing a search and replace in multiple files in linux, but this is how I do it with vim.<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; vim firstfile secondfile theothers*<br />:all<br />:windo %s/this/that/g</blockquote><br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:all</span> will split the window to show you all the files at once.<br />This would not be the best option for lots of files, but for a small number you get to see the changes that are made. <br />The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo</span> will execute the given command for all the files in the current window.<br />Note this wont affect windows in other tabs.<br /><br />If you want to undo that change in all buffers, you can use the same method:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:windo undo</span></blockquote>When your finished, you can save and quit with:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:wqall</span></blockquote>There are plenty of variations, for more infomation checkout the help pages for these:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:tabdo</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:bufdo</div><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">:argdo</span></blockquote>
 </div>
 
