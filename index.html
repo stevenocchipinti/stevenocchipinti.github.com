@@ -173,6 +173,192 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2016-12-28T09:36:00+11:00">
+        <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/">December 28, 2016</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/" rel="bookmark" title="Using Netrw Instead of NERDTree for Vim" itemprop="url">Using Netrw Instead of NERDTree for Vim</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>I&rsquo;m going to attempt to use netrw exclusively for a while instead of NERDTree.
+Mainly because not everyone has NERDTree, but everyone I work with will
+generally have netrw installed by default so I thought I should be become more
+proficient with it.</p>
+
+<p>This post should provide me something I can quickly refer back to when I get
+stuck. Netrw has a lot of features and the help page is pretty comprehensive.
+It&rsquo;s worth a quick look, at least at the table of contents. It&rsquo;s available by
+typing <code>:help netrw</code>.</p>
+
+<p>There is also a quick reference for the mapping by typing <code>:help netrw-quickmap</code>
+and one for the commands by typing <code>:help netrw-quickcom</code>.</p>
+
+<h2>Navigation</h2>
+
+<p>Navigating around netrw is pretty intuitive, you use the arrows (or hjkl) to
+move around and <code>enter</code> to open files or directories. These windows are just
+like any other window in vim so most of the usual motions, etc. work except
+netrw adds some default mappings. Here are the basics for navigation:</p>
+
+<p><code>enter</code>  -  Open files/directories<br/>
+<code>-</code>      -  Go up one directory<br/>
+<code>u</code>      -  Go back to previously visited directory (like <code>&lt;C-o&gt;</code> in vim)<br/>
+<code>U</code>      -  Go forward to subsequently visited directory (like <code>&lt;C-i&gt;</code> in vim)</p>
+
+<p><code>enter</code> works just fine to open files and directories, but there are some other
+options available too:</p>
+
+<p><code>o</code>  -  Open file/directory in new horizontal split<br/>
+<code>v</code>  -  Open file/directory in new vertical split<br/>
+<code>t</code>  -  Open file/directory in new tab<br/>
+<code>p</code>  -  Preview file without (moving the cursor from netrw)<br/>
+<code>x</code>  -  Open the file/directory with the default system app</p>
+
+<h2>Appearance and Behaviour</h2>
+
+<p>One of the first things I noticed when making the switch was when you press
+<code>enter</code> on a directory, instead of displaying the contents of the sub-directory
+inline, it would replace the whole buffer with the contents of the
+sub-directory.</p>
+
+<p>This is because by default netrw doesn&rsquo;t use a tree to display the
+files/directories, its more like doing an <code>ls</code> but you can configure netrw to
+print a tree and have the same behaviour as NERDTree with this mapping:</p>
+
+<p><code>i</code> - Cycle between different listing modes (one of them is tree mode)</p>
+
+<ul>
+<li>In normal mode, <code>enter</code> will move into and show the given file/directory</li>
+<li>In tree mode, <code>enter</code> will show the contents of the sub-directory in addition</li>
+</ul>
+
+
+<p>While netrw doesn&rsquo;t look as nice as NERDTree, it still has a lot of options to
+customize the way it looks and works.</p>
+
+<p><code>I</code>   -  Toggle the banner<br/>
+<code>c</code>   -  Make the browsing directory the current working directory<br/>
+<code>gn</code>  -  Make the directory under the cursor the top of the tree<br/>
+<code>gh</code>  -  Toggle hidden files on or off<br/>
+<code>a</code>   -  Cycle between all files, not hidden files or just hidden files visible<br/>
+<code>s</code>   -  Cycle sort order between name, time or filesize<br/>
+<code>r</code>   -  Reverse sort order</p>
+
+<h2>File Operations</h2>
+
+<p>It&rsquo;s also pretty easy to do basic file operations:</p>
+
+<p><code>%</code>   -  Create a new file<br/>
+<code>d</code>   -  Create a new directory<br/>
+<code>D</code>   -  Delete the file/directory under the cursor (or marked files/dirs)<br/>
+<code>R</code>   -  Rename/move file/directory</p>
+
+<p>Copying files however is a little more involved. You need to mark the files you
+want to copy, mark the destination, then execute the operation (a little
+tedious):</p>
+
+<p><code>mf</code>  -  Toggle whether the file/directory is marked<br/>
+<code>mt</code>  -  Mark the directory under the cursor as the copy target<br/>
+<code>mc</code>  -  Execute the copy operation<br/>
+<code>mu</code>  -  Unmark all marked items</p>
+
+<h2>Commands</h2>
+
+<p>To open netrw is easy. You can use all the same commands you would use to open a
+file except give them a directory. You can use the command line with <code>vim .</code> or
+within vim with the commands below. These commands don&rsquo;t even need a space
+between it and its arguments, so its very few keystrokes:</p>
+
+<p><code>:e.</code>     - Open the current directory normally<br/>
+<code>:sp.</code>    - Open the current directory in a horizontal split<br/>
+<code>:vs.</code>    - Open the current directory in a vertical split<br/>
+<code>:tabe.</code>  - Open the current directory in a new tab</p>
+
+<p>These will all work, unless you have installed an alternative explorer plugin
+(like NERDTree), in which case you can explicitly open netrw with <code>:Ntree</code>.</p>
+
+<p>Netrw also provides a lot of different ways to launch an explorer window. The
+most common command is <code>:Explore</code> which will open netrw in the directory of the
+currently open file, much like the <code>:NERDTreeFind</code> command. Here are some
+variations of that command:</p>
+
+<p><code>:Ex</code>    -  Use current buffer if available, otherwise split horizontally<br/>
+<code>:Ex!</code>   -  Use current buffer if available, otherwise split vertically</p>
+
+<p><code>:Sex!</code>  -  Horizontal split<br/>
+<code>:Hex</code>   -  Horizontal split<br/>
+<code>:Hex!</code>  -  Horizontal split (opposite side)</p>
+
+<p><code>:Sex</code>   -  Vertical split<br/>
+<code>:Vex</code>   -  Vertical split<br/>
+<code>:Vex!</code>  -  Vertical split (opposite side)</p>
+
+<p><code>:Tex</code>   -  New tab, directory of currently open buffer</p>
+
+<p>There is another variation that doesn&rsquo;t use the directory of currently open
+buffer but uses the current working directory. This is one is the most similar
+to the default <code>:NERDTree</code> command.</p>
+
+<p><code>:Lex</code>   -  Vertical split full height, current working directory<br/>
+<code>:Lex!</code>  -  Vertical split, current working directory (opposite side)</p>
+
+<p>All these commands can also take a directory as an argument.</p>
+
+<h2>Basic Configuration</h2>
+
+<p>I didn&rsquo;t want to customize too much because that would defeat the purpose of the
+learning the defaults, but I did want to turn off that banner (it was handy
+having the basic operations on display, but I don&rsquo;t think I need it anymore).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> <span class="k">g</span>:netrw_banner<span class="p">=</span><span class="m">0</span>
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:netrw_list_hide <span class="p">=</span> <span class="s1">&#39;\(^\|\s\s\)\zs\.\S\+,\(^\|\s\s\)ntuser\.\S\+&#39;</span>
+</span><span class='line'><span class="k">autocmd</span> <span class="nb">FileType</span> netrw <span class="k">set</span> <span class="nb">nolist</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>More Features</h2>
+
+<p>There is more to explore with netrw, such as working with bookmarks and pattern
+listings, but this post should have enough of the basics to be productive.
+Checkout <code>:help netrw</code> for more features.</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2016-12-28T02:30:00+11:00">
         <a href="/2016/12/28/different-author-email-addresses-per-git-repository/">December 28, 2016</a>
       </time>
@@ -1046,164 +1232,6 @@ Interestingly, the channel up and down buttons on my remote we already assigned
 to page up and page down, which suits me great while I don&rsquo;t have a TV Tuner.</p>
 
 <p>After rebooting, I now have a functional remote control!</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2015-03-24T11:13:00+11:00">
-        <a href="/2015/03/24/git-reset-cheatsheet/">March 24, 2015</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2015/03/24/git-reset-cheatsheet/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2015/03/24/git-reset-cheatsheet/" rel="bookmark" title="Git Reset Cheatsheet" itemprop="url">Git Reset Cheatsheet</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>The <code>reset</code> command in git does quite a lot, but I always forget all its uses.<br/>
-This is a cheatsheet based on <a href="http://git-scm.com/blog/2011/07/11/reset.html">this blog</a>.</p>
-
-<p>The <code>reset</code> command will:<br/>
-1. Move whatever branch <code>HEAD</code> points to <em>(stop here unless <code>--soft</code>)</em><br/>
-2. THEN, make the Index look like that <em>(stop here unless <code>--hard</code>)</em><br/>
-3. THEN, make the Working Directory look like that</p>
-
-<h2>Commit level</h2>
-
-<table>
-<thead>
-<tr>
-<th>                            </th>
-<th> Updates Current Branch? </th>
-<th> Updates Index? </th>
-<th> Updates Working Dir? </th>
-<th> Working Dir Safe?                               </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> <code>reset --soft [commit]</code>    </td>
-<td> YES                     </td>
-<td> NO             </td>
-<td> NO                   </td>
-<td> YES                                             </td>
-</tr>
-<tr>
-<td> <code>reset (--mixed) [commit]</code> </td>
-<td> YES                     </td>
-<td> YES            </td>
-<td> NO                   </td>
-<td> YES                                             </td>
-</tr>
-<tr>
-<td> <code>reset --hard [commit]</code>    </td>
-<td> YES                     </td>
-<td> YES            </td>
-<td> YES                  </td>
-<td> <span style="color: rgb(255, 38, 0);">NO</span> </td>
-</tr>
-<tr>
-<td> <code>checkout [commit]</code>        </td>
-<td> NO                      </td>
-<td> YES            </td>
-<td> YES                  </td>
-<td> YES                                             </td>
-</tr>
-</tbody>
-</table>
-
-
-<p><strong>reset &#45;&#45;soft [commit]</strong><br/>
-When given <code>HEAD~</code>, this undos the git commit<br/>
-Will move the current branch back to the given commit, but not update the index or working directory<br/>
-This provides similar functionality as <code>git checkout --amend</code> (but changing the whole commit, not just the message)</p>
-
-<p><strong>reset (&#45;&#45;mixed) [commit] <span style="color: rgb(160, 160, 160); font-weight: normal;">(default form)</span></strong><br/>
-When given <code>HEAD~</code>, this undos the <code>git commit</code> and the <code>git add</code><br/>
-Will move the current branch and update the index, but working directory will remain untouched</p>
-
-<p><strong>reset &#45;&#45;hard [commit] <span style="color: rgb(255, 38, 0);">(unsafe)</span></strong><br/>
-When given <code>HEAD~</code>, this undos the <code>git commit</code>, <code>git add</code> and also the changes in the working directory<br/>
-Will update all three trees to match the given commit<br/>
-This is useful to remove commits you don’t want<br/>
-From a clean working tree, it is also useful to undo a conflicted (or not conflicted) <code>git merge</code> or a <code>git pull</code><br/>
-From a dirty working tree, use <code>--merge</code> instead, this will safely preserve your local changes<br/>
-The <code>--keep</code> option is useful when removing some of the last commits while safely keeping your local changes</p>
-
-<p><strong>checkout [commit]</strong><br/>
-When given <code>HEAD~</code>, this will safely update the working directory and the index without moving the current branch<br/>
-This will leave you in a <em>detached HEAD</em> state</p>
-
-<h2>File level</h2>
-
-<table>
-<thead>
-<tr>
-<th>                            </th>
-<th> Updates Current Branch? </th>
-<th> Updates Index? </th>
-<th> Updates Working Dir? </th>
-<th> Working Dir safe?                               </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> <code>reset (commit) [file]</code>    </td>
-<td> NO                      </td>
-<td> YES            </td>
-<td> NO                   </td>
-<td> YES                                             </td>
-</tr>
-<tr>
-<td> <code>checkout (commit) [file]</code> </td>
-<td> NO                      </td>
-<td> NO             </td>
-<td> YES                  </td>
-<td> <span style="color: rgb(255, 38, 0);">NO</span> </td>
-</tr>
-</tbody>
-</table>
-
-
-<p><strong>reset (commit) [file]</strong><br/>
-When given a file path, the first step of updating the branch that <code>HEAD</code> points to is skipped<br/>
-Will update the index only to match commit, leaving both working directory and current branch untouched<br/>
-From here, you could use <code>git checkout</code> to make the working directory match the index, although <code>git checkout</code> can do that with one command (see below)<br/>
-The commit parameter will default to <code>HEAD</code> which effectively <em>un-stages</em> files</p>
-
-<p><strong>checkout (commit) [file] <span style="color: rgb(255, 38, 0);">(unsafe)</span></strong><br/>
-Updates the working directory only, without changing the index, current branch or even what <code>HEAD</code> is pointing to<br/>
-This would effectively be <code>git reset --hard [branch] file</code>, but this command does not exist</p>
-
-<p>More info and examples in <code>git reset --help</code></p>
 
   
   

@@ -173,6 +173,51 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2011-08-21T07:29:00+10:00">
+        <a href="/2011/08/poweroff-without-password.html">August 21, 2011</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2011/08/poweroff-without-password.html#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2011/08/poweroff-without-password.html" rel="bookmark" title="Poweroff Without a Password" itemprop="url">Poweroff Without a Password</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <div class="css-full-post-content js-full-post-content">
+Ever find it strange that in Ubuntu you can use the GUI to shutdown the computer without a password, but if you use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">poweroff</span> command you will need to type in a password?<br /><br />Well there is an easy fix. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers</span> file governs the use of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo</span> command.<br />It can also be configured to allow specified commands, users and/or groups to not have to worry about a sudo password.<br /><br />In Ubuntu, this file also sources the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/sudoers.d/</span> directory so the sudoers file doesn&#8217;t get too cluttered.<br /><br />I created a new file called &#8220;powercmds&#8221; under this directory with the following contents:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Allow users in the admin group to poweroff the machine without a password</span><br /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%admin ALL = NOPASSWD: /sbin/shutdown, /sbin/poweroff, /sbin/halt, /sbin/reboot</span></blockquote><br />Then updated its permissions with this command:<br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo chmod 0440 /etc/sudoers.d/powercmds</div></blockquote><br />Now anyone in the admin group will not require a password to shutdown the machine.<br /><br />This is very useful for scripting, such as if I want to download a large file and have the computer shutdown when its finished (so I can go to bed or something) this is now possible:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://somesite.com/somefile.big 2&gt; ~/Desktop/dl.log; sudo poweroff</span></blockquote><br />
+</div>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2011-08-05T06:17:00+10:00">
         <a href="/2011/08/mounting-nfs-in-ubuntu.html">August 05, 2011</a>
       </time>
@@ -559,66 +604,6 @@ If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite h
   <div class="css-full-post-content js-full-post-content">
 There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
 </div>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2011-06-18T13:09:00+10:00">
-        <a href="/2011/06/cant-open-file-for-writing.html">June 18, 2011</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2011/06/cant-open-file-for-writing.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2011/06/cant-open-file-for-writing.html" rel="bookmark" title="Can't Open File for Writing" itemprop="url">Can&#8217;t Open File for Writing</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <blockquote><p>E212: Can&#8217;t open file for writing  <br/>Press ENTER or type command to continue</p></blockquote>
-
-
-<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
-It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
-
-<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
-
-<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
-
-<figure class='code'><figcaption><span>.vimrc </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
-
-<p>Works brilliantly!</p>
 
   
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T03:12:34+11:00</updated>
+  <updated>2016-12-28T13:58:59+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using Netrw Instead of NERDTree for Vim]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/"/>
+    <updated>2016-12-28T09:36:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/using-netrw-instead-of-nerdtree-for-vim</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m going to attempt to use netrw exclusively for a while instead of NERDTree.
+Mainly because not everyone has NERDTree, but everyone I work with will
+generally have netrw installed by default so I thought I should be become more
+proficient with it.</p>
+
+<p>This post should provide me something I can quickly refer back to when I get
+stuck. Netrw has a lot of features and the help page is pretty comprehensive.
+It&rsquo;s worth a quick look, at least at the table of contents. It&rsquo;s available by
+typing <code>:help netrw</code>.</p>
+
+<p>There is also a quick reference for the mapping by typing <code>:help netrw-quickmap</code>
+and one for the commands by typing <code>:help netrw-quickcom</code>.</p>
+
+<h2>Navigation</h2>
+
+<p>Navigating around netrw is pretty intuitive, you use the arrows (or hjkl) to
+move around and <code>enter</code> to open files or directories. These windows are just
+like any other window in vim so most of the usual motions, etc. work except
+netrw adds some default mappings. Here are the basics for navigation:</p>
+
+<p><code>enter</code>  -  Open files/directories<br/>
+<code>-</code>      -  Go up one directory<br/>
+<code>u</code>      -  Go back to previously visited directory (like <code>&lt;C-o&gt;</code> in vim)<br/>
+<code>U</code>      -  Go forward to subsequently visited directory (like <code>&lt;C-i&gt;</code> in vim)</p>
+
+<p><code>enter</code> works just fine to open files and directories, but there are some other
+options available too:</p>
+
+<p><code>o</code>  -  Open file/directory in new horizontal split<br/>
+<code>v</code>  -  Open file/directory in new vertical split<br/>
+<code>t</code>  -  Open file/directory in new tab<br/>
+<code>p</code>  -  Preview file without (moving the cursor from netrw)<br/>
+<code>x</code>  -  Open the file/directory with the default system app</p>
+
+<h2>Appearance and Behaviour</h2>
+
+<p>One of the first things I noticed when making the switch was when you press
+<code>enter</code> on a directory, instead of displaying the contents of the sub-directory
+inline, it would replace the whole buffer with the contents of the
+sub-directory.</p>
+
+<p>This is because by default netrw doesn&rsquo;t use a tree to display the
+files/directories, its more like doing an <code>ls</code> but you can configure netrw to
+print a tree and have the same behaviour as NERDTree with this mapping:</p>
+
+<p><code>i</code> - Cycle between different listing modes (one of them is tree mode)</p>
+
+<ul>
+<li>In normal mode, <code>enter</code> will move into and show the given file/directory</li>
+<li>In tree mode, <code>enter</code> will show the contents of the sub-directory in addition</li>
+</ul>
+
+
+<p>While netrw doesn&rsquo;t look as nice as NERDTree, it still has a lot of options to
+customize the way it looks and works.</p>
+
+<p><code>I</code>   -  Toggle the banner<br/>
+<code>c</code>   -  Make the browsing directory the current working directory<br/>
+<code>gn</code>  -  Make the directory under the cursor the top of the tree<br/>
+<code>gh</code>  -  Toggle hidden files on or off<br/>
+<code>a</code>   -  Cycle between all files, not hidden files or just hidden files visible<br/>
+<code>s</code>   -  Cycle sort order between name, time or filesize<br/>
+<code>r</code>   -  Reverse sort order</p>
+
+<h2>File Operations</h2>
+
+<p>It&rsquo;s also pretty easy to do basic file operations:</p>
+
+<p><code>%</code>   -  Create a new file<br/>
+<code>d</code>   -  Create a new directory<br/>
+<code>D</code>   -  Delete the file/directory under the cursor (or marked files/dirs)<br/>
+<code>R</code>   -  Rename/move file/directory</p>
+
+<p>Copying files however is a little more involved. You need to mark the files you
+want to copy, mark the destination, then execute the operation (a little
+tedious):</p>
+
+<p><code>mf</code>  -  Toggle whether the file/directory is marked<br/>
+<code>mt</code>  -  Mark the directory under the cursor as the copy target<br/>
+<code>mc</code>  -  Execute the copy operation<br/>
+<code>mu</code>  -  Unmark all marked items</p>
+
+<h2>Commands</h2>
+
+<p>To open netrw is easy. You can use all the same commands you would use to open a
+file except give them a directory. You can use the command line with <code>vim .</code> or
+within vim with the commands below. These commands don&rsquo;t even need a space
+between it and its arguments, so its very few keystrokes:</p>
+
+<p><code>:e.</code>     - Open the current directory normally<br/>
+<code>:sp.</code>    - Open the current directory in a horizontal split<br/>
+<code>:vs.</code>    - Open the current directory in a vertical split<br/>
+<code>:tabe.</code>  - Open the current directory in a new tab</p>
+
+<p>These will all work, unless you have installed an alternative explorer plugin
+(like NERDTree), in which case you can explicitly open netrw with <code>:Ntree</code>.</p>
+
+<p>Netrw also provides a lot of different ways to launch an explorer window. The
+most common command is <code>:Explore</code> which will open netrw in the directory of the
+currently open file, much like the <code>:NERDTreeFind</code> command. Here are some
+variations of that command:</p>
+
+<p><code>:Ex</code>    -  Use current buffer if available, otherwise split horizontally<br/>
+<code>:Ex!</code>   -  Use current buffer if available, otherwise split vertically</p>
+
+<p><code>:Sex!</code>  -  Horizontal split<br/>
+<code>:Hex</code>   -  Horizontal split<br/>
+<code>:Hex!</code>  -  Horizontal split (opposite side)</p>
+
+<p><code>:Sex</code>   -  Vertical split<br/>
+<code>:Vex</code>   -  Vertical split<br/>
+<code>:Vex!</code>  -  Vertical split (opposite side)</p>
+
+<p><code>:Tex</code>   -  New tab, directory of currently open buffer</p>
+
+<p>There is another variation that doesn&rsquo;t use the directory of currently open
+buffer but uses the current working directory. This is one is the most similar
+to the default <code>:NERDTree</code> command.</p>
+
+<p><code>:Lex</code>   -  Vertical split full height, current working directory<br/>
+<code>:Lex!</code>  -  Vertical split, current working directory (opposite side)</p>
+
+<p>All these commands can also take a directory as an argument.</p>
+
+<h2>Basic Configuration</h2>
+
+<p>I didn&rsquo;t want to customize too much because that would defeat the purpose of the
+learning the defaults, but I did want to turn off that banner (it was handy
+having the basic operations on display, but I don&rsquo;t think I need it anymore).</p>
+
+<pre><code class="vim">let g:netrw_banner=0
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+,\(^\|\s\s\)ntuser\.\S\+'
+autocmd FileType netrw set nolist
+</code></pre>
+
+<h2>More Features</h2>
+
+<p>There is more to explore with netrw, such as working with bookmarks and pattern
+listings, but this post should have enough of the basics to be productive.
+Checkout <code>:help netrw</code> for more features.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Introduction to Vim for IDE Users]]></title>
@@ -218,33 +366,6 @@ A while ago I was helping a friend with a regex.<br />He  wanted to extract part
 So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this earlier)<br /><br />To enable vi mode, just type this into your shell:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; set -o vi</blockquote><br />That will enable it for this shell so you can try it out, and if you like it, add that line to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file for future.<br /><br />One really useful vi-mode command is pressing '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">v</span>' from command mode. This will put your current command line into vim to modify. <br /><br />To get more help on the commands available in vi-mode, take a look at the bottom of this man page:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; man 3 readline</blockquote><br />To get more information on the various options available for bash, take a look at:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; help set</span></blockquote><br />I'm going to give it ago in the coming weeks to see if its actually useful or not. <br /><br />So far, I've found one small annoyance, I use ctrl+l to clear the terminal, but with the vi key bindings enabled, this only works from command mode (you have to hit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ESC</span> first).<br />To fix this, I added this to my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bind -m vi-insert 'Control-l: clear-screen'</span></blockquote><br />These commands could also be added to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/inputrc</span>, but I'm happy to leave these 2 lines together in my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> so its easier to remember.
 </div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Can't Open File for Writing]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing.html"/>
-    <updated>2011-06-18T13:09:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/06/cant-open-file-for-writing</id>
-    <content type="html"><![CDATA[<p>{% blockquote %}
-E212: Can&rsquo;t open file for writing<br/>
-Press ENTER or type command to continue
-{% endblockquote %}</p>
-
-<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
-It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
-
-<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
-
-<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
-
-<p>{% codeblock .vimrc %}
-command! W w !sudo tee % &gt; /dev/null
-{% endcodeblock %}</p>
-
-<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
-
-<p>Works brilliantly!</p>
 ]]></content>
   </entry>
   

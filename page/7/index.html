@@ -173,6 +173,66 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2011-06-18T13:09:00+10:00">
+        <a href="/2011/06/cant-open-file-for-writing.html">June 18, 2011</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2011/06/cant-open-file-for-writing.html#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2011/06/cant-open-file-for-writing.html" rel="bookmark" title="Can't Open File for Writing" itemprop="url">Can&#8217;t Open File for Writing</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <blockquote><p>E212: Can&#8217;t open file for writing  <br/>Press ENTER or type command to continue</p></blockquote>
+
+
+<p>If you use <code>vim</code>, you have probably come across this error before.<br/>
+It normally happens when you don&rsquo;t have permission to write to your chosen destination.</p>
+
+<p>The temporary solution has traditionally been to save your changes to somewhere where you do have permissions (such as <code>/tmp</code> or <code>~</code>), then use <code>sudo</code> to <code>cp</code> it across, or re-open the file in vim with <code>sudo</code>.</p>
+
+<p>A collegue at work showed me a great trick to get around this when it happens (Thanks <a href="https://twitter.com/rich0H">@rich0H</a>). All you have to do is add this to your <code>.vimrc</code> file:</p>
+
+<figure class='code'><figcaption><span>.vimrc </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>command! W w !sudo tee % &gt; /dev/null</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then when you come across this error again, instead of of using <code>:w</code> you can use <code>:W</code> and it will prompt you for your <code>sudo</code> password before saving.</p>
+
+<p>Works brilliantly!</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2011-06-01T10:49:00+10:00">
         <a href="/2011/06/flashy-prezis-ddd.html">June 01, 2011</a>
       </time>
@@ -570,51 +630,6 @@ I haven&#8217;t really played a game properly since back in my Counter Strike da
 
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2011-04-16T07:26:00+10:00">
-        <a href="/2011/04/intro-to-braindumping.html">April 16, 2011</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2011/04/intro-to-braindumping.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2011/04/intro-to-braindumping.html" rel="bookmark" title="Intro to Braindumping!" itemprop="url">Intro to Braindumping!</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <div class="css-full-post-content js-full-post-content">
-Not the most creative name for your average blog, but for those that dont know:<br /><div style="text-align: left;"><blockquote><span style="font-size: x-small;"><i>&#8220;the transfer of a large quantity of information from one person to  another or to a piece of paper can be referred to as a &#8216;brain dump&#8217;.&#8221;</i></span><br /><div style="text-align: right;"><div style="text-align: right;"><span style="font-size: x-small;"><i>- <a href="http://en.wikipedia.org/wiki/Brain_dump">Wikipedia</a></i></span></div></div></blockquote></div><br />I created this blog mainly as a place to keep a record of things I&#8217;m likely to forget, such as cool command line tricks, handy websites, etc.<br />Nothing very important, just random thoughts really.
-</div>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
 
 <div class="pagination">
   
@@ -623,6 +638,8 @@ Not the most creative name for your average blog, but for those that dont know:<
     
   
   <a href="/archives">Blog Archives</a>
+  
+    <a href="" class="btn">Next</a>
   
 </div><!-- /.pagination -->
 
