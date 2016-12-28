@@ -173,6 +173,51 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2011-09-03T00:18:00+10:00">
+        <a href="/2011/09/meta-contacts-in-pidgin.html">September 03, 2011</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2011/09/meta-contacts-in-pidgin.html#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2011/09/meta-contacts-in-pidgin.html" rel="bookmark" title="Meta-contacts in Pidgin" itemprop="url">Meta-contacts in Pidgin</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <div class="css-full-post-content js-full-post-content">
+<a href="http://pidgin.im/">Pidgin</a> is my IM client of choice, its one of the first things I replace in a stock installation of Ubuntu.<br />I chose Pidgin not because of a slick UI but because it has some really nice features!<br /><br />The two features that stand out the most in my opinion are the &#8220;buddy pounces&#8221; and the many available plugins:<br /><br /><b>Buddy pounces</b><b>:</b><br />For those that don&#8217;t know about pounces, they are little predefined actions that can be triggered upon some configurable event, such as <i>&#8220;when &lt;SomeContact&gt; returns from away status, open a conversation window&#8221;</i>, or <i>&#8220;when &lt;SomeContact&gt; signs on, send them a predefined message&#8221;</i>.<br /><br /><b>Plugins:</b><br />Not only does Pidgin come with lots of plugins by default, but there are a lot of <a href="http://developer.pidgin.im/wiki/ThirdPartyPlugins">third party plugins</a> available too.<br />There are basic ones that offer a more robust and configurable way of notifying you of messages, etc and some more fun ones like &#8220;psychic mode&#8221; - which listens for when a new contact starts typing a message to you and pops up a convo window before they have even sent it.<br /><br /><b>Meta-contacts:</b><br />The one thing that I missed from other IM clients was meta-contacts.<br />For example, at any one time I have Pidgin signed into my Google chat, MSN and Facebook chat accounts and for those friends of mine that have an account on all three platforms, they appear 3 times in my buddy list.<br />With meta-contacts you can collapse those 3 contacts into just one.<br /><br />Well, it turns out this feature has been in Pidgin for quite a while, I just never noticed as its just not quite as obvious as with other clients.<br /><br /><b>How to use meta-contacts in Pidgin:</b><br />To use this feature, all you have to do is right-mouse click on the contact and click &#8220;expand&#8221; and drag and drop other contacts under the newly expanded name.<br />You should put the most common account at the top as that is the account is used by default when you double click the contact.<br /><br />Even though these features aren&#8217;t exactly ground breaking, when you get used to having them there it becomes a little harder to go back to clients without them.
+</div>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2011-08-21T07:29:00+10:00">
         <a href="/2011/08/poweroff-without-password.html">August 21, 2011</a>
       </time>
@@ -558,51 +603,6 @@ So it turns out bash has a vi mode!<br />(Can&#8217;t believe I didn&#8217;t kno
 <div class="entry-content">
   <div class="css-full-post-content js-full-post-content">
 If you&#8217;ve ever used PhpMyAdmin before, you&#8217;ll know it can be quite handy, especially for people like me who always forget SQL&#8217;s syntax.<br />I even use it for simple tasks just so I can see what SQL it generated and it even has a handy &#8220;Create PHP Code&#8221; button to give me a baseline to start hacking the query to suit my situation.<br /><br />This is great for local setups, but sometimes I need to do a query a production database where PhpMyAdmin is not installed and its alot easier to inspect the data of big tables with a gui (at least for me anyway).<br /><br />Another helpful tip that I picked up from my new work place (thanks Rich) is to make PhpMyAdmin connect to a remote database via an SSH tunnel.<br />It requires a small config change to PhpMyAdmin, but it works a charm!<br /><br />To differentiate between a tunnelled database and the local one, you need to configure your web server to serve up PhpMyAdmin from an additional URL, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/php<b>remote</b>admin</span> in addition to the standard <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">http://localhost/phpmyadmin</span>.<br /><br />I added a second alias for PhpMyAdmin in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/apache2/conf.d/phpmyadmin.conf</span> to look like this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">Alias /phpmyadmin /usr/share/phpmyadmin<br />Alias /phpremoteadmin /usr/share/phpmyadmin</blockquote><br />Then, I modified my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/phpmyadmin/config.inc.php</span> to include this:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">// If phpremoteadmin is requested, use an ssh tunnel on 6666<br />// Note: This doesn&#8217;t create the tunnel, use ~/bin/mysql_remote<br />if (substr_count($_SERVER[&#8220;REQUEST_URI&#8221;], &#8220;phpremoteadmin&#8221;) &gt; 0) {<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;connect_type&#8217;] = &#8216;tcp&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;port&#8217;] = &#8216;6666&#8217;;<br />$cfg[&#8216;Servers&#8217;][$i][&#8216;host&#8217;] = &#8216;127.0.0.1&#8217;;<br />}</blockquote><br />Basically that means if the request is for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/phpremoteadmin</span>, look for the database on port 6666 instead of the preconfigured database port.<br /><br />You&#8217;l have to reload apache for these changes to take effect:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo /etc/init.d/apache2 reload</span></blockquote><br />Then you need a SSH tunnel from your local port 6666 to the servers port 3306 (where mysql is normally listening). To create this tunnel, you can use:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">ssh -L 6666:localhost:3306 $USER@$HOST</blockquote><br />But, to make it easier, I use (a slight variation) of this script:<br /><br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">#!/bin/sh<br /><br />if [ $# -lt 1 ] || [ $# -gt 2 ]; then<br />&nbsp; echo &#8220;Usage: $0 host1 [host2]&#8221;<br />&nbsp; exit 2<br />fi<br /><br />USER=&#8221;steve&#8221;<br />HOST=$1<br /><br />DBHOST=&#8221;localhost&#8221;<br />[ -z &#8220;$2&#8221; ] || DBHOST=&#8221;$2&#8221;<br /><br />echo &#8220;Browse to: http://localhost/phpremoteadmin&#8221;<br />ssh -L 6666:$DBHOST:3306 $USER@$HOST</blockquote><br />The script also allows you to pass in an optional argument of the host where the database is.<br />By default, that is localhost (the remote server&#8217;s localhost). <br />This is useful if you can only ssh to a gateway server and the database is on another server within that remote network that you wouldn&#8217;t normally be able to ssh directly to.<br /><br />This has been really helpful, so I wanted to share :)
-</div>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2011-06-20T05:40:00+10:00">
-        <a href="/2011/06/bash-auto-complete.html">June 20, 2011</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2011/06/bash-auto-complete.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2011/06/bash-auto-complete.html" rel="bookmark" title="Bash Auto-complete" itemprop="url">Bash Auto-complete</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <div class="css-full-post-content js-full-post-content">
-There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
 </div>
 
   

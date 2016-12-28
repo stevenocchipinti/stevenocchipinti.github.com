@@ -173,6 +173,51 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2011-06-20T05:40:00+10:00">
+        <a href="/2011/06/bash-auto-complete.html">June 20, 2011</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2011/06/bash-auto-complete.html#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2011/06/bash-auto-complete.html" rel="bookmark" title="Bash Auto-complete" itemprop="url">Bash Auto-complete</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <div class="css-full-post-content js-full-post-content">
+There are a ton of extended auto-completions that come with Ubuntu, but they are disabled by default.<br /><br />Have a look in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion.d/</span> directory for the programs that have specific auto-completes (such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">git</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache2ctl</span>, etc.).<br /><br />To get all the extra auto-completion-goodness, all you have to do is source <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/bash_completion</span> in your profile.<br /><br />I added this is my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span>, but there may already be a commented out block for this in the stock <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bashrc</span> file for ubuntu:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"># Enable bash completion in interactive shells</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">if [ -f /etc/bash_completion ] &amp;&amp; ! shopt -oq posix; then</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp; . /etc/bash_completion</span><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fi</span></blockquote>
+</div>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2011-06-18T13:09:00+10:00">
         <a href="/2011/06/cant-open-file-for-writing.html">June 18, 2011</a>
       </time>
@@ -573,51 +618,6 @@ So I started my new job and they use Google Apps!<br />Initially I thought this 
 <div class="entry-content">
   <div class="css-full-post-content js-full-post-content">
 A friend of mine has a Canon 24-70mm f2.8 &#8216;L&#8217; lens and after having a play with it and looking at his photos I have had a little bit of gear-envy.<br />The extra speed and frequent bokeh was really nice! <br />Naturally I started looking at prices.. and the Nikon equivalent is&#8230; not cheap!<br /><br />I cant justify <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=1917">$1969</a> on a lens! Especially considering that I dont actually need it, and I am just a hobbyist (therefore: return on investment == profit from my work == $0).<br /><br />I then read up on some more affordable <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2221">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=374">Tamron</a> lenses that were similar and liked the prices much better!<br />&#8230; but im still really indecisive :(<br /><br />Then I saw the 17-50mm f2.8 lenses (from <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2416">Tamron</a>, <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=3013">Sigma</a> and <a href="http://www.dwidigitalcameras.com.au/store/product.asp?idProduct=2278">Tokina</a>), and this made me think..<br />When I was travelling to Japan (with Sarma, the Canon guy) I remember him complaining about not being able to get a wide enough shot and he would often stand pretty far back to get the shot he wanted or swap to his 10-20mm lens.<br />This probably wouldn&#8217;t be an issue with a full-frame camera, but the 50d&#8217;s smaller sensor means it is already quite &#8220;zoomed-in&#8221; at its widest setting.<br /><br />I started writing up an email to ask Sarma what he thought and realized I have all his photos from our Japan trip, so with a bit of linux command line fun, I came up with this:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">exiftool -p &#8216;$focallength&#8217; -q -f `find -L .` | sort -n | uniq -c</span></blockquote>Now for the explanation: <br /><dl><dt><b>exiftool -p &#8216;$focallength&#8217; -q -f</b></dt><dd>exiftool extracts exif information from jpg&#8217;s.The -p prints a formatted string, which I inserted just the $focallength variable.The -q means quiet (basically, dont print too much).The -f is the list of files, which I use a sub-command (wrapped in backticks) to get.</dd><dt><b>find -L . </b></dt><dd>As all of our groups photos were kind-of mixed in together, I created a directory with symlinks to just Sarma&#8217;s photos (hence the find -L, where -L will follow symlinks to the appropriate directories).</dd><dt><b>sort -n</b></dt><dd>This just sorts the data by numberic value (so 10 &gt; 1), this is mainly so the uniq command works properly.</dd><dt><b>uniq -c</b></dt><dd>This will collapse the data down to unique values and with the -c, it will also print the number of occurences have been collapsed down.</dd> </dl>The output of this command included all of Sarma&#8217;s photos (not just taken with the 24-70) but it still gave me a pretty good idea.<br />The output looked like this:<br /><br /><pre>86    10.0 mm<br />2     11.0 mm<br />2     15.0 mm<br />14    16.0 mm<br />2     18.0 mm<br />108   20.0 mm<br />2362  24.0 mm<br />142   28.0 mm<br />176   32.0 mm<br />138   35.0 mm<br />104   40.0 mm<br />118   45.0 mm<br />136   47.0 mm<br />120   50.0 mm<br />94    55.0 mm<br />78    58.0 mm<br />76    60.0 mm<br />76    65.0 mm<br />70    67.0 mm<br />52    70.0 mm<br />52    73.0 mm<br />34    75.0 mm<br />14    80.0 mm<br />48    82.0 mm<br />56    84.0 mm<br />18    85.0 mm<br />24    88.0 mm<br />10    90.0 mm<br />14    92.0 mm<br />12    93.0 mm<br />16    95.0 mm<br />10    96.0 mm<br />4     97.0 mm<br />8     98.0 mm<br />8     99.0 mm<br />12    100.0 mm<br />10    102.0 mm<br />404   105.0 mm<br /><br /></pre>With the majority of Sarma&#8217;s photos clearly being taken at 24mm, it made me think that as I too have a cropped sensor camera, the wider 17-50mm lenses are probably a better choice for me as I really dont have any plans to lash out on a full frame camera anytime soon :P
-</div>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2011-04-16T08:25:00+10:00">
-        <a href="/2011/04/minecraft-and-arch-linux-ftw.html">April 16, 2011</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2011/04/minecraft-and-arch-linux-ftw.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2011/04/minecraft-and-arch-linux-ftw.html" rel="bookmark" title="(Minecraft and) Arch Linux FTW!" itemprop="url">(Minecraft and) Arch Linux FTW!</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <div class="css-full-post-content js-full-post-content">
-I haven&#8217;t really played a game properly since back in my Counter Strike days, but recently my brother and I started playing <a href="http://www.minecraft.net/">Minecraft</a>&#8230; and its incredibly addictive!<br /><br />Minecraft give you the option of running a Java based dedicated server and so as we were starting out, my brother would start up a dedicated server and we would both connect to it.<br />As time went on, we thought it would be really cool to have a dedicated Minecraft box and thought we could build one out of some old hardware, which brings me to the HTPC!<br /><br />A little while ago, my brother built this (the black box):<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s1600/IMAG0146.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="191" src="http://1.bp.blogspot.com/-7dL37EFmdbw/TalNVGQgTII/AAAAAAAAAuU/9mIJYfk8Z48/s320/IMAG0146.jpg" width="320" /></a></div><br /><br />He did an awesome job!<br />Basically gutted our very first dvd player (which was great for its time) and got some cheap (physically small) hardware off eBay and managed to fit it all inside! <br />It involved making alot of little brackets, extender cables, etc. but with a lot of effort it turned out pretty impressive!<br /><br />Unfortunately, using it as a media pc was a bit tough as it wasn&#8217;t the most powerful of machines around and the graphics drivers weren&#8217;t working too well so this got left in the dust for a while&#8230; until Minecraft came along!<br /><br />Last weekend we decided to make this our dedicated server :)<br />A while ago a friend of a friend was talking about how good Arch Linux was for its simplicity and ease of administration, so I started reading up on it and I am impressed!<br /><br />On the <a href="https://wiki.archlinux.org/">Arch Linux wiki</a> they have a couple of <a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide">guides</a> to help you get going, but my favorite page was the <a href="https://wiki.archlinux.org/index.php/Boot">explanation of the boot process</a>.<br />After a bit of reading I worked out my plan of attack:<br /><ul><li>Burn ISO to cd</li><li>Install Arch Linux</li><li>Install sudo (via pacman)&nbsp;</li><li>Setup &#8216;minecraft&#8217; user with sudo access to the poweroff command</li><li>Install Java (via pacman)</li><li>Install rungetty (via AUR)</li><li>Replace &#8216;agetty&#8217; with &#8216;rungetty&#8217; and make the minecraft server startup on tty1, followed by a &#8216;poweroff&#8217;</li><li>Configure Wake-On-Lan</li></ul><br />After the server was all setup, I wrote a little client side wrapper that will:<br /><ul><li>Launch minecraft</li><li>Broadcast a magic-packet to power on the server</li><li>Start pinging it and when it is available, notify me via Ubuntu&#8217;s &#8216;notify-send&#8217; command</li></ul><br />So now when I want to play Minecraft, I launch my script and it will power on the server and launch the client, I log in, wait about 5 seconds until my fancy fade-in notification appears, then join the server, play, and when im done, I issue the &#8216;/stop&#8217; command in Minecraft and it will stop the server and power it self off!<br /><br />This was a great first experiment with Arch Linux and I didn&#8217;t even know what getty was before this day.<br /><br />Needless to say I was pretty happy with this setup and all in a days work :)
 </div>
 
   

@@ -173,6 +173,132 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2015-04-04T21:39:00+11:00">
+        <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">April 04, 2015</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/" rel="bookmark" title="Configuring a HDMI-CEC Remote in Kodi" itemprop="url">Configuring a HDMI-CEC Remote in Kodi</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>I&rsquo;ve been using Raspbmc for a while now, but I only just saw that it has been
+superseded by <a href="https://osmc.tv/">OSMC</a> (and XBMC is now called <a href="http://kodi.tv/">Kodi</a>,
+so with the long weekend I thought I&rsquo;d upgrade.</p>
+
+<p>The upgrade process is really simple. I backed up my existing installtion of
+Raspbmc, downloaded the offical <a href="https://osmc.tv/download/">OSMC installer</a>
+from their site, installed it over the top and booted it up.</p>
+
+<p>From here, there are only a few things to do. I entered my <a href="https://osmc.tv/help/wiki/pi-buycodec">MPG2 and WVC1 codecs</a>,
+setup my video sources and kicked off the scrapers and installed a few addons.
+The only other thing is setting up my TV remote.
+(I did this last time but forgot how, so this time I thought I&rsquo;d blog it!)</p>
+
+<p>Out of the box, my Samsung <em>&ldquo;Smart Touch&rdquo;</em> Remote (<a href="http://reviews.lcdtvbuyingguide.com/samsung-lcd-tv/pictures/samsung-f6400-remote.jpg">this one</a>
+if you&rsquo;re wondering) mostly just works, the only problem is the back button
+opens the context menu instead of going back!</p>
+
+<p>To fix this, the first step is to find out what each button on the remote maps
+to in Kodi. Thanks to this great <a href="http://forum.kodi.tv/showthread.php?tid=139145&amp;pid=1285390#pid1285390">forum post</a>
+by a user called &ldquo;Knapster&rdquo; this is really easy.</p>
+
+<p>Just SSH to the pi, create a new file <code>~/.kodi/userdata/keymaps/remote.xml</code> and
+paste <a href="https://gist.github.com/stevenocchipinti/42f2eca2a9f04ed9e52f">this contents</a>
+in it. Now reboot Kodi and everytime you press a button, you&rsquo;ll get a
+notification on the screen of what command it is sending.</p>
+
+<p>A quick way of doing that from an SSH session is like this:<br/>
+(The default username and password are both <code>osmc</code>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh osmc@&lt;kodi-ip-address&gt;
+</span><span class='line'>curl https://gist.githubusercontent.com/stevenocchipinti/42f2eca2a9f04ed9e52f/raw/remote.xml &gt; ~/.kodi/userdata/keymaps/remote.xml
+</span><span class='line'>sudo reboot</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In my case, everything seemed to make sense except the back button, which was
+actually sending <code>title</code> instead of <code>back</code>. As I don&rsquo;t have a <em>title</em> button,
+I&rsquo;m going to reassign that to be a back button instead.</p>
+
+<p>First, lets replace our <code>remote.xml</code> with the default configuration, you can get
+these mappings from the installed Kodi files:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp /usr/share/kodi/system/keymaps/remote.xml ~/.kodi/userdata/keymaps/remote.xml</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file has what every command does in every context and makes it easy to
+modify. Here is a diff of the changes I made for my remote:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>58c58
+</span><span class='line'>&lt;       &lt;title&gt;ContextMenu&lt;/title&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;title&gt;Back&lt;/title&gt;
+</span><span class='line'>74c74
+</span><span class='line'>&lt;       &lt;guide&gt;ActivateWindow(TVGuide)&lt;/guide&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;guide&gt;ActivateWindow(Home)&lt;/guide&gt;
+</span><span class='line'>79c79
+</span><span class='line'>&lt;       &lt;red&gt;ActivateWindow(TVChannels)&lt;/red&gt;
+</span><span class='line'>---
+</span><span class='line'>&gt;       &lt;red&gt;ContextMenu&lt;/red&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ve made the <em>&ldquo;title&rdquo;</em> button send the <code>back</code> command and because I don&rsquo;t have
+a TV tuner connected, I&rsquo;ve also re-assigned the <em>&ldquo;TV Guide&rdquo;</em> button to go to the
+home screen and the <em>&ldquo;Red&rdquo;</em> button to be the context menu button.<br/>
+Interestingly, the channel up and down buttons on my remote we already assigned
+to page up and page down, which suits me great while I don&rsquo;t have a TV Tuner.</p>
+
+<p>After rebooting, I now have a functional remote control!</p>
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2015-03-24T11:13:00+11:00">
         <a href="/2015/03/24/git-reset-cheatsheet/">March 24, 2015</a>
       </time>
@@ -1453,62 +1579,6 @@ This behaviour suits a TUI, and the old contents is still restored when you retu
 I ended up using the <code>\033[K</code> (&ldquo;Erase to end of line&rdquo;) and the <code>\033[A</code> (&ldquo;Move the cursor up&rdquo;) <a href="https://github.com/stevenocchipinti/tramtracker/blob/master/lib/formatters/polling_formatter.rb">characters in my TramTracker gem</a> and it worked a treat!</p>
 
 <p>Now go and make a cool retro user interface! :)</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2013-05-12T04:36:00+10:00">
-        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html">May 12, 2013</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2013/05/safe-mode-on-samsung-galaxy-s3.html" rel="bookmark" title=""Safe Mode" on the Samsung Galaxy S3" itemprop="url">&#8220;Safe Mode&#8221; on the Samsung Galaxy S3</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>I recently had some trouble with my Samsung Galaxy S3. I&rsquo;m still not sure what caused it, but quite frequently, it would completely freeze up, even after a fresh reboot. It may have been a dodgy app, or something deeper in android, but in the process of fixing it, I was introduced to &ldquo;<em>safe mode</em>&rdquo;.</p>
-
-<p>&ldquo;<em>Safe mode</em>&rdquo; here behaves like safe mode in Windows. It basically lets you use your phone just like normal, but without starting the usual plethora of background processes. You can still get to your settings, apps and files, but things won&rsquo;t start automatically.</p>
-
-<p>To enter safe mode on the Galaxy S3 is really simple:</p>
-
-<blockquote><p>1. Restart the phone<br/>2. While it is booting up (and you see the Samsung logo),  <br/>   simply hold the volume down button</p></blockquote>
-
-
-<p>When it boots, you should have the stock wallpaper, your shortcuts will be gone and you should see a little watermark in the bottom left corner that says &ldquo;<em>Safe mode</em>&rdquo;.</p>
-
-<p><img class="center" src="http://lh4.ggpht.com/-AJ8LJPOQQPM/UY8ZnFfsA-I/AAAAAAAABPM/4yaTDxpxyH8/Screenshot_2013-05-12-09-41-12.png"></p>
-
-<p>From here you can do everything like normal, browse the net, make calls, etc. but more importantly, you can uninstall dodgy apps, change settings, even factory reset the device.</p>
 
   
   

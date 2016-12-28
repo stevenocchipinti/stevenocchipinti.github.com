@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T13:58:59+11:00</updated>
+  <updated>2016-12-28T15:44:05+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Search and Replace, Vim and Git]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/"/>
+    <updated>2016-12-28T14:04:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git</id>
+    <content type="html"><![CDATA[<p>Git provides some nice utility functionality that can make a vim development
+environment much nicer. With recent updates to Vim it can now execute a command
+for every item in the quickfix list (<code>:cdo</code>) and location list (<code>:ldo</code>). These
+features work together quite nicely.</p>
+
+<p>This new functionality has been introduced to vim from version 7.4.858 and is
+therefore available in vim8 and also available in neovim.</p>
+
+<h2>The Old Way</h2>
+
+<p>Back in 2011 I wrote a
+<a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html/">post about doing search and replace across multiple files</a>
+with just the basic vim functionality. It&rsquo;s quite common to use the arg list
+because its easy to add to:</p>
+
+<pre><code class="vim">:arg *.js
+:arg `git ls-files`
+</code></pre>
+
+<p>and it&rsquo;s easy to execute commands:</p>
+
+<pre><code class="vim">:argdo %s/foo/bar/gc
+</code></pre>
+
+<h2>The New Way</h2>
+
+<p>Now that we can execute a command from the quickfix and location lists it is
+much easier to make larger, more controlled edits with the help of other
+features or plugins.</p>
+
+<p>If you use <code>syntastic</code> or <code>neomake</code> for linting, a compiler via the <code>:make</code>
+command, the built in <code>:grep</code> or <code>:vimgrep</code> commands or any number of other
+plugins that integrate with these lists, such as
+<a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, you can take advantage of
+<code>:cdo</code> and <code>:ldo</code>.</p>
+
+<pre><code class="vim">:grep foo **/*.js
+</code></pre>
+
+<p>Then you can execute commands like this:</p>
+
+<pre><code class="vim">:cdo s/foo/bar/gc
+</code></pre>
+
+<h2>Git Is Awesome</h2>
+
+<p>Git is incredibly powerful and I often use a couple of features that are often
+overlooked:</p>
+
+<ul>
+<li><code>git ls-files</code> - recursively list all the files in the repo</li>
+<li><code>git grep</code> - grep through all the files in the repo</li>
+</ul>
+
+
+<p>One of the reasons these commands are so good is because by default they will
+ignore the items in the <code>.gitignore</code> file.</p>
+
+<p>I tend to work with javascript a fair bit and having an easy way to avoid those
+nasty <code>node_modules</code> directories readily available is great! Best of all, these
+tools are available on just about every machine I work, on including the
+machines of other peoples that I pair with.</p>
+
+<h2>My Workflow</h2>
+
+<p>I use <code>ctrl-p</code> in vim and rather than relying on yet another third party tool
+like <code>ack</code> or <code>ag</code>, I&rsquo;ve configured <code>crtl-p</code> like this:</p>
+
+<pre><code class="vim">let g:ctrlp_user_command = [
+\  '.git',
+\  'cd %s &amp;&amp; git ls-files . -co --exclude-standard',
+\  'find %s -type f'
+\]
+</code></pre>
+
+<p>It is super fast and I haven&rsquo;t come across a situation where I need ctrl-p for a
+large enough non-git repo and <code>find</code> wasn&rsquo;t good enough for&hellip; yet!</p>
+
+<p>If you use <a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, there is also
+a <code>:Ggrep</code> command that behaves much like the builtin <code>:grep</code> command, but it
+will ignore the <code>.gitignore</code> items. I use this quite a lot too:</p>
+
+<pre><code class="vim">:Ggrep foo
+:Ggrep foo **/*.js
+</code></pre>
+
+<p>Then you can execute commands in the same manner as above:</p>
+
+<pre><code class="vim">:cdo s/foo/bar/gc
+</code></pre>
+
+<p>Because I use this so often, I&rsquo;ve added the following mapping to my config to
+automatically search for the token under my cursor:</p>
+
+<pre><code>map &lt;leader&gt;g :Ggrep!  &lt;Bar&gt; copen
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Different Author Email Addresses Per Git Repository]]></title>
@@ -364,121 +468,6 @@ Updates the working directory only, without changing the index, current branch o
 This would effectively be <code>git reset --hard [branch] file</code>, but this command does not exist</p>
 
 <p>More info and examples in <code>git reset --help</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Completely Removing a Git Commit Due to Sensitive Information]]></title>
-    <link href="http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information/"/>
-    <updated>2014-03-10T15:07:00+11:00</updated>
-    <id>http://blog.stevenocchipinti.com/2014/03/10/completely-removing-a-git-commit-due-to-sensitive-information</id>
-    <content type="html"><![CDATA[<p>I recently made a big mistake and checked in some sensitive information into a
-public GitHub repository.</p>
-
-<p>The first reaction is to remove that sensitive information. While that is a good
-first step, making a new commit to remove the information means that when anyone
-looks at the commit history, the sensitive information will still be visible.</p>
-
-<h2>Re-writing history</h2>
-
-<p>The next step is to re-write the git history.<br/>
-This can be done a few ways, but I took a simple approach and sqaushed the
-commits down such that the addition and removal of the sensitive information
-cancel each other out and the new commit doesn&rsquo;t contain any sensitive
-information.</p>
-
-<p>To demonstrate, here is the history of a git respository where some sensitive
-information was commited in <code>bbd80c4</code> and then removed in <code>a120437</code>.</p>
-
-<pre><code>$&gt; git log --oneline
-a120437 Ooops... remove sensitive data!
-bbd80c4 Add some more data
-0115d7b Add some data
-20133f4 Initial commit
-
-$&gt; git show bbd80c4
-diff --git a/data b/data
-index f8327c3..afbbccd 100644
---- a/data
-+++ b/data
-@@ -1 +1,3 @@
- KEY=value
-+MORE=data
-+PASSWORD=secret
-
-$&gt; git show a120437
-diff --git a/data b/data
-index afbbccd..1f0aa11 100644
---- a/data
-+++ b/data
-@@ -1,3 +1,2 @@
- KEY=value
- MORE=data
--PASSWORD=secret
-</code></pre>
-
-<p>From here, I used git&rsquo;s interactive rebase feature to modify the relevant
-commits. In this case, I chose the commit just before the sensitive data was
-added, like this: <code>git rebase -i 0115d7b</code></p>
-
-<p>In the interactive editor, I did the following and then provided a new commit
-message:</p>
-
-<pre><code>pick a120437 Ooops... remove sensitive data!
-squash bbd80c4 Add some more data
-</code></pre>
-
-<p>This resulted in the last 2 commits being merged into a new one.<br/>
-Here is the history:</p>
-
-<pre><code>$&gt; git log --oneline
-fd04bfc Add some more data
-0115d7b Add some data
-20133f4 Initial commit
-
-$&gt; git show fd04bfc
-diff --git a/data b/data
-index f8327c3..1f0aa11 100644
---- a/data
-+++ b/data
-@@ -1 +1,2 @@
- KEY=value
-+MORE=data
-</code></pre>
-
-<p>Rewriting commits that have already been pushed to a remote means a couple of
-things.<br/>
-For one, when you push this new history to the remote, you may require
-the <code>--force</code> option to disregard the existing history.<br/>
-Also, anyone who has an existing clone of the repository will have issues when
-they pull down the latest changes but in the case of sensitive information, this
-is a necessary side-effect.</p>
-
-<h2>Cleaning up the cached commits</h2>
-
-<p>We&rsquo;re not done yet!<br/>
-Git keeps track of all changes made to a repository, even though the history
-does not show the <em>bad</em> commits, they are still there! You can view all changes
-to the repository using <code>git reflog</code>. From this command you can find the SHA of
-the <em>bad</em> commit and then use <code>git show</code> to see the sensitive information.</p>
-
-<p>This means that GitHub also still has the <em>bad</em> commits and if you know the SHA
-you will be able to find that sensitive information again.
-To fix this we should clear the local cache and GitHub&rsquo;s cache.</p>
-
-<p>You can clear the your local reflog by issuing these commands:
-<code>
-rm -rf .git/refs/original/
-git reflog expire --expire=now --all
-git gc --prune=now
-git gc --aggressive --prune=now
-</code></p>
-
-<p>GitHub doesn&rsquo;t give us a way to clear a repositorys cache, but due to the
-nature of git, simply deleting the repository and pushing a new copy of your
-local repository to GitHub will effectively destroy that cache.</p>
-
-<p>GitHub also have an article on how to <a href="https://help.github.com/articles/remove-sensitive-data">remove sensitive data</a>.</p>
 ]]></content>
   </entry>
   

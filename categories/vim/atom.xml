@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/vim/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2016-12-28T13:58:59+11:00</updated>
+  <updated>2016-12-28T15:44:05+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Search and Replace, Vim and Git]]></title>
+    <link href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/"/>
+    <updated>2016-12-28T14:04:00+11:00</updated>
+    <id>http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git</id>
+    <content type="html"><![CDATA[<p>Git provides some nice utility functionality that can make a vim development
+environment much nicer. With recent updates to Vim it can now execute a command
+for every item in the quickfix list (<code>:cdo</code>) and location list (<code>:ldo</code>). These
+features work together quite nicely.</p>
+
+<p>This new functionality has been introduced to vim from version 7.4.858 and is
+therefore available in vim8 and also available in neovim.</p>
+
+<h2>The Old Way</h2>
+
+<p>Back in 2011 I wrote a
+<a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html/">post about doing search and replace across multiple files</a>
+with just the basic vim functionality. It&rsquo;s quite common to use the arg list
+because its easy to add to:</p>
+
+<pre><code class="vim">:arg *.js
+:arg `git ls-files`
+</code></pre>
+
+<p>and it&rsquo;s easy to execute commands:</p>
+
+<pre><code class="vim">:argdo %s/foo/bar/gc
+</code></pre>
+
+<h2>The New Way</h2>
+
+<p>Now that we can execute a command from the quickfix and location lists it is
+much easier to make larger, more controlled edits with the help of other
+features or plugins.</p>
+
+<p>If you use <code>syntastic</code> or <code>neomake</code> for linting, a compiler via the <code>:make</code>
+command, the built in <code>:grep</code> or <code>:vimgrep</code> commands or any number of other
+plugins that integrate with these lists, such as
+<a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, you can take advantage of
+<code>:cdo</code> and <code>:ldo</code>.</p>
+
+<pre><code class="vim">:grep foo **/*.js
+</code></pre>
+
+<p>Then you can execute commands like this:</p>
+
+<pre><code class="vim">:cdo s/foo/bar/gc
+</code></pre>
+
+<h2>Git Is Awesome</h2>
+
+<p>Git is incredibly powerful and I often use a couple of features that are often
+overlooked:</p>
+
+<ul>
+<li><code>git ls-files</code> - recursively list all the files in the repo</li>
+<li><code>git grep</code> - grep through all the files in the repo</li>
+</ul>
+
+
+<p>One of the reasons these commands are so good is because by default they will
+ignore the items in the <code>.gitignore</code> file.</p>
+
+<p>I tend to work with javascript a fair bit and having an easy way to avoid those
+nasty <code>node_modules</code> directories readily available is great! Best of all, these
+tools are available on just about every machine I work, on including the
+machines of other peoples that I pair with.</p>
+
+<h2>My Workflow</h2>
+
+<p>I use <code>ctrl-p</code> in vim and rather than relying on yet another third party tool
+like <code>ack</code> or <code>ag</code>, I&rsquo;ve configured <code>crtl-p</code> like this:</p>
+
+<pre><code class="vim">let g:ctrlp_user_command = [
+\  '.git',
+\  'cd %s &amp;&amp; git ls-files . -co --exclude-standard',
+\  'find %s -type f'
+\]
+</code></pre>
+
+<p>It is super fast and I haven&rsquo;t come across a situation where I need ctrl-p for a
+large enough non-git repo and <code>find</code> wasn&rsquo;t good enough for&hellip; yet!</p>
+
+<p>If you use <a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, there is also
+a <code>:Ggrep</code> command that behaves much like the builtin <code>:grep</code> command, but it
+will ignore the <code>.gitignore</code> items. I use this quite a lot too:</p>
+
+<pre><code class="vim">:Ggrep foo
+:Ggrep foo **/*.js
+</code></pre>
+
+<p>Then you can execute commands in the same manner as above:</p>
+
+<pre><code class="vim">:cdo s/foo/bar/gc
+</code></pre>
+
+<p>Because I use this so often, I&rsquo;ve added the following mapping to my config to
+automatically search for the token under my cursor:</p>
+
+<pre><code>map &lt;leader&gt;g :Ggrep!  &lt;Bar&gt; copen
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using Netrw Instead of NERDTree for Vim]]></title>
@@ -352,18 +456,6 @@ Usually when I need to find things in multiple files, I would use <span style="f
     <id>http://blog.stevenocchipinti.com/2011/08/regex-substitution-101</id>
     <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
 A while ago I was helping a friend with a regex.<br />He  wanted to extract parts of the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/passwd</span> file, so I explained my basic thought process to him so he could understand how I came up with the pattern.<br />I thought I would (paraphrase and) blog this explanation, as it might just help others out too.<br /><br /><b>The Explanation:</b><br />First you have to write a regex that matches as much of the string (in this case the lines in the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">passwd</span> file) as you need (or all of it to be safe):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = will match a character that is not a colon</blockquote><br />You can repeat this pattern with the * operator to match everything up to the first colon (because that wont match the pattern):<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*</span>&nbsp;&nbsp;&nbsp;&nbsp; = will match everything up to the colon</blockquote><br />That pattern obviously doesnt have the bit you want, so you need to keep matching...<br />The next character you need to match is the colon itself:<br /><br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:</span>&nbsp;&nbsp;&nbsp; = will match everything up to the colon, and then one colon character too</blockquote><br />This isn't enough either, but now you just need to repeat your self for as many sections as you want.<br />There is 6 colons and 7 fields in your example of the passwd file, so repeat the pattern to suit:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*</div></blockquote><br />Now this pattern will match the entire string by going through section-by-section.<br />Of course .* would also match the whole string, but now we have parts of the pattern that represent parts of the string.<br />Using these parts, we can wrap the bit you want to use with backreferences (brackets) so we can use them later.<br /><br />Lets say you only wanted the 5th field (the username).<br />First, wrap the 5th field in a backreference.<br />Note you have to escape the brackets with a backslash otherwise it will look for an actual bracket character:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*</div></blockquote><br />Now you can use it in a substitution, which will replace everything that is matched with what you tell it to:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello</div></blockquote><br />This will replace what it has matched (which is everything) with the word 'hello'<br />Now you can add that part that you captured earlier with the backreference<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):[^:]*:[^:]*/hello \1</div></blockquote><br />The \1 means the first backreference, if you had 2 sets of backets, you could also use \2<br />Running this substition will result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">apache:x:48:48:Apache:/var/www:/sbin/nologin</div></blockquote><br />becoming this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache</div></blockquote><br />To extend this further, you could add stuff like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">:%s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex</div></blockquote><br />Which would result in this line:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">hello Apache, I know you home is /var/www because I know regex</div></blockquote><br />Obviously you wouldnt want to make these substitutions in your passwd file, but you could use this regex substitution in a pipeline with sed, like this:<br /><br /><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">cat /etc/passwd | sed "s/[^:]*:[^:]*:[^:]*:[^:]*:\([^:]*\):\([^:]*\):[^:]*/hello \1, I know you home is \2 because I know regex/" &gt; ~/regexed.txt</div></blockquote><br />Note that unlike vim, sed requires the substitution to be terminated with a trailing separator, so valid syntaxes are:<br /><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></div><blockquote><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">sed =&nbsp; sed 's/PATTERN/REPLACEMENT/'</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT/</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">vim =&nbsp; :s/PATTERN/REPLACEMENT</div></blockquote><br />The last separator is useful for putting additional options, such as <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">g</span> for global replaces (multiple times on one line), etc.<br /><br />Another helpful note is that the separator does not have to be / it could be (almost) any character.<br />For example, / might be cumbersome if your dealing with paths that have a lot of /'s, so you could use # instead:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">%s#this#that#g </span></blockquote>
-</div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vi Mode for Bash]]></title>
-    <link href="http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash.html"/>
-    <updated>2011-06-26T23:22:00+10:00</updated>
-    <id>http://blog.stevenocchipinti.com/2011/06/vi-mode-for-bash</id>
-    <content type="html"><![CDATA[<div class="css-full-post-content js-full-post-content">
-So it turns out bash has a vi mode!<br />(Can't believe I didn't know about this earlier)<br /><br />To enable vi mode, just type this into your shell:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; set -o vi</blockquote><br />That will enable it for this shell so you can try it out, and if you like it, add that line to your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file for future.<br /><br />One really useful vi-mode command is pressing '<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">v</span>' from command mode. This will put your current command line into vim to modify. <br /><br />To get more help on the commands available in vi-mode, take a look at the bottom of this man page:<br /><blockquote style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; man 3 readline</blockquote><br />To get more information on the various options available for bash, take a look at:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$&gt; help set</span></blockquote><br />I'm going to give it ago in the coming weeks to see if its actually useful or not. <br /><br />So far, I've found one small annoyance, I use ctrl+l to clear the terminal, but with the vi key bindings enabled, this only works from command mode (you have to hit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ESC</span> first).<br />To fix this, I added this to my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file:<br /><blockquote><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bind -m vi-insert 'Control-l: clear-screen'</span></blockquote><br />These commands could also be added to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/etc/inputrc</span>, but I'm happy to leave these 2 lines together in my <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> so its easier to remember.
 </div>
 
 ]]></content>

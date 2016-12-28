@@ -10,15 +10,15 @@
 <meta charset="utf-8">
 <meta http-equiv="cleartype" content="on">
 
-<title>Rewriting Author and Email in Every Commit - Steven Occhipinti</title>
+<title>Search and Replace, Vim and Git - Steven Occhipinti</title>
 <meta name="author" content="Steven Occhipinti">
 
 
 
 
-<meta name="description" content="rewriting author and email in every commit">
+<meta name="description" content="Search and replace, vim and git">
 
-<meta name="keywords" content="git ">
+<meta name="keywords" content="git vim ">
 
 
 <!-- http://t.co/dKP3o1e -->
@@ -32,23 +32,23 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content"">
   
-  <meta name="twitter:title" content="rewriting author and email in every commit">
-  <meta name="twitter:description" content="rewriting author and email in every commit">
+  <meta name="twitter:title" content="Search and replace, vim and git">
+  <meta name="twitter:description" content="Search and replace, vim and git">
   <meta name="twitter:creator" content="@steveocchipinti">
 
 
 <!-- Open Graph -->
 <meta property="og:local" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit">
-<meta property="og:title" content="rewriting author and email in every commit">
-<meta property="og:description" content="rewriting author and email in every commit">
+<meta property="og:url" content="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git">
+<meta property="og:title" content="Search and replace, vim and git">
+<meta property="og:description" content="Search and replace, vim and git">
 
   <meta property="og:image" content="">
 
 <meta property="og:site_name" content="Steven Occhipinti">
 
-<link rel="canonical" href="http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit">
+<link rel="canonical" href="http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git">
 <link href="/favicon.ico" rel="icon">
 <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -152,7 +152,7 @@
   
   <div class="entry-image">
     
-    <img src="/images/hero.jpg" alt="rewriting author and email in every commit">
+    <img src="/images/hero.jpg" alt="Search and replace, vim and git">
     
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
@@ -162,93 +162,134 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="/2015/06/01/rewriting-author-and-email-in-every-commit/" rel="bookmark" title="rewriting author and email in every commit">rewriting author and email in every commit</a></h1>
+          <h1 class="entry-title"><a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/" rel="bookmark" title="Search and replace, vim and git">Search and replace, vim and git</a></h1>
         
-        <h2>June 01, 2015</h2>
+        <h2>December 28, 2016</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>Following on from a previous post about <a href="http://blog.stevenocchipinti.com/2015/04/30/rewriting-indentation-in-every-file-and-every-commit/">rewriting indentation for an entire git repo</a>,
-another reason to rewrite the history of a whole repo is to change the email
-address or name mentioned in commits.</p>
+      <p>Git provides some nice utility functionality that can make a vim development
+environment much nicer. With recent updates to Vim it can now execute a command
+for every item in the quickfix list (<code>:cdo</code>) and location list (<code>:ldo</code>). These
+features work together quite nicely.</p>
 
-<p>Once again, be aware that rewriting history will cause problems if other people
-have clones of the repo so make sure you understand the risks before doing
-this!</p>
+<p>This new functionality has been introduced to vim from version 7.4.858 and is
+therefore available in vim8 and also available in neovim.</p>
 
-<p>To change the author name and email address for every commit, you can run this:</p>
+<h2>The Old Way</h2>
+
+<p>Back in 2011 I wrote a
+<a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html/">post about doing search and replace across multiple files</a>
+with just the basic vim functionality. It&rsquo;s quite common to use the arg list
+because its easy to add to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">arg</span> *.<span class="nb">js</span>
+</span><span class='line'><span class="p">:</span><span class="k">arg</span> `git <span class="k">ls</span><span class="p">-</span><span class="k">files</span>`
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it&rsquo;s easy to execute commands:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">argdo</span> %<span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The New Way</h2>
+
+<p>Now that we can execute a command from the quickfix and location lists it is
+much easier to make larger, more controlled edits with the help of other
+features or plugins.</p>
+
+<p>If you use <code>syntastic</code> or <code>neomake</code> for linting, a compiler via the <code>:make</code>
+command, the built in <code>:grep</code> or <code>:vimgrep</code> commands or any number of other
+plugins that integrate with these lists, such as
+<a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, you can take advantage of
+<code>:cdo</code> and <code>:ldo</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">grep</span> foo **/*.<span class="nb">js</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can execute commands like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>cdo <span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Git Is Awesome</h2>
+
+<p>Git is incredibly powerful and I often use a couple of features that are often
+overlooked:</p>
+
+<ul>
+<li><code>git ls-files</code> - recursively list all the files in the repo</li>
+<li><code>git grep</code> - grep through all the files in the repo</li>
+</ul>
+
+
+<p>One of the reasons these commands are so good is because by default they will
+ignore the items in the <code>.gitignore</code> file.</p>
+
+<p>I tend to work with javascript a fair bit and having an easy way to avoid those
+nasty <code>node_modules</code> directories readily available is great! Best of all, these
+tools are available on just about every machine I work, on including the
+machines of other peoples that I pair with.</p>
+
+<h2>My Workflow</h2>
+
+<p>I use <code>ctrl-p</code> in vim and rather than relying on yet another third party tool
+like <code>ack</code> or <code>ag</code>, I&rsquo;ve configured <code>crtl-p</code> like this:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch -f --env-filter <span class="s2">&quot;</span>
-</span><span class='line'><span class="s2">  GIT_AUTHOR_NAME=&#39;YOUR_NAME&#39;</span>
-</span><span class='line'><span class="s2">  GIT_AUTHOR_EMAIL=&#39;YOUR_EMAIL&#39;</span>
-</span><span class='line'><span class="s2">  GIT_COMMITTER_NAME=&#39;YOUR_NAME&#39;</span>
-</span><span class='line'><span class="s2">  GIT_COMMITTER_EMAIL=&#39;YOUR_EMAIL&#39;</span>
-</span><span class='line'><span class="s2">&quot;</span> HEAD
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> <span class="k">g</span>:ctrlp_user_command <span class="p">=</span> [
+</span><span class='line'>\  <span class="s1">&#39;.git&#39;</span><span class="p">,</span>
+</span><span class='line'>\  <span class="s1">&#39;cd %s &amp;&amp; git ls-files . -co --exclude-standard&#39;</span><span class="p">,</span>
+</span><span class='line'>\  <span class="s1">&#39;find %s -type f&#39;</span>
+</span><span class='line'>\]
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This will blindly replace all the commits with the details given, but if other
-people have contributed, you may need to be a bit more careful and only replace
-your own:</p>
+<p>It is super fast and I haven&rsquo;t come across a situation where I need ctrl-p for a
+large enough non-git repo and <code>find</code> wasn&rsquo;t good enough for&hellip; yet!</p>
+
+<p>If you use <a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, there is also
+a <code>:Ggrep</code> command that behaves much like the builtin <code>:grep</code> command, but it
+will ignore the <code>.gitignore</code> items. I use this quite a lot too:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch --commit-filter <span class="s2">&quot;</span>
-</span><span class='line'><span class="s2">  if [ &quot;</span><span class="nv">$GIT_COMMITTER_NAME</span><span class="s2">&quot; = &#39;YOUR_ORIGINAL_NAME&#39;];</span>
-</span><span class='line'><span class="s2">  then</span>
-</span><span class='line'><span class="s2">    GIT_AUTHOR_NAME=&#39;YOUR_NEW_NAME&#39;</span>
-</span><span class='line'><span class="s2">    GIT_AUTHOR_EMAIL=&#39;YOUR_NEW_EMAIL&#39;</span>
-</span><span class='line'><span class="s2">    GIT_COMMITTER_NAME=&#39;YOUR_NEW_NAME&#39;</span>
-</span><span class='line'><span class="s2">    GIT_COMMITTER_EMAIL=&#39;YOUR_NEW_EMAIL&#39;</span>
-</span><span class='line'><span class="s2">    git commit-tree &quot;</span><span class="nv">$@</span><span class="s2">&quot;;</span>
-</span><span class='line'><span class="s2">  else</span>
-</span><span class='line'><span class="s2">    git commit-tree &quot;</span><span class="nv">$@</span><span class="s2">&quot;;</span>
-</span><span class='line'><span class="s2">  fi</span>
-</span><span class='line'><span class="s2">&quot;</span> HEAD
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>Ggrep foo
+</span><span class='line'><span class="p">:</span>Ggrep foo **/*.<span class="nb">js</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If you understand the risks of rewriting history for a shared repository, you
-can force push with the <code>-f</code> flag:</p>
+<p>Then you can execute commands in the same manner as above:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push -f
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>cdo <span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then, to ensure future commits don&rsquo;t use the wrong name and email, you can set
-it explicity for this particular repo (instead of globally) with these
-commands:</p>
+<p>Because I use this so often, I&rsquo;ve added the following mapping to my config to
+automatically search for the token under my cursor:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config user.email <span class="s2">&quot;your_email@example.com&quot;</span>
-</span><span class='line'>git config user.email <span class="s2">&quot;your_email@example.com&quot;</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>map <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">g</span> :Ggrep<span class="p">!</span>  <span class="p">&lt;</span>Bar<span class="p">&gt;</span> <span class="k">copen</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>Keep in mind this will only work for this particular clone as the details will
-be stored locally in <code>.git/config</code>.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="/categories/#git" title="Pages tagged git" class="tag">git</a></span>
-        <span><a href="/2015/06/01/rewriting-author-and-email-in-every-commit/" rel="bookmark" title="rewriting author and email in every commit">rewriting author and email in every commit</a> was published on <span class="entry-date date published updated"><time datetime="2015-06-01T00:08:00+10:00">June 01, 2015</time></span></span>
+        <span class="entry-tags"><a href="/categories/#git" title="Pages tagged git" class="tag">git</a><a href="/categories/#vim" title="Pages tagged vim" class="tag">vim</a></span>
+        <span><a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/" rel="bookmark" title="Search and replace, vim and git">Search and replace, vim and git</a> was published on <span class="entry-date date published updated"><time datetime="2016-12-28T14:04:00+11:00">December 28, 2016</time></span></span>
         
         <span class="author vcard"><span class="fn"><a href="" title="About Steven Occhipinti">Steven Occhipinti</a></span></span>
         
@@ -258,22 +299,22 @@ be stored locally in <code>.git/config</code>.</p>
       <div class="read-more">
         
           <div class="read-more-header">
-            <a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/" class="btn">Read More</a>
+            <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/" class="btn">Read More</a>
           </div><!-- /.read-more-header -->
           <div class="read-more-content">
-            <h3><a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/" title="Search and replace, vim and git">Search and replace, vim and git</a></h3>
-            <p>Search and replace, vim and git <a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/"> Continue reading</a></p>
+            <h3><a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/" title="Using netrw instead of NERDTree for Vim">Using netrw instead of NERDTree for Vim</a></h3>
+            <p>Using netrw instead of NERDTree for Vim <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/"> Continue reading</a></p>
           </div><!-- /.read-more-content -->
         
         <div class="read-more-list">
           
             <div class="list-item">
-              <h4><a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/" title="Using netrw instead of NERDTree for Vim">Using netrw instead of NERDTree for Vim</a></h4>
+              <h4><a href="/2016/12/28/different-author-email-addresses-per-git-repository/" title="Different author email addresses per git repository">Different author email addresses per git repository</a></h4>
               <span>Published on December 28, 2016</span>
             </div><!-- /.list-item -->
           
             <div class="list-item">
-              <h4><a href="/2016/12/28/different-author-email-addresses-per-git-repository/" title="Different author email addresses per git repository">Different author email addresses per git repository</a></h4>
+              <h4><a href="/2016/12/28/windows-starting-up-by-itself-at-random-times/" title="Windows starting up by itself at random times">Windows starting up by itself at random times</a></h4>
               <span>Published on December 28, 2016</span>
             </div><!-- /.list-item -->
           
@@ -318,8 +359,8 @@ be stored locally in <code>.git/config</code>.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit/';
-        var disqus_url = 'http://blog.stevenocchipinti.com/2015/06/01/rewriting-author-and-email-in-every-commit/';
+        var disqus_identifier = 'http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/';
+        var disqus_url = 'http://blog.stevenocchipinti.com/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/';
         var disqus_script = 'embed.js';
       
     (function () {

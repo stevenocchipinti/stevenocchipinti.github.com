@@ -173,6 +173,166 @@
 <header>
   <div class="entry-meta">
     <span class="entry-date date published updated">
+      <time datetime="2016-12-28T14:04:00+11:00">
+        <a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/">December 28, 2016</a>
+      </time>
+    </span>
+    <span class="author vcard">
+      <span class="fn">
+        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
+      </span>
+    </span>
+    
+      &nbsp; &bull; &nbsp;<span class="entry-comments">
+        <a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/#disqus_thread">Comment</a>
+      </span>
+    
+  </div><!-- /.entry-meta -->
+  
+    <h1 class="entry-title">
+      <a href="/2016/12/28/search-and-replace-in-multiple-files-with-vim-and-git/" rel="bookmark" title="Search and Replace, Vim and Git" itemprop="url">Search and Replace, Vim and Git</a>
+    </h1>
+  
+</header>
+
+<div class="entry-content">
+  <p>Git provides some nice utility functionality that can make a vim development
+environment much nicer. With recent updates to Vim it can now execute a command
+for every item in the quickfix list (<code>:cdo</code>) and location list (<code>:ldo</code>). These
+features work together quite nicely.</p>
+
+<p>This new functionality has been introduced to vim from version 7.4.858 and is
+therefore available in vim8 and also available in neovim.</p>
+
+<h2>The Old Way</h2>
+
+<p>Back in 2011 I wrote a
+<a href="http://blog.stevenocchipinti.com/2011/05/search-and-replace-in-multiple-files.html/">post about doing search and replace across multiple files</a>
+with just the basic vim functionality. It&rsquo;s quite common to use the arg list
+because its easy to add to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">arg</span> *.<span class="nb">js</span>
+</span><span class='line'><span class="p">:</span><span class="k">arg</span> `git <span class="k">ls</span><span class="p">-</span><span class="k">files</span>`
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it&rsquo;s easy to execute commands:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">argdo</span> %<span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The New Way</h2>
+
+<p>Now that we can execute a command from the quickfix and location lists it is
+much easier to make larger, more controlled edits with the help of other
+features or plugins.</p>
+
+<p>If you use <code>syntastic</code> or <code>neomake</code> for linting, a compiler via the <code>:make</code>
+command, the built in <code>:grep</code> or <code>:vimgrep</code> commands or any number of other
+plugins that integrate with these lists, such as
+<a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, you can take advantage of
+<code>:cdo</code> and <code>:ldo</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span><span class="k">grep</span> foo **/*.<span class="nb">js</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can execute commands like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>cdo <span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Git Is Awesome</h2>
+
+<p>Git is incredibly powerful and I often use a couple of features that are often
+overlooked:</p>
+
+<ul>
+<li><code>git ls-files</code> - recursively list all the files in the repo</li>
+<li><code>git grep</code> - grep through all the files in the repo</li>
+</ul>
+
+
+<p>One of the reasons these commands are so good is because by default they will
+ignore the items in the <code>.gitignore</code> file.</p>
+
+<p>I tend to work with javascript a fair bit and having an easy way to avoid those
+nasty <code>node_modules</code> directories readily available is great! Best of all, these
+tools are available on just about every machine I work, on including the
+machines of other peoples that I pair with.</p>
+
+<h2>My Workflow</h2>
+
+<p>I use <code>ctrl-p</code> in vim and rather than relying on yet another third party tool
+like <code>ack</code> or <code>ag</code>, I&rsquo;ve configured <code>crtl-p</code> like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> <span class="k">g</span>:ctrlp_user_command <span class="p">=</span> [
+</span><span class='line'>\  <span class="s1">&#39;.git&#39;</span><span class="p">,</span>
+</span><span class='line'>\  <span class="s1">&#39;cd %s &amp;&amp; git ls-files . -co --exclude-standard&#39;</span><span class="p">,</span>
+</span><span class='line'>\  <span class="s1">&#39;find %s -type f&#39;</span>
+</span><span class='line'>\]
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is super fast and I haven&rsquo;t come across a situation where I need ctrl-p for a
+large enough non-git repo and <code>find</code> wasn&rsquo;t good enough for&hellip; yet!</p>
+
+<p>If you use <a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>, there is also
+a <code>:Ggrep</code> command that behaves much like the builtin <code>:grep</code> command, but it
+will ignore the <code>.gitignore</code> items. I use this quite a lot too:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>Ggrep foo
+</span><span class='line'><span class="p">:</span>Ggrep foo **/*.<span class="nb">js</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can execute commands in the same manner as above:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>cdo <span class="k">s</span><span class="sr">/foo/</span><span class="k">bar</span>/gc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because I use this so often, I&rsquo;ve added the following mapping to my config to
+automatically search for the token under my cursor:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>map <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">g</span> :Ggrep<span class="p">!</span>  <span class="p">&lt;</span>Bar<span class="p">&gt;</span> <span class="k">copen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+  
+  
+</div><!-- /.entry-content -->
+
+
+
+
+
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  
+
+
+
+<header>
+  <div class="entry-meta">
+    <span class="entry-date date published updated">
       <time datetime="2016-12-28T09:36:00+11:00">
         <a href="/2016/12/28/using-netrw-instead-of-nerdtree-for-vim/">December 28, 2016</a>
       </time>
@@ -1106,132 +1266,6 @@ otherwise running this command will just bring the existing instance into focus.
 you can give this instance its own settings. For example, this instance is not
 signed into my Google account and I&rsquo;ve configured a bright red theme so I can
 easily tell the difference between my normal Chrome and my insecure Chrome!</p>
-
-  
-  
-</div><!-- /.entry-content -->
-
-
-
-
-
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  
-
-
-
-<header>
-  <div class="entry-meta">
-    <span class="entry-date date published updated">
-      <time datetime="2015-04-04T21:39:00+11:00">
-        <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/">April 04, 2015</a>
-      </time>
-    </span>
-    <span class="author vcard">
-      <span class="fn">
-        <a href="" title="About Steven Occhipinti">Steven Occhipinti</a>
-      </span>
-    </span>
-    
-      &nbsp; &bull; &nbsp;<span class="entry-comments">
-        <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/#disqus_thread">Comment</a>
-      </span>
-    
-  </div><!-- /.entry-meta -->
-  
-    <h1 class="entry-title">
-      <a href="/2015/04/04/configuring-a-hdmi-cec-remote-in-kodi/" rel="bookmark" title="Configuring a HDMI-CEC Remote in Kodi" itemprop="url">Configuring a HDMI-CEC Remote in Kodi</a>
-    </h1>
-  
-</header>
-
-<div class="entry-content">
-  <p>I&rsquo;ve been using Raspbmc for a while now, but I only just saw that it has been
-superseded by <a href="https://osmc.tv/">OSMC</a> (and XBMC is now called <a href="http://kodi.tv/">Kodi</a>,
-so with the long weekend I thought I&rsquo;d upgrade.</p>
-
-<p>The upgrade process is really simple. I backed up my existing installtion of
-Raspbmc, downloaded the offical <a href="https://osmc.tv/download/">OSMC installer</a>
-from their site, installed it over the top and booted it up.</p>
-
-<p>From here, there are only a few things to do. I entered my <a href="https://osmc.tv/help/wiki/pi-buycodec">MPG2 and WVC1 codecs</a>,
-setup my video sources and kicked off the scrapers and installed a few addons.
-The only other thing is setting up my TV remote.
-(I did this last time but forgot how, so this time I thought I&rsquo;d blog it!)</p>
-
-<p>Out of the box, my Samsung <em>&ldquo;Smart Touch&rdquo;</em> Remote (<a href="http://reviews.lcdtvbuyingguide.com/samsung-lcd-tv/pictures/samsung-f6400-remote.jpg">this one</a>
-if you&rsquo;re wondering) mostly just works, the only problem is the back button
-opens the context menu instead of going back!</p>
-
-<p>To fix this, the first step is to find out what each button on the remote maps
-to in Kodi. Thanks to this great <a href="http://forum.kodi.tv/showthread.php?tid=139145&amp;pid=1285390#pid1285390">forum post</a>
-by a user called &ldquo;Knapster&rdquo; this is really easy.</p>
-
-<p>Just SSH to the pi, create a new file <code>~/.kodi/userdata/keymaps/remote.xml</code> and
-paste <a href="https://gist.github.com/stevenocchipinti/42f2eca2a9f04ed9e52f">this contents</a>
-in it. Now reboot Kodi and everytime you press a button, you&rsquo;ll get a
-notification on the screen of what command it is sending.</p>
-
-<p>A quick way of doing that from an SSH session is like this:<br/>
-(The default username and password are both <code>osmc</code>)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ssh osmc@&lt;kodi-ip-address&gt;
-</span><span class='line'>curl https://gist.githubusercontent.com/stevenocchipinti/42f2eca2a9f04ed9e52f/raw/remote.xml &gt; ~/.kodi/userdata/keymaps/remote.xml
-</span><span class='line'>sudo reboot</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In my case, everything seemed to make sense except the back button, which was
-actually sending <code>title</code> instead of <code>back</code>. As I don&rsquo;t have a <em>title</em> button,
-I&rsquo;m going to reassign that to be a back button instead.</p>
-
-<p>First, lets replace our <code>remote.xml</code> with the default configuration, you can get
-these mappings from the installed Kodi files:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cp /usr/share/kodi/system/keymaps/remote.xml ~/.kodi/userdata/keymaps/remote.xml</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This file has what every command does in every context and makes it easy to
-modify. Here is a diff of the changes I made for my remote:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>58c58
-</span><span class='line'>&lt;       &lt;title&gt;ContextMenu&lt;/title&gt;
-</span><span class='line'>---
-</span><span class='line'>&gt;       &lt;title&gt;Back&lt;/title&gt;
-</span><span class='line'>74c74
-</span><span class='line'>&lt;       &lt;guide&gt;ActivateWindow(TVGuide)&lt;/guide&gt;
-</span><span class='line'>---
-</span><span class='line'>&gt;       &lt;guide&gt;ActivateWindow(Home)&lt;/guide&gt;
-</span><span class='line'>79c79
-</span><span class='line'>&lt;       &lt;red&gt;ActivateWindow(TVChannels)&lt;/red&gt;
-</span><span class='line'>---
-</span><span class='line'>&gt;       &lt;red&gt;ContextMenu&lt;/red&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&rsquo;ve made the <em>&ldquo;title&rdquo;</em> button send the <code>back</code> command and because I don&rsquo;t have
-a TV tuner connected, I&rsquo;ve also re-assigned the <em>&ldquo;TV Guide&rdquo;</em> button to go to the
-home screen and the <em>&ldquo;Red&rdquo;</em> button to be the context menu button.<br/>
-Interestingly, the channel up and down buttons on my remote we already assigned
-to page up and page down, which suits me great while I don&rsquo;t have a TV Tuner.</p>
-
-<p>After rebooting, I now have a functional remote control!</p>
 
   
   
