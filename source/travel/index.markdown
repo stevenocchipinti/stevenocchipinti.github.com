@@ -20,6 +20,8 @@ Cook Islands
 <dd>12/08/2016 &rarr; 26/08/2016</dd>
 </dl>
 
+<a href="http://cookislands2016.stevenocchipinti.com" class="btn">Blog</a>
+
 </article>
 
 <article>
