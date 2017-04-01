@@ -10,6 +10,22 @@ footer: false
 
 <article>
 
+New Zealand
+-----------
+
+{% img left http://newzealand2017.stevenocchipinti.com/assets/img/touring.jpg %}
+
+<dl>
+<dt>New Zealand</dt>
+<dd>02/04/2017 &rarr; 16/04/2017</dd>
+</dl>
+
+<a href="http://newzealand2017.stevenocchipinti.com" class="btn">Blog</a>
+
+</article>
+
+<article>
+
 Cook Islands
 ------------
 
