@@ -9,214 +9,316 @@ footer: false
 ---
 
 <article>
+Singapore
+---------
 
-New Zealand
------------
+{% img left /images/travel/singapore-2018.jpg %}
 
-{% img left http://newzealand2017.stevenocchipinti.com/assets/img/touring.jpg %}
+<aside style="display: inline-block;">
+  <dl>
+    <dt>Singapore (for a wedding)</dt>
+    <dd>01/12/2017 &rarr; 06/12/2017</dd>
+  </dl>
+</aside>
 
-<dl>
-<dt>New Zealand</dt>
-<dd>02/04/2017 &rarr; 16/04/2017</dd>
-</dl>
+</article>
 
-<a href="http://newzealand2017.stevenocchipinti.com" class="btn">Blog</a>
+
+<article>
+Cook Islands
+------------
+
+{% img left /images/travel/cook-islands-2018.jpg %}
+
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Rarotonga</dt>
+  <dd>05/10/2018 &rarr; 11/10/2018</dd>
+  <dt>Aitutaki</dt>
+  <dd>11/10/2018 &rarr; 16/10/2018</dd>
+  </dl>
+</aside>
 
 </article>
 
 <article>
+Europe
+------
 
+{% img left /images/travel/europe-2018.jpg %}
+
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Paris</dt>
+  <dd>18/05/2018 &rarr; 22/05/2018</dd>
+  <dt>Sicily</dt>
+  <dd>22/05/2018 &rarr; 28/05/2018</dd>
+  <dt>Sorento</dt>
+  <dd>28/05/2018 &rarr; 29/05/2018</dd>
+  <dt>Positano</dt>
+  <dd>29/05/2018 &rarr; 02/06/2018</dd>
+  <dt>Naples</dt>
+  <dd>02/06/2018 &rarr; 03/06/2018</dd>
+  <dt>Seville</dt>
+  <dd>03/06/2018 &rarr; 07/06/2018</dd>
+  <dt>Barcelona</dt>
+  <dd>07/06/2018 &rarr; 10/06/2018</dd>
+  </dl>
+
+  <a href="https://withvolo.com/trip/4dx8akp3" class="btn">Blog</a>
+</aside>
+
+</article>
+
+<article>
+Cook Islands
+------------
+
+{% img left /images/travel/cook-islands-2017.jpg %}
+
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Rarotonga</dt>
+  <dd>22/09/2017 &rarr; 03/10/2017</dd>
+  </dl>
+</aside>
+
+</article>
+
+<article>
+Singapore
+---------
+
+{% img left /images/travel/singapore-2017.jpg %}
+
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Singapore (for work)</dt>
+  <dd>22/07/2017 &rarr; 12/07/2017</dd>
+  </dl>
+</aside>
+
+</article>
+
+<article>
+New Zealand
+-----------
+
+{% img left /images/travel/new-zealand-2017.jpg %}
+
+<aside style="display: inline-block;">
+  <dl>
+  <dt>New Zealand</dt>
+  <dd>02/04/2017 &rarr; 16/04/2017</dd>
+  </dl>
+
+  <a href="http://newzealand2017.stevenocchipinti.com" class="btn">Blog</a>
+</aside>
+
+</article>
+
+<article>
 Cook Islands
 ------------
 
 {% img left /images/travel/cook-islands-2016-w320.jpg %}
 
-<dl>
-<dt>Rarotonga</dt>
-<dd>12/08/2016 &rarr; 26/08/2016</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Rarotonga</dt>
+  <dd>12/08/2016 &rarr; 26/08/2016</dd>
+  </dl>
 
-<a href="http://cookislands2016.stevenocchipinti.com" class="btn">Blog</a>
+  <a href="http://cookislands2016.stevenocchipinti.com" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 China
 -----
 
 {% img left /images/travel/xian-2016-w320.jpg %}
 
-<dl>
-<dt>Xi'an:</dt>
-<dd>09/04/2016 &rarr; 22/04/2016</dd>
-</dl>
-
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Xi'an:</dt>
+  <dd>09/04/2016 &rarr; 22/04/2016</dd>
+  </dl>
+</aside>
 
 </article>
 
 <article>
-
 Taiwan and Japan
 ----------------
 
 {% img left /images/travel/taipan-2016-w320.jpg %}
 
-<dl>
-<dt>Taipei:</dt>
-<dd>28/12/2015 &rarr; 04/01/2016</dd>
-<dt>Osaka:</dt>
-<dd>04/01/2016 &rarr; 07/01/2016</dd>
-<dt>Hakone:</dt>
-<dd>07/01/2016 &rarr; 08/01/2016</dd>
-<dt>Tokyo:</dt>
-<dd>08/01/2016 &rarr; 16/01/2016</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Taipei:</dt>
+  <dd>28/12/2015 &rarr; 04/01/2016</dd>
+  <dt>Osaka:</dt>
+  <dd>04/01/2016 &rarr; 07/01/2016</dd>
+  <dt>Hakone:</dt>
+  <dd>07/01/2016 &rarr; 08/01/2016</dd>
+  <dt>Tokyo:</dt>
+  <dd>08/01/2016 &rarr; 16/01/2016</dd>
+  </dl>
 
-<a href="http://taipan2016.blogspot.com/" class="btn">Blog</a>
+  <a href="http://taipan2016.blogspot.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Perth and Bali
 --------------
 
 {% img left /images/travel/bali-2014-w320.jpg %}
 
-<dl>
-<dt>Perth:</dt>
-<dd>14/11/2014 &rarr; 17/11/2014</dd>
-<dt>Bali:</dt>
-<dd>18/11/2014 &rarr; 23/11/2014</dd>
-<dt>Perth:</dt>
-<dd>24/11/2014 &rarr; 26/11/2014</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Perth:</dt>
+  <dd>14/11/2014 &rarr; 17/11/2014</dd>
+  <dt>Bali:</dt>
+  <dd>18/11/2014 &rarr; 23/11/2014</dd>
+  <dt>Perth:</dt>
+  <dd>24/11/2014 &rarr; 26/11/2014</dd>
+  </dl>
 
-<a href="http://bali2014.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://bali2014.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Japan
 -----
 
 {% img left /images/travel/japan-2013-w320.jpg %}
 
-<dl>
-<dt>Osaka:</dt>
-<dd>28/12/2012 &rarr; 01/01/2013</dd>
-<dt>Kyoto:</dt>
-<dd>01/01/2013 &rarr; 05/01/2013</dd>
-<dt>Tokyo:</dt>
-<dd>05/01/2013 &rarr; 11/01/2013</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Osaka:</dt>
+  <dd>28/12/2012 &rarr; 01/01/2013</dd>
+  <dt>Kyoto:</dt>
+  <dd>01/01/2013 &rarr; 05/01/2013</dd>
+  <dt>Tokyo:</dt>
+  <dd>05/01/2013 &rarr; 11/01/2013</dd>
+  </dl>
 
-<a href="http://japan2013.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://japan2013.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Singapore and Malaysia
 ----------------------
 
 {% img left /images/travel/sinkul-2012-w320.jpg %}
 
-<dl>
-<dt>Singapore:</dt>
-<dd>28/12/2011 &rarr; 04/01/2012</dd>
-<dt>Kuala Lumpur:</dt>
-<dd>04/01/2012 &rarr; 11/01/2012</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Singapore:</dt>
+  <dd>28/12/2011 &rarr; 04/01/2012</dd>
+  <dt>Kuala Lumpur:</dt>
+  <dd>04/01/2012 &rarr; 11/01/2012</dd>
+  </dl>
 
-<a href="http://sinkul2012.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://sinkul2012.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Malaysia and Hong Kong
 ----------------------
 
 {% img left /images/travel/klhk-2010-w320.jpg %}
 
-<dl>
-<dt>Kuala Lumpur:</dt>
-<dd>24/11/2010 &rarr; 27/11/2010</dd>
-<dt>Hong Kong:</dt>
-<dd>27/11/2010 &rarr; 06/12/2010</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Kuala Lumpur:</dt>
+  <dd>24/11/2010 &rarr; 27/11/2010</dd>
+  <dt>Hong Kong:</dt>
+  <dd>27/11/2010 &rarr; 06/12/2010</dd>
+  </dl>
 
-<a href="http://klhk2010.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://klhk2010.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Japan
 -----
 
 {% img left /images/travel/japan-2009-w320.jpg %}
 
-<dl>
-<dt>Tokyo:</dt>
-<dd>29/12/2009 &rarr; 12/01/2010</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Tokyo:</dt>
+  <dd>29/12/2009 &rarr; 12/01/2010</dd>
+  </dl>
 
-<a href="http://japan2010.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://japan2010.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Thailand
 --------
 
 {% img left /images/travel/thailand-2009-w320.jpg %}
 
-<dl>
-<dt>Phuket:</dt>
-<dd>25/06/2009 &rarr; 05/07/2009</dd>
-<dt>Koh Samui:</dt>
-<dd>05/07/2009 &rarr; 13/07/2009</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Phuket:</dt>
+  <dd>25/06/2009 &rarr; 05/07/2009</dd>
+  <dt>Koh Samui:</dt>
+  <dd>05/07/2009 &rarr; 13/07/2009</dd>
+  </dl>
+</aside>
 
 </article>
 
 <article>
-
 Vietnam and Cambodia
 --------------------
 
 {% img left /images/travel/vietnam-2007-w320.jpg %}
 
-<dl>
-<dt>Ho Chi Minh City:</dt>
-<dd>1/12/2007 &rarr; 20/12/2007</dd>
-<dt>Siem Reap:</dt>
-<dd>15/12/2007 &rarr; 17/12/2007</dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Ho Chi Minh City:</dt>
+  <dd>1/12/2007 &rarr; 20/12/2007</dd>
+  <dt>Siem Reap:</dt>
+  <dd>15/12/2007 &rarr; 17/12/2007</dd>
+  </dl>
 
-<a href="http://vietnam2007.stevenocchipinti.com/" class="btn">Blog</a>
+  <a href="http://vietnam2007.stevenocchipinti.com/" class="btn">Blog</a>
+</aside>
 
 </article>
 
 <article>
-
 Canada and USA
 --------------
 
 {% img left /images/travel/toronto-2007-w320.jpg %}
 
-<dl>
-<dt>Toronto:</dt>
-<dd>23/06/2007 &rarr; 08/07/2007</dd>
-<dt>Boston:</dt>
-<dd>08/07/2007 &rarr; 19/07/2007</dd>
-
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt>Toronto:</dt>
+  <dd>23/06/2007 &rarr; 08/07/2007</dd>
+  <dt>Boston:</dt>
+  <dd>08/07/2007 &rarr; 19/07/2007</dd>
+  </dl>
+</aside>
 
 </article>
 
@@ -224,13 +326,14 @@ Canada and USA
 
 Italy
 -----
-
 {% img left /images/travel/italy-2005-w320.jpg %}
 
-<dl>
-<dt><span title="Milan &#9992; Venice &#9992; Florence &#9992; Pisa &#9992; Rome &#9992; Pompeii &#9992; Sorento &amp; Capri &#9992; Rome">Tour&#42;</span>:</dt>
-<dd>28/03/2005 &rarr; <span title="Not sure about the end date">~12/04/2005</span></dd>
-</dl>
+<aside style="display: inline-block;">
+  <dl>
+  <dt><span title="Milan &#9992; Venice &#9992; Florence &#9992; Pisa &#9992; Rome &#9992; Pompeii &#9992; Sorento &amp; Capri &#9992; Rome">Tour&#42;</span>:</dt>
+  <dd>28/03/2005 &rarr; <span title="Not sure about the end date">~12/04/2005</span></dd>
+  </dl>
+</aside>
 
 <div style="clear: both"/>
 
