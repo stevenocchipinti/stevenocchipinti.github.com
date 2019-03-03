@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Google | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/google/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2017-04-01T15:44:36+11:00</updated>
+  <updated>2019-03-03T17:47:37+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -31,7 +31,9 @@ It turns out that the interface Google provide to set recurring events does not 
 
 <p>The simplest way is to just write out the event in plain English. For example:</p>
 
-<p><blockquote><p>RORO at Inspire9, Richmond on the last Thursday of every month</p></blockquote></p>
+<p>{% blockquote %}
+RORO at Inspire9, Richmond on the last Thursday of every month
+{% endblockquote %}</p>
 
 <p>This will create an event called &ldquo;RORO at Inspire9, Richmond&rdquo;, with the location field set to &ldquo;Inspire9, Richmond&rdquo; and the repetition set to <em>&ldquo;Monthly on the last Thursday&rdquo;.</em></p>
 

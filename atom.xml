@@ -4,7 +4,7 @@
   <title><![CDATA[Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2017-04-01T15:44:36+11:00</updated>
+  <updated>2019-03-03T17:47:29+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -1017,14 +1017,14 @@ with one simple line of code!</p>
 <p>On a mac:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -f from-addr@example.com
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">|</span> mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -f from-addr@example.com
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>On *nix:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> | mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -aFrom:from-addr@example.com
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">|</span> mail -s <span class="s2">&quot;Your alert&quot;</span> to-addr@example.com -aFrom:from-addr@example.com
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

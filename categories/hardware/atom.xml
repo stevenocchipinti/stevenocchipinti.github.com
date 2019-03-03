@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hardware | Steven Occhipinti]]></title>
   <link href="http://blog.stevenocchipinti.com/categories/hardware/atom.xml" rel="self"/>
   <link href="http://blog.stevenocchipinti.com/"/>
-  <updated>2017-04-01T15:44:36+11:00</updated>
+  <updated>2019-03-03T17:47:37+11:00</updated>
   <id>http://blog.stevenocchipinti.com/</id>
   <author>
     <name><![CDATA[Steven Occhipinti]]></name>
@@ -43,7 +43,7 @@ By the end of the night we had the first version of CarDuino!</p>
 
 <p>After sleeping in till about lunch time there next day, I wanted to put my EtherMega to use, so I spent the rest of the day fiddling with that.   With network access, power over Ethernet and a card reader, this is a perfect platform for controlling things via a web interface. As my background is web development, this was right up my alley!   Using various sample code, I put together a <a href="https://github.com/stevenocchipinti/ArduinoWebServer">really basic web server</a> that can respond to different requests and serve files from its built in memory card reader.</p>
 
-<p><img class="center <a" src="href="http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png">http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png</a>" title="My Freetronics EtherMega 2560 serving files from the memory card on a webserver!" ></p>
+<p>{% img center <a href="http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png">http://lh5.ggpht.com/-ezXsvJSsgHc/UAvmjO-JnGI/AAAAAAAAAKE/oZ6v5viAgzQ/20120722_213551.png</a> My Freetronics EtherMega 2560 serving files from the memory card on a webserver! %}</p>
 
 <p>In just a few days, we went from no Arduino experience to a working project (or two). Especially with basic programming experience, the entry level for getting into Arduino is really low. When you buy (or build) a board and download the software, you have enough sample code with the IDE to make things happen, and you can get a lot done by simply copying and pasting!</p>
 
